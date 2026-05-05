@@ -1,12 +1,327 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" output="build/main" path="src/main/java-gen/">
+	<classpathentry kind="src" output="build/resources/test" path="src/test/resources">
 		<attributes>
-			<attribute name="gradle_scope" value="main"/>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
+			<attribute name="test" value="true"/>
+			<attribute name="optional" value="true"/>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="resource" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17/"/>
-	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
+	<classpathentry kind="src" output="build/classes/java/test" path="src/test/java">
+		<attributes>
+			<attribute name="test" value="true"/>
+			<attribute name="optional" value="true"/>
+			<attribute name="gradle.buildServer" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="build/resources/main" path="src/main/resources">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="resource" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="build/classes/java/main" path="src/main/java-gen">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="build/classes/java/main" path="src/main/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="gradle.buildServer" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="build/classes/java/test" path="build/generated/sources/annotationProcessor/java/test">
+		<attributes>
+			<attribute name="test" value="true"/>
+			<attribute name="optional" value="true"/>
+			<attribute name="gradle.buildServer" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="build/classes/java/main" path="build/generated/sources/annotationProcessor/java/main">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="gradle.buildServer" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.2/25ea2e8b0c338a877313bd4672d3fe056ea78f0d/jsr305-3.0.2.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.2/b19b5927c2c25b6c70f093767041e641ae0b1b35/jsr305-3.0.2-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="com.google.code.findbugs"/>
+			<attribute name="artifactId" value="jsr305"/>
+			<attribute name="version" value="3.0.2"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.glsp/org.eclipse.glsp.server/2.3.0/af12e8f9a5ed038f69e76950906c233931535839/org.eclipse.glsp.server-2.3.0.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.glsp/org.eclipse.glsp.server/2.3.0/5b6aab6e8c7a1b8f3df4be5eb20afb8e5b8f28d3/org.eclipse.glsp.server-2.3.0-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.eclipse.glsp"/>
+			<attribute name="artifactId" value="org.eclipse.glsp.server"/>
+			<attribute name="version" value="2.3.0"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/aopalliance/aopalliance/1.0/235ba8b489512805ac13a8f9ea77a1ca5ebe3e8/aopalliance-1.0.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/aopalliance/aopalliance/1.0/4a4b6d692e17846a9f3da036438a7ac491d3c814/aopalliance-1.0-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="aopalliance"/>
+			<attribute name="artifactId" value="aopalliance"/>
+			<attribute name="version" value="1.0"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.xtext/org.eclipse.xtext.xbase.lib/2.20.0/55e9d0630f0f64735d0b564cdbee0b1f2217bceb/org.eclipse.xtext.xbase.lib-2.20.0.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.xtext/org.eclipse.xtext.xbase.lib/2.20.0/affcf538a893a6637377ad9985866bba8fa7e7e/org.eclipse.xtext.xbase.lib-2.20.0-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.eclipse.xtext"/>
+			<attribute name="artifactId" value="org.eclipse.xtext.xbase.lib"/>
+			<attribute name="version" value="2.20.0"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/jakarta.inject/jakarta.inject-api/2.0.1/4c28afe1991a941d7702fe1362c365f0a8641d1e/jakarta.inject-api-2.0.1.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/jakarta.inject/jakarta.inject-api/2.0.1/569d6c5f18d6ff83c82152d1870cf0faf830c594/jakarta.inject-api-2.0.1-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="jakarta.inject"/>
+			<attribute name="artifactId" value="jakarta.inject-api"/>
+			<attribute name="version" value="2.0.1"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.emf/org.eclipse.emf.ecore.edit/2.15.0/dedf815806c754f37e437dd628457b5e33cf9343/org.eclipse.emf.ecore.edit-2.15.0.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.emf/org.eclipse.emf.ecore.edit/2.15.0/4ce81e648ea902434875025ee6059012dfab2ff8/org.eclipse.emf.ecore.edit-2.15.0-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.eclipse.emf"/>
+			<attribute name="artifactId" value="org.eclipse.emf.ecore.edit"/>
+			<attribute name="version" value="2.15.0"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.platform/org.eclipse.osgi/3.18.500/ce66d8eaec4eddf1bf2b391ca0208e4ab37bacca/org.eclipse.osgi-3.18.500.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.platform/org.eclipse.osgi/3.18.500/f49f4b23b3d858a12fee19dba97cb14a260e3aed/org.eclipse.osgi-3.18.500-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.eclipse.platform"/>
+			<attribute name="artifactId" value="org.eclipse.osgi"/>
+			<attribute name="version" value="3.18.500"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.xtext/org.eclipse.xtext/2.20.0/652d1e4900d144e2ebada7c7dae28c94bc4327fe/org.eclipse.xtext-2.20.0.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.xtext/org.eclipse.xtext/2.20.0/2271b003344aed6e33eefafa549e0f6e16e77b3e/org.eclipse.xtext-2.20.0-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.eclipse.xtext"/>
+			<attribute name="artifactId" value="org.eclipse.xtext"/>
+			<attribute name="version" value="2.20.0"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.platform/org.eclipse.equinox.common/3.10.500/c29f48cbb65a50cda524ecd41e182b83c4b31c1d/org.eclipse.equinox.common-3.10.500.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.platform/org.eclipse.equinox.common/3.10.500/a42945d7efb6837111b92d78016e5933a5d69c6c/org.eclipse.equinox.common-3.10.500-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.eclipse.platform"/>
+			<attribute name="artifactId" value="org.eclipse.equinox.common"/>
+			<attribute name="version" value="3.10.500"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/com.google.guava/failureaccess/1.0.1/1dcf1de382a0bf95a3d8b0849546c88bac1292c9/failureaccess-1.0.1.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/com.google.guava/failureaccess/1.0.1/1d064e61aad6c51cc77f9b59dc2cccc78e792f5a/failureaccess-1.0.1-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="com.google.guava"/>
+			<attribute name="artifactId" value="failureaccess"/>
+			<attribute name="version" value="1.0.1"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.elk/org.eclipse.elk.graph.text/0.8.1/8871bc04d05dfbfc78236ee023ee8a58aa307345/org.eclipse.elk.graph.text-0.8.1.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.elk/org.eclipse.elk.graph.text/0.8.1/5774109835353713a1546c411cee4f5526f6bf01/org.eclipse.elk.graph.text-0.8.1-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.eclipse.elk"/>
+			<attribute name="artifactId" value="org.eclipse.elk.graph.text"/>
+			<attribute name="version" value="0.8.1"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.13.2/48b8230771e573b54ce6e867a9001e75977fe78e/gson-2.13.2.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.13.2/e28a0b248e9435c6b6863275b2e5c1569dfac888/gson-2.13.2-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="com.google.code.gson"/>
+			<attribute name="artifactId" value="gson"/>
+			<attribute name="version" value="2.13.2"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.emf/org.eclipse.emf.common/2.42.0/729466b608fb056caa3326e682ebd68ce45e511d/org.eclipse.emf.common-2.42.0.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.emf/org.eclipse.emf.common/2.42.0/c0f36e92e032a83ee7a5470cadd92dfb2e8015f7/org.eclipse.emf.common-2.42.0-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.eclipse.emf"/>
+			<attribute name="artifactId" value="org.eclipse.emf.common"/>
+			<attribute name="version" value="2.42.0"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.glsp/org.eclipse.glsp.server.emf/2.3.0/d17f34d5fa45b3a878fc159eade49503e25ba023/org.eclipse.glsp.server.emf-2.3.0.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.glsp/org.eclipse.glsp.server.emf/2.3.0/5380502c47470e04fd1b6677962f8566823f725/org.eclipse.glsp.server.emf-2.3.0-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.eclipse.glsp"/>
+			<attribute name="artifactId" value="org.eclipse.glsp.server.emf"/>
+			<attribute name="version" value="2.3.0"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.checkerframework/checker-qual/3.12.0/d5692f0526415fcc6de94bb5bfbd3afd9dd3b3e5/checker-qual-3.12.0.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.checkerframework/checker-qual/3.12.0/10dacb8b36398debceca36cd0db5f3316967f80e/checker-qual-3.12.0-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.checkerframework"/>
+			<attribute name="artifactId" value="checker-qual"/>
+			<attribute name="version" value="3.12.0"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/31.0.1-jre/119ea2b2bc205b138974d351777b20f02b92704b/guava-31.0.1-jre.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/31.0.1-jre/d34772c01bd6637982d1aafe895c4fcd8b42e139/guava-31.0.1-jre-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="com.google.guava"/>
+			<attribute name="artifactId" value="guava"/>
+			<attribute name="version" value="31.0.1-jre"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.antlr/antlr-runtime/3.2/31c746001016c6226bd7356c9f87a6a084ce3715/antlr-runtime-3.2.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.antlr/antlr-runtime/3.2/fc08e5ebbee6d8c4576b34743aec39989e9bf2c4/antlr-runtime-3.2-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.antlr"/>
+			<attribute name="artifactId" value="antlr-runtime"/>
+			<attribute name="version" value="3.2"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.xtext/org.eclipse.xtext.util/2.20.0/cc65065b4cc9920c351b6b6197fbf6cc5238a0ab/org.eclipse.xtext.util-2.20.0.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.xtext/org.eclipse.xtext.util/2.20.0/2b7aa2eb6fc43a4eac4700200972a20c818b7419/org.eclipse.xtext.util-2.20.0-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.eclipse.xtext"/>
+			<attribute name="artifactId" value="org.eclipse.xtext.util"/>
+			<attribute name="version" value="2.20.0"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.emf/org.eclipse.emf.ecore/2.39.0/fd93fb6685740b06b01e50c87dcfcf66da92fae3/org.eclipse.emf.ecore-2.39.0.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.emf/org.eclipse.emf.ecore/2.39.0/ac08101cc779118182e86ee8263e8f2ae40f2e9d/org.eclipse.emf.ecore-2.39.0-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.eclipse.emf"/>
+			<attribute name="artifactId" value="org.eclipse.emf.ecore"/>
+			<attribute name="version" value="2.39.0"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.xtend/org.eclipse.xtend.lib/2.20.0/f2b4d75879e699f5e464f5c00586da03def877ca/org.eclipse.xtend.lib-2.20.0.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.xtend/org.eclipse.xtend.lib/2.20.0/855a7ecf80d6d758f9e10a6ffafd74ac1fcafa5e/org.eclipse.xtend.lib-2.20.0-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.eclipse.xtend"/>
+			<attribute name="artifactId" value="org.eclipse.xtend.lib"/>
+			<attribute name="version" value="2.20.0"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/commons-cli/commons-cli/1.11.0/a461452d3e31bebf2706323f8738ec44b19c96e1/commons-cli-1.11.0.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/commons-cli/commons-cli/1.11.0/6ca0f9ced7fdbe74fdc6cc19094bf985d2b0650c/commons-cli-1.11.0-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="commons-cli"/>
+			<attribute name="artifactId" value="commons-cli"/>
+			<attribute name="version" value="1.11.0"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.glsp/org.eclipse.glsp.layout/2.3.0/8d4b46908177b8eaa10b8fcbf3633687149a6907/org.eclipse.glsp.layout-2.3.0.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.glsp/org.eclipse.glsp.layout/2.3.0/3d3e62a078ecc037bea0e3ec63985f8d4fa82e74/org.eclipse.glsp.layout-2.3.0-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.eclipse.glsp"/>
+			<attribute name="artifactId" value="org.eclipse.glsp.layout"/>
+			<attribute name="version" value="2.3.0"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.emf/org.eclipse.emf.edit/2.23.0/c78c1308ecefe1984e2e801bbf05aefa094f2c59/org.eclipse.emf.edit-2.23.0.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.emf/org.eclipse.emf.edit/2.23.0/9e0be79b7afe5397f30155afaf26032dc68c80c8/org.eclipse.emf.edit-2.23.0-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.eclipse.emf"/>
+			<attribute name="artifactId" value="org.eclipse.emf.edit"/>
+			<attribute name="version" value="2.23.0"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.elk/org.eclipse.elk.core/0.8.1/8a92f92ef673cea6537e67066e546c25cee232c1/org.eclipse.elk.core-0.8.1.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.elk/org.eclipse.elk.core/0.8.1/3fbf42fa6fde37f3b9f49c9df3542a418b9d40/org.eclipse.elk.core-0.8.1-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.eclipse.elk"/>
+			<attribute name="artifactId" value="org.eclipse.elk.core"/>
+			<attribute name="version" value="0.8.1"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.emf/org.eclipse.emf.ecore.change/2.17.0/11229675baea5910c387c7dedf86046ba67dd8fb/org.eclipse.emf.ecore.change-2.17.0.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.emf/org.eclipse.emf.ecore.change/2.17.0/10c12cb3293d4dfc80cbbd8d29b0968a8d73749a/org.eclipse.emf.ecore.change-2.17.0-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.eclipse.emf"/>
+			<attribute name="artifactId" value="org.eclipse.emf.ecore.change"/>
+			<attribute name="version" value="2.17.0"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.lsp4j/org.eclipse.lsp4j.jsonrpc/1.0.0/11580adce31a287dda1ed6eb4fb8f76f1a2cc815/org.eclipse.lsp4j.jsonrpc-1.0.0.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.lsp4j/org.eclipse.lsp4j.jsonrpc/1.0.0/790da5eb0a705cca0dbdf154263e395fc1353d49/org.eclipse.lsp4j.jsonrpc-1.0.0-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.eclipse.lsp4j"/>
+			<attribute name="artifactId" value="org.eclipse.lsp4j.jsonrpc"/>
+			<attribute name="version" value="1.0.0"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/com.google.errorprone/error_prone_annotations/2.41.0/4381275efdef6ddfae38f002c31e84cd001c97f0/error_prone_annotations-2.41.0.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/com.google.errorprone/error_prone_annotations/2.41.0/2324bf7861ca2a201f1d9638030b224aad2122e9/error_prone_annotations-2.41.0-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="com.google.errorprone"/>
+			<attribute name="artifactId" value="error_prone_annotations"/>
+			<attribute name="version" value="2.41.0"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.elk/org.eclipse.elk.graph/0.8.1/c232b9030ab310f3d0d0e41b2882540dc793913/org.eclipse.elk.graph-0.8.1.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.elk/org.eclipse.elk.graph/0.8.1/6be59dd63bf45753f909fe536e95fb3c2d953ade/org.eclipse.elk.graph-0.8.1-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.eclipse.elk"/>
+			<attribute name="artifactId" value="org.eclipse.elk.graph"/>
+			<attribute name="version" value="0.8.1"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/com.google.guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/b421526c5f297295adef1c886e5246c39d4ac629/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="com.google.guava"/>
+			<attribute name="artifactId" value="listenablefuture"/>
+			<attribute name="version" value="9999.0-empty-to-avoid-conflict-with-guava"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/com.google.j2objc/j2objc-annotations/1.3/ba035118bc8bac37d7eff77700720999acd9986d/j2objc-annotations-1.3.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/com.google.j2objc/j2objc-annotations/1.3/d26c56180205cbb50447c3eca98ecb617cf9f58b/j2objc-annotations-1.3-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="com.google.j2objc"/>
+			<attribute name="artifactId" value="j2objc-annotations"/>
+			<attribute name="version" value="1.3"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.glsp/org.eclipse.glsp.graph/2.3.0/586485ec33cb684dc8555518537d781e7539a4e5/org.eclipse.glsp.graph-2.3.0.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.glsp/org.eclipse.glsp.graph/2.3.0/60978553bc5ec21f6738940e9c3e28c3b357c0f7/org.eclipse.glsp.graph-2.3.0-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.eclipse.glsp"/>
+			<attribute name="artifactId" value="org.eclipse.glsp.graph"/>
+			<attribute name="version" value="2.3.0"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.xtend/org.eclipse.xtend.lib.macro/2.20.0/4e429d55748e09021ded1e6e78515e736159ffd/org.eclipse.xtend.lib.macro-2.20.0.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.xtend/org.eclipse.xtend.lib.macro/2.20.0/4abda528d9e3b17c293aa75105f05b05a4a56b69/org.eclipse.xtend.lib.macro-2.20.0-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.eclipse.xtend"/>
+			<attribute name="artifactId" value="org.eclipse.xtend.lib.macro"/>
+			<attribute name="version" value="2.20.0"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.emf/org.eclipse.emf.ecore.xmi/2.35.0/823a10202e08da1f51420f8282668ff32a837029/org.eclipse.emf.ecore.xmi-2.35.0.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/org.eclipse.emf/org.eclipse.emf.ecore.xmi/2.35.0/e6bf80cfdf9523c9b595617988909c97450d5132/org.eclipse.emf.ecore.xmi-2.35.0-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="org.eclipse.emf"/>
+			<attribute name="artifactId" value="org.eclipse.emf.ecore.xmi"/>
+			<attribute name="version" value="2.35.0"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/haydar/.gradle/caches/modules-2/files-2.1/com.google.inject/guice/7.0.0/ccc518677b9367d45f99dfa592c9b039f07687d3/guice-7.0.0.jar" sourcepath="/home/haydar/.gradle/caches/modules-2/files-2.1/com.google.inject/guice/7.0.0/386789ff7ba84553eb965eecee39c5a3ee6454d/guice-7.0.0-sources.jar">
+		<attributes>
+			<attribute name="gradle.buildServer" value="true"/>
+			<attribute name="groupId" value="com.google.inject"/>
+			<attribute name="artifactId" value="guice"/>
+			<attribute name="version" value="7.0.0"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin/default"/>
 </classpath>

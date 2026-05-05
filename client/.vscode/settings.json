@@ -25,6 +25,5 @@
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.preferences.importModuleSpecifier": "project-relative",
-  "eslint.validate": ["javascript", "javascriptreact", "html", "typescript", "typescriptreact"],
-  "bigUML.hideUnotation": false
+  "eslint.validate": ["javascript", "javascriptreact", "html", "typescript", "typescriptreact"]
 }

@@ -1,0 +1,44 @@
+/********************************************************************************
+ * Copyright (c) 2023 CrossBreeze.
+ ********************************************************************************/
+
+// @ts-nocheck
+import { DiagramSerializer, Serializer } from "../../src/langium-connector/serializer.js";
+import {
+  <%~ it.entryName %>,
+  is<%~ it.entryName %>,
+<% it.parserRules.forEach(function(rule) { %>
+  <%~ rule.name %>,
+  is<%~ rule.name %>,
+<% }) %>
+<% it.typeRules.forEach(function(rule) { %>
+  <%~ rule.name %>,
+  is<%~ rule.name %>,
+<% }) %>
+} from "../langium/language/ast.js";
+import { <%~ it.languageName %>Services } from "../../src/langium/<%~ it.languageId %>-module.js";
+import { AstNode } from "langium";
+
+export class <%~ it.languageName %>Serializer
+  implements Serializer<<%~ it.entryName %>>, DiagramSerializer<<%~ it.entryName %>>
+{
+  constructor(protected services: <%~ it.languageName %>Services) {}
+
+  serialize(root: AstNode): string {
+    let str: Array<string> = [];
+    <%~ it.serializeRootBody %>
+    str = str.filter((element) => !!element);
+    const json = JSON.parse("{\n" + str.join(",\n") + "\n}");
+    return JSON.stringify(json, undefined, "\t");
+  }
+
+  <%~ it.parserRuleMethods %>
+
+
+  <%~ it.typeRuleMethods %>
+
+
+  public asDiagram(root: <%~ it.entryName %>): string {
+    return "";
+  }
+}

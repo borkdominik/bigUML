@@ -6,24 +6,22 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { helloWorldModule } from '@borkdominik-biguml/big-hello-world/vscode';
+import { advancedSearchModule } from '@borkdominik-biguml/big-advancedsearch/vscode';
+import { codeGenerationModule } from '@borkdominik-biguml/big-code-generation/vscode';
 import { eyeTrackingModule } from '@borkdominik-biguml/big-eye-tracking/vscode';
 import { minimapModule } from '@borkdominik-biguml/big-minimap/vscode';
 import { outlineModule } from '@borkdominik-biguml/big-outline/vscode';
 import { propertyPaletteModule } from '@borkdominik-biguml/big-property-palette/vscode';
-import { createVSCodeCommonContainer, TYPES, type ActionListener, type GLSPDiagramSettings } from '@borkdominik-biguml/big-vscode-integration/vscode';
-import { loadVSCodeNodeContainer, type GLSPServerConfig } from '@borkdominik-biguml/big-vscode-integration/vscode-node';
+import { revisionManagementModule } from '@borkdominik-biguml/big-revision-management/vscode';
+import { VSCodeSettings } from '@borkdominik-biguml/big-vscode';
+import { vscodeModule, type ActionListener, type GlspDiagramSettings, type GlspServerConfig } from '@borkdominik-biguml/big-vscode/vscode';
 import { editorModule, themeModule } from '@borkdominik-biguml/uml-glsp-client/vscode';
+import { DisposableCollection, type ActionMessage } from '@eclipse-glsp/protocol';
 import { type Container } from 'inversify';
 import type * as vscode from 'vscode';
-import { VSCodeSettings } from './language.js';
-import { DefaultCommandsProvider } from './vscode/command/default-commands.js';
-import { vscodeModule } from './vscode/vscode.module.js';
-import { DisposableCollection, type ActionMessage } from '@eclipse-glsp/protocol';
-
 
 // ActionMonitorService - implementing VS Code's Disposable interface
-class ActionMonitorService implements vscode.Disposable {
+export class ActionMonitorService implements vscode.Disposable {
     private readonly toDispose = new DisposableCollection();
     private monitoringEndpoint = 'http://127.0.0.1:8000/interactions';
     private isInitialized = false;
@@ -70,7 +68,6 @@ class ActionMonitorService implements vscode.Disposable {
         }
     }
 
-
     /**
      * Generates a unique session ID
      */
@@ -78,7 +75,6 @@ class ActionMonitorService implements vscode.Disposable {
         return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     }
 
-    
     getSessionId(): string {
         return this.sessionId;
     }
@@ -89,7 +85,6 @@ class ActionMonitorService implements vscode.Disposable {
     private generateBatchId(): string {
         return `batch_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     }
-
 
     private async sendToMonitoringServer(message: ActionMessage, direction: string): Promise<void> {
         try {
@@ -109,13 +104,13 @@ class ActionMonitorService implements vscode.Disposable {
             };
 
             console.log(`[ActionMonitor] 📤 Sending: ${message.action.kind} (${direction})`);
-            
+
             const batch = {
                 interactions: [payload],
                 batchId: this.generateBatchId(),
                 timestamp: new Date().toISOString(),
                 sessionId: this.getSessionId()
-            }
+            };
 
             const response = await fetch(this.monitoringEndpoint, {
                 method: 'POST',
@@ -155,34 +150,29 @@ class ActionMonitorService implements vscode.Disposable {
     }
 }
 
-
 export function createContainer(
     extensionContext: vscode.ExtensionContext,
     options: {
-        diagram: GLSPDiagramSettings;
-        glspServerConfig: GLSPServerConfig;
+        diagram: GlspDiagramSettings;
+        glspServerConfig: GlspServerConfig;
     }
 ): Container {
-    const container = createVSCodeCommonContainer(extensionContext, options);
-    loadVSCodeNodeContainer(container, options);
-
-    container.bind(DefaultCommandsProvider).toSelf().inSingletonScope();
-    container.bind(TYPES.RootInitialization).toService(DefaultCommandsProvider);
+    const container = vscodeModule(extensionContext, options);
 
     container.load(
-        vscodeModule,
         editorModule({
             diagramType: VSCodeSettings.diagramType,
             viewType: VSCodeSettings.editor.viewType
         }),
-        outlineModule(VSCodeSettings.outline.viewId),
-        propertyPaletteModule(VSCodeSettings.propertyPalette.viewId),
-        minimapModule(VSCodeSettings.minimap.viewId),
-        helloWorldModule(VSCodeSettings.helloWorld.viewId),
-        eyeTrackingModule(VSCodeSettings.eyeTracking.viewId),
+        outlineModule(VSCodeSettings.outline.viewType),
+        propertyPaletteModule(VSCodeSettings.propertyPalette.viewType),
+        minimapModule(VSCodeSettings.minimap.viewType),
+        advancedSearchModule(VSCodeSettings.advancedSearch.viewType),
+        codeGenerationModule(VSCodeSettings.codeGeneration.viewType),
+        revisionManagementModule(VSCodeSettings.revisionManagement.viewType),
+        eyeTrackingModule(VSCodeSettings.eyeTracking.viewType),
         themeModule
     );
-
 
     // Initialize action monitoring with proper type casting
     try {

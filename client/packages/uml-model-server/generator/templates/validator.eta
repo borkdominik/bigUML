@@ -1,0 +1,29 @@
+// AUTO-GENERATED – DO NOT EDIT
+/**********************************************************************************
+ * Copyright (c) 2025 borkdominik and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ **********************************************************************************/
+
+import { validateSync } from 'class-validator';
+import type { AstNode } from 'langium';
+import { <%~ it.astGuards.join(', ') %> } from '../langium/language/ast.js';
+import { <%~ it.dtoNames.join(', ') %> } from './validation-elements.js';
+
+export function validateNode(node: AstNode): void {
+    let errors: any[] = [];
+<% it.entities.forEach(function(ent) { %>
+
+    if (is<%~ ent.name %>(node)) {
+        errors = validateSync(new <%~ ent.dtoClassName %>(node));
+    }
+<% }); %>
+
+    if (errors.length) {
+        const msg = errors.flatMap(e => Object.values(e.constraints ?? {})).join(', ');
+        throw new Error('Validation error: ' + msg);
+    }
+}

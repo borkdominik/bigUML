@@ -1,0 +1,52 @@
+// AUTO-GENERATED – DO NOT EDIT
+/**********************************************************************************
+ * Copyright (c) 2026 borkdominik and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ **********************************************************************************/
+
+import { <%~ it.diagramName %>DiagramEdgeTypes, <%~ it.diagramName %>DiagramNodeTypes } from '../../../common/model-types/<%~ it.modelTypesFileName %>.js';
+import {
+    type Args,
+    type MaybePromise,
+    type PaletteItem,
+    ToolPaletteItemProvider,
+    TriggerEdgeCreationAction,
+    TriggerNodeCreationAction
+} from '@eclipse-glsp/server';
+
+export class <%~ it.diagramName %>DiagramToolPaletteItemProvider extends ToolPaletteItemProvider {
+    override getItems(_args?: Args): MaybePromise<PaletteItem[]> {
+        return [
+<% it.sections.forEach(function(section, sIdx) { %>
+            {
+                id: '<%~ section.id %>',
+                sortString: 'A',
+                label: '<%~ section.label %>',
+                icon: 'symbol-property',
+                children: [
+<% section.children.forEach(function(child, cIdx) { %>
+                    {
+                        id: '<%~ child.id %>',
+                        sortString: 'A',
+                        label: '<%~ child.label %>',
+                        icon: '<%~ child.icon %>',
+<% if (child.isEdge) { %>
+                        actions: [TriggerEdgeCreationAction.create(<%~ it.diagramName %>DiagramEdgeTypes.<%~ child.constName %>)]
+<% } else { %>
+                        actions: [TriggerNodeCreationAction.create(<%~ it.diagramName %>DiagramNodeTypes.<%~ child.constName %>)]
+<% } %>
+                    }<% if (cIdx < section.children.length - 1) { %>,<% } %>
+
+<% }); %>
+                ],
+                actions: []
+            }<% if (sIdx < it.sections.length - 1) { %>,<% } %>
+
+<% }); %>
+        ];
+    }
+}

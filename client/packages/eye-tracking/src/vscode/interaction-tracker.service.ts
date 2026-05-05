@@ -6,24 +6,21 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { inject, injectable, postConstruct } from 'inversify';
-import * as vscode from 'vscode';
-import * as fs from 'fs';
-import * as path from 'path';
+import { TYPES } from '@borkdominik-biguml/big-vscode/vscode';
 import { exec } from 'child_process';
-import { TYPES } from '@borkdominik-biguml/big-vscode-integration/vscode';
-import { InteractionEventType } from '../common/interaction-tracking.types.js';
-import { 
-    ViewportTrackingAction, 
+import * as fs from 'fs';
+import { inject, injectable, postConstruct } from 'inversify';
+import * as path from 'path';
+import * as vscode from 'vscode';
+import {
     ElementBoundsTrackingAction,
     MouseClickTrackingAction,
     MousePositionTrackingAction,
-    RoutingPointsTrackingAction
+    RoutingPointsTrackingAction,
+    ViewportTrackingAction
 } from '../common/interaction-tracking.action.js';
-import type { 
-    InteractionEvent, 
-    SessionData 
-} from '../common/interaction-tracking.types.js';
+import type { InteractionEvent, SessionData } from '../common/interaction-tracking.types.js';
+import { InteractionEventType } from '../common/interaction-tracking.types.js';
 
 @injectable()
 export class InteractionTracker {
@@ -32,20 +29,20 @@ export class InteractionTracker {
     private isTracking = false;
     private logDir: string;
     private disposables: vscode.Disposable[] = [];
-    
+
     // Viewport debouncing
     private lastViewportEvent: { timestamp: number; data: any } | null = null;
     private viewportDebounceTimeout: NodeJS.Timeout | null = null;
     private readonly VIEWPORT_DEBOUNCE_MS = 100; // Debounce viewport events to max 10 per second
 
     // Mouse position tracking - stores the last known mouse position with all coordinate types
-    private lastMousePosition: { 
-        canvasX: number; 
-        canvasY: number; 
+    private lastMousePosition: {
+        canvasX: number;
+        canvasY: number;
         screenX: number;
         screenY: number;
-        elementId?: string; 
-        timestamp: number 
+        elementId?: string;
+        timestamp: number;
     } | null = null;
 
     // Inject ActionListener to track GLSP actions
@@ -59,7 +56,7 @@ export class InteractionTracker {
         this.logDir = workspaceFolder
             ? path.join(workspaceFolder.uri.fsPath, 'interaction-logs')
             : path.join(process.cwd(), 'interaction-logs');
-        
+
         this.ensureLogDirectoryExists();
     }
 
@@ -80,18 +77,18 @@ export class InteractionTracker {
         this.currentSession = {
             sessionId: sessionId || this.generateSessionId(editorType),
             startTime: Date.now(),
-            
+
             // New generic GLSP fields
             toolId: 'bigUML',
             toolVersion: toolVersion,
             editorType: editorType,
             modelFile: modelFile,
             modelFilePath: modelFilePath || undefined,
-            
+
             // User Info TODO check if we should probably hash this
             user: process.env.USER || process.env.USERNAME || 'unknown',
             workspace: vscode.workspace.workspaceFolders?.[0]?.name || 'unknown',
-            
+
             // Legacy fields (for backward compatibility)
             umlFile: modelFile,
             umlFilePath: modelFilePath || undefined,
@@ -107,9 +104,7 @@ export class InteractionTracker {
         // Set up all tracking listeners
         this.setupTracking();
 
-        vscode.window.showInformationMessage(
-            `Interaction tracking started: ${this.currentSession.sessionId}`
-        );
+        vscode.window.showInformationMessage(`Interaction tracking started: ${this.currentSession.sessionId}`);
     }
 
     public stopSession(): void {
@@ -138,28 +133,28 @@ export class InteractionTracker {
 
         // Capture screenshot before exporting
         const sessionId = this.currentSession.sessionId;
-        this.captureScreenshot(sessionId).then(screenshotPath => {
-            if (screenshotPath) {
-                console.log('Screenshot saved:', screenshotPath);
-            }
-            
-            // Export data after screenshot attempt
-            this.exportSession();
-            
-            this.isTracking = false;
-            vscode.window.showInformationMessage(
-                `Interaction tracking stopped. Events: ${this.events.length}${screenshotPath ? ' (screenshot saved)' : ''}`
-            );
-        }).catch(err => {
-            console.error('Screenshot capture failed:', err);
-            // Still export data even if screenshot fails
-            this.exportSession();
-            
-            this.isTracking = false;
-            vscode.window.showInformationMessage(
-                `Interaction tracking stopped. Events: ${this.events.length}`
-            );
-        });
+        this.captureScreenshot(sessionId)
+            .then(screenshotPath => {
+                if (screenshotPath) {
+                    console.log('Screenshot saved:', screenshotPath);
+                }
+
+                // Export data after screenshot attempt
+                this.exportSession();
+
+                this.isTracking = false;
+                vscode.window.showInformationMessage(
+                    `Interaction tracking stopped. Events: ${this.events.length}${screenshotPath ? ' (screenshot saved)' : ''}`
+                );
+            })
+            .catch(err => {
+                console.error('Screenshot capture failed:', err);
+                // Still export data even if screenshot fails
+                this.exportSession();
+
+                this.isTracking = false;
+                vscode.window.showInformationMessage(`Interaction tracking stopped. Events: ${this.events.length}`);
+            });
     }
 
     /**
@@ -170,7 +165,7 @@ export class InteractionTracker {
      */
     private async captureScreenshot(sessionId: string): Promise<string | null> {
         const screenshotPath = path.join(this.logDir, `${sessionId}_screenshot.png`);
-        
+
         // Check platform
         if (process.platform === 'win32') {
             return this.captureScreenshotWindows(screenshotPath);
@@ -188,10 +183,10 @@ export class InteractionTracker {
      * Capture screenshot on Windows using PowerShell
      */
     private captureScreenshotWindows(outputPath: string): Promise<string | null> {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             // Create a temporary PowerShell script file to avoid escaping issues
             const tempScriptPath = path.join(this.logDir, '_screenshot_temp.ps1');
-            
+
             // PowerShell script to capture primary screen only
             const psScript = `
 Add-Type -AssemblyName System.Windows.Forms
@@ -207,41 +202,38 @@ $bitmap.Save('${outputPath}')
 $graphics.Dispose()
 $bitmap.Dispose()
 `;
-            
+
             try {
                 // Write the script to a temp file
                 fs.writeFileSync(tempScriptPath, psScript, 'utf-8');
-                
+
                 // Execute the script file
-                exec(`powershell -ExecutionPolicy Bypass -File "${tempScriptPath}"`, 
-                    { timeout: 15000 },
-                    (error, _stdout, stderr) => {
-                        // Clean up temp script
-                        try {
-                            if (fs.existsSync(tempScriptPath)) {
-                                fs.unlinkSync(tempScriptPath);
-                            }
-                        } catch (cleanupErr) {
-                            console.warn('Failed to clean up temp script:', cleanupErr);
+                exec(`powershell -ExecutionPolicy Bypass -File "${tempScriptPath}"`, { timeout: 15000 }, (error, _stdout, stderr) => {
+                    // Clean up temp script
+                    try {
+                        if (fs.existsSync(tempScriptPath)) {
+                            fs.unlinkSync(tempScriptPath);
                         }
-                        
-                        if (error) {
-                            console.error('PowerShell screenshot error:', error.message);
-                            if (stderr) {
-                                console.error('PowerShell stderr:', stderr);
-                            }
-                            resolve(null);
+                    } catch (cleanupErr) {
+                        console.warn('Failed to clean up temp script:', cleanupErr);
+                    }
+
+                    if (error) {
+                        console.error('PowerShell screenshot error:', error.message);
+                        if (stderr) {
+                            console.error('PowerShell stderr:', stderr);
+                        }
+                        resolve(null);
+                    } else {
+                        // Verify the file was created
+                        if (fs.existsSync(outputPath)) {
+                            resolve(outputPath);
                         } else {
-                            // Verify the file was created
-                            if (fs.existsSync(outputPath)) {
-                                resolve(outputPath);
-                            } else {
-                                console.error('Screenshot file was not created');
-                                resolve(null);
-                            }
+                            console.error('Screenshot file was not created');
+                            resolve(null);
                         }
                     }
-                );
+                });
             } catch (err) {
                 console.error('Failed to create temp script:', err);
                 resolve(null);
@@ -254,21 +246,18 @@ $bitmap.Dispose()
      * Uses -m flag to capture only the main display
      */
     private captureScreenshotMac(outputPath: string): Promise<string | null> {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             // -m captures main monitor only, -x suppresses sound
-            exec(`screencapture -m -x "${outputPath}"`, 
-                { timeout: 10000 },
-                (error) => {
-                    if (error) {
-                        console.error('macOS screenshot error:', error.message);
-                        resolve(null);
-                    } else if (fs.existsSync(outputPath)) {
-                        resolve(outputPath);
-                    } else {
-                        resolve(null);
-                    }
+            exec(`screencapture -m -x "${outputPath}"`, { timeout: 10000 }, error => {
+                if (error) {
+                    console.error('macOS screenshot error:', error.message);
+                    resolve(null);
+                } else if (fs.existsSync(outputPath)) {
+                    resolve(outputPath);
+                } else {
+                    resolve(null);
                 }
-            );
+            });
         });
     }
 
@@ -277,57 +266,48 @@ $bitmap.Dispose()
      * Attempts to capture only the primary monitor
      */
     private captureScreenshotLinux(outputPath: string): Promise<string | null> {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             // First, try to get primary monitor geometry using xrandr
-            exec('xrandr --query | grep " connected primary" | grep -oP "\\d+x\\d+\\+\\d+\\+\\d+"', 
-                { timeout: 5000 },
-                (error, stdout) => {
-                    if (!error && stdout.trim()) {
-                        // Parse geometry: WIDTHxHEIGHT+X+Y
-                        const geometry = stdout.trim();
-                        // Use ImageMagick import with geometry
-                        exec(`import -window root -crop ${geometry} +repage "${outputPath}"`,
-                            { timeout: 10000 },
-                            (importError) => {
-                                if (!importError && fs.existsSync(outputPath)) {
-                                    resolve(outputPath);
-                                } else {
-                                    // Fallback to other methods
-                                    this.captureScreenshotLinuxFallback(outputPath, resolve);
-                                }
-                            }
-                        );
-                    } else {
-                        // Fallback to other methods
-                        this.captureScreenshotLinuxFallback(outputPath, resolve);
-                    }
+            exec('xrandr --query | grep " connected primary" | grep -oP "\\d+x\\d+\\+\\d+\\+\\d+"', { timeout: 5000 }, (error, stdout) => {
+                if (!error && stdout.trim()) {
+                    // Parse geometry: WIDTHxHEIGHT+X+Y
+                    const geometry = stdout.trim();
+                    // Use ImageMagick import with geometry
+                    exec(`import -window root -crop ${geometry} +repage "${outputPath}"`, { timeout: 10000 }, importError => {
+                        if (!importError && fs.existsSync(outputPath)) {
+                            resolve(outputPath);
+                        } else {
+                            // Fallback to other methods
+                            this.captureScreenshotLinuxFallback(outputPath, resolve);
+                        }
+                    });
+                } else {
+                    // Fallback to other methods
+                    this.captureScreenshotLinuxFallback(outputPath, resolve);
                 }
-            );
+            });
         });
     }
 
     /**
      * Fallback screenshot methods for Linux
      */
-    private captureScreenshotLinuxFallback(
-        outputPath: string, 
-        resolve: (value: string | null) => void
-    ): void {
+    private captureScreenshotLinuxFallback(outputPath: string, resolve: (value: string | null) => void): void {
         // Try gnome-screenshot (captures current screen), then scrot, then full import
         const commands = [
             `gnome-screenshot -f "${outputPath}"`,
-            `scrot -m "${outputPath}"`,  // -m captures focused monitor
+            `scrot -m "${outputPath}"`, // -m captures focused monitor
             `import -window root "${outputPath}"`
         ];
-        
+
         const tryCommand = (index: number): void => {
             if (index >= commands.length) {
                 console.error('No screenshot tool available on Linux');
                 resolve(null);
                 return;
             }
-            
-            exec(commands[index], { timeout: 10000 }, (error) => {
+
+            exec(commands[index], { timeout: 10000 }, error => {
                 if (error) {
                     tryCommand(index + 1);
                 } else if (fs.existsSync(outputPath)) {
@@ -337,7 +317,7 @@ $bitmap.Dispose()
                 }
             });
         };
-        
+
         tryCommand(0);
     }
 
@@ -541,7 +521,7 @@ $bitmap.Dispose()
             if (glspServerDisposable) {
                 this.disposables.push(glspServerDisposable);
             }
-            
+
             // Also listen to actions being SENT to the server (client-to-server)
             // This catches property palette actions that go directly to the server
             const glspSendDisposable = (this.actionListener as any).registerSendListener?.((message: any) => {
@@ -662,7 +642,7 @@ $bitmap.Dispose()
             const viewport = action.newViewport || action.viewport;
             const scroll = viewport?.scroll || action.scroll || { x: action.scrollX, y: action.scrollY };
             const zoom = viewport?.zoom ?? action.zoom ?? action.zoomLevel;
-            
+
             // Only track if we have actual viewport data
             if (scroll?.x !== undefined || scroll?.y !== undefined || zoom !== undefined) {
                 this.trackViewportEvent({
@@ -755,10 +735,7 @@ $bitmap.Dispose()
     private autoSave(): void {
         if (!this.currentSession) return;
 
-        const tempFilePath = path.join(
-            this.logDir,
-            `${this.currentSession.sessionId}_temp.json`
-        );
+        const tempFilePath = path.join(this.logDir, `${this.currentSession.sessionId}_temp.json`);
 
         fs.writeFile(tempFilePath, JSON.stringify(this.events, null, 2), 'utf-8', err => {
             if (err) {
@@ -787,7 +764,7 @@ $bitmap.Dispose()
                 ...event,
                 timestamp: new Date(event.timestamp).toISOString()
             };
-            
+
             // Also convert timestamps inside session_start and session_end data
             if (event.type === InteractionEventType.SESSION_START || event.type === InteractionEventType.SESSION_END) {
                 eventCopy.data = {
@@ -796,23 +773,32 @@ $bitmap.Dispose()
                     endTime: event.data.endTime ? new Date(event.data.endTime).toISOString() : undefined
                 };
             }
-            
+
             return eventCopy;
         });
 
         // Export as JSON
         const jsonFilePath = path.join(this.logDir, `${sessionId}.json`);
-        fs.writeFile(jsonFilePath, JSON.stringify({
-            session: sessionWithIsoTimestamps,
-            events: eventsWithIsoTimestamps
-        }, null, 2), 'utf-8', err => {
-            if (err) {
-                console.error('Failed to export JSON:', err);
-                vscode.window.showErrorMessage('Failed to export interaction data');
-            } else {
-                console.log('Interaction data exported:', jsonFilePath);
+        fs.writeFile(
+            jsonFilePath,
+            JSON.stringify(
+                {
+                    session: sessionWithIsoTimestamps,
+                    events: eventsWithIsoTimestamps
+                },
+                null,
+                2
+            ),
+            'utf-8',
+            err => {
+                if (err) {
+                    console.error('Failed to export JSON:', err);
+                    vscode.window.showErrorMessage('Failed to export interaction data');
+                } else {
+                    console.log('Interaction data exported:', jsonFilePath);
+                }
             }
-        });
+        );
 
         // Export as CSV
         const csvFilePath = path.join(this.logDir, `${sessionId}.csv`);
@@ -838,7 +824,7 @@ $bitmap.Dispose()
         const rows = this.events.map(event => {
             // Convert Unix timestamp to ISO format with milliseconds
             const isoTimestamp = new Date(event.timestamp).toISOString();
-            
+
             // For session events, convert timestamps in data too
             let data = event.data;
             if (event.type === InteractionEventType.SESSION_START || event.type === InteractionEventType.SESSION_END) {
@@ -848,7 +834,7 @@ $bitmap.Dispose()
                     endTime: event.data.endTime ? new Date(event.data.endTime).toISOString() : undefined
                 };
             }
-            
+
             const dataStr = JSON.stringify(data).replace(/"/g, '""');
             return `${isoTimestamp},${event.type},${event.sessionId},"${dataStr}"`;
         });
@@ -865,7 +851,7 @@ $bitmap.Dispose()
         const minutes = String(date.getUTCMinutes()).padStart(2, '0');
         const seconds = String(date.getUTCSeconds()).padStart(2, '0');
         const milliseconds = String(date.getUTCMilliseconds()).padStart(3, '0');
-        
+
         const timestamp = `${year}-${month}-${day}T${hours}-${minutes}-${seconds}.${milliseconds}Z`;
         return `${diagramType}_${timestamp}`;
     }
@@ -878,17 +864,19 @@ $bitmap.Dispose()
         const activeEditor = vscode.window.activeTextEditor;
         if (activeEditor) {
             const fileName = activeEditor.document.fileName;
-            const match = fileName.match(/\.(activity|class|communication|deployment|information_flow|package|state_machine|use_case|sequence)\.uml$/i);
+            const match = fileName.match(
+                /\.(activity|class|communication|deployment|information_flow|package|state_machine|use_case|sequence)\.uml$/i
+            );
             if (match) {
                 return match[1].toLowerCase();
             }
         }
-        
+
         // 2: Check active tab for custom editors (like UML diagrams)
         const activeTab = vscode.window.tabGroups.activeTabGroup?.activeTab;
         if (activeTab?.input) {
             const input = activeTab.input as any;
-            
+
             // Try to get URI from various possible properties
             let uri: vscode.Uri | undefined;
             if (input.uri) {
@@ -896,16 +884,18 @@ $bitmap.Dispose()
             } else if (input.viewType && input.resource) {
                 uri = input.resource;
             }
-            
+
             if (uri) {
                 const fileName = uri.fsPath || uri.path || '';
-                
+
                 // First check filename pattern
-                const filenameMatch = fileName.match(/\.(activity|class|communication|deployment|information_flow|package|state_machine|use_case|sequence)\.uml$/i);
+                const filenameMatch = fileName.match(
+                    /\.(activity|class|communication|deployment|information_flow|package|state_machine|use_case|sequence)\.uml$/i
+                );
                 if (filenameMatch) {
                     return filenameMatch[1].toLowerCase();
                 }
-                
+
                 // If filename doesn't have diagram type, try to read the notation file
                 if (fileName.endsWith('.uml')) {
                     const detectedType = this.detectDiagramTypeFromFile(fileName);
@@ -914,24 +904,28 @@ $bitmap.Dispose()
                     }
                 }
             }
-            
+
             // Try to extract from tab label
             const tabLabel = activeTab.label;
             if (tabLabel) {
-                const match = tabLabel.match(/\.(activity|class|communication|deployment|information_flow|package|state_machine|use_case|sequence)\.uml$/i);
+                const match = tabLabel.match(
+                    /\.(activity|class|communication|deployment|information_flow|package|state_machine|use_case|sequence)\.uml$/i
+                );
                 if (match) {
                     return match[1].toLowerCase();
                 }
             }
         }
-        
+
         // 3: Check all visible tabs
         for (const tabGroup of vscode.window.tabGroups.all) {
             for (const tab of tabGroup.tabs) {
                 if (tab.isActive) {
                     const tabLabel = tab.label;
                     if (tabLabel) {
-                        const match = tabLabel.match(/\.(activity|class|communication|deployment|information_flow|package|state_machine|use_case|sequence)\.uml$/i);
+                        const match = tabLabel.match(
+                            /\.(activity|class|communication|deployment|information_flow|package|state_machine|use_case|sequence)\.uml$/i
+                        );
                         if (match) {
                             return match[1].toLowerCase();
                         }
@@ -939,7 +933,7 @@ $bitmap.Dispose()
                 }
             }
         }
-        
+
         // Default fallback
         return 'unknown';
     }
@@ -966,10 +960,10 @@ $bitmap.Dispose()
         try {
             // Read the .unotation file (companion file with diagram type)
             const notationFilePath = filePath.replace(/\.uml$/, '.unotation');
-            
+
             if (fs.existsSync(notationFilePath)) {
                 const notationContent = fs.readFileSync(notationFilePath, 'utf-8');
-                
+
                 // Look for diagramType attribute
                 const diagramTypeMatch = notationContent.match(/diagramType="(\w+)"/i);
                 if (diagramTypeMatch) {
@@ -977,10 +971,10 @@ $bitmap.Dispose()
                     return this.normalizeDiagramType(type);
                 }
             }
-            
+
             // Fallback: Try to read the UML file content
             const content = fs.readFileSync(filePath, 'utf-8');
-            
+
             // Check for UML element types that indicate diagram type
             if (content.includes('uml:Activity') || content.includes('Activity"')) {
                 return 'activity';
@@ -1006,7 +1000,7 @@ $bitmap.Dispose()
             if (content.includes('uml:Class') || content.includes('uml:Interface') || content.includes('uml:Enumeration')) {
                 return 'class';
             }
-            
+
             return null;
         } catch (error) {
             console.error('[DiagramType] Error reading file:', error);
@@ -1019,20 +1013,20 @@ $bitmap.Dispose()
      */
     private normalizeDiagramType(type: string): string {
         const typeMap: { [key: string]: string } = {
-            'class': 'class',
-            'activity': 'activity',
-            'communication': 'communication',
-            'deployment': 'deployment',
-            'informationflow': 'information_flow',
-            'information_flow': 'information_flow',
-            'package': 'package',
-            'statemachine': 'state_machine',
-            'state_machine': 'state_machine',
-            'usecase': 'use_case',
-            'use_case': 'use_case',
-            'sequence': 'sequence'
+            class: 'class',
+            activity: 'activity',
+            communication: 'communication',
+            deployment: 'deployment',
+            informationflow: 'information_flow',
+            information_flow: 'information_flow',
+            package: 'package',
+            statemachine: 'state_machine',
+            state_machine: 'state_machine',
+            usecase: 'use_case',
+            use_case: 'use_case',
+            sequence: 'sequence'
         };
-        
+
         const normalized = typeMap[type.toLowerCase()];
         return normalized || type.toLowerCase();
     }

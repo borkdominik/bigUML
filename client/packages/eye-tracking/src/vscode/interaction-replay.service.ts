@@ -6,13 +6,13 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+import { TYPES } from '@borkdominik-biguml/big-vscode/vscode';
+import { parse } from 'csv-parse/sync';
+import * as fs from 'fs';
 import { inject, injectable } from 'inversify';
 import * as vscode from 'vscode';
-import * as fs from 'fs';
-import { parse } from 'csv-parse/sync';
-import { TYPES } from '@borkdominik-biguml/big-vscode-integration/vscode';
-import { InteractionEventType } from '../common/interaction-tracking.types.js';
 import type { InteractionEvent } from '../common/interaction-tracking.types.js';
+import { InteractionEventType } from '../common/interaction-tracking.types.js';
 
 export interface ReplayOptions {
     speed?: number; // Speed multiplier (1 = real-time, 2 = 2x speed, 0 = instant)
@@ -77,9 +77,7 @@ export class InteractionReplayService {
     ];
 
     // Communication elements that need Interaction container
-    private static readonly COMMUNICATION_INTERACTION_TYPES = [
-        'COMMUNICATION__Lifeline'
-    ];
+    private static readonly COMMUNICATION_INTERACTION_TYPES = ['COMMUNICATION__Lifeline'];
 
     // Class/Deployment/InformationFlow elements that need classifier container
     private static readonly CLASS_MEMBER_TYPES = [
@@ -92,9 +90,7 @@ export class InteractionReplayService {
     ];
 
     // Enumeration literal needs Enumeration container
-    private static readonly ENUMERATION_MEMBER_TYPES = [
-        'CLASS__EnumerationLiteral'
-    ];
+    private static readonly ENUMERATION_MEMBER_TYPES = ['CLASS__EnumerationLiteral'];
 
     /**
      * Load and replay a session from a CSV file
@@ -145,7 +141,7 @@ export class InteractionReplayService {
             );
 
             vscode.window.showInformationMessage('Replay completed successfully');
-            
+
             // Log summary of ID mappings
             console.log('[Replay] === Replay Summary ===');
             console.log(`[Replay] Total ID mappings created: ${this.idMapping.size}`);
@@ -218,12 +214,14 @@ export class InteractionReplayService {
         const createNodes: { index: number; elementType: string; event: InteractionEvent }[] = [];
         for (let i = 0; i < events.length; i++) {
             const event = events[i];
-            if (event.type === InteractionEventType.ELEMENT_CREATE &&
-                (event.data.kind === 'createNode' || event.data.kind === 'createEdge')) {
+            if (
+                event.type === InteractionEventType.ELEMENT_CREATE &&
+                (event.data.kind === 'createNode' || event.data.kind === 'createEdge')
+            ) {
                 createNodes.push({ index: i, elementType: event.data.elementTypeId, event });
             }
         }
-        
+
         // Step 2: Find first occurrence of each ID (from selections, edges, property changes)
         const idFirstOccurrence: Map<string, number> = new Map();
         for (let i = 0; i < events.length; i++) {
@@ -234,25 +232,24 @@ export class InteractionReplayService {
                 }
             }
         }
-        
+
         // Step 3: Sort IDs by their first occurrence
-        const sortedIds = Array.from(idFirstOccurrence.entries())
-            .sort((a, b) => a[1] - b[1]);
-        
+        const sortedIds = Array.from(idFirstOccurrence.entries()).sort((a, b) => a[1] - b[1]);
+
         // Step 4: Assign each ID to the oldest unassigned createNode that precedes it
         const assignedCreateNodes = new Set<number>();
-        
+
         for (const [id, firstOccurrence] of sortedIds) {
             // Find the oldest unassigned createNode that was created BEFORE this ID first appeared
             let bestCreateNode: { index: number; elementType: string; event: InteractionEvent } | null = null;
-            
+
             for (const cn of createNodes) {
                 // Skip if already assigned
                 if (assignedCreateNodes.has(cn.index)) continue;
-                
+
                 // The createNode must be BEFORE the ID's first occurrence
                 if (cn.index >= firstOccurrence) continue;
-                
+
                 // Take the MOST RECENT (closest preceding) unassigned create event.
                 // "Oldest" caused cascading mismatches: when an edge has no ID in any
                 // element_select, its slot stays unassigned and the next node's ID gets
@@ -261,14 +258,14 @@ export class InteractionReplayService {
                     bestCreateNode = cn;
                 }
             }
-            
+
             if (bestCreateNode) {
                 (bestCreateNode.event.data as any)._oldElementId = id;
                 assignedCreateNodes.add(bestCreateNode.index);
                 console.log(`[Replay] Pre-mapped ID ${id} to createNode ${bestCreateNode.elementType} at index ${bestCreateNode.index}`);
             }
         }
-        
+
         // Log any createNodes that couldn't be assigned
         for (const cn of createNodes) {
             if (!assignedCreateNodes.has(cn.index)) {
@@ -282,19 +279,19 @@ export class InteractionReplayService {
      */
     private extractIdsFromEvent(event: InteractionEvent): string[] {
         const ids: string[] = [];
-        
+
         if (event.type === InteractionEventType.ELEMENT_SELECT) {
             const selectedIds = event.data.selectedElementsIDs;
             if (selectedIds) {
                 ids.push(...selectedIds);
             }
         }
-        
+
         if (event.type === InteractionEventType.ELEMENT_CREATE && event.data.kind === 'createEdge') {
             if (event.data.sourceElementId) ids.push(event.data.sourceElementId);
             if (event.data.targetElementId) ids.push(event.data.targetElementId);
         }
-        
+
         if (event.type === InteractionEventType.PROPERTY_CHANGE) {
             if (event.data.kind === 'applyLabelEdit' && event.data.labelId) {
                 const elementId = event.data.labelId.replace(/_name_label$/, '');
@@ -306,23 +303,23 @@ export class InteractionReplayService {
                 ids.push(event.data.elementId);
             }
         }
-        
+
         if (event.type === InteractionEventType.ELEMENT_MOVE && event.data.newBounds) {
             for (const bound of event.data.newBounds) {
                 if (bound.elementId) ids.push(bound.elementId);
             }
         }
-        
+
         if (event.type === InteractionEventType.ELEMENT_ROUTE_CHANGE && event.data.newRoutingPoints) {
             for (const rp of event.data.newRoutingPoints) {
                 if (rp.elementId) ids.push(rp.elementId);
             }
         }
-        
+
         if (event.type === InteractionEventType.ELEMENT_DELETE && event.data.elementIds) {
             ids.push(...event.data.elementIds);
         }
-        
+
         return ids;
     }
 
@@ -343,21 +340,19 @@ export class InteractionReplayService {
 
         if (this.pendingElementCreation) {
             const expectedType = this.pendingElementCreation.elementType;
-            
+
             const matchingElements = allElements.filter(el => {
                 if (!el.type || !el.id) return false;
-                
+
                 // Use flexible type matching
                 const typeMatches = this.elementTypesMatch(el.type, expectedType);
-                
-                const isValidElement = !el.type.includes('label') && 
-                                      !el.type.includes('comp') &&
-                                      !el.type.includes('_context_');
+
+                const isValidElement = !el.type.includes('label') && !el.type.includes('comp') && !el.type.includes('_context_');
                 const isNew = !this.knownElementIds.has(el.id);
-                
+
                 return typeMatches && isValidElement && isNew;
             });
-            
+
             if (matchingElements.length > 0) {
                 const newElement = matchingElements[0];
                 if (newElement && newElement.id) {
@@ -370,8 +365,10 @@ export class InteractionReplayService {
                 // Log what elements we found for debugging
                 const newElements = allElements.filter(el => el.id && !this.knownElementIds.has(el.id));
                 if (newElements.length > 0) {
-                    console.log(`[Replay] No match for ${expectedType}. New elements found:`, 
-                        newElements.map(e => ({ type: e.type, id: e.id?.substring(0, 20) })));
+                    console.log(
+                        `[Replay] No match for ${expectedType}. New elements found:`,
+                        newElements.map(e => ({ type: e.type, id: e.id?.substring(0, 20) }))
+                    );
                 }
             }
         }
@@ -393,24 +390,22 @@ export class InteractionReplayService {
         const newChildren = allElements.filter(el => {
             if (!el.id || !el.type) return false;
             if (this.knownElementIds.has(el.id)) return false;
-            
-            const isProperty = el.type.includes('Property') || 
-                              el.type.includes('property') ||
-                              el.type.includes('PROPERTY');
+
+            const isProperty = el.type.includes('Property') || el.type.includes('property') || el.type.includes('PROPERTY');
             const isNotParent = el.id !== parentElement.id;
             const isNotLabel = !el.type.includes('label') && !el.type.includes('Label');
-            
+
             return isProperty && isNotParent && isNotLabel;
         });
-        
+
         if (newChildren.length === 0) {
             return;
         }
-        
+
         if (!this.autoCreatedChildrenQueue) {
             this.autoCreatedChildrenQueue = [];
         }
-        
+
         newChildren.forEach(child => {
             this.autoCreatedChildrenQueue!.push(child.id);
         });
@@ -422,7 +417,10 @@ export class InteractionReplayService {
     private normalizeElementType(type: string): string {
         // Remove common prefixes and convert to lowercase
         return type
-            .replace(/^(CLASS__|ACTIVITY__|STATE_MACHINE__|COMMUNICATION__|DEPLOYMENT__|PACKAGE__|USE_CASE__|INFORMATION_FLOW__|node:|edge:)/, '')
+            .replace(
+                /^(CLASS__|ACTIVITY__|STATE_MACHINE__|COMMUNICATION__|DEPLOYMENT__|PACKAGE__|USE_CASE__|INFORMATION_FLOW__|node:|edge:)/,
+                ''
+            )
             .replace(/^.*:/, '') // Remove any remaining prefix before colon
             .toLowerCase();
     }
@@ -433,19 +431,19 @@ export class InteractionReplayService {
     private elementTypesMatch(serverType: string, expectedType: string): boolean {
         // Exact match
         if (serverType === expectedType) return true;
-        
+
         // Contains match
         if (serverType.includes(expectedType) || expectedType.includes(serverType)) return true;
-        
+
         // Normalized match
         const normalizedServer = this.normalizeElementType(serverType);
         const normalizedExpected = this.normalizeElementType(expectedType);
         if (normalizedServer === normalizedExpected) return true;
-        
+
         // Check if server type ends with expected element name
         // something like "node:Class" should match "CLASS__Class"
         if (normalizedServer.endsWith(normalizedExpected) || normalizedExpected.endsWith(normalizedServer)) return true;
-        
+
         return false;
     }
 
@@ -454,17 +452,17 @@ export class InteractionReplayService {
      */
     private getAllElements(element: any): any[] {
         const elements: any[] = [];
-        
+
         if (element.id) {
             elements.push(element);
         }
-        
+
         if (element.children && Array.isArray(element.children)) {
             for (const child of element.children) {
                 elements.push(...this.getAllElements(child));
             }
         }
-        
+
         return elements;
     }
 
@@ -492,7 +490,7 @@ export class InteractionReplayService {
                     // Unix epoch milliseconds
                     timestamp = parseInt(record.timestamp);
                 }
-                
+
                 return {
                     timestamp,
                     type: record.type as InteractionEventType,
@@ -559,16 +557,16 @@ export class InteractionReplayService {
             const action = this.convertEventToAction(event);
             if (action) {
                 const oldElementId = (event.data as any)._oldElementId;
-                
+
                 await this.actionDispatcher.dispatch(action);
-                
+
                 if (action.kind === 'createNode' && oldElementId) {
                     const newElementId = await this.waitForNewElementId(action.elementTypeId);
                     if (newElementId) {
                         console.log(`[Replay] ID Mapping created: ${oldElementId} -> ${newElementId}`);
                         this.idMapping.set(oldElementId, newElementId);
                         this.elementTypes.set(oldElementId, action.elementTypeId);
-                        
+
                         // Also map the label ID
                         const oldLabelId = `${oldElementId}_name_label`;
                         const newLabelId = `${newElementId}_name_label`;
@@ -578,7 +576,7 @@ export class InteractionReplayService {
                         console.warn(`[Replay] Failed to get new element ID for ${action.elementTypeId} (old ID: ${oldElementId})`);
                     }
                 }
-                
+
                 if (action.kind === 'createEdge' && oldElementId) {
                     const newElementId = await this.waitForNewElementId(action.elementTypeId);
                     if (newElementId) {
@@ -589,7 +587,7 @@ export class InteractionReplayService {
                         console.warn(`[Replay] Failed to get new edge ID for ${action.elementTypeId} (old ID: ${oldElementId})`);
                     }
                 }
-                
+
                 const delay = this.getActionProcessingDelay(action.kind);
                 await this.sleep(delay);
             }
@@ -623,14 +621,14 @@ export class InteractionReplayService {
      * Wait for the new element ID to be captured from model update
      */
     private waitForNewElementId(elementType: string): Promise<string> {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             console.log(`[Replay] Waiting for new element of type: ${elementType}`);
-            
+
             this.pendingElementCreation = {
                 resolve,
                 elementType
             };
-            
+
             // Timeout after 10 seconds (increased from 5s because there were issues)
             setTimeout(() => {
                 if (this.pendingElementCreation) {
@@ -647,24 +645,32 @@ export class InteractionReplayService {
      */
     private updateContainerTracking(elementType: string, mappedId: string): void {
         // Activity diagram
-        if (elementType === 'ACTIVITY__Activity' || (elementType.includes('Activity') && !elementType.includes('Node') && !elementType.includes('Partition'))) {
+        if (
+            elementType === 'ACTIVITY__Activity' ||
+            (elementType.includes('Activity') && !elementType.includes('Node') && !elementType.includes('Partition'))
+        ) {
             this.lastSelectedActivityId = mappedId;
         }
-        
+
         // Class diagram - include AbstractClass
-        if (elementType === 'CLASS__Class' || elementType === 'CLASS__AbstractClass' || elementType === 'CLASS__Interface' || elementType === 'CLASS__DataType') {
+        if (
+            elementType === 'CLASS__Class' ||
+            elementType === 'CLASS__AbstractClass' ||
+            elementType === 'CLASS__Interface' ||
+            elementType === 'CLASS__DataType'
+        ) {
             this.lastSelectedClassId = mappedId;
             console.log(`[Replay] Updated lastSelectedClassId to ${mappedId} (type: ${elementType})`);
         }
         if (elementType === 'CLASS__Enumeration') {
             this.lastSelectedEnumerationId = mappedId;
         }
-        
+
         // Communication diagram
         if (elementType === 'COMMUNICATION__Interaction') {
             this.lastSelectedInteractionId = mappedId;
         }
-        
+
         // State Machine diagram
         if (elementType === 'STATE_MACHINE__StateMachine') {
             this.lastSelectedStateMachineId = mappedId;
@@ -672,9 +678,13 @@ export class InteractionReplayService {
         if (elementType === 'STATE_MACHINE__Region') {
             this.lastSelectedRegionId = mappedId;
         }
-        
+
         // Deployment diagram
-        if (elementType === 'DEPLOYMENT__Node' || elementType === 'DEPLOYMENT__Device' || elementType === 'DEPLOYMENT__ExecutionEnvironment') {
+        if (
+            elementType === 'DEPLOYMENT__Node' ||
+            elementType === 'DEPLOYMENT__Device' ||
+            elementType === 'DEPLOYMENT__ExecutionEnvironment'
+        ) {
             this.lastSelectedNodeId = mappedId;
         }
     }
@@ -687,32 +697,32 @@ export class InteractionReplayService {
         if (InteractionReplayService.ACTIVITY_NODE_TYPES.includes(elementTypeId)) {
             return this.lastSelectedActivityId;
         }
-        
+
         // State Machine elements need Region container
         if (InteractionReplayService.STATE_MACHINE_REGION_TYPES.includes(elementTypeId)) {
             return this.lastSelectedRegionId;
         }
-        
+
         // Region needs StateMachine container
         if (elementTypeId === 'STATE_MACHINE__Region') {
             return this.lastSelectedStateMachineId;
         }
-        
+
         // Communication Lifeline needs Interaction container
         if (InteractionReplayService.COMMUNICATION_INTERACTION_TYPES.includes(elementTypeId)) {
             return this.lastSelectedInteractionId;
         }
-        
+
         // Class members need Class/Interface/DataType container
         if (InteractionReplayService.CLASS_MEMBER_TYPES.includes(elementTypeId)) {
             return this.lastSelectedClassId || this.lastSelectedNodeId;
         }
-        
+
         // Enumeration literals need Enumeration container
         if (InteractionReplayService.ENUMERATION_MEMBER_TYPES.includes(elementTypeId)) {
             return this.lastSelectedEnumerationId;
         }
-        
+
         return null;
     }
 
@@ -731,7 +741,7 @@ export class InteractionReplayService {
                         location: data.location,
                         isOperation: true
                     };
-                    
+
                     // Get the appropriate container for this element type
                     const containerId = this.getContainerIdForElementType(data.elementTypeId);
                     if (containerId) {
@@ -743,19 +753,19 @@ export class InteractionReplayService {
                     } else {
                         console.log(`[Replay] createNode ${data.elementTypeId} at root`);
                     }
-                    
+
                     return action;
                 } else if (data.kind === 'createEdge') {
                     const sourceId = this.idMapping.get(data.sourceElementId) || data.sourceElementId;
                     const targetId = this.idMapping.get(data.targetElementId) || data.targetElementId;
-                    
+
                     const sourceHasMapping = this.idMapping.has(data.sourceElementId);
                     const targetHasMapping = this.idMapping.has(data.targetElementId);
-                    
+
                     console.log(`[Replay] createEdge: ${data.elementTypeId}`);
                     console.log(`  source: ${data.sourceElementId} -> ${sourceId} (mapped: ${sourceHasMapping})`);
                     console.log(`  target: ${data.targetElementId} -> ${targetId} (mapped: ${targetHasMapping})`);
-                    
+
                     if (sourceHasMapping && targetHasMapping) {
                         return {
                             kind: 'createEdge',
@@ -765,7 +775,9 @@ export class InteractionReplayService {
                             isOperation: true
                         };
                     } else {
-                        console.warn(`[Replay] Skipping edge - missing ID mapping. Source mapped: ${sourceHasMapping}, Target mapped: ${targetHasMapping}`);
+                        console.warn(
+                            `[Replay] Skipping edge - missing ID mapping. Source mapped: ${sourceHasMapping}, Target mapped: ${targetHasMapping}`
+                        );
                         console.warn(`  Available mappings: ${Array.from(this.idMapping.keys()).join(', ')}`);
                         return null;
                     }
@@ -773,14 +785,10 @@ export class InteractionReplayService {
                 break;
 
             case InteractionEventType.ELEMENT_DELETE: {
-                const mappedElementIds = data.elementIds?.map((id: string) => 
-                    this.idMapping.get(id) || id
-                );
-                
-                const allMapped = data.elementIds?.every((id: string) => 
-                    this.idMapping.has(id)
-                );
-                
+                const mappedElementIds = data.elementIds?.map((id: string) => this.idMapping.get(id) || id);
+
+                const allMapped = data.elementIds?.every((id: string) => this.idMapping.has(id));
+
                 if (allMapped) {
                     return {
                         kind: 'deleteElement',
@@ -797,7 +805,7 @@ export class InteractionReplayService {
                     ...bound,
                     elementId: this.idMapping.get(bound.elementId) || bound.elementId
                 }));
-                
+
                 return {
                     kind: 'changeBounds',
                     newBounds: mappedBounds,
@@ -831,18 +839,18 @@ export class InteractionReplayService {
                 if (data.selectedElementsIDs && data.selectedElementsIDs.length > 0) {
                     const selectedId = data.selectedElementsIDs[0];
                     const mappedId = this.idMapping.get(selectedId) || selectedId;
-                    
+
                     const elementTypeFromOld = this.elementTypes.get(selectedId);
                     const elementTypeFromNew = this.elementTypeMap.get(mappedId);
                     const elementType = elementTypeFromOld || elementTypeFromNew;
-                    
+
                     console.log(`[Replay] Selection: old=${selectedId}, mapped=${mappedId}, type=${elementType || 'unknown'}`);
-                    
+
                     if (elementType) {
                         this.updateContainerTracking(elementType, mappedId);
                     }
                 }
-                
+
                 return {
                     kind: 'elementSelected',
                     selectedElementsIDs: data.selectedElementsIDs || [],
@@ -853,10 +861,10 @@ export class InteractionReplayService {
                 if (data.kind === 'applyLabelEdit') {
                     const labelId = this.idMapping.get(data.labelId) || data.labelId;
                     const hasMapping = this.idMapping.has(data.labelId);
-                    
+
                     console.log(`[Replay] applyLabelEdit: "${data.text}"`);
                     console.log(`  labelId: ${data.labelId} -> ${labelId} (mapped: ${hasMapping})`);
-                    
+
                     if (hasMapping) {
                         return {
                             kind: 'applyLabelEdit',
@@ -870,7 +878,7 @@ export class InteractionReplayService {
                     }
                 } else if (data.kind === 'updateElementProperty') {
                     let elementId = this.idMapping.get(data.elementId);
-                    
+
                     if (!elementId) {
                         if (this.autoCreatedChildrenQueue && this.autoCreatedChildrenQueue.length > 0) {
                             const newChildId = this.autoCreatedChildrenQueue.shift()!;
@@ -880,7 +888,7 @@ export class InteractionReplayService {
                             return null;
                         }
                     }
-                    
+
                     return {
                         kind: 'updateElementProperty',
                         elementId: elementId,
@@ -895,7 +903,7 @@ export class InteractionReplayService {
                 const scroll = data.scroll || data.newViewport?.scroll;
                 const zoom = data.zoom ?? data.newViewport?.zoom;
                 const graphElementId = this.graphRootId || 'GRAPH';
-                
+
                 if (data.kind === 'setViewport' && (scroll || zoom !== undefined)) {
                     return {
                         kind: 'viewport',
@@ -907,9 +915,7 @@ export class InteractionReplayService {
                         animate: data.animate ?? false
                     };
                 } else if (data.kind === 'center' && data.elementIds) {
-                    const mappedIds = data.elementIds.map((id: string) => 
-                        this.idMapping.get(id) || id
-                    );
+                    const mappedIds = data.elementIds.map((id: string) => this.idMapping.get(id) || id);
                     return {
                         kind: 'center',
                         elementIds: mappedIds,
@@ -917,9 +923,7 @@ export class InteractionReplayService {
                         retainZoom: data.retainZoom ?? true
                     };
                 } else if (data.kind === 'fit') {
-                    const mappedIds = data.elementIds?.map((id: string) => 
-                        this.idMapping.get(id) || id
-                    );
+                    const mappedIds = data.elementIds?.map((id: string) => this.idMapping.get(id) || id);
                     return {
                         kind: 'fit',
                         elementIds: mappedIds || [],

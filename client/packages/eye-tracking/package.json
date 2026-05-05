@@ -1,6 +1,6 @@
 {
   "name": "@borkdominik-biguml/big-eye-tracking",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "Interaction Tracking",
   "homepage": "https://github.com/borkdominik/bigUML",
   "bugs": "https://github.com/borkdominik/bigUML/issues",
@@ -27,21 +27,21 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./lib/common/index.d.ts",
-      "default": "./lib/common/index.js"
+      "types": "./build/common/index.d.ts",
+      "default": "./build/common/index.js"
     },
     "./glsp-client": {
-      "types": "./lib/glsp-client/index.d.ts",
-      "default": "./lib/glsp-client/index.js"
+      "types": "./build/glsp-client/index.d.ts",
+      "default": "./build/glsp-client/index.js"
     },
     "./vscode": {
-      "types": "./lib/vscode/index.d.ts",
-      "default": "./lib/vscode/index.js"
+      "types": "./build/vscode/index.d.ts",
+      "default": "./build/vscode/index.js"
     }
   },
-  "types": "lib/common/index.d.ts",
+  "types": "build/common/index.d.ts",
   "files": [
-    "dist"
+    "build"
   ],
   "scripts": {
     "build": "npm run clean && npm run compile && npm run bundle && npm run lint",
@@ -55,8 +55,7 @@
   },
   "dependencies": {
     "@borkdominik-biguml/big-components": "*",
-    "@borkdominik-biguml/big-vscode-integration": "*",
-    "@borkdominik-biguml/uml-protocol": "*",
+    "@borkdominik-biguml/big-vscode": "*",
     "@eclipse-glsp/client": "*",
     "@eclipse-glsp/protocol": "*",
     "@eclipse-glsp/vscode-integration-webview": "*",

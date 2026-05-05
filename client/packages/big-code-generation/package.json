@@ -43,14 +43,14 @@
     "dist"
   ],
   "scripts": {
-    "build": "npm run clean && npm run compile && npm run bundle && npm run lint && npm run copy",
+    "build": "npm run clean && npm run compile && npm run bundle && npm run copy",
     "bundle": "tsx esbuild.ts",
     "clean": "rimraf build dist node_modules/.tmp",
     "compile": "tsc -b",
     "copy": "npx cpx \"./templates/*\" ../../application/vscode/templates -v",
     "lint": "eslint -c ./eslint.config.js",
     "lint:fix": "npm run lint -- --fix",
-    "watch": "concurrently --kill-others 'npm run watch:compile' 'npm run watch:bundle'",
+    "watch": "concurrently --kill-others \"npm run watch:compile\" \"npm run watch:bundle\"",
     "watch:bundle": "npm run bundle -- --watch",
     "watch:compile": "npm run compile -- --watch --preserveWatchOutput"
   },

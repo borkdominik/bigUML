@@ -62,7 +62,7 @@
     "vscode:prepublish": "npm run compile:prod",
     "vscode:release": "vsce publish --no-dependencies",
     "vscode:release-pre": "npm run vscode:release -- --pre-release",
-    "watch": "concurrently --kill-others 'npm run watch:compile' 'npm run watch:bundle'",
+    "watch": "concurrently --kill-others \"npm run watch:compile\" \"npm run watch:bundle\"",
     "watch:bundle": "npm run bundle -- --watch --preserveWatchOutput",
     "watch:compile": "npm run compile -- --watch --preserveWatchOutput"
   },
@@ -346,7 +346,6 @@
     "react-dom": "^18.0.0",
     "reflect-metadata": "^0.2.2",
     "scheduler": "^0.25.0",
-    "urijs": "^1.19.11",
     "vscode-languageclient": "9.0.1",
     "vscode-languageserver": "9.0.1",
     "vscode-languageserver-protocol": "^3.17.5",
@@ -358,7 +357,6 @@
     "@eclipse-glsp/vscode-integration-webview": "*",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
-    "@types/urijs": "1.19.11",
     "@types/vscode": "^1.63.0",
     "@vscode/vsce": "^3.6.2"
   },

@@ -63,7 +63,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "npm run clean && npm run compile && npm run bundle && npm run lint",
+    "build": "npm run clean && npm run compile && npm run bundle",
     "bundle": "tsx esbuild.ts",
     "clean": "rimraf build dist node_modules/.tmp",
     "compile": "tsc -b",
@@ -71,7 +71,7 @@
     "language:generate": "uml-language-tooling extension generate -d @borkdominik-biguml/uml-language/definition -c ./generator/index.ts",
     "lint": "eslint -c ./eslint.config.js",
     "lint:fix": "npm run lint -- --fix",
-    "watch": "concurrently --kill-others 'npm run watch:compile' 'npm run watch:bundle'",
+    "watch": "concurrently --kill-others \"npm run watch:compile\" \"npm run watch:bundle\"",
     "watch:bundle": "npm run bundle -- --watch",
     "watch:compile": "npm run compile -- --watch --preserveWatchOutput"
   },

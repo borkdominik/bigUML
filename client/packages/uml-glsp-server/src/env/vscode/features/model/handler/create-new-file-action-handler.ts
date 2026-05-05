@@ -14,6 +14,7 @@ import { type Action, type ActionHandler, type MaybePromise } from '@eclipse-gls
 import * as fs from 'fs';
 import { inject, injectable } from 'inversify';
 import * as path from 'path';
+import { URI } from 'vscode-uri';
 
 @injectable()
 export class CreateNewFileActionHandler implements ActionHandler {
@@ -24,7 +25,7 @@ export class CreateNewFileActionHandler implements ActionHandler {
 
     execute(action: CreateNewFileAction): MaybePromise<Action[]> {
         const sourceUri = action.options.sourceUri;
-        const filePath = `${sourceUri}.uml`;
+        const filePath = `${URI.parse(sourceUri).fsPath}.uml`;
         const dirPath = path.dirname(filePath);
 
         fs.mkdirSync(dirPath, { recursive: true });

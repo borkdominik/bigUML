@@ -36,13 +36,13 @@
     "build"
   ],
   "scripts": {
-    "build": "npm run clean && npm run compile && npm run lint",
+    "build": "npm run clean && npm run compile",
     "clean": "rimraf lib dist node_modules/.tmp",
     "compile": "tsc -b",
     "lint": "eslint -c ./eslint.config.js",
     "lint:fix": "npm run lint -- --fix",
     "tsc": "tsc",
-    "watch": "concurrently --kill-others 'npm run watch:compile'",
+    "watch": "concurrently --kill-others \"npm run watch:compile\"",
     "watch:compile": "npm run compile -- --watch --preserveWatchOutput"
   },
   "dependencies": {

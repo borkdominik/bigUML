@@ -40,13 +40,13 @@
     }
   },
   "scripts": {
-    "build": "npm run clean && npm run compile && npm run lint",
+    "build": "npm run clean && npm run compile",
     "clean": "rimraf build dist node_modules/.tmp",
     "compile": "tsc -b",
     "lint": "eslint -c ./eslint.config.js",
     "lint:ci": "npm run lint -o eslint.xml -f checkstyle",
     "lint:fix": "eslint --fix -c ./eslint.config.js",
-    "watch": "concurrently --kill-others 'npm run watch:compile'",
+    "watch": "concurrently --kill-others \"npm run watch:compile\"",
     "watch:compile": "npm run compile -- --watch --preserveWatchOutput"
   },
   "dependencies": {

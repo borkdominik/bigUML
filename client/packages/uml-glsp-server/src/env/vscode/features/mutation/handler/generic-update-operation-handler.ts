@@ -57,6 +57,7 @@ export class GenericUpdateOperationHandler extends OperationHandler {
                 }
             };
         }
+        // TODO Why smart cast? or rather, why are numbers never allowed as part of strings? this seems oddly restrictive
         return smartCast(raw);
     }
 

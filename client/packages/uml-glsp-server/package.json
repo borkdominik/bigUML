@@ -75,6 +75,7 @@
     "@eclipse-glsp/layout-elk": "*",
     "@eclipse-glsp/protocol": "*",
     "@eclipse-glsp/server": "*",
+    "@eclipse-glsp/server-mcp": "*",
     "eta": "^3.5.0",
     "fast-json-patch": "^3.1.1",
     "uuid": "^10.0.0"

@@ -19,7 +19,7 @@ export class ClassValidationElement {
     @Matches(/^[A-Z]/, {
         message: 'First letter of class name must be uppercase.'
     })
-    @MinLength(5, { message: 'Class name must be at least 5 characters long' })
+    @MinLength(3, { message: 'Class name must be at least 3 characters long' })
     name: string;
     @ValidateIf(o => o.isActive === true)
     @ArrayMaxSize(3, {

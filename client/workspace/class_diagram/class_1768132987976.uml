@@ -5,24 +5,94 @@
 		"diagramType": "CLASS",
 		"entities": [
 			{
+				"__type": "EnumerationLiteral",
+				"__id": "a96cea426-e326-4c5c-b265-eb9b1bf42409",
+				"name": "NewEnumerationLiteral2",
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "Slot",
+				"__id": "a36f10a74-e992-4f11-8185-92b21adf4ed0",
+				"name": "NewSlot2",
+				"values": []
+			},
+			{
+				"__type": "EnumerationLiteral",
+				"__id": "abe5b8e32-d6a5-42c3-8828-bd9456063523",
+				"name": "NewEnumerationLiteral3",
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "Operation",
+				"__id": "aaf628ad0-13b0-4599-988c-a17fa798c327",
+				"name": "NewOperation4",
+				"isAbstract": false,
+				"isStatic": false,
+				"isQuery": false,
+				"visibility": "PUBLIC",
+				"concurrency": "SEQUENTIAL",
+				"parameters": []
+			},
+			{
+				"__type": "Property",
+				"__id": "a1603e75c-dd77-49b5-8b8f-6471d11be265",
+				"name": "NewProperty1",
+				"isDerived": false,
+				"isOrdered": false,
+				"isStatic": false,
+				"isDerivedUnion": false,
+				"isReadOnly": false,
+				"isUnique": false,
+				"visibility": "PUBLIC"
+			},
+			{
 				"__type": "Class",
-				"__id": "a04550825-ad6d-45ed-ab8a-e3df7c58cf03",
-				"name": "NewClass1",
+				"__id": "a8c9ac23b-3d9b-43b9-b8e5-1437bef128f4",
+				"name": "MyClass",
 				"isAbstract": false,
 				"properties": [],
-				"operations": [],
+				"operations": [
+					{
+						"__type": "Operation",
+						"__id": "a02b73426-311a-45f0-92c2-0bde1a1a5f8c",
+						"name": "executeTask",
+						"isAbstract": false,
+						"isStatic": false,
+						"isQuery": false,
+						"visibility": "PUBLIC",
+						"concurrency": "SEQUENTIAL",
+						"parameters": [
+							{
+								"__type": "Parameter",
+								"__id": "a5a6fae13-4c7b-4390-963f-b4220540fb4e",
+								"name": "inputData",
+								"isException": false,
+								"isStream": false,
+								"isOrdered": false,
+								"isUnique": false,
+								"visibility": "PUBLIC",
+								"parameterType": {
+									"__type": "Reference",
+									"__refType": "DataTypeReference",
+									"__value": "a299ba6e6-384a-40b0-940b-3788e155de57"
+								}
+							}
+						],
+						"returnType": {
+							"__type": "Reference",
+							"__refType": "DataTypeReference",
+							"__value": "a299ba6e6-384a-40b0-940b-3788e155de57"
+						}
+					}
+				],
 				"isActive": false,
 				"visibility": "PUBLIC",
 				"skip": false
 			},
 			{
-				"__type": "DataType",
-				"__id": "af330f6c4-2874-41cf-9786-aced6eb99ae8",
-				"name": "NewDataType1",
-				"properties": [],
-				"operations": [],
-				"isAbstract": false,
-				"visibility": "PUBLIC"
+				"__type": "PrimitiveType",
+				"__id": "a299ba6e6-384a-40b0-940b-3788e155de57",
+				"name": "String"
 			}
 		],
 		"relations": []
@@ -30,46 +100,46 @@
 	"metaInfos": [
 		{
 			"__type": "Size",
-			"__id": "size_a04550825-ad6d-45ed-ab8a-e3df7c58cf03",
+			"__id": "size_a8c9ac23b-3d9b-43b9-b8e5-1437bef128f4",
 			"height": 30,
 			"width": 80,
 			"element": {
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
-				"__value": "a04550825-ad6d-45ed-ab8a-e3df7c58cf03"
+				"__value": "a8c9ac23b-3d9b-43b9-b8e5-1437bef128f4"
 			}
 		},
 		{
 			"__type": "Position",
-			"__id": "pos_a04550825-ad6d-45ed-ab8a-e3df7c58cf03",
-			"x": 150,
-			"y": 10,
+			"__id": "pos_a8c9ac23b-3d9b-43b9-b8e5-1437bef128f4",
+			"x": 200,
+			"y": 150,
 			"element": {
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
-				"__value": "a04550825-ad6d-45ed-ab8a-e3df7c58cf03"
+				"__value": "a8c9ac23b-3d9b-43b9-b8e5-1437bef128f4"
 			}
 		},
 		{
 			"__type": "Size",
-			"__id": "size_af330f6c4-2874-41cf-9786-aced6eb99ae8",
+			"__id": "size_a299ba6e6-384a-40b0-940b-3788e155de57",
 			"height": 30,
 			"width": 80,
 			"element": {
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
-				"__value": "af330f6c4-2874-41cf-9786-aced6eb99ae8"
+				"__value": "a299ba6e6-384a-40b0-940b-3788e155de57"
 			}
 		},
 		{
 			"__type": "Position",
-			"__id": "pos_af330f6c4-2874-41cf-9786-aced6eb99ae8",
-			"x": 170,
-			"y": 160,
+			"__id": "pos_a299ba6e6-384a-40b0-940b-3788e155de57",
+			"x": 500,
+			"y": 150,
 			"element": {
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
-				"__value": "af330f6c4-2874-41cf-9786-aced6eb99ae8"
+				"__value": "a299ba6e6-384a-40b0-940b-3788e155de57"
 			}
 		}
 	]

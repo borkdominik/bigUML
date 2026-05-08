@@ -120,7 +120,6 @@ export class OpenableTextDocuments<
     }
 
     public notifyDidChangeTextDocument(event: DidChangeTextDocumentParams, client?: string): void {
-        console.log('notifyDidChangeTextDocument', event, client);
         const td = event.textDocument;
         const changes = event.contentChanges;
         if (changes.length === 0) {

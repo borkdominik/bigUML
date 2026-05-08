@@ -288,6 +288,7 @@ export interface Operation extends AstNode {
     isStatic: boolean
     name: string
     parameters: Array<Parameter>
+    returnType?: Reference<DataTypeReference>
     visibility?: Visibility
 }
 
@@ -842,6 +843,7 @@ export class UmlDiagramAstReflection extends AbstractAstReflection {
             case 'Usage:target': {
                 return Node;
             }
+            case 'Operation:returnType':
             case 'Parameter:parameterType':
             case 'Property:propertyType': {
                 return DataTypeReference;

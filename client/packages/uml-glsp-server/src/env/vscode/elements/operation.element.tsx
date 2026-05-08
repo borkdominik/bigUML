@@ -39,6 +39,7 @@ export function GOperationNodeElement(props: GOperationNodeElementProps): GModel
         key: param.name!,
         type: param.parameterType?.ref?.name ?? 'Unknown'
     }));
+    const returnTypeName = node.returnType?.ref?.name;
 
     const opNode = new GOperationNode();
     opNode.id = id;
@@ -67,20 +68,29 @@ export function GOperationNodeElement(props: GOperationNodeElementProps): GModel
     opNode.children.push(leftSide);
 
     // Right side: empty compartment (matching original behavior)
-    const rightSide = (
-        <GCompartmentElement
-            type={DefaultTypes.COMPARTMENT}
-            layout='hbox'
-            layoutOptions={{
-                hGap: 3,
-                paddingTop: 0,
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                resizeContainer: true
-            }}
-        />
-    );
+    const rightSideChildren: GModelElement[] = [];
+    if (returnTypeName) {
+        const colonLabel = <GLabelElement type={CommonModelTypes.LABEL_TEXT} text=':' />;
+        const detailComp = (
+            <GCompartmentElement
+                type={DefaultTypes.COMPARTMENT}
+                layout='hbox'
+                layoutOptions={{
+                    hGap: 3,
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    resizeContainer: true
+                }}
+            >
+                <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={returnTypeName} />
+            </GCompartmentElement>
+        );
+        rightSideChildren.push(colonLabel, detailComp);
+    }
+
+    const rightSide = <InlineCompartment id={id + 'right_side'}>{rightSideChildren}</InlineCompartment>;
     rightSide.parent = opNode;
     opNode.children.push(rightSide);
 

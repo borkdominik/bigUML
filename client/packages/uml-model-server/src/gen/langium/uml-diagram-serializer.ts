@@ -383,6 +383,15 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (element.parameters !== undefined && element.parameters !== null) {
             str.push('"parameters": [' + element.parameters.map(property => this.serializeParameter(property)).join(',') + ']');
         }
+        if (element.returnType !== undefined && element.returnType !== null) {
+            str.push(
+                '"returnType": ' +
+                    '{' +
+                    ' "__type": "Reference", "__refType": "DataTypeReference", "__value": "' +
+                    (element.returnType.ref?.__id ?? 'undefined') +
+                    '"}'
+            );
+        }
         return '{' + str.join(',\n') + '}';
     }
 

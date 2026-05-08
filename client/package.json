@@ -24,10 +24,13 @@
     "watch": "lerna run --parallel --stream watch"
   },
   "overrides": {
-    "@eclipse-glsp/client": "2.5.0",
-    "@eclipse-glsp/layout-elk": "2.5.0",
-    "@eclipse-glsp/protocol": "2.5.0",
-    "@eclipse-glsp/server": "2.5.0",
+    "@eclipse-glsp/client": "2.6.0-next",
+    "@eclipse-glsp/graph": "2.6.0-next",
+    "@eclipse-glsp/layout-elk": "2.6.0-next",
+    "@eclipse-glsp/protocol": "2.6.0-next",
+    "@eclipse-glsp/server": "2.6.0-next",
+    "@eclipse-glsp/server-mcp": "2.6.0-next",
+    "@eclipse-glsp/sprotty": "2.6.0-next",
     "@eclipse-glsp/vscode-integration": "2.5.0",
     "@eclipse-glsp/vscode-integration-webview": "2.5.0"
   },

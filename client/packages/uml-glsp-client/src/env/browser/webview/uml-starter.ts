@@ -9,6 +9,7 @@
 
 import { advancedSearchModule } from '@borkdominik-biguml/big-advancedsearch/glsp-client';
 import { codeGenerationModule } from '@borkdominik-biguml/big-code-generation/glsp-client';
+import { eyeTrackingModule } from '@borkdominik-biguml/big-eye-tracking/glsp-client';
 import { minimapModule } from '@borkdominik-biguml/big-minimap/glsp-client';
 import { outlineModule } from '@borkdominik-biguml/big-outline/glsp-client';
 import { propertyPaletteModule } from '@borkdominik-biguml/big-property-palette/glsp-client';
@@ -46,7 +47,8 @@ class UmlStarter extends GLSPStarter {
             minimapModule,
             propertyPaletteModule,
             codeGenerationModule,
-            advancedSearchModule
+            advancedSearchModule,
+            eyeTrackingModule
         );
 
         return container;

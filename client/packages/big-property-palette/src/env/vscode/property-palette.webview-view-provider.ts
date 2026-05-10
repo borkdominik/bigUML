@@ -9,20 +9,22 @@
 import {
     RequestPropertyPaletteAction,
     SetNavigationIdNotification,
-    SetPropertyPaletteAction
+    SetPropertyPaletteAction,
+    UpdateElementPropertyAction
 } from '@borkdominik-biguml/big-property-palette';
+import { ActionWebviewProtocol } from '@borkdominik-biguml/big-vscode';
 import type { WebviewMessenger, WebviewViewProviderOptions } from '@borkdominik-biguml/big-vscode/vscode';
 import {
+    TYPES,
+    WebviewViewProvider,
     type ActionDispatcher,
     type CacheActionListener,
     type ConnectionManager,
     type GlspModelState,
-    type SelectionService,
-    TYPES,
-    WebviewViewProvider
+    type SelectionService
 } from '@borkdominik-biguml/big-vscode/vscode';
 import { DisposableCollection } from '@eclipse-glsp/vscode-integration';
-import { inject, injectable, postConstruct } from 'inversify';
+import { inject, injectable, optional, postConstruct } from 'inversify';
 import type { Disposable } from 'vscode';
 
 @injectable()
@@ -38,6 +40,11 @@ export class PropertyPaletteWebviewViewProvider extends WebviewViewProvider {
 
     @inject(TYPES.SelectionService)
     protected readonly selectionService: SelectionService;
+
+    // Optional injection of InteractionTracker - won't fail if not available
+    @inject('InteractionTracker')
+    @optional()
+    protected interactionTracker?: any;
 
     protected actionCache: CacheActionListener;
     protected selectedId?: string;
@@ -78,6 +85,37 @@ export class PropertyPaletteWebviewViewProvider extends WebviewViewProvider {
             }),
             this.modelState.onDidChangeModelState(() => {
                 this.requestPropertyPalette();
+            }),
+            // Track property changes from webview
+            messenger.onNotification(ActionWebviewProtocol.Message, message => {
+                if (UpdateElementPropertyAction.is(message.action)) {
+                    // Track this action for interaction logging
+                    if (this.interactionTracker && typeof this.interactionTracker.trackAction === 'function') {
+                        console.log('Tracking updateElementProperty action');
+                        this.interactionTracker.trackAction(message.action);
+                    } else {
+                        console.log('InteractionTracker not available or trackAction method missing');
+                    }
+
+                    // Mark as operation and dispatch to server
+                    const serverAction = {
+                        ...message.action,
+                        isOperation: true // Mark as server operation
+                    };
+                    console.log('Sending updateElementProperty to server:', serverAction);
+                    this.actionDispatcher.dispatch(serverAction);
+                } else if (message.action?.kind === 'createNode') {
+                    console.log('Property CREATE detected:', JSON.stringify(message.action, null, 2));
+
+                    // Track createNode actions from property palette
+                    // Try not to dispatch again - it's already being dispatched somewhere else
+                    if (this.interactionTracker && typeof this.interactionTracker.trackAction === 'function') {
+                        console.log('Tracking createNode action from property palette');
+                        this.interactionTracker.trackAction(message.action);
+                    }
+                } else {
+                    console.log('Not an UpdateElementPropertyAction or createNode, got:', message?.action?.kind);
+                }
             })
         );
         return disposables;

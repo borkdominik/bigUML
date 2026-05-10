@@ -7,7 +7,8 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { Action, hasStringProp, RequestAction, type ResponseAction } from '@eclipse-glsp/protocol';
+import type { RequestAction, ResponseAction } from '@eclipse-glsp/protocol';
+import { Action, hasStringProp } from '@eclipse-glsp/protocol';
 import { type ElementProperties } from './property-palette.model.js';
 
 export interface RequestPropertyPaletteAction extends RequestAction<SetPropertyPaletteAction> {
@@ -77,7 +78,7 @@ export namespace UpdateElementPropertyAction {
 
     export function is(object: any): object is UpdateElementPropertyAction {
         return (
-            RequestAction.hasKind(object, KIND) &&
+            Action.hasKind(object, KIND) &&
             hasStringProp(object, 'elementId') &&
             hasStringProp(object, 'propertyId') &&
             hasStringProp(object, 'value')

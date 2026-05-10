@@ -108,6 +108,28 @@
         "command": "timeline.export",
         "title": "Export Timeline",
         "icon": "$(cloud-download)"
+      },
+      {
+        "command": "bigUML.startInteractionTracking",
+        "title": "Start Interaction Tracking",
+        "category": "bigUML",
+        "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
+      },
+      {
+        "command": "bigUML.stopInteractionTracking",
+        "title": "Stop Interaction Tracking",
+        "category": "bigUML",
+        "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
+      },
+      {
+        "command": "bigUML.replayInteractionSession",
+        "title": "Replay Interaction Session",
+        "category": "bigUML"
+      },
+      {
+        "command": "bigUML.showSessionSummary",
+        "title": "Show Session Summary",
+        "category": "bigUML"
       }
     ],
     "configuration": {
@@ -122,6 +144,12 @@
           "type": "boolean",
           "default": false,
           "description": "Persist timeline entries across restarts."
+        },
+        "bigUML.monitoringServerUrl": {
+          "type": "string",
+          "default": "http://localhost:8000",
+          "scope": "resource",
+          "description": "URL of the monitoring server for uploading interaction tracking sessions."
         }
       }
     },
@@ -309,6 +337,12 @@
           "name": "Timeline",
           "type": "webview",
           "when": "bigUML.isRunning"
+        },
+        {
+          "id": "bigUML.panel.eye-tracking",
+          "name": "Eye Tracking",
+          "type": "webview",
+          "when": "bigUML.isRunning"
         }
       ]
     },
@@ -329,6 +363,7 @@
     "@borkdominik-biguml/big-advancedsearch": "*",
     "@borkdominik-biguml/big-code-generation": "*",
     "@borkdominik-biguml/big-common": "*",
+    "@borkdominik-biguml/big-eye-tracking": "*",
     "@borkdominik-biguml/big-minimap": "*",
     "@borkdominik-biguml/big-outline": "*",
     "@borkdominik-biguml/big-property-palette": "*",

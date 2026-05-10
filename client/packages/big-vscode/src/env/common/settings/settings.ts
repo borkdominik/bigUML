@@ -34,5 +34,8 @@ export const VSCodeSettings = {
     },
     advancedSearch: {
         viewType: 'bigUML.panel.advancedsearch'
+    },
+    eyeTracking: {
+        viewType: 'bigUML.panel.eye-tracking'
     }
 } as const;

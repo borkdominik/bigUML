@@ -1,0 +1,112 @@
+/**********************************************************************************
+ * Copyright (c) 2025 borkdominik and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ **********************************************************************************/
+
+/* Eye Tracking Component Styles */
+.eye-tracking-container {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.status-section {
+    padding: 12px;
+    border: 1px solid var(--vscode-editorWidget-border);
+    border-radius: 4px;
+    background-color: var(--vscode-editor-background);
+}
+
+.status-indicator {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+}
+
+.status-active {
+    background-color: var(--vscode-testing-iconPassed);
+}
+
+.status-inactive {
+    background-color: var(--vscode-testing-iconFailed);
+}
+
+.control-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.control-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.primary-button {
+    background-color: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+}
+
+.secondary-button {
+    background-color: var(--vscode-button-secondaryBackground);
+    color: var(--vscode-button-foreground);
+}
+
+.calibration-section {
+    padding: 12px;
+    border: 2px solid var(--vscode-focusBorder);
+    border-radius: 4px;
+    background-color: var(--vscode-editor-background);
+}
+
+.calibration-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    height: 120px;
+    margin: 12px 0;
+}
+
+.calibration-point {
+    background-color: #ff0000;
+    border-radius: 50%;
+    cursor: pointer;
+    min-height: 16px;
+    transition: transform 0.2s;
+}
+
+.calibration-point:hover {
+    transform: scale(1.2);
+}
+
+.data-section {
+    padding: 12px;
+    border: 1px solid var(--vscode-editorWidget-border);
+    border-radius: 4px;
+    background-color: var(--vscode-editor-background);
+}
+
+/* General styling */
+body {
+    margin: 0;
+    font-family: var(--vscode-font-family);
+    font-size: var(--vscode-font-size);
+    color: var(--vscode-foreground);
+    background-color: var(--vscode-editor-background);
+}
+
+#root {
+    height: 100vh;
+}

@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eye Tracking Demo - HTTPS</title>
+    <script src="webgazerv2.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1e1e1e;
+            color: #cccccc;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .panel {
+            background-color: #252526;
+            border: 1px solid #3e3e42;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .panel-header {
+            background-color: #2d2d30;
+            padding: 8px 12px;
+            border-bottom: 1px solid #3e3e42;
+            font-weight: bold;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .panel-content {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .status-section {
+            padding: 12px;
+            border: 1px solid #3e3e42;
+            border-radius: 4px;
+            background-color: #1e1e1e;
+        }
+
+        .status-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .status-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .status-label {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .status-indicator {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .status-active {
+            background-color: #388a34;
+        }
+
+        .status-inactive {
+            background-color: #f14c4c;
+        }
+
+        .status-info {
+            font-size: 12px;
+            color: #9d9d9d;
+        }
+
+        .status-message {
+            font-size: 12px;
+            margin-top: 4px;
+            font-style: italic;
+            color: #cccccc;
+        }
+
+        .controls-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .btn-primary {
+            background-color: #0078d4;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background-color: #106ebe;
+        }
+
+        .btn-secondary {
+            background-color: #3e3e42;
+            color: #cccccc;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background-color: #4e4e52;
+        }
+
+        .btn-stop {
+            background-color: #5a5a5a;
+            color: white;
+        }
+
+        .btn-stop:hover:not(:disabled) {
+            background-color: #6a6a6a;
+        }
+
+        .btn-upload {
+            background-color: #388a34;
+            color: white;
+        }
+
+        .btn-upload:hover:not(:disabled) {
+            background-color: #2d7a2a;
+        }
+
+        .data-section {
+            padding: 12px;
+            border: 1px solid #3e3e42;
+            border-radius: 4px;
+            background-color: #1e1e1e;
+        }
+
+        .data-section p {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+        }
+
+        .data-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .input-group label {
+            font-size: 12px;
+            color: #9d9d9d;
+        }
+
+        .input-group input {
+            padding: 8px 12px;
+            border: 1px solid #3e3e42;
+            border-radius: 4px;
+            background-color: #1e1e1e;
+            color: #cccccc;
+            font-size: 14px;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #0078d4;
+        }
+
+        .input-group input::placeholder {
+            color: #6d6d6d;
+        }
+
+        .upload-status {
+            font-size: 12px;
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+
+        .upload-status.success {
+            background-color: rgba(56, 138, 52, 0.2);
+            border: 1px solid #388a34;
+            color: #4caf50;
+        }
+
+        .upload-status.error {
+            background-color: rgba(241, 76, 76, 0.2);
+            border: 1px solid #f14c4c;
+            color: #f14c4c;
+        }
+
+        .upload-status.loading {
+            background-color: rgba(0, 120, 212, 0.2);
+            border: 1px solid #0078d4;
+            color: #0078d4;
+        }
+
+        .calibration-section {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .calibration-section.show {
+            display: flex;
+        }
+
+        .calibration-instructions {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #264f78;
+            border: 1px solid #0078d4;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            z-index: 10001;
+            max-width: 500px;
+        }
+
+        .calibration-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+        }
+
+        .calibration-point {
+            position: absolute;
+            background-color: #ff0000;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            pointer-events: auto;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            border: 2px solid white;
+        }
+
+        .calibration-point:hover {
+            transform: scale(1.5);
+            background-color: #ff3333;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+        }
+
+        .calibration-point.clicked {
+            background-color: #00ff00;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.8);
+            transform: scale(0.8);
+        }
+
+        .calibration-point.current {
+            animation: pulse 1s infinite;
+            background-color: #ffff00;
+            box-shadow: 0 0 25px rgba(255, 255, 0, 1);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        .finish-calibration-btn {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10001;
+        }
+
+        .demo-info {
+            background-color: #264f78;
+            border: 1px solid #3e3e42;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+
+        .demo-info h3 {
+            margin: 0 0 8px 0;
+            color: #9cdcfe;
+        }
+
+        .gaze-visualization {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .gaze-point {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 0, 0, 0.7);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: fadeOut 2s forwards;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #3e3e42;
+            margin: 8px 0;
+        }
+
+        /* Screenshot styles */
+        .screenshot-section {
+            padding: 12px;
+            border: 1px solid #3e3e42;
+            border-radius: 4px;
+            background-color: #1e1e1e;
+        }
+
+        .screenshot-preview {
+            max-width: 100%;
+            max-height: 150px;
+            margin-top: 8px;
+            border: 1px solid #3e3e42;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .screenshot-preview.show {
+            display: block;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 8px 16px;
+            background-color: #3e3e42;
+            color: #cccccc;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .file-input-label:hover {
+            background-color: #4e4e52;
+        }
+
+        .screenshot-info {
+            font-size: 11px;
+            color: #9d9d9d;
+            margin-top: 4px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            font-size: 12px;
+            color: #cccccc;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="panel">
+            <div class="panel-header">
+                ▼ EYE TRACKING
+            </div>
+            <div class="panel-content">
+                <!-- Status Section -->
+                <div class="status-section">
+                    <div class="status-row">
+                        <span class="status-label">Status:</span>
+                        <span id="statusIndicator" class="status-indicator status-inactive">Inactive</span>
+                    </div>
+                    <div class="status-info">WebGazer: <span id="webgazerStatus">Loading...</span></div>
+                    <div class="status-info">Protocol: <span id="protocolStatus">HTTPS ✓</span></div>
+                    <div class="status-info">Client: <span id="clientStatus">Connected</span></div>
+                    <div id="statusMessage" class="status-message">Ready to start eye tracking</div>
+                </div>
+
+                <!-- Control Buttons -->
+                <div class="controls-section">
+                    <button id="startBtn" class="btn btn-primary" disabled>Loading WebGazer...</button>
+                    <button id="calibrateBtn" class="btn btn-secondary" disabled>Calibrate</button>
+                    <button id="clearBtn" class="btn btn-secondary">Clear Data</button>
+                    <button id="exportBtn" class="btn btn-secondary" disabled>Export Data (JSON)</button>
+                </div>
+
+                <!-- Calibration Section -->
+                <div id="calibrationSection" class="calibration-section">
+                    <div class="calibration-instructions">
+                        <h3 style="margin: 0 0 12px 0; color: #9cdcfe;">Eye Tracking Calibration</h3>
+                        <p style="margin: 0 0 8px 0; font-size: 14px;">
+                            Look at each yellow dot and click on it when it appears.
+                        </p>
+                        <p style="margin: 0; font-size: 12px; color: #cccccc;">
+                            Click the dots in order for best results. Keep your head still during calibration.
+                        </p>
+                    </div>
+                    <div class="calibration-grid">
+                        <div class="calibration-point" data-index="0">1</div>
+                        <div class="calibration-point" data-index="1">2</div>
+                        <div class="calibration-point" data-index="2">3</div>
+                        <div class="calibration-point" data-index="3">4</div>
+                        <div class="calibration-point" data-index="4">5</div>
+                        <div class="calibration-point" data-index="5">6</div>
+                        <div class="calibration-point" data-index="6">7</div>
+                        <div class="calibration-point" data-index="7">8</div>
+                        <div class="calibration-point" data-index="8">9</div>
+                    </div>
+                    <button id="finishCalibrationBtn" class="btn btn-primary finish-calibration-btn">Finish Calibration</button>
+                </div>
+
+                <!-- Data Display -->
+                <div class="data-section">
+                    <p>Gaze Points Collected: <strong id="gazeCount">0</strong></p>
+                    <div id="latestGaze" class="status-info"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Panel -->
+        <div class="panel">
+            <div class="panel-header">
+                ▼ UPLOAD TO SERVER
+            </div>
+            <div class="panel-content">
+                <div class="input-group">
+                    <label for="serverUrl">Server URL</label>
+                    <input type="text" id="serverUrl" placeholder="http://localhost:8000" value="http://localhost:8000">
+                </div>
+                
+                <div class="input-group">
+                    <label for="apiKey">API Key (optional)</label>
+                    <input type="password" id="apiKey" placeholder="Leave empty if not required">
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="input-group">
+                    <label for="linkedSessionId">Linked Session ID (from interaction tracking)</label>
+                    <input type="text" id="linkedSessionId" placeholder="e.g., activity_2026-01-26T13-21-33.773Z">
+                </div>
+
+                <div class="status-info" style="margin-top: 4px;">
+                    💡 Leave empty for standalone eye tracking, or paste the session ID from bigUML interaction tracking to link the data.
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Screenshot Section -->
+                <div class="screenshot-section">
+                    <div class="input-group">
+                        <label>Screenshot (optional)</label>
+                        <div class="file-input-wrapper">
+                            <span class="file-input-label" id="fileInputLabel">📷 Select Screenshot Image</span>
+                            <input type="file" id="screenshotInput" accept="image/png,image/jpeg,image/jpg">
+                        </div>
+                        <div class="screenshot-info" id="screenshotInfo">No screenshot selected</div>
+                    </div>
+                    <img id="screenshotPreview" class="screenshot-preview" alt="Screenshot preview">
+                    
+                    <div class="checkbox-group" style="margin-top: 8px;">
+                        <input type="checkbox" id="uploadScreenshotCheckbox" checked>
+                        <label for="uploadScreenshotCheckbox">Upload screenshot with eye tracking data</label>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <button id="uploadBtn" class="btn btn-upload" disabled>Upload to Server</button>
+                
+                <div id="uploadStatus" class="upload-status" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gaze visualization container -->
+    <div id="gazeVisualization" class="gaze-visualization"></div>
+
+    <script>
+        // Eye tracking demo implementation with API fixes
+        class EyeTrackingDemo {
+            constructor() {
+                this.isActive = false;
+                this.isWebGazerLoaded = false;
+                this.isCalibrating = false;
+                this.isPaused = false;
+                this.gazeData = [];
+                this.calibratedPoints = new Set();
+                this.currentCalibrationPoint = 0;
+                this.calibrationPointCount = 0;
+                this.selectedScreenshot = null;
+                this.screenshotBase64 = null;
+                
+                this.initializeElements();
+                this.setupEventListeners();
+                this.checkWebGazerStatus();
+                this.loadSavedSettings();
+            }
+
+            initializeElements() {
+                this.statusIndicator = document.getElementById('statusIndicator');
+                this.webgazerStatus = document.getElementById('webgazerStatus');
+                this.protocolStatus = document.getElementById('protocolStatus');
+                this.clientStatus = document.getElementById('clientStatus');
+                this.statusMessage = document.getElementById('statusMessage');
+                this.startBtn = document.getElementById('startBtn');
+                this.calibrateBtn = document.getElementById('calibrateBtn');
+                this.clearBtn = document.getElementById('clearBtn');
+                this.exportBtn = document.getElementById('exportBtn');
+                this.calibrationSection = document.getElementById('calibrationSection');
+                this.finishCalibrationBtn = document.getElementById('finishCalibrationBtn');
+                this.gazeCount = document.getElementById('gazeCount');
+                this.latestGaze = document.getElementById('latestGaze');
+                this.gazeVisualization = document.getElementById('gazeVisualization');
+                
+                // Upload elements
+                this.serverUrlInput = document.getElementById('serverUrl');
+                this.apiKeyInput = document.getElementById('apiKey');
+                this.linkedSessionIdInput = document.getElementById('linkedSessionId');
+                this.uploadBtn = document.getElementById('uploadBtn');
+                this.uploadStatus = document.getElementById('uploadStatus');
+                
+                // Screenshot elements
+                this.screenshotInput = document.getElementById('screenshotInput');
+                this.screenshotPreview = document.getElementById('screenshotPreview');
+                this.screenshotInfo = document.getElementById('screenshotInfo');
+                this.fileInputLabel = document.getElementById('fileInputLabel');
+                this.uploadScreenshotCheckbox = document.getElementById('uploadScreenshotCheckbox');
+            }
+
+            setupEventListeners() {
+                this.startBtn.addEventListener('click', () => this.toggleEyeTracking());
+                this.calibrateBtn.addEventListener('click', () => this.startCalibration());
+                this.clearBtn.addEventListener('click', () => this.clearData());
+                this.exportBtn.addEventListener('click', () => this.exportData());
+                this.finishCalibrationBtn.addEventListener('click', () => this.endCalibration());
+                this.uploadBtn.addEventListener('click', () => this.uploadToServer());
+
+                // Calibration points
+                document.querySelectorAll('.calibration-point').forEach(point => {
+                    point.addEventListener('click', (e) => this.calibratePoint(e.target));
+                });
+                
+                // Save settings on change
+                this.serverUrlInput.addEventListener('change', () => this.saveSettings());
+                this.apiKeyInput.addEventListener('change', () => this.saveSettings());
+                
+                // Screenshot file input
+                this.screenshotInput.addEventListener('change', (e) => this.handleScreenshotSelect(e));
+            }
+            
+            handleScreenshotSelect(event) {
+                const file = event.target.files[0];
+                if (!file) {
+                    this.clearScreenshot();
+                    return;
+                }
+                
+                // Validate file type
+                if (!file.type.startsWith('image/')) {
+                    this.showUploadStatus('Please select an image file (PNG or JPEG)', 'error');
+                    this.clearScreenshot();
+                    return;
+                }
+                
+                this.selectedScreenshot = file;
+                
+                // Read file as base64
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.screenshotBase64 = e.target.result;
+                    
+                    // Show preview
+                    this.screenshotPreview.src = this.screenshotBase64;
+                    this.screenshotPreview.classList.add('show');
+                    
+                    // Update info
+                    const sizeKB = (file.size / 1024).toFixed(1);
+                    this.screenshotInfo.textContent = `${file.name} (${sizeKB} KB)`;
+                    this.fileInputLabel.textContent = '📷 Change Screenshot';
+                    
+                    this.updateUI();
+                };
+                reader.onerror = () => {
+                    this.showUploadStatus('Failed to read screenshot file', 'error');
+                    this.clearScreenshot();
+                };
+                reader.readAsDataURL(file);
+            }
+            
+            clearScreenshot() {
+                this.selectedScreenshot = null;
+                this.screenshotBase64 = null;
+                this.screenshotInput.value = '';
+                this.screenshotPreview.src = '';
+                this.screenshotPreview.classList.remove('show');
+                this.screenshotInfo.textContent = 'No screenshot selected';
+                this.fileInputLabel.textContent = '📷 Select Screenshot Image';
+                this.updateUI();
+            }
+            
+            loadSavedSettings() {
+                const savedServerUrl = localStorage.getItem('eyeTracking_serverUrl');
+                const savedApiKey = localStorage.getItem('eyeTracking_apiKey');
+                
+                if (savedServerUrl) {
+                    this.serverUrlInput.value = savedServerUrl;
+                }
+                if (savedApiKey) {
+                    this.apiKeyInput.value = savedApiKey;
+                }
+            }
+            
+            saveSettings() {
+                localStorage.setItem('eyeTracking_serverUrl', this.serverUrlInput.value);
+                localStorage.setItem('eyeTracking_apiKey', this.apiKeyInput.value);
+            }
+
+            checkWebGazerStatus() {
+                console.log('Checking WebGazer status...', typeof webgazer);
+                
+                if (typeof webgazer !== 'undefined' && webgazer) {
+                    this.isWebGazerLoaded = true;
+                    this.webgazerStatus.textContent = 'Ready';
+                    this.updateStatus('WebGazer loaded successfully');
+                    this.startBtn.disabled = false;
+                    this.startBtn.textContent = 'Start Eye Tracking';
+                } else {
+                    this.webgazerStatus.textContent = 'Loading...';
+                    this.updateStatus('Loading WebGazer library...');
+                    this.startBtn.disabled = true;
+                    
+                    // Keep trying for up to 30 seconds
+                    if (!this.loadAttempts) this.loadAttempts = 0;
+                    this.loadAttempts++;
+                    
+                    if (this.loadAttempts < 60) { // 30 seconds (60 * 500ms)
+                        setTimeout(() => this.checkWebGazerStatus(), 500);
+                    } else {
+                        this.webgazerStatus.textContent = 'Failed to load';
+                        this.updateStatus('Failed to load WebGazer. Please check your internet connection.');
+                    }
+                }
+            }
+
+            async toggleEyeTracking() {
+                if (this.isActive) {
+                    await this.stopEyeTracking();
+                } else {
+                    await this.startEyeTracking();
+                }
+            }
+
+            async startEyeTracking() {
+                if (!this.isWebGazerLoaded) {
+                    this.updateStatus('WebGazer not ready');
+                    return;
+                }
+
+                try {
+                    this.updateStatus('Starting eye tracking...');
+                    
+                    // If WebGazer was paused, just resume it
+                    if (this.isPaused && webgazer.resume) {
+                        webgazer.resume();
+                        this.isPaused = false;
+                        this.isActive = true;
+                        this.updateUI();
+                        this.updateStatus('Eye tracking resumed!');
+                        return;
+                    }
+                    
+                    // Check if WebGazer is already running
+                    if (webgazer.isReady && webgazer.isReady()) {
+                        this.isActive = true;
+                        this.updateUI();
+                        this.updateStatus('Eye tracking is already active!');
+                        return;
+                    }
+                    
+                    await webgazer
+                        .setRegression('ridge')
+                        .setTracker('TFFacemesh')
+                        .setGazeListener((data) => {
+                            if (data && data.x && data.y) {
+                                this.handleGazeData(data);
+                            }
+                        })
+                        .begin();
+
+                    // Configure WebGazer with proper API calls
+                    try {
+                        webgazer.showVideo(true);
+                        webgazer.showPredictions(true);
+                        webgazer.showFaceOverlay(true);
+                        webgazer.showFaceFeedbackBox(true);
+                    } catch (configError) {
+                        console.warn('WebGazer configuration warning:', configError);
+                        // Continue even if configuration fails
+                    }
+
+                    this.isActive = true;
+                    this.isPaused = false;
+                    this.updateUI();
+                    this.updateStatus('Eye tracking started - Look around to see red dots!');
+                    
+                } catch (error) {
+                    console.error('Error starting WebGazer:', error);
+                    
+                    // Check if WebGazer is actually working despite the error
+                    if (typeof webgazer !== 'undefined' && webgazer.getGazeData) {
+                        // Force activate if WebGazer seems to be working
+                        this.isActive = true;
+                        this.updateUI();
+                        this.updateStatus('Eye tracking activated (with warnings)');
+                    } else if (error.name === 'NotAllowedError') {
+                        this.updateStatus('Camera access denied. Please allow camera access and try again.');
+                    } else if (error.name === 'NotFoundError') {
+                        this.updateStatus('No camera found. Please ensure your device has a camera.');
+                    } else {
+                        this.updateStatus(`Error: ${error.message || error}`);
+                    }
+                }
+            }
+
+            async stopEyeTracking() {
+                try {
+                    // Use pause instead of end to allow restarting
+                    if (webgazer && webgazer.pause) {
+                        webgazer.pause();
+                        this.isPaused = true;
+                    }
+                    this.isActive = false;
+                    this.isCalibrating = false;
+                    this.calibrationSection.classList.remove('show');
+                    this.updateUI();
+                    this.updateStatus('Eye tracking paused');
+                } catch (error) {
+                    this.updateStatus(`Error stopping: ${error.message || error}`);
+                }
+            }
+
+            handleGazeData(data) {
+                const gazePoint = {
+                    x: data.x,
+                    y: data.y,
+                    timestamp: Date.now()
+                };
+
+                this.gazeData.push(gazePoint);
+
+                // Limit data points
+                if (this.gazeData.length > 50000) {
+                    this.gazeData.shift();
+                }
+
+                // Update UI periodically
+                if (this.gazeData.length % 10 === 0) {
+                    this.updateGazeDisplay();
+                }
+
+                // Show gaze point visualization
+                this.showGazePoint(data.x, data.y);
+            }
+
+            showGazePoint(x, y) {
+                const point = document.createElement('div');
+                point.className = 'gaze-point';
+                point.style.left = x + 'px';
+                point.style.top = y + 'px';
+                
+                this.gazeVisualization.appendChild(point);
+
+                // Remove after animation
+                setTimeout(() => {
+                    if (point.parentNode) {
+                        point.parentNode.removeChild(point);
+                    }
+                }, 2000);
+            }
+
+            startCalibration() {
+                if (!this.isActive) {
+                    // Force enable if gaze data is being collected
+                    if (this.gazeData.length > 0) {
+                        this.isActive = true;
+                        this.updateUI();
+                    } else {
+                        this.updateStatus('Start eye tracking first');
+                        return;
+                    }
+                }
+
+                this.isCalibrating = true;
+                this.calibratedPoints.clear();
+                this.calibrationSection.classList.add('show');
+                this.currentCalibrationPoint = 0;
+                this.calibrationPointCount = 0;
+                
+                if (webgazer && webgazer.clearData) {
+                    webgazer.clearData();
+                }
+                
+                this.updateStatus('Calibration started - click the numbered dots in order');
+
+                // Reset calibration points
+                document.querySelectorAll('.calibration-point').forEach(point => {
+                    point.classList.remove('clicked', 'current');
+                });
+
+                // Position dots across the full screen
+                this.positionCalibrationDots();
+                
+                // Highlight first dot
+                this.highlightCurrentDot();
+            }
+
+            positionCalibrationDots() {
+                const points = document.querySelectorAll('.calibration-point');
+                const margin = 100; // pixels from edge
+                const screenWidth = window.innerWidth;
+                const screenHeight = window.innerHeight;
+                
+                // Account for instruction window at top (roughly 150px high + 50px from top)
+                const topSafeZone = 220; // Safe area below instruction window
+                const bottomSafeZone = 120; // Safe area above finish button
+                
+                // Define positions avoiding the instruction window area
+                const positions = [
+                    { x: margin, y: margin }, // Top-left
+                    { x: screenWidth / 2, y: topSafeZone }, // Top-center (below instruction window)
+                    { x: screenWidth - margin, y: margin }, // Top-right
+                    { x: margin, y: screenHeight / 2 }, // Middle-left
+                    { x: screenWidth / 2, y: screenHeight / 2 }, // Center
+                    { x: screenWidth - margin, y: screenHeight / 2 }, // Middle-right
+                    { x: margin, y: screenHeight - bottomSafeZone }, // Bottom-left (above button)
+                    { x: screenWidth / 2, y: screenHeight - bottomSafeZone }, // Bottom-center (above button)
+                    { x: screenWidth - margin, y: screenHeight - bottomSafeZone } // Bottom-right (above button)
+                ];
+
+                points.forEach((point, index) => {
+                    const pos = positions[index];
+                    point.style.left = pos.x + 'px';
+                    point.style.top = pos.y + 'px';
+                });
+            }
+
+            highlightCurrentDot() {
+                const points = document.querySelectorAll('.calibration-point');
+                points.forEach(point => point.classList.remove('current'));
+                
+                if (this.currentCalibrationPoint < points.length) {
+                    points[this.currentCalibrationPoint].classList.add('current');
+                }
+            }
+
+            calibratePoint(pointElement) {
+                const index = parseInt(pointElement.dataset.index);
+                
+                // Only allow clicking the current highlighted dot
+                if (index !== this.currentCalibrationPoint) {
+                    this.updateStatus(`Please click dot ${this.currentCalibrationPoint + 1} (the yellow one)`);
+                    return;
+                }
+                
+                const rect = pointElement.getBoundingClientRect();
+                const x = rect.left + rect.width / 2;
+                const y = rect.top + rect.height / 2;
+
+                if (webgazer && webgazer.recordScreenPosition) {
+                    // Record multiple samples for better accuracy
+                    for (let i = 0; i < 5; i++) {
+                        webgazer.recordScreenPosition(x, y, 'click');
+                    }
+                }
+                
+                pointElement.classList.add('clicked');
+                pointElement.classList.remove('current');
+                this.calibratedPoints.add(index);
+                this.currentCalibrationPoint++;
+                this.calibrationPointCount++;
+
+                this.updateStatus(`Calibrated point ${index + 1}/9`);
+
+                if (this.currentCalibrationPoint < 9) {
+                    // Highlight next dot after a short delay
+                    setTimeout(() => this.highlightCurrentDot(), 500);
+                } else {
+                    // All points calibrated
+                    setTimeout(() => this.endCalibration(), 1000);
+                }
+            }
+
+            endCalibration() {
+                this.isCalibrating = false;
+                this.calibrationSection.classList.remove('show');
+                this.updateStatus('Calibration completed - tracking should be more accurate now');
+            }
+
+            clearData() {
+                this.gazeData = [];
+                this.calibrationPointCount = 0;
+                if (webgazer && webgazer.clearData) {
+                    webgazer.clearData();
+                }
+                this.updateGazeDisplay();
+                this.updateStatus('Data cleared');
+            }
+
+            exportData() {
+                if (this.gazeData.length === 0) {
+                    this.updateStatus('No data to export');
+                    return;
+                }
+
+                const exportData = this.buildExportData();
+                const dataStr = JSON.stringify(exportData, null, 2);
+
+                const blob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `eye_tracking_data_${Date.now()}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+
+                this.updateStatus(`Exported ${this.gazeData.length} gaze points`);
+            }
+            
+            buildExportData() {
+                const duration = this.gazeData.length > 0 ? 
+                    this.gazeData[this.gazeData.length - 1].timestamp - this.gazeData[0].timestamp : 0;
+                    
+                return {
+                    metadata: {
+                        exportTime: new Date().toISOString(),
+                        totalPoints: this.gazeData.length,
+                        duration: duration,
+                        trackerType: 'webgazer',
+                        screenWidth: window.screen.width,
+                        screenHeight: window.screen.height,
+                        calibrationPoints: this.calibrationPointCount
+                    },
+                    gazePoints: this.gazeData
+                };
+            }
+            
+            async uploadToServer() {
+                if (this.gazeData.length === 0) {
+                    this.showUploadStatus('No data to upload', 'error');
+                    return;
+                }
+                
+                const serverUrl = this.serverUrlInput.value.trim();
+                const apiKey = this.apiKeyInput.value.trim();
+                const linkedSessionId = this.linkedSessionIdInput.value.trim();
+                
+                if (!serverUrl) {
+                    this.showUploadStatus('Please enter a server URL', 'error');
+                    return;
+                }
+                
+                // API key is optional
+                
+                this.uploadBtn.disabled = true;
+                this.showUploadStatus('Uploading...', 'loading');
+                
+                try {
+                    const exportData = this.buildExportData();
+                    
+                    // Add linked session ID if provided
+                    const requestBody = {
+                        metadata: exportData.metadata,
+                        gazePoints: exportData.gazePoints,
+                        linkedSessionId: linkedSessionId || null
+                    };
+                    
+                    const headers = {
+                        'Content-Type': 'application/json'
+                    };
+                    
+                    // Only add API key header if provided
+                    if (apiKey) {
+                        headers['X-API-Key'] = apiKey;
+                    }
+                    
+                    // Upload eye tracking data
+                    const response = await fetch(`${serverUrl}/sessions/eye-tracking`, {
+                        method: 'POST',
+                        headers: headers,
+                        body: JSON.stringify(requestBody)
+                    });
+                    
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({}));
+                        throw new Error(errorData.detail || `HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    
+                    const result = await response.json();
+                    
+                    let successMessage = `✓ Uploaded ${result.gaze_points_stored} gaze points`;
+                    if (result.linked_recording_session_id) {
+                        successMessage += ` (linked to session)`;
+                    }
+                    
+                    // Upload screenshot if selected and checkbox is checked
+                    if (this.screenshotBase64 && this.uploadScreenshotCheckbox.checked) {
+                        try {
+                            this.showUploadStatus('Uploading screenshot...', 'loading');
+                            
+                            // Extract base64 data (remove data:image/...;base64, prefix)
+                            const base64Data = this.screenshotBase64.split(',')[1];
+                            
+                            const screenshotBody = {
+                                imageData: base64Data,
+                                linkedSessionId: linkedSessionId || null,
+                                timestamp: new Date().toISOString(),
+                                description: 'Eye tracking session screenshot'
+                            };
+                            
+                            const screenshotResponse = await fetch(`${serverUrl}/sessions/screenshot`, {
+                                method: 'POST',
+                                headers: headers,
+                                body: JSON.stringify(screenshotBody)
+                            });
+                            
+                            if (!screenshotResponse.ok) {
+                                const errorData = await screenshotResponse.json().catch(() => ({}));
+                                console.error('Screenshot upload failed:', errorData);
+                                successMessage += ` | ⚠️ Screenshot upload failed: ${errorData.detail || 'Unknown error'}`;
+                            } else {
+                                const screenshotResult = await screenshotResponse.json();
+                                successMessage += ` | 📷 Screenshot saved: ${screenshotResult.filename}`;
+                            }
+                        } catch (screenshotError) {
+                            console.error('Screenshot upload error:', screenshotError);
+                            successMessage += ` | ⚠️ Screenshot upload failed: ${screenshotError.message}`;
+                        }
+                    }
+                    
+                    this.showUploadStatus(successMessage, 'success');
+                    this.updateStatus('Upload successful!');
+                    
+                } catch (error) {
+                    console.error('Upload error:', error);
+                    this.showUploadStatus(`✗ Upload failed: ${error.message}`, 'error');
+                    this.updateStatus('Upload failed');
+                } finally {
+                    this.uploadBtn.disabled = false;
+                    this.updateUI();
+                }
+            }
+            
+            showUploadStatus(message, type) {
+                this.uploadStatus.textContent = message;
+                this.uploadStatus.className = `upload-status ${type}`;
+                this.uploadStatus.style.display = 'block';
+                
+                // Auto-hide success messages after 5 seconds
+                if (type === 'success') {
+                    setTimeout(() => {
+                        this.uploadStatus.style.display = 'none';
+                    }, 5000);
+                }
+            }
+
+            updateUI() {
+                // Update status indicator
+                this.statusIndicator.textContent = this.isActive ? 'Active' : 'Inactive';
+                this.statusIndicator.className = `status-indicator ${this.isActive ? 'status-active' : 'status-inactive'}`;
+
+                // Update buttons
+                this.startBtn.textContent = this.isActive ? 'Stop Eye Tracking' : 'Start Eye Tracking';
+                this.startBtn.className = `btn ${this.isActive ? 'btn-stop' : 'btn-primary'}`;
+                this.calibrateBtn.disabled = !this.isActive;
+                this.exportBtn.disabled = this.gazeData.length === 0;
+                this.uploadBtn.disabled = this.gazeData.length === 0;
+            }
+
+            updateGazeDisplay() {
+                this.gazeCount.textContent = this.gazeData.length.toString();
+                
+                if (this.gazeData.length > 0) {
+                    const latest = this.gazeData[this.gazeData.length - 1];
+                    this.latestGaze.textContent = `Latest: x=${Math.round(latest.x)}, y=${Math.round(latest.y)}`;
+                } else {
+                    this.latestGaze.textContent = '';
+                }
+            }
+
+            updateStatus(message) {
+                this.statusMessage.textContent = message;
+                console.log('Eye Tracking Demo:', message);
+            }
+        }
+
+        // Initialize the demo when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            window.eyeTrackingDemo = new EyeTrackingDemo();
+        });
+
+        // Auto-detect if eye tracking is working and force UI update
+        setTimeout(() => {
+            const demo = window.eyeTrackingDemo || new EyeTrackingDemo();
+            window.eyeTrackingDemo = demo;
+            
+            // Check if gaze data is being collected despite UI showing inactive
+            if (demo.gazeData && demo.gazeData.length > 0 && !demo.isActive) {
+                console.log('Auto-detecting active eye tracking...');
+                demo.isActive = true;
+                demo.updateUI();
+                demo.updateStatus('Eye tracking detected and activated!');
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

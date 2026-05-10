@@ -1,0 +1,202 @@
+{
+  "session": {
+    "sessionId": "unknown_2026-05-05T12-50-07.425Z",
+    "startTime": "2026-05-05T12:50:07.425Z",
+    "toolId": "bigUML",
+    "toolVersion": "0.6.3",
+    "editorType": "unknown",
+    "modelFile": "asd.uml",
+    "modelFilePath": "/home/haydar/Git/OpenSource/bigUML/bigUML/client/workspace/asd/asd.uml",
+    "user": "haydar",
+    "workspace": "workspace",
+    "umlFile": "asd.uml",
+    "umlFilePath": "/home/haydar/Git/OpenSource/bigUML/bigUML/client/workspace/asd/asd.uml",
+    "diagramType": "unknown",
+    "endTime": "2026-05-05T12:50:17.210Z",
+    "totalEvents": 8
+  },
+  "events": [
+    {
+      "timestamp": "2026-05-05T12:50:07.426Z",
+      "type": "session_start",
+      "data": {
+        "sessionId": "unknown_2026-05-05T12-50-07.425Z",
+        "startTime": "2026-05-05T12:50:07.425Z",
+        "toolId": "bigUML",
+        "toolVersion": "0.6.3",
+        "editorType": "unknown",
+        "modelFile": "asd.uml",
+        "modelFilePath": "/home/haydar/Git/OpenSource/bigUML/bigUML/client/workspace/asd/asd.uml",
+        "user": "haydar",
+        "workspace": "workspace",
+        "umlFile": "asd.uml",
+        "umlFilePath": "/home/haydar/Git/OpenSource/bigUML/bigUML/client/workspace/asd/asd.uml",
+        "diagramType": "unknown",
+        "endTime": "2026-05-05T12:50:17.210Z",
+        "totalEvents": 8
+      },
+      "sessionId": "unknown_2026-05-05T12-50-07.425Z"
+    },
+    {
+      "timestamp": "2026-05-05T12:50:07.427Z",
+      "type": "eye_tracking_start",
+      "data": {
+        "component": "interaction-tracking-panel"
+      },
+      "sessionId": "unknown_2026-05-05T12-50-07.425Z"
+    },
+    {
+      "timestamp": "2026-05-05T12:50:11.057Z",
+      "type": "mouse_click",
+      "data": {
+        "canvasX": 609,
+        "canvasY": 251,
+        "screenX": 1149,
+        "screenY": 444,
+        "clientX": 609,
+        "clientY": 251,
+        "button": "left",
+        "isDoubleClick": false,
+        "modifiers": {
+          "ctrl": false,
+          "shift": false,
+          "alt": false,
+          "meta": false
+        },
+        "canvasBounds": {
+          "screenX": 540,
+          "screenY": 193,
+          "width": 1251,
+          "height": 483
+        }
+      },
+      "sessionId": "unknown_2026-05-05T12-50-07.425Z"
+    },
+    {
+      "timestamp": "2026-05-05T12:50:11.233Z",
+      "type": "element_select",
+      "data": {
+        "kind": "elementSelected",
+        "selectedElementsIDs": [],
+        "deselectedElementsIDs": [],
+        "mousePosition": {
+          "canvasX": 609,
+          "canvasY": 251,
+          "screenX": 1149,
+          "screenY": 444
+        }
+      },
+      "sessionId": "unknown_2026-05-05T12-50-07.425Z"
+    },
+    {
+      "timestamp": "2026-05-05T12:50:11.235Z",
+      "type": "element_create",
+      "data": {
+        "kind": "createNode",
+        "elementTypeId": "class__Class",
+        "containerId": "$ROOT",
+        "location": {
+          "x": 609,
+          "y": 251
+        },
+        "mousePosition": {
+          "canvasX": 609,
+          "canvasY": 251,
+          "screenX": 1149,
+          "screenY": 444
+        }
+      },
+      "sessionId": "unknown_2026-05-05T12-50-07.425Z"
+    },
+    {
+      "timestamp": "2026-05-05T12:50:14.659Z",
+      "type": "mouse_click",
+      "data": {
+        "canvasX": 331,
+        "canvasY": 264,
+        "screenX": 815,
+        "screenY": 460,
+        "clientX": 331,
+        "clientY": 264,
+        "button": "left",
+        "isDoubleClick": false,
+        "modifiers": {
+          "ctrl": false,
+          "shift": false,
+          "alt": false,
+          "meta": false
+        },
+        "canvasBounds": {
+          "screenX": 484,
+          "screenY": 196,
+          "width": 1251,
+          "height": 483
+        }
+      },
+      "sessionId": "unknown_2026-05-05T12-50-07.425Z"
+    },
+    {
+      "timestamp": "2026-05-05T12:50:14.837Z",
+      "type": "element_select",
+      "data": {
+        "kind": "elementSelected",
+        "selectedElementsIDs": [],
+        "deselectedElementsIDs": [],
+        "mousePosition": {
+          "canvasX": 331,
+          "canvasY": 264,
+          "screenX": 815,
+          "screenY": 460
+        }
+      },
+      "sessionId": "unknown_2026-05-05T12-50-07.425Z"
+    },
+    {
+      "timestamp": "2026-05-05T12:50:14.838Z",
+      "type": "element_create",
+      "data": {
+        "kind": "createNode",
+        "elementTypeId": "class__Class",
+        "containerId": "$ROOT",
+        "location": {
+          "x": 331,
+          "y": 264
+        },
+        "mousePosition": {
+          "canvasX": 331,
+          "canvasY": 264,
+          "screenX": 815,
+          "screenY": 460
+        }
+      },
+      "sessionId": "unknown_2026-05-05T12-50-07.425Z"
+    },
+    {
+      "timestamp": "2026-05-05T12:50:17.210Z",
+      "type": "session_end",
+      "data": {
+        "sessionId": "unknown_2026-05-05T12-50-07.425Z",
+        "startTime": "2026-05-05T12:50:07.425Z",
+        "toolId": "bigUML",
+        "toolVersion": "0.6.3",
+        "editorType": "unknown",
+        "modelFile": "asd.uml",
+        "modelFilePath": "/home/haydar/Git/OpenSource/bigUML/bigUML/client/workspace/asd/asd.uml",
+        "user": "haydar",
+        "workspace": "workspace",
+        "umlFile": "asd.uml",
+        "umlFilePath": "/home/haydar/Git/OpenSource/bigUML/bigUML/client/workspace/asd/asd.uml",
+        "diagramType": "unknown",
+        "endTime": "2026-05-05T12:50:17.210Z",
+        "totalEvents": 8,
+        "mousePosition": {
+          "canvasX": 7,
+          "canvasY": 241,
+          "screenX": 427,
+          "screenY": 432
+        }
+      },
+      "sessionId": "unknown_2026-05-05T12-50-07.425Z"
+    }
+  ]
+}

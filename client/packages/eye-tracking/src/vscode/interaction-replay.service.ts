@@ -114,6 +114,14 @@ export class InteractionReplayService {
 
             modelListener = this.setupModelListener();
 
+            const seededRoot = this.getActiveDiagramUri();
+            if (seededRoot) {
+                this.graphRootId = seededRoot;
+                console.log(`[Replay] Seeded graph root id from active editor: ${seededRoot}`);
+            } else {
+                console.warn('[Replay] Could not determine active diagram URI; first createNode at root may be dropped by the server.');
+            }
+
             const csvContent = fs.readFileSync(filePath, 'utf-8');
             const events = this.parseCSV(csvContent);
             const filteredEvents = this.filterEventsByTime(events, options);
@@ -173,6 +181,26 @@ export class InteractionReplayService {
         this.lastSelectedRegionId = null;
         this.lastSelectedEnumerationId = null;
         this.lastSelectedNodeId = null;
+    }
+
+    /**
+     * Returns the URI of the currently active diagram tab in the format used by
+     * GLSP as the graph root id (e.g. `file:///c:/path/to/file.uml`).
+     * `toString(true)` keeps the Windows drive-letter colon unencoded so the
+     * string matches the id the server sends back in `updateModel.newRoot.id`.
+     */
+    private getActiveDiagramUri(): string | null {
+        try {
+            const activeTab = vscode.window.tabGroups.activeTabGroup?.activeTab;
+            const input: any = activeTab?.input;
+            const uri = input?.uri;
+            if (uri && typeof uri.toString === 'function') {
+                return uri.toString(true);
+            }
+        } catch (err) {
+            console.warn('[Replay] Failed to read active diagram URI:', err);
+        }
+        return null;
     }
 
     /**
@@ -331,8 +359,12 @@ export class InteractionReplayService {
             return;
         }
 
-        // Capture the graph root ID for viewport actions
+        // Capture the graph root ID for viewport actions and for use as a fallback
+        // containerId on top-level createNode operations (see convertEventToAction).
         if (root.id && (root.type === 'graph' || !root.type)) {
+            if (this.graphRootId !== root.id) {
+                console.log(`[Replay] Captured graph root id: ${root.id}`);
+            }
             this.graphRootId = root.id;
         }
 
@@ -362,14 +394,21 @@ export class InteractionReplayService {
                     this.mapAutoCreatedChildren(newElement, allElements);
                 }
             } else {
-                // Log what elements we found for debugging
-                const newElements = allElements.filter(el => el.id && !this.knownElementIds.has(el.id));
-                if (newElements.length > 0) {
-                    console.log(
-                        `[Replay] No match for ${expectedType}. New elements found:`,
-                        newElements.map(e => ({ type: e.type, id: e.id?.substring(0, 20) }))
-                    );
-                }
+                // Diagnostic: log EVERY element in the new model so we can see
+                // exactly what types/ids the server is emitting and why nothing
+                // matched the expected type.
+                console.warn(
+                    `[Replay] No match for expectedType="${expectedType}". All elements in this updateModel:`,
+                    allElements.map(e => ({
+                        type: e.type,
+                        id: e.id,
+                        known: this.knownElementIds.has(e.id),
+                        typeMatches: e.type ? this.elementTypesMatch(e.type, expectedType) : false,
+                        isValidElement: e.type
+                            ? !e.type.includes('label') && !e.type.includes('comp') && !e.type.includes('_context_')
+                            : false
+                    }))
+                );
             }
         }
 
@@ -412,13 +451,14 @@ export class InteractionReplayService {
     }
 
     /**
-     * Normalize element type for comparison (handle different formats)
+     * Normalize element type for comparison (handle different formats).
+     * Case-insensitive so it works for both `CLASS__Class` and `class__Class`.
      */
     private normalizeElementType(type: string): string {
         // Remove common prefixes and convert to lowercase
         return type
             .replace(
-                /^(CLASS__|ACTIVITY__|STATE_MACHINE__|COMMUNICATION__|DEPLOYMENT__|PACKAGE__|USE_CASE__|INFORMATION_FLOW__|node:|edge:)/,
+                /^(CLASS__|ACTIVITY__|STATE_MACHINE__|STATEMACHINE__|COMMUNICATION__|DEPLOYMENT__|PACKAGE__|USE_CASE__|USECASE__|INFORMATION_FLOW__|INFORMATIONFLOW__|node:|edge:)/i,
                 ''
             )
             .replace(/^.*:/, '') // Remove any remaining prefix before colon
@@ -558,33 +598,29 @@ export class InteractionReplayService {
             if (action) {
                 const oldElementId = (event.data as any)._oldElementId;
 
+                let waitPromise: Promise<string> | null = null;
+                if ((action.kind === 'createNode' || action.kind === 'createEdge') && oldElementId) {
+                    waitPromise = this.waitForNewElementId(action.elementTypeId);
+                }
+
                 await this.actionDispatcher.dispatch(action);
 
-                if (action.kind === 'createNode' && oldElementId) {
-                    const newElementId = await this.waitForNewElementId(action.elementTypeId);
+                if (waitPromise) {
+                    const newElementId = await waitPromise;
                     if (newElementId) {
                         console.log(`[Replay] ID Mapping created: ${oldElementId} -> ${newElementId}`);
                         this.idMapping.set(oldElementId, newElementId);
                         this.elementTypes.set(oldElementId, action.elementTypeId);
 
-                        // Also map the label ID
-                        const oldLabelId = `${oldElementId}_name_label`;
-                        const newLabelId = `${newElementId}_name_label`;
-                        this.idMapping.set(oldLabelId, newLabelId);
-                        console.log(`[Replay] Label ID Mapping created: ${oldLabelId} -> ${newLabelId}`);
+                        if (action.kind === 'createNode') {
+                            // Also map the label ID for subsequent applyLabelEdit events
+                            const oldLabelId = `${oldElementId}_name_label`;
+                            const newLabelId = `${newElementId}_name_label`;
+                            this.idMapping.set(oldLabelId, newLabelId);
+                            console.log(`[Replay] Label ID Mapping created: ${oldLabelId} -> ${newLabelId}`);
+                        }
                     } else {
                         console.warn(`[Replay] Failed to get new element ID for ${action.elementTypeId} (old ID: ${oldElementId})`);
-                    }
-                }
-
-                if (action.kind === 'createEdge' && oldElementId) {
-                    const newElementId = await this.waitForNewElementId(action.elementTypeId);
-                    if (newElementId) {
-                        console.log(`[Replay] Edge ID Mapping created: ${oldElementId} -> ${newElementId}`);
-                        this.idMapping.set(oldElementId, newElementId);
-                        this.elementTypes.set(oldElementId, action.elementTypeId);
-                    } else {
-                        console.warn(`[Replay] Failed to get new edge ID for ${action.elementTypeId} (old ID: ${oldElementId})`);
                     }
                 }
 
@@ -641,85 +677,81 @@ export class InteractionReplayService {
     }
 
     /**
-     * Update container tracking based on selected element type
+     * Update container tracking based on selected element type.
+     * Comparisons are case-insensitive so this works regardless of whether
+     * the GLSP server emits `CLASS__Class` (legacy) or `class__Class` (post-merge).
      */
     private updateContainerTracking(elementType: string, mappedId: string): void {
+        const t = elementType.toLowerCase();
+
         // Activity diagram
-        if (
-            elementType === 'ACTIVITY__Activity' ||
-            (elementType.includes('Activity') && !elementType.includes('Node') && !elementType.includes('Partition'))
-        ) {
+        if (t === 'activity__activity' || (t.includes('activity') && !t.includes('node') && !t.includes('partition'))) {
             this.lastSelectedActivityId = mappedId;
         }
 
         // Class diagram - include AbstractClass
-        if (
-            elementType === 'CLASS__Class' ||
-            elementType === 'CLASS__AbstractClass' ||
-            elementType === 'CLASS__Interface' ||
-            elementType === 'CLASS__DataType'
-        ) {
+        if (t === 'class__class' || t === 'class__abstractclass' || t === 'class__interface' || t === 'class__datatype') {
             this.lastSelectedClassId = mappedId;
             console.log(`[Replay] Updated lastSelectedClassId to ${mappedId} (type: ${elementType})`);
         }
-        if (elementType === 'CLASS__Enumeration') {
+        if (t === 'class__enumeration') {
             this.lastSelectedEnumerationId = mappedId;
         }
 
         // Communication diagram
-        if (elementType === 'COMMUNICATION__Interaction') {
+        if (t === 'communication__interaction') {
             this.lastSelectedInteractionId = mappedId;
         }
 
-        // State Machine diagram
-        if (elementType === 'STATE_MACHINE__StateMachine') {
+        // State Machine diagram - tolerate both `state_machine__` and `statemachine__` prefixes
+        if (t === 'state_machine__statemachine' || t === 'statemachine__statemachine') {
             this.lastSelectedStateMachineId = mappedId;
         }
-        if (elementType === 'STATE_MACHINE__Region') {
+        if (t === 'state_machine__region' || t === 'statemachine__region') {
             this.lastSelectedRegionId = mappedId;
         }
 
         // Deployment diagram
-        if (
-            elementType === 'DEPLOYMENT__Node' ||
-            elementType === 'DEPLOYMENT__Device' ||
-            elementType === 'DEPLOYMENT__ExecutionEnvironment'
-        ) {
+        if (t === 'deployment__node' || t === 'deployment__device' || t === 'deployment__executionenvironment') {
             this.lastSelectedNodeId = mappedId;
         }
     }
 
     /**
-     * Get the appropriate container ID for an element type
+     * Get the appropriate container ID for an element type.
+     * Lookup is case-insensitive to tolerate both legacy uppercase prefixes
+     * (e.g. `ACTIVITY__InitialNode`) and the post-merge lowercase form.
      */
     private getContainerIdForElementType(elementTypeId: string): string | null {
+        const t = elementTypeId.toLowerCase();
+
         // Activity nodes need Activity container
-        if (InteractionReplayService.ACTIVITY_NODE_TYPES.includes(elementTypeId)) {
+        if (InteractionReplayService.ACTIVITY_NODE_TYPES.some(x => x.toLowerCase() === t)) {
             return this.lastSelectedActivityId;
         }
 
         // State Machine elements need Region container
-        if (InteractionReplayService.STATE_MACHINE_REGION_TYPES.includes(elementTypeId)) {
+        if (InteractionReplayService.STATE_MACHINE_REGION_TYPES.some(x => x.toLowerCase() === t)) {
             return this.lastSelectedRegionId;
         }
 
         // Region needs StateMachine container
-        if (elementTypeId === 'STATE_MACHINE__Region') {
+        if (t === 'state_machine__region' || t === 'statemachine__region') {
             return this.lastSelectedStateMachineId;
         }
 
         // Communication Lifeline needs Interaction container
-        if (InteractionReplayService.COMMUNICATION_INTERACTION_TYPES.includes(elementTypeId)) {
+        if (InteractionReplayService.COMMUNICATION_INTERACTION_TYPES.some(x => x.toLowerCase() === t)) {
             return this.lastSelectedInteractionId;
         }
 
         // Class members need Class/Interface/DataType container
-        if (InteractionReplayService.CLASS_MEMBER_TYPES.includes(elementTypeId)) {
+        if (InteractionReplayService.CLASS_MEMBER_TYPES.some(x => x.toLowerCase() === t)) {
             return this.lastSelectedClassId || this.lastSelectedNodeId;
         }
 
         // Enumeration literals need Enumeration container
-        if (InteractionReplayService.ENUMERATION_MEMBER_TYPES.includes(elementTypeId)) {
+        if (InteractionReplayService.ENUMERATION_MEMBER_TYPES.some(x => x.toLowerCase() === t)) {
             return this.lastSelectedEnumerationId;
         }
 
@@ -750,8 +782,13 @@ export class InteractionReplayService {
                     } else if (data.containerId && data.containerId !== '$ROOT') {
                         action.containerId = this.idMapping.get(data.containerId) || data.containerId;
                         console.log(`[Replay] createNode ${data.elementTypeId} in mapped container ${action.containerId}`);
+                    } else if (this.graphRootId) {
+                        action.containerId = this.graphRootId;
+                        console.log(`[Replay] createNode ${data.elementTypeId} at graph root ${this.graphRootId}`);
                     } else {
-                        console.log(`[Replay] createNode ${data.elementTypeId} at root`);
+                        console.warn(
+                            `[Replay] createNode ${data.elementTypeId} at root, but no graphRootId captured yet — this will likely be a no-op on the server.`
+                        );
                     }
 
                     return action;

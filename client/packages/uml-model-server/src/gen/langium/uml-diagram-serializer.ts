@@ -59,6 +59,8 @@ import {
     isPackageImport,
     PackageMerge,
     isPackageMerge,
+    ElementImport,
+    isElementImport,
     Realization,
     isRealization,
     Substitution,
@@ -67,6 +69,8 @@ import {
     isUsage,
     Package,
     isPackage,
+    Visibility,
+    isVisibility,
     ClassDiagramElements,
     isClassDiagramElements,
     ClassDiagramNodes,
@@ -87,8 +91,6 @@ import {
     isConcurrency,
     RelationType,
     isRelationType,
-    Visibility,
-    isVisibility,
     Element,
     isElement,
     ElementWithSizeAndPosition,
@@ -194,6 +196,12 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (element.name !== undefined && element.name !== null) {
             str.push('"name": ' + '"' + element.name + '"');
         }
+        if (element.isAbstract !== undefined && element.isAbstract !== null) {
+            str.push('"isAbstract": ' + element.isAbstract + '');
+        }
+        if (element.visibility !== undefined && element.visibility !== null) {
+            str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
         if (element.values !== undefined && element.values !== null) {
             str.push('"values": [' + element.values.map(property => this.serializeEnumerationLiteral(property)).join(',') + ']');
         }
@@ -245,9 +253,6 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
         }
-        if (element.skip !== undefined && element.skip !== null) {
-            str.push('"skip": ' + element.skip + '');
-        }
         return '{' + str.join(',\n') + '}';
     }
 
@@ -283,9 +288,6 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
-        }
-        if (element.skip !== undefined && element.skip !== null) {
-            str.push('"skip": ' + element.skip + '');
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -331,6 +333,9 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         }
         if (element.isReadOnly !== undefined && element.isReadOnly !== null) {
             str.push('"isReadOnly": ' + element.isReadOnly + '');
+        }
+        if (element.isNavigable !== undefined && element.isNavigable !== null) {
+            str.push('"isNavigable": ' + element.isNavigable + '');
         }
         if (element.isUnique !== undefined && element.isUnique !== null) {
             str.push('"isUnique": ' + element.isUnique + '');
@@ -552,6 +557,9 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         }
         if (isPackageMerge(element)) {
             return this.serializePackageMerge(element);
+        }
+        if (isElementImport(element)) {
+            return this.serializeElementImport(element);
         }
         if (isRealization(element)) {
             return this.serializeRealization(element);
@@ -956,6 +964,42 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         return '{' + str.join(',\n') + '}';
     }
 
+    serializeElementImport(element: ElementImport): string {
+        let str: Array<string> = [];
+        str.push('"__type": "ElementImport"');
+        if (element.__id !== undefined && element.__id !== null) {
+            str.push('"__id": ' + '"' + element.__id + '"');
+        }
+        if (element.alias !== undefined && element.alias !== null) {
+            str.push('"alias": ' + '"' + element.alias + '"');
+        }
+        if (element.visibility !== undefined && element.visibility !== null) {
+            str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.source !== undefined && element.source !== null) {
+            str.push(
+                '"source": ' +
+                    '{' +
+                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
+                    (element.source.ref?.__id ?? 'undefined') +
+                    '"}'
+            );
+        }
+        if (element.target !== undefined && element.target !== null) {
+            str.push(
+                '"target": ' +
+                    '{' +
+                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
+                    (element.target.ref?.__id ?? 'undefined') +
+                    '"}'
+            );
+        }
+        if (element.relationType !== undefined && element.relationType !== null) {
+            str.push('"relationType": ' + this.serializeRelationType(element.relationType));
+        }
+        return '{' + str.join(',\n') + '}';
+    }
+
     serializeRealization(element: Realization): string {
         let str: Array<string> = [];
         str.push('"__type": "Realization"');
@@ -1096,6 +1140,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         return '{' + str.join(',\n') + '}';
     }
 
+    serializeVisibility(element: Visibility): any {
+        return '"' + element + '"';
+    }
+
     serializeClassDiagramElements(element: ClassDiagramElements): any {
         if (isClassDiagramNodes(element)) {
             return this.serializeClassDiagramNodes(element);
@@ -1165,6 +1213,9 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         }
         if (isComposition(element)) {
             return this.serializeComposition(element);
+        }
+        if (isElementImport(element)) {
+            return this.serializeElementImport(element);
         }
         if (isInterfaceRealization(element)) {
             return this.serializeInterfaceRealization(element);
@@ -1239,10 +1290,6 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         return '"' + element + '"';
     }
 
-    serializeVisibility(element: Visibility): any {
-        return '"' + element + '"';
-    }
-
     serializeElement(element: Element): any {
         if (isElementWithSizeAndPosition(element)) {
             return this.serializeElementWithSizeAndPosition(element);
@@ -1280,9 +1327,6 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (isInstanceSpecification(element)) {
             return this.serializeInstanceSpecification(element);
         }
-        if (isSlot(element)) {
-            return this.serializeSlot(element);
-        }
         if (isPackage(element)) {
             return this.serializePackage(element);
         }
@@ -1306,6 +1350,9 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         }
         if (isParameter(element)) {
             return this.serializeParameter(element);
+        }
+        if (isSlot(element)) {
+            return this.serializeSlot(element);
         }
         if (isLiteralSpecification(element)) {
             return this.serializeLiteralSpecification(element);

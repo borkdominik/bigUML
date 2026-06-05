@@ -4,7 +4,14 @@ import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palet
 import { CreateNodeOperation, DeleteElementOperation } from '@eclipse-glsp/server';
 import { type Enumeration } from '@borkdominik-biguml/uml-model-server/grammar';
 import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
-import { PropertyPalette, ReferenceProperty, TextProperty } from '@borkdominik-biguml/big-property-palette/glsp-server';
+import {
+    BoolProperty,
+    ChoiceProperty,
+    PropertyPalette,
+    PropertyPaletteChoices,
+    ReferenceProperty,
+    TextProperty
+} from '@borkdominik-biguml/big-property-palette/glsp-server';
 
 export namespace EnumerationPropertyPaletteHandler {
     export function getPropertyPalette(semanticElement: Enumeration): SetPropertyPaletteAction[] {
@@ -12,6 +19,19 @@ export namespace EnumerationPropertyPaletteHandler {
             SetPropertyPaletteAction.create(
                 <PropertyPalette elementId={semanticElement.__id} label={(semanticElement as any).name ?? semanticElement.$type}>
                     <TextProperty elementId={semanticElement.__id} propertyId='name' text={semanticElement.name!} label='Name' />
+                    <BoolProperty
+                        elementId={semanticElement.__id}
+                        propertyId='isAbstract'
+                        value={!!semanticElement.isAbstract}
+                        label='isAbstract'
+                    />
+                    <ChoiceProperty
+                        elementId={semanticElement.__id}
+                        propertyId='visibility'
+                        choices={PropertyPaletteChoices.VISIBILITY}
+                        choice={semanticElement.visibility!}
+                        label='Visibility'
+                    />
                     <ReferenceProperty
                         elementId={semanticElement.__id}
                         propertyId='values'

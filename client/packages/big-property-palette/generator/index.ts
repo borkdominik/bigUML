@@ -8,4 +8,4 @@
  **********************************************************************************/
 
 export * from './contribution.js';
-export * from './decorators.js';
+export * from './decorator/property-palette.decorator.js';

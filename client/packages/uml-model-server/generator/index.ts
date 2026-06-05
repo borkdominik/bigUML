@@ -7,7 +7,8 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
+export * from './builder/grammar-transformer.js';
 export * from './contribution.js';
-export * from './langium-generator.js';
-export * from './serializer-generator.js';
-export * from './validation-generator.js';
+export * from './render/diagram-serializer.renderer.js';
+export * from './render/langium.renderer.js';
+export * from './render/validation.renderer.js';

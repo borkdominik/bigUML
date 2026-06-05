@@ -7,22 +7,21 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import type { UmlToolingContributionResult } from '@borkdominik-biguml/uml-language-tooling';
-import { type LangiumDeclaration } from '@borkdominik-biguml/uml-language-tooling';
-import { buildCreationPath } from './creation-path-generator.js';
-import { buildDefaultValue } from './default-value-generator.js';
-import { buildDiagramLanguageMetadata } from './diagram-language-metadata-generator.js';
-import { buildModelTypes } from './model-types-generator.js';
-import { buildToolPaletteItemProvider } from './tool-palette-generator.js';
+import type { GeneratorContext, GeneratorResult } from '@borkdominik-biguml/uml-language-tooling';
+import { renderCreationPath } from './render/creation-path.renderer.js';
+import { renderDefaultValue } from './render/default-value.renderer.js';
+import { renderDiagramLanguageMetadata } from './render/diagram-language-metadata.renderer.js';
+import { renderModelTypes } from './render/model-types.renderer.js';
+import { renderToolPaletteItemProvider } from './render/tool-palette.renderer.js';
 
-export function umlToolingContribution(extensionPath: string, declarations: LangiumDeclaration[]): UmlToolingContributionResult {
+export function generate({ outputPath, declarations }: GeneratorContext): GeneratorResult {
     const results: { path: string; content: string }[] = [];
 
-    results.push(...buildCreationPath(extensionPath, declarations));
-    results.push(...buildDefaultValue(extensionPath, declarations));
-    results.push(...buildModelTypes(extensionPath, declarations));
-    results.push(...buildDiagramLanguageMetadata(extensionPath, declarations));
-    results.push(...buildToolPaletteItemProvider(extensionPath, declarations));
+    results.push(...renderCreationPath(outputPath, declarations));
+    results.push(...renderDefaultValue(outputPath, declarations));
+    results.push(...renderModelTypes(outputPath, declarations));
+    results.push(...renderDiagramLanguageMetadata(outputPath, declarations));
+    results.push(...renderToolPaletteItemProvider(outputPath, declarations));
 
     return { files: results };
 }

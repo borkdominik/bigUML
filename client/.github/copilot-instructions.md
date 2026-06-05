@@ -33,6 +33,7 @@ Key architectural rules:
 - Before adding new code, check if an existing pattern in the same package already solves the problem. Reuse existing base classes (`BaseWebviewProvider`, `VSCodeCommand`, generic operation handlers).
 - When adding a new UML element: modify `tooling/uml-language/src/language/def.ts` and run `npm run generate`. Do not create handlers manually.
 - When adding a new feature package: follow the environment folder convention (`src/env/{common,vscode,glsp-server,glsp-client,browser}/`), expose exports via `package.json` exports map, and register modules in `extension.config.ts` and/or `server.main.ts`.
+- Never write backwards-compatible code. If a change requires updates to existing code, update the existing code. Do not add new code that supports old patterns.
 
 ## Verification
 

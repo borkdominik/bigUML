@@ -193,6 +193,13 @@ export class ClassDiagramToolPaletteItemProvider extends ToolPaletteItemProvider
                         actions: [TriggerEdgeCreationAction.create(ClassDiagramEdgeTypes.PACKAGE_MERGE)]
                     },
                     {
+                        id: 'element-import',
+                        sortString: 'A',
+                        label: 'Element Import',
+                        icon: 'uml-package-import-icon',
+                        actions: [TriggerEdgeCreationAction.create(ClassDiagramEdgeTypes.ELEMENT_IMPORT)]
+                    },
+                    {
                         id: 'realization',
                         sortString: 'A',
                         label: 'Realization',

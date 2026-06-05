@@ -24,7 +24,7 @@ export function isAggregationType(item: unknown): item is AggregationType {
     return item === 'NONE' || item === 'SHARED' || item === 'COMPOSITE';
 }
 
-export type ClassDiagramEdges = Abstraction | Aggregation | Association | Composition | Dependency | Generalization | InterfaceRealization | PackageImport | PackageMerge | Realization | Substitution | Usage;
+export type ClassDiagramEdges = Abstraction | Aggregation | Association | Composition | Dependency | ElementImport | Generalization | InterfaceRealization | PackageImport | PackageMerge | Realization | Substitution | Usage;
 
 export const ClassDiagramEdges = 'ClassDiagramEdges';
 
@@ -100,7 +100,7 @@ export function isMetaInfo(item: unknown): item is MetaInfo {
     return reflection.isInstance(item, MetaInfo);
 }
 
-export type Node = Class | DataType | Enumeration | InstanceSpecification | Interface | Package | PrimitiveType | Slot;
+export type Node = Class | DataType | Enumeration | InstanceSpecification | Interface | Package | PrimitiveType;
 
 export const Node = 'Node';
 
@@ -128,7 +128,7 @@ export function isSlotDefiningFeature(item: unknown): item is SlotDefiningFeatur
     return reflection.isInstance(item, SlotDefiningFeature);
 }
 
-export type Unbounded = EnumerationLiteral | LiteralSpecification | Operation | Parameter | Property;
+export type Unbounded = EnumerationLiteral | LiteralSpecification | Operation | Parameter | Property | Slot;
 
 export const Unbounded = 'Unbounded';
 
@@ -151,7 +151,6 @@ export interface Class extends AstNode {
     name: string
     operations: Array<Operation>
     properties: Array<Property>
-    skip: boolean
     visibility: Visibility
 }
 
@@ -209,8 +208,10 @@ export interface Enumeration extends AstNode {
     readonly $container: ClassDiagram | Package;
     readonly $type: 'Enumeration';
     __id: string
+    isAbstract: boolean
     name: string
     values: Array<EnumerationLiteral>
+    visibility?: Visibility
 }
 
 export const Enumeration = 'Enumeration';
@@ -370,6 +371,7 @@ export interface Property extends AstNode {
     aggregation?: AggregationType
     isDerived: boolean
     isDerivedUnion: boolean
+    isNavigable: boolean
     isOrdered: boolean
     isReadOnly: boolean
     isStatic: boolean
@@ -388,7 +390,7 @@ export function isProperty(item: unknown): item is Property {
 
 export interface Relation extends AstNode {
     readonly $container: ClassDiagram;
-    readonly $type: 'Abstraction' | 'Aggregation' | 'Association' | 'Composition' | 'Dependency' | 'Generalization' | 'InterfaceRealization' | 'PackageImport' | 'PackageMerge' | 'Realization' | 'Relation' | 'Substitution' | 'Usage';
+    readonly $type: 'Abstraction' | 'Aggregation' | 'Association' | 'Composition' | 'Dependency' | 'ElementImport' | 'Generalization' | 'InterfaceRealization' | 'PackageImport' | 'PackageMerge' | 'Realization' | 'Relation' | 'Substitution' | 'Usage';
     __id: string
     relationType: RelationType
     source: Reference<Node>
@@ -417,7 +419,7 @@ export function isSize(item: unknown): item is Size {
 }
 
 export interface Slot extends AstNode {
-    readonly $container: ClassDiagram | InstanceSpecification | Package;
+    readonly $container: ClassDiagram | InstanceSpecification;
     readonly $type: 'Slot';
     __id: string
     definingFeature?: Reference<SlotDefiningFeature>
@@ -441,7 +443,6 @@ export interface AbstractClass extends Class {
     name: string
     operations: Array<Operation>
     properties: Array<Property>
-    skip: boolean
     visibility: Visibility
 }
 
@@ -552,6 +553,23 @@ export const Dependency = 'Dependency';
 
 export function isDependency(item: unknown): item is Dependency {
     return reflection.isInstance(item, Dependency);
+}
+
+export interface ElementImport extends Relation {
+    readonly $container: ClassDiagram;
+    readonly $type: 'ElementImport';
+    __id: string
+    alias?: string
+    relationType: RelationType
+    source: Reference<Node>
+    target: Reference<Node>
+    visibility?: Visibility
+}
+
+export const ElementImport = 'ElementImport';
+
+export function isElementImport(item: unknown): item is ElementImport {
+    return reflection.isInstance(item, ElementImport);
 }
 
 export interface Generalization extends Relation {
@@ -686,6 +704,7 @@ export type UmlDiagramAstType = {
     Diagram: Diagram
     Edge: Edge
     Element: Element
+    ElementImport: ElementImport
     ElementWithSizeAndPosition: ElementWithSizeAndPosition
     Enumeration: Enumeration
     EnumerationLiteral: EnumerationLiteral
@@ -717,7 +736,7 @@ export type UmlDiagramAstType = {
 export class UmlDiagramAstReflection extends AbstractAstReflection {
 
     getAllTypes(): string[] {
-        return ['AbstractClass', 'Abstraction', 'Aggregation', 'Association', 'Class', 'ClassDiagram', 'ClassDiagramEdges', 'ClassDiagramElements', 'ClassDiagramNodes', 'Composition', 'DataType', 'DataTypeReference', 'Dependency', 'Diagram', 'Edge', 'Element', 'ElementWithSizeAndPosition', 'Enumeration', 'EnumerationLiteral', 'Generalization', 'InstanceSpecification', 'Interface', 'InterfaceRealization', 'LiteralSpecification', 'MetaInfo', 'Node', 'Operation', 'Package', 'PackageImport', 'PackageMerge', 'Parameter', 'Position', 'PrimitiveType', 'Property', 'Realization', 'Relation', 'Size', 'Slot', 'SlotDefiningFeature', 'Substitution', 'Unbounded', 'Usage'];
+        return ['AbstractClass', 'Abstraction', 'Aggregation', 'Association', 'Class', 'ClassDiagram', 'ClassDiagramEdges', 'ClassDiagramElements', 'ClassDiagramNodes', 'Composition', 'DataType', 'DataTypeReference', 'Dependency', 'Diagram', 'Edge', 'Element', 'ElementImport', 'ElementWithSizeAndPosition', 'Enumeration', 'EnumerationLiteral', 'Generalization', 'InstanceSpecification', 'Interface', 'InterfaceRealization', 'LiteralSpecification', 'MetaInfo', 'Node', 'Operation', 'Package', 'PackageImport', 'PackageMerge', 'Parameter', 'Position', 'PrimitiveType', 'Property', 'Realization', 'Relation', 'Size', 'Slot', 'SlotDefiningFeature', 'Substitution', 'Unbounded', 'Usage'];
     }
 
     protected override computeIsSubtype(subtype: string, supertype: string): boolean {
@@ -730,6 +749,7 @@ export class UmlDiagramAstReflection extends AbstractAstReflection {
             case Association:
             case Composition:
             case Dependency:
+            case ElementImport:
             case Generalization:
             case InterfaceRealization:
             case PackageImport:
@@ -760,12 +780,12 @@ export class UmlDiagramAstReflection extends AbstractAstReflection {
             case EnumerationLiteral:
             case LiteralSpecification:
             case Operation:
-            case Parameter: {
+            case Parameter:
+            case Slot: {
                 return this.isSubtype(ClassDiagramNodes, supertype) || this.isSubtype(Unbounded, supertype);
             }
             case InstanceSpecification:
-            case Package:
-            case Slot: {
+            case Package: {
                 return this.isSubtype(ClassDiagramNodes, supertype) || this.isSubtype(Node, supertype);
             }
             case Node: {
@@ -810,6 +830,10 @@ export class UmlDiagramAstReflection extends AbstractAstReflection {
             case 'Dependency:target':
             case 'Dependency:source':
             case 'Dependency:target':
+            case 'ElementImport:source':
+            case 'ElementImport:target':
+            case 'ElementImport:source':
+            case 'ElementImport:target':
             case 'Generalization:source':
             case 'Generalization:target':
             case 'Generalization:source':
@@ -868,8 +892,7 @@ export class UmlDiagramAstReflection extends AbstractAstReflection {
                         { name: 'isAbstract', type: 'boolean' },
                         { name: 'isActive', type: 'boolean' },
                         { name: 'operations', type: 'array' },
-                        { name: 'properties', type: 'array' },
-                        { name: 'skip', type: 'boolean' }
+                        { name: 'properties', type: 'array' }
                     ]
                 };
             }
@@ -904,6 +927,7 @@ export class UmlDiagramAstReflection extends AbstractAstReflection {
                 return {
                     name: 'Enumeration',
                     mandatory: [
+                        { name: 'isAbstract', type: 'boolean' },
                         { name: 'values', type: 'array' }
                     ]
                 };
@@ -961,6 +985,7 @@ export class UmlDiagramAstReflection extends AbstractAstReflection {
                     mandatory: [
                         { name: 'isDerived', type: 'boolean' },
                         { name: 'isDerivedUnion', type: 'boolean' },
+                        { name: 'isNavigable', type: 'boolean' },
                         { name: 'isOrdered', type: 'boolean' },
                         { name: 'isReadOnly', type: 'boolean' },
                         { name: 'isStatic', type: 'boolean' },
@@ -983,8 +1008,7 @@ export class UmlDiagramAstReflection extends AbstractAstReflection {
                         { name: 'isAbstract', type: 'boolean' },
                         { name: 'isActive', type: 'boolean' },
                         { name: 'operations', type: 'array' },
-                        { name: 'properties', type: 'array' },
-                        { name: 'skip', type: 'boolean' }
+                        { name: 'properties', type: 'array' }
                     ]
                 };
             }

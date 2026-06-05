@@ -11,6 +11,22 @@
 // @ts-nocheck
 
 const mapping: Record<string, Array<{ property: string; allowedChildTypes?: string[] }>> = {
+    Diagram: [
+        {
+            property: 'metaInfos',
+            allowedChildTypes: ['Size', 'Position']
+        }
+    ],
+    ClassDiagram: [
+        {
+            property: 'entities',
+            allowedChildTypes: ['ClassDiagramNodes']
+        },
+        {
+            property: 'relations',
+            allowedChildTypes: ['ClassDiagramEdges']
+        }
+    ],
     Enumeration: [
         {
             property: 'values',
@@ -78,16 +94,7 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
     Package: [
         {
             property: 'entities',
-            allowedChildTypes: [
-                'Enumeration',
-                'Class',
-                'Interface',
-                'DataType',
-                'PrimitiveType',
-                'InstanceSpecification',
-                'Slot',
-                'Package'
-            ]
+            allowedChildTypes: ['Enumeration', 'Class', 'Interface', 'DataType', 'PrimitiveType', 'InstanceSpecification', 'Package']
         }
     ]
 };

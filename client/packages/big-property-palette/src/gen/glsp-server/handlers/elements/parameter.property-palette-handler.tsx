@@ -50,7 +50,7 @@ export namespace ParameterPropertyPaletteHandler {
                     <ChoiceProperty
                         elementId={semanticElement.__id}
                         propertyId='effect'
-                        choices={PropertyPaletteChoices.EFFECT}
+                        choices={PropertyPaletteChoices.EFFECT_TYPE}
                         choice={semanticElement.effect!}
                         label='Effect Type'
                     />

@@ -48,6 +48,12 @@ export namespace PropertyPropertyPaletteHandler {
                     />
                     <BoolProperty
                         elementId={semanticElement.__id}
+                        propertyId='isNavigable'
+                        value={!!semanticElement.isNavigable}
+                        label='isNavigable'
+                    />
+                    <BoolProperty
+                        elementId={semanticElement.__id}
                         propertyId='isUnique'
                         value={!!semanticElement.isUnique}
                         label='isUnique'
@@ -79,7 +85,7 @@ export namespace PropertyPropertyPaletteHandler {
                     <ChoiceProperty
                         elementId={semanticElement.__id}
                         propertyId='aggregation'
-                        choices={PropertyPaletteChoices.AGGREGATION}
+                        choices={PropertyPaletteChoices.AGGREGATION_TYPE}
                         choice={semanticElement.aggregation!}
                         label='Aggregation Type'
                     />

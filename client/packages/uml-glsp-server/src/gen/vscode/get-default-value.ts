@@ -60,7 +60,7 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
     ClassDiagram: [
         {
             property: 'diagramType',
-            propertyType: '"\\"CLASS\\""'
+            propertyType: '"CLASS"'
         },
         {
             property: 'entities',
@@ -75,6 +75,15 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
         {
             property: 'name',
             propertyType: 'string'
+        },
+        {
+            property: 'isAbstract',
+            propertyType: 'boolean',
+            defaultValue: false
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
         },
         {
             property: 'values',
@@ -120,10 +129,6 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
         {
             property: 'visibility',
             propertyType: 'Visibility'
-        },
-        {
-            property: 'skip',
-            propertyType: 'boolean'
         }
     ],
     AbstractClass: [
@@ -154,10 +159,6 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
         },
         {
             property: 'isActive',
-            propertyType: 'boolean'
-        },
-        {
-            property: 'skip',
             propertyType: 'boolean'
         }
     ],
@@ -202,6 +203,11 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
         },
         {
             property: 'isReadOnly',
+            propertyType: 'boolean',
+            defaultValue: false
+        },
+        {
+            property: 'isNavigable',
             propertyType: 'boolean',
             defaultValue: false
         },
@@ -631,7 +637,37 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'RelationType'
         }
     ],
+    ElementImport: [
+        {
+            property: 'alias',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'source',
+            propertyType: 'Node'
+        },
+        {
+            property: 'target',
+            propertyType: 'Node'
+        },
+        {
+            property: 'relationType',
+            propertyType: 'RelationType'
+        }
+    ],
     Realization: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
         {
             property: 'source',
             propertyType: 'Node'
@@ -709,7 +745,14 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
     ]
 };
 
-export const noBoundsClasses = new Set<string>(['EnumerationLiteral', 'Property', 'Operation', 'Parameter', 'Slot']);
+export const noBoundsClasses = new Set<string>([
+    'EnumerationLiteral',
+    'Property',
+    'Operation',
+    'Parameter',
+    'Slot',
+    'LiteralSpecification'
+]);
 
 export const astTypeMapping: Record<string, string> = {
     aggregation: 'Association',

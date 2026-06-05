@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { type CrossReference } from '@borkdominik-biguml/uml-language-tooling';
+import { type Language } from '@borkdominik-biguml/uml-language-tooling';
 import {
     type AstNode,
     type AstNodeLocator,
@@ -80,7 +80,7 @@ export interface JsonSerializer {
 
 interface IntermediateReference {
     $refText?: string;
-    $ref?: CrossReference<AstNode>;
+    $ref?: Language.Reference<AstNode>;
     $error?: string;
 }
 
@@ -248,7 +248,7 @@ export class UmlDiagramJsonSerializer implements JsonSerializer {
         }
     }
 
-    protected getRefNode<T extends AstNode>(root: AstNode, ref: CrossReference<T>): AstNode {
+    protected getRefNode<T extends AstNode>(root: AstNode, ref: Language.Reference<T>): AstNode {
         if (ref[properties.referenceProperty] as string) {
             if (ref.__documentUri) {
                 const doc = this.langiumDocs.getOrCreateDocument(URI.parse(ref.__documentUri));

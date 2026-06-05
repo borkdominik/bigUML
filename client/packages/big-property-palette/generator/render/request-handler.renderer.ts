@@ -75,7 +75,7 @@ export function renderRequestHandler(outputPath: string, declarations: Declarati
 
         const dispatchEntries = nodes.map(d => {
             const dynForDecl = getDynamicPropertyTypes(d);
-            const args = ['semanticElement'].concat(dynForDecl.map(t => lcFirst(t) + 'Choices')).join(', ');
+            const args = ['context'].concat(dynForDecl.map(t => lcFirst(t) + 'Choices')).join(', ');
             return {
                 guard: `is${d.name}`,
                 handler: `${d.name}PropertyPaletteHandler`,

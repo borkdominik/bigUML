@@ -7,7 +7,8 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { type AstNode, DefaultServiceRegistry, type JsonSerializer, type LangiumServices, type LangiumSharedServices } from 'langium';
+import { type AstNode, DefaultServiceRegistry, type Hydrator, type JsonSerializer, type LangiumCoreServices } from 'langium';
+import { type LangiumServices, type LangiumSharedServices } from 'langium/lsp';
 import { type TextDocument } from 'vscode-languageserver-textdocument';
 import { type URI } from 'vscode-uri';
 import { type ModelService } from './model-service.js';
@@ -20,13 +21,14 @@ import { type Serializer } from './serializer.js';
  ***************************/
 export interface ExtendedLangiumServices extends LangiumServices {
     serializer: {
+        Hydrator: Hydrator;
         JsonSerializer: JsonSerializer;
         Serializer: Serializer<AstNode>;
     };
 }
 
 export class ExtendedServiceRegistry extends DefaultServiceRegistry {
-    override register(language: ExtendedLangiumServices): void {
+    override register(language: LangiumCoreServices): void {
         super.register(language);
     }
 

@@ -55,18 +55,17 @@ export class UmlDiagramWorkspaceManager extends DefaultWorkspaceManager {
         return this.services.workspace.PackageManager.initialize(folders);
     }
 
-    protected override includeEntry(_workspaceFolder: WorkspaceFolder, entry: FileSystemNode, fileExtensions: string[]): boolean {
-        // Note: same as super implementation but we also allow 'node_modules' directories to be scanned
+    override shouldIncludeEntry(entry: FileSystemNode): boolean {
         const name = Utils.basename(entry.uri);
         if (name.startsWith('.')) {
             return false;
         }
         if (entry.isDirectory) {
-            // CHANGE: Also support 'node_modules' directory
+            // Also support 'node_modules' directory (unlike the default which excludes it)
             return name !== 'out';
         } else if (entry.isFile) {
-            const extname = Utils.extname(entry.uri);
-            return fileExtensions.includes(extname);
+            // Only include files with registered language extensions; package.json is handled by PackageManager
+            return this.serviceRegistry.hasServices(entry.uri);
         }
         return false;
     }

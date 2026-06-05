@@ -38,5 +38,10 @@ export const PropertyPaletteChoices = {
         { label: 'read', value: 'READ' },
         { label: 'update', value: 'UPDATE' },
         { label: 'delete', value: 'DELETE' }
+    ],
+    TRANSITION_KIND: [
+        { label: 'internal', value: 'INTERNAL' },
+        { label: 'external', value: 'EXTERNAL' },
+        { label: 'local', value: 'LOCAL' }
     ]
 } as const;

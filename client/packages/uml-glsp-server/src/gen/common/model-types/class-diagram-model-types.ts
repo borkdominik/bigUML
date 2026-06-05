@@ -9,7 +9,7 @@
  **********************************************************************************/
 
 import { DefaultTypes } from '@eclipse-glsp/server';
-import { representationTemplateTypeId, representationTypeId } from '../../../env/common/model/model-type-utils.js';
+import { representationTypeId } from '../../../env/common/model/model-type-utils.js';
 import { AstTypeUtils } from '../../../env/common/model/model-type-utils.js';
 
 export namespace ClassDiagramNodeTypes {
@@ -33,8 +33,6 @@ export namespace ClassDiagramEdgeTypes {
     export const ABSTRACTION = representationTypeId('Class', DefaultTypes.EDGE, 'Abstraction');
     export const DEPENDENCY = representationTypeId('Class', DefaultTypes.EDGE, 'Dependency');
     export const ASSOCIATION = representationTypeId('Class', DefaultTypes.EDGE, 'Association');
-    export const AGGREGATION = representationTemplateTypeId('Class', DefaultTypes.EDGE, 'aggregation', 'Association');
-    export const COMPOSITION = representationTemplateTypeId('Class', DefaultTypes.EDGE, 'composition', 'Association');
     export const ELEMENT_IMPORT = representationTypeId('Class', DefaultTypes.EDGE, 'ElementImport');
     export const INTERFACE_REALIZATION = representationTypeId('Class', DefaultTypes.EDGE, 'InterfaceRealization');
     export const GENERALIZATION = representationTypeId('Class', DefaultTypes.EDGE, 'Generalization');
@@ -66,8 +64,6 @@ export namespace ClassDiagramModelTypes {
     export const ABSTRACTION = ClassDiagramEdgeTypes.ABSTRACTION;
     export const DEPENDENCY = ClassDiagramEdgeTypes.DEPENDENCY;
     export const ASSOCIATION = ClassDiagramEdgeTypes.ASSOCIATION;
-    export const AGGREGATION = ClassDiagramEdgeTypes.AGGREGATION;
-    export const COMPOSITION = ClassDiagramEdgeTypes.COMPOSITION;
     export const ELEMENT_IMPORT = ClassDiagramEdgeTypes.ELEMENT_IMPORT;
     export const INTERFACE_REALIZATION = ClassDiagramEdgeTypes.INTERFACE_REALIZATION;
     export const GENERALIZATION = ClassDiagramEdgeTypes.GENERALIZATION;
@@ -80,9 +76,35 @@ export namespace ClassDiagramModelTypes {
 
 export namespace ClassAstTypes {
     const aliases: Record<string, string> = {
-        [ClassDiagramModelTypes.ABSTRACT_CLASS]: 'Class',
-        [ClassDiagramModelTypes.AGGREGATION]: 'Association',
-        [ClassDiagramModelTypes.COMPOSITION]: 'Association'
+        [ClassDiagramModelTypes.ABSTRACT_CLASS]: 'Class'
+    };
+
+    const typeMap: Record<string, string> = {
+        Enumeration: ClassDiagramModelTypes.ENUMERATION,
+        EnumerationLiteral: ClassDiagramModelTypes.ENUMERATION_LITERAL,
+        Class: ClassDiagramModelTypes.CLASS,
+        AbstractClass: ClassDiagramModelTypes.ABSTRACT_CLASS,
+        Interface: ClassDiagramModelTypes.INTERFACE,
+        Package: ClassDiagramModelTypes.PACKAGE,
+        Property: ClassDiagramModelTypes.PROPERTY,
+        Operation: ClassDiagramModelTypes.OPERATION,
+        Parameter: ClassDiagramModelTypes.PARAMETER,
+        DataType: ClassDiagramModelTypes.DATA_TYPE,
+        PrimitiveType: ClassDiagramModelTypes.PRIMITIVE_TYPE,
+        InstanceSpecification: ClassDiagramModelTypes.INSTANCE_SPECIFICATION,
+        Slot: ClassDiagramModelTypes.SLOT,
+        LiteralSpecification: ClassDiagramModelTypes.LITERAL_SPECIFICATION,
+        Abstraction: ClassDiagramModelTypes.ABSTRACTION,
+        Dependency: ClassDiagramModelTypes.DEPENDENCY,
+        Association: ClassDiagramModelTypes.ASSOCIATION,
+        ElementImport: ClassDiagramModelTypes.ELEMENT_IMPORT,
+        InterfaceRealization: ClassDiagramModelTypes.INTERFACE_REALIZATION,
+        Generalization: ClassDiagramModelTypes.GENERALIZATION,
+        PackageImport: ClassDiagramModelTypes.PACKAGE_IMPORT,
+        PackageMerge: ClassDiagramModelTypes.PACKAGE_MERGE,
+        Realization: ClassDiagramModelTypes.REALIZATION,
+        Substitution: ClassDiagramModelTypes.SUBSTITUTION,
+        Usage: ClassDiagramModelTypes.USAGE
     };
 
     export function convertToAst(elementId: string): string {
@@ -90,5 +112,13 @@ export namespace ClassAstTypes {
             return aliases[elementId];
         }
         return AstTypeUtils.stripPrefix(elementId);
+    }
+
+    export function convertToElementType(astType: string): string {
+        const elementType = typeMap[astType];
+        if (!elementType) {
+            throw new Error(`[ClassAstTypes] No element type found for AST type '${astType}'`);
+        }
+        return elementType;
     }
 }

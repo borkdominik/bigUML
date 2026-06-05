@@ -39,7 +39,7 @@ import {
     isSize
 } from '@borkdominik-biguml/uml-model-server/grammar';
 import { UmlDiagramLSPServices } from '@borkdominik-biguml/uml-model-server/integration';
-import { type AstNode, streamAst } from 'langium';
+import { type AstNode, AstUtils } from 'langium';
 
 type JSONValue = string | number | boolean | null | JSONObject | JSONArray;
 interface JSONObject {
@@ -74,7 +74,7 @@ export class DiagramModelIndex extends GModelIndex {
         this.idToPath.clear();
         this.dataTypes.length = 0;
         this.definingFeatures.length = 0;
-        streamAst(root).forEach(node => {
+        AstUtils.streamAst(root).forEach(node => {
             this.indexAstNode(node);
             this.indexDataTypeNode(node);
             this.indexDefiningFeatureNode(node);

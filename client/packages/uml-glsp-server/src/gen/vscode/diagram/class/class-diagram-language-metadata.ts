@@ -20,4 +20,8 @@ export class ClassDiagramLanguageMetadata implements DiagramLanguageMetadata {
     convertToAst(elementTypeId: string): string {
         return ClassAstTypes.convertToAst(elementTypeId);
     }
+
+    convertToElementType(astType: string): string {
+        return ClassAstTypes.convertToElementType(astType);
+    }
 }

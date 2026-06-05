@@ -13,10 +13,8 @@ import { inject, injectable } from 'inversify';
 import {
     isAbstractClass,
     isAbstraction,
-    isAggregation,
     isAssociation,
     isClass,
-    isComposition,
     isDataType,
     isDependency,
     isElementImport,
@@ -39,13 +37,12 @@ import {
     isSubstitution,
     isUsage
 } from '@borkdominik-biguml/uml-model-server/grammar';
-import { DiagramModelState } from '@borkdominik-biguml/uml-glsp-server/vscode';
+import { DiagramModelState, DiagramLanguageMetadata } from '@borkdominik-biguml/uml-glsp-server/vscode';
+import type { DiagramLanguageMetadata as DiagramLanguageMetadataType } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import { AbstractClassPropertyPaletteHandler } from './elements/abstract-class.property-palette-handler.js';
 import { AbstractionPropertyPaletteHandler } from './elements/abstraction.property-palette-handler.js';
-import { AggregationPropertyPaletteHandler } from './elements/aggregation.property-palette-handler.js';
 import { AssociationPropertyPaletteHandler } from './elements/association.property-palette-handler.js';
 import { ClassPropertyPaletteHandler } from './elements/class.property-palette-handler.js';
-import { CompositionPropertyPaletteHandler } from './elements/composition.property-palette-handler.js';
 import { DataTypePropertyPaletteHandler } from './elements/data-type.property-palette-handler.js';
 import { DependencyPropertyPaletteHandler } from './elements/dependency.property-palette-handler.js';
 import { ElementImportPropertyPaletteHandler } from './elements/element-import.property-palette-handler.js';
@@ -74,6 +71,9 @@ export class RequestClassPropertyPaletteActionHandler implements ActionHandler {
     @inject(DiagramModelState)
     protected modelState!: DiagramModelState;
 
+    @inject(DiagramLanguageMetadata)
+    protected languageMetadata!: DiagramLanguageMetadataType;
+
     execute(action: RequestPropertyPaletteAction): MaybePromise<any[]> {
         try {
             if (!action.elementId) {
@@ -93,6 +93,8 @@ export class RequestClassPropertyPaletteActionHandler implements ActionHandler {
                 return [SetPropertyPaletteAction.create()];
             }
 
+            const context = { semanticElement, languageMetadata: this.languageMetadata };
+
             const dataTypeChoices = (this.modelState.index.getAllDataTypes?.() ?? [])
                 .filter((item: any) => !!item && !!item.__id && !!item.name)
                 .map((item: any) => ({
@@ -107,60 +109,56 @@ export class RequestClassPropertyPaletteActionHandler implements ActionHandler {
                     value: item.__id + '_refValue',
                     secondaryText: item.$type
                 }));
-            if (isEnumeration(semanticElement)) {
-                return EnumerationPropertyPaletteHandler.getPropertyPalette(semanticElement);
-            } else if (isEnumerationLiteral(semanticElement)) {
-                return EnumerationLiteralPropertyPaletteHandler.getPropertyPalette(semanticElement);
-            } else if (isClass(semanticElement)) {
-                return ClassPropertyPaletteHandler.getPropertyPalette(semanticElement);
-            } else if (isAbstractClass(semanticElement)) {
-                return AbstractClassPropertyPaletteHandler.getPropertyPalette(semanticElement);
-            } else if (isInterface(semanticElement)) {
-                return InterfacePropertyPaletteHandler.getPropertyPalette(semanticElement);
-            } else if (isProperty(semanticElement)) {
-                return PropertyPropertyPaletteHandler.getPropertyPalette(semanticElement, dataTypeChoices);
-            } else if (isOperation(semanticElement)) {
-                return OperationPropertyPaletteHandler.getPropertyPalette(semanticElement);
-            } else if (isParameter(semanticElement)) {
-                return ParameterPropertyPaletteHandler.getPropertyPalette(semanticElement, dataTypeChoices);
-            } else if (isDataType(semanticElement)) {
-                return DataTypePropertyPaletteHandler.getPropertyPalette(semanticElement);
-            } else if (isPrimitiveType(semanticElement)) {
-                return PrimitiveTypePropertyPaletteHandler.getPropertyPalette(semanticElement);
-            } else if (isInstanceSpecification(semanticElement)) {
-                return InstanceSpecificationPropertyPaletteHandler.getPropertyPalette(semanticElement);
-            } else if (isSlot(semanticElement)) {
-                return SlotPropertyPaletteHandler.getPropertyPalette(semanticElement, definingFeatureChoices);
-            } else if (isLiteralSpecification(semanticElement)) {
-                return LiteralSpecificationPropertyPaletteHandler.getPropertyPalette(semanticElement);
-            } else if (isAbstraction(semanticElement)) {
-                return AbstractionPropertyPaletteHandler.getPropertyPalette(semanticElement);
-            } else if (isDependency(semanticElement)) {
-                return DependencyPropertyPaletteHandler.getPropertyPalette(semanticElement);
+            if (isGeneralization(semanticElement)) {
+                return GeneralizationPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isAssociation(semanticElement)) {
-                return AssociationPropertyPaletteHandler.getPropertyPalette(semanticElement);
-            } else if (isAggregation(semanticElement)) {
-                return AggregationPropertyPaletteHandler.getPropertyPalette(semanticElement);
-            } else if (isComposition(semanticElement)) {
-                return CompositionPropertyPaletteHandler.getPropertyPalette(semanticElement);
-            } else if (isInterfaceRealization(semanticElement)) {
-                return InterfaceRealizationPropertyPaletteHandler.getPropertyPalette(semanticElement);
-            } else if (isGeneralization(semanticElement)) {
-                return GeneralizationPropertyPaletteHandler.getPropertyPalette(semanticElement);
-            } else if (isPackageImport(semanticElement)) {
-                return PackageImportPropertyPaletteHandler.getPropertyPalette(semanticElement);
-            } else if (isPackageMerge(semanticElement)) {
-                return PackageMergePropertyPaletteHandler.getPropertyPalette(semanticElement);
-            } else if (isElementImport(semanticElement)) {
-                return ElementImportPropertyPaletteHandler.getPropertyPalette(semanticElement);
-            } else if (isRealization(semanticElement)) {
-                return RealizationPropertyPaletteHandler.getPropertyPalette(semanticElement);
-            } else if (isSubstitution(semanticElement)) {
-                return SubstitutionPropertyPaletteHandler.getPropertyPalette(semanticElement);
+                return AssociationPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isProperty(semanticElement)) {
+                return PropertyPropertyPaletteHandler.getPropertyPalette(context, dataTypeChoices);
+            } else if (isDataType(semanticElement)) {
+                return DataTypePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isPrimitiveType(semanticElement)) {
+                return PrimitiveTypePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isOperation(semanticElement)) {
+                return OperationPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isParameter(semanticElement)) {
+                return ParameterPropertyPaletteHandler.getPropertyPalette(context, dataTypeChoices);
+            } else if (isInterface(semanticElement)) {
+                return InterfacePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isEnumeration(semanticElement)) {
+                return EnumerationPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isEnumerationLiteral(semanticElement)) {
+                return EnumerationLiteralPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isClass(semanticElement)) {
+                return ClassPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isUsage(semanticElement)) {
-                return UsagePropertyPaletteHandler.getPropertyPalette(semanticElement);
+                return UsagePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isPackageMerge(semanticElement)) {
+                return PackageMergePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isPackageImport(semanticElement)) {
+                return PackageImportPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isPackage(semanticElement)) {
-                return PackagePropertyPaletteHandler.getPropertyPalette(semanticElement);
+                return PackagePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isElementImport(semanticElement)) {
+                return ElementImportPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isDependency(semanticElement)) {
+                return DependencyPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isAbstraction(semanticElement)) {
+                return AbstractionPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isSubstitution(semanticElement)) {
+                return SubstitutionPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isSlot(semanticElement)) {
+                return SlotPropertyPaletteHandler.getPropertyPalette(context, definingFeatureChoices);
+            } else if (isLiteralSpecification(semanticElement)) {
+                return LiteralSpecificationPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isRealization(semanticElement)) {
+                return RealizationPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isInterfaceRealization(semanticElement)) {
+                return InterfaceRealizationPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isInstanceSpecification(semanticElement)) {
+                return InstanceSpecificationPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isAbstractClass(semanticElement)) {
+                return AbstractClassPropertyPaletteHandler.getPropertyPalette(context);
             }
 
             return [SetPropertyPaletteAction.create()];

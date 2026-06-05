@@ -1,0 +1,69 @@
+{
+	"diagram": {
+		"__type": "UseCaseDiagram",
+		"__id": "diagram_20b3d0f7-e21e-428d-a16e-e95b8d141ac1",
+		"diagramType": "USE_CASE",
+		"entities": [
+			{
+				"__type": "Subject",
+				"__id": "Subject_8ddb55d7-1f59-450b-aafb-48cbe780be40",
+				"name": "NewSubject1",
+				"visibility": "PUBLIC",
+				"useCases": []
+			},
+			{
+				"__type": "UseCase",
+				"__id": "UseCase_8dda2d1f-993c-4b65-a5a0-b2794c1b754a",
+				"name": "NewUseCase1",
+				"visibility": "PUBLIC"
+			}
+		],
+		"relations": []
+	},
+	"metaInfos": [
+		{
+			"__type": "Size",
+			"__id": "size_Subject_8ddb55d7-1f59-450b-aafb-48cbe780be40",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Subject_8ddb55d7-1f59-450b-aafb-48cbe780be40"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_Subject_8ddb55d7-1f59-450b-aafb-48cbe780be40",
+			"x": 610,
+			"y": 170,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Subject_8ddb55d7-1f59-450b-aafb-48cbe780be40"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_UseCase_8dda2d1f-993c-4b65-a5a0-b2794c1b754a",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "UseCase_8dda2d1f-993c-4b65-a5a0-b2794c1b754a"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_UseCase_8dda2d1f-993c-4b65-a5a0-b2794c1b754a",
+			"x": 830,
+			"y": 210,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "UseCase_8dda2d1f-993c-4b65-a5a0-b2794c1b754a"
+			}
+		}
+	]
+}

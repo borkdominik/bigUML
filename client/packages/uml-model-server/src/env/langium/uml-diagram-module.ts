@@ -8,25 +8,12 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import { UmlDiagramSerializer } from '@borkdominik-biguml/uml-model-server/gen/langium';
-import {
-    createDefaultModule,
-    createDefaultSharedModule,
-    inject,
-    type DefaultSharedModuleContext,
-    type Module,
-    type PartialLangiumServices,
-    type PartialLangiumSharedServices
-} from 'langium';
+import { inject, type Module } from 'langium';
+import { createDefaultModule, createDefaultSharedModule, type DefaultSharedModuleContext, type PartialLangiumServices } from 'langium/lsp';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import { UmlDiagramGeneratedModule, UmlDiagramGeneratedSharedModule } from '../grammar.js';
 import { ModelService, OpenableTextDocuments, OpenTextDocumentManager } from '../index.js';
-import {
-    ExtendedServiceRegistry,
-    type AddedSharedModelServices,
-    type AddedSharedServices,
-    type ExtendedLangiumServices,
-    type SharedServices
-} from '../langium-connector/model-module.js';
+import { ExtendedServiceRegistry, type ExtendedLangiumServices, type SharedServices } from '../langium-connector/model-module.js';
 import { ClientLogger } from './uml-diagram-client-logger.js';
 import { UmlDiagramCompletionProvider } from './uml-diagram-completion-provider.js';
 import { UmlDiagramDocumentBuilder } from './uml-diagram-document-builder.js';
@@ -57,10 +44,7 @@ export type UmlDiagramAddedSharedServices = {
 export const UmlDiagramSharedServices = Symbol('UmlDiagramSharedServices');
 export type UmlDiagramSharedServices = SharedServices & UmlDiagramAddedSharedServices;
 
-export const UmlDiagramSharedModule: Module<
-    UmlDiagramSharedServices,
-    PartialLangiumSharedServices & UmlDiagramAddedSharedServices & AddedSharedServices & AddedSharedModelServices
-> = {
+export const UmlDiagramSharedModule: Module<UmlDiagramSharedServices, any> = {
     ServiceRegistry: () => new ExtendedServiceRegistry(),
     workspace: {
         WorkspaceManager: services => new UmlDiagramWorkspaceManager(services),

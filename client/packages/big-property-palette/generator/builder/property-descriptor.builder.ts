@@ -8,7 +8,7 @@
  *********************************************************************************/
 
 import { type Declaration, Decorator, lcFirst, type Property, toConstant, toHuman } from '@borkdominik-biguml/uml-language-tooling';
-import { optionConstant } from '../utils/declaration.utils.js';
+import { isAbstractType, isInDiagramTypes, optionConstant } from '../utils/declaration.utils.js';
 
 export interface PropertyDescriptor {
     type: 'text' | 'bool' | 'choice' | 'reference';
@@ -21,7 +21,7 @@ export interface PropertyDescriptor {
     createsExpr?: string;
 }
 
-export function buildPropertyDescriptor(prop: Property, declarations: Declaration[]): PropertyDescriptor | undefined {
+export function buildPropertyDescriptor(prop: Property, declarations: Declaration[], diagramName: string): PropertyDescriptor | undefined {
     if (Decorator.has(prop.decorators, 'skip')) return;
 
     const dynDec = Decorator.find(prop.decorators, 'dynamic');
@@ -33,7 +33,7 @@ export function buildPropertyDescriptor(prop: Property, declarations: Declaratio
             id: prop.name,
             label: toHuman(prop.name),
             choicesExpr: choicesVar,
-            choiceExpr: `(semanticElement.${prop.name} as any)?.ref?.__id ? (semanticElement.${prop.name} as any).ref.__id + '_refValue' : ''`
+            choiceExpr: `(context.semanticElement.${prop.name} as any)?.ref?.__id ? (context.semanticElement.${prop.name} as any).ref.__id + '_refValue' : ''`
         };
     }
 
@@ -48,12 +48,18 @@ export function buildPropertyDescriptor(prop: Property, declarations: Declaratio
         const typeName = first?.typeName ?? 'Element';
         const modelConst = toConstant(typeName);
         const label = toHuman(typeName);
+
+        let createsExpr: string | undefined;
+        if (!isAbstractType(typeName, declarations) && isInDiagramTypes(typeName, diagramName, declarations)) {
+            createsExpr = `[{ label: 'Create ${label}', action: CreateNodeOperation.create(context.languageMetadata.convertToElementType('${typeName}'), { containerId: context.semanticElement.__id }) }]`;
+        }
+
         return {
             type: 'reference',
             id,
             label: toHuman(id),
             referencesExpr: [
-                `(semanticElement.${id} ?? [])`,
+                `(context.semanticElement.${id} ?? [])`,
                 `.filter((e: any) => !!e && !!e.__id)`,
                 `.map((e: any) => ({`,
                 `    elementId: e.__id,`,
@@ -62,16 +68,16 @@ export function buildPropertyDescriptor(prop: Property, declarations: Declaratio
                 `    deleteActions: [DeleteElementOperation.create([e.__id])]`,
                 `}))`
             ].join('\n                            '),
-            createsExpr: `[{ label: 'Create ${label}', action: CreateNodeOperation.create(ClassDiagramNodeTypes.${modelConst}, { containerId: semanticElement.__id }) }]`
+            createsExpr: createsExpr ?? '[]'
         };
     }
 
     if (first?.typeName === 'boolean') {
-        return { type: 'bool', id, label: id, valueExpr: `!!semanticElement.${id}` };
+        return { type: 'bool', id, label: id, valueExpr: `!!context.semanticElement.${id}` };
     }
 
     if (first?.typeName === 'string' || first?.typeName === 'number') {
-        const val = first.typeName === 'number' ? `String(semanticElement.${id})` : `semanticElement.${id}`;
+        const val = first.typeName === 'number' ? `String(context.semanticElement.${id})` : `context.semanticElement.${id}`;
         return { type: 'text', id, label: toHuman(id), valueExpr: `${val}!` };
     }
 
@@ -82,7 +88,7 @@ export function buildPropertyDescriptor(prop: Property, declarations: Declaratio
             id,
             label: toHuman(first!.typeName),
             choicesExpr: `PropertyPaletteChoices.${constant}`,
-            choiceExpr: `semanticElement.${id}!`
+            choiceExpr: `context.semanticElement.${id}!`
         };
     }
 

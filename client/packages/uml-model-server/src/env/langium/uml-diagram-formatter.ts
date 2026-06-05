@@ -7,7 +7,8 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { AbstractFormatter, type AstNode, type LangiumDocument } from 'langium';
+import { type AstNode, type LangiumDocument } from 'langium';
+import { AbstractFormatter } from 'langium/lsp';
 import type { DocumentFormattingParams, DocumentRangeFormattingParams, TextEdit } from 'vscode-languageserver';
 import { Range } from 'vscode-languageserver-types';
 

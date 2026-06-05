@@ -10,18 +10,18 @@
 
 import { validateSync } from 'class-validator';
 import type { AstNode } from 'langium';
-import { isClass, isDataType } from '../langium/language/ast.js';
-import { ClassValidationElement, DataTypeValidationElement } from './validation-elements.js';
+import { isDataType, isClass } from '../langium/language/ast.js';
+import { DataTypeValidationElement, ClassValidationElement } from './validation-elements.js';
 
 export function validateNode(node: AstNode): void {
     let errors: any[] = [];
 
-    if (isClass(node)) {
-        errors = validateSync(new ClassValidationElement(node));
-    }
-
     if (isDataType(node)) {
         errors = validateSync(new DataTypeValidationElement(node));
+    }
+
+    if (isClass(node)) {
+        errors = validateSync(new ClassValidationElement(node));
     }
 
     if (errors.length) {

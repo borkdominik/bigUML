@@ -2,30 +2,21 @@
 
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
 import { type Generalization } from '@borkdominik-biguml/uml-model-server/grammar';
-import {
-    BoolProperty,
-    ChoiceProperty,
-    PropertyPalette,
-    PropertyPaletteChoices
-} from '@borkdominik-biguml/big-property-palette/glsp-server';
+import { type GetPropertyPaletteHandlerContext, BoolProperty, PropertyPalette } from '@borkdominik-biguml/big-property-palette/glsp-server';
 
 export namespace GeneralizationPropertyPaletteHandler {
-    export function getPropertyPalette(semanticElement: Generalization): SetPropertyPaletteAction[] {
+    export function getPropertyPalette(context: GetPropertyPaletteHandlerContext<Generalization>): SetPropertyPaletteAction[] {
         return [
             SetPropertyPaletteAction.create(
-                <PropertyPalette elementId={semanticElement.__id} label={(semanticElement as any).name ?? semanticElement.$type}>
+                <PropertyPalette
+                    elementId={context.semanticElement.__id}
+                    label={(context.semanticElement as any).name ?? context.semanticElement.$type}
+                >
                     <BoolProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='isSubstitutable'
-                        value={!!semanticElement.isSubstitutable}
+                        value={!!context.semanticElement.isSubstitutable}
                         label='isSubstitutable'
-                    />
-                    <ChoiceProperty
-                        elementId={semanticElement.__id}
-                        propertyId='relationType'
-                        choices={PropertyPaletteChoices.RELATION_TYPE}
-                        choice={semanticElement.relationType!}
-                        label='Relation Type'
                     />
                 </PropertyPalette>
             )

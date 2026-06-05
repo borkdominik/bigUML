@@ -3,6 +3,7 @@
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
 import { type EnumerationLiteral } from '@borkdominik-biguml/uml-model-server/grammar';
 import {
+    type GetPropertyPaletteHandlerContext,
     ChoiceProperty,
     PropertyPalette,
     PropertyPaletteChoices,
@@ -10,17 +11,30 @@ import {
 } from '@borkdominik-biguml/big-property-palette/glsp-server';
 
 export namespace EnumerationLiteralPropertyPaletteHandler {
-    export function getPropertyPalette(semanticElement: EnumerationLiteral): SetPropertyPaletteAction[] {
+    export function getPropertyPalette(context: GetPropertyPaletteHandlerContext<EnumerationLiteral>): SetPropertyPaletteAction[] {
         return [
             SetPropertyPaletteAction.create(
-                <PropertyPalette elementId={semanticElement.__id} label={(semanticElement as any).name ?? semanticElement.$type}>
-                    <TextProperty elementId={semanticElement.__id} propertyId='name' text={semanticElement.name!} label='Name' />
-                    <TextProperty elementId={semanticElement.__id} propertyId='value' text={semanticElement.value!} label='Value' />
+                <PropertyPalette
+                    elementId={context.semanticElement.__id}
+                    label={(context.semanticElement as any).name ?? context.semanticElement.$type}
+                >
+                    <TextProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='name'
+                        text={context.semanticElement.name!}
+                        label='Name'
+                    />
+                    <TextProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='value'
+                        text={context.semanticElement.value!}
+                        label='Value'
+                    />
                     <ChoiceProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='visibility'
                         choices={PropertyPaletteChoices.VISIBILITY}
-                        choice={semanticElement.visibility!}
+                        choice={context.semanticElement.visibility!}
                         label='Visibility'
                     />
                 </PropertyPalette>

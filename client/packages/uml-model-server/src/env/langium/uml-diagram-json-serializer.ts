@@ -9,74 +9,27 @@
  **********************************************************************************/
 import { type Language } from '@borkdominik-biguml/uml-language-tooling';
 import {
+    AstUtils,
+    GrammarUtils,
+    isAstNode,
+    isReference,
     type AstNode,
     type AstNodeLocator,
+    type AstNodeRegionWithAssignments,
+    type AstNodeWithTextRegion,
     type CstNode,
     type DocumentSegment,
     type GenericAstNode,
+    type JsonSerializer,
+    type JsonSerializeOptions,
     type LangiumDocuments,
-    type LangiumServices,
     type Mutable,
     type NameProvider,
-    type Reference,
-    findNodesForProperty,
-    getDocument,
-    isAstNode,
-    isReference,
-    streamAst
+    type Reference
 } from 'langium';
+import { type LangiumServices } from 'langium/lsp';
 import { URI } from 'vscode-uri';
 import { properties } from '../generator-config.js';
-
-export interface JsonSerializeOptions {
-    space?: string | number;
-    refText?: boolean;
-    sourceText?: boolean;
-    textRegions?: boolean;
-    replacer?: (key: string, value: unknown, defaultReplacer: (key: string, value: unknown) => unknown) => unknown;
-}
-
-/**
- * {@link AstNode}s that may carry information on their definition area within the DSL text.
- */
-export interface AstNodeWithTextRegion extends AstNode {
-    $sourceText?: string;
-    $textRegion?: AstNodeRegionWithAssignments;
-}
-
-/**
- * A {@DocumentSegment} representing the definition area of an AstNode within the DSL text.
- * Usually contains text region information on all assigned property values of the AstNode,
- * and may contain the defining file's URI as string.
- */
-export interface AstNodeRegionWithAssignments extends DocumentSegment {
-    /**
-     * A record containing an entry for each assignd property of the AstNode.
-     * The key is equal to the property name and the value is an array of the property values'
-     * text regions, regardless of whether the property is a single value or list property.
-     */
-    assignments?: Record<string, DocumentSegment[]>;
-    /**
-     * The AstNode defining file's URI as string
-     */
-    documentURI?: string;
-}
-
-/**
- * Utility service for transforming an `AstNode` into a JSON string and vice versa.
- */
-export interface JsonSerializer {
-    /**
-     * Serialize an `AstNode` into a JSON `string`.
-     * @param node The `AstNode` to be serialized.
-     * @param space Adds indentation, white space, and line break characters to the return-value JSON text to make it easier to read.
-     */
-    serialize(node: AstNode, options?: JsonSerializeOptions): string;
-    /**
-     * Deserialize (parse) a JSON `string` into an `AstNode`.
-     */
-    deserialize(content: string): AstNode;
-}
 
 interface IntermediateReference {
     $refText?: string;
@@ -111,7 +64,7 @@ export class UmlDiagramJsonSerializer implements JsonSerializer {
         return str;
     }
 
-    deserialize(content: string): AstNode {
+    deserialize<T extends AstNode = AstNode>(content: string): T {
         const root = JSON.parse(content);
         this.linkNode(root, root);
         return root;
@@ -124,14 +77,14 @@ export class UmlDiagramJsonSerializer implements JsonSerializer {
             const refValue = value.ref;
             const $refText = refText ? value.$refText : undefined;
             if (refValue) {
-                if ((refValue as any)[properties.referenceProperty]) {
+                if ((refValue as GenericAstNode)[properties.referenceProperty]) {
                     return {
                         $refText,
                         $ref: {
                             __documentUri: value.$nodeDescription?.node ? undefined : value.$nodeDescription?.documentUri.path,
-                            __id: (refValue as any)[properties.referenceProperty]
+                            __id: (refValue as GenericAstNode)[properties.referenceProperty]
                         }
-                    } as unknown as IntermediateReference;
+                    };
                 }
                 return {
                     $refText,
@@ -139,7 +92,7 @@ export class UmlDiagramJsonSerializer implements JsonSerializer {
                         __documentUri: value.$nodeDescription?.node ? undefined : value.$nodeDescription?.documentUri.path,
                         __path: refValue && this.astNodeLocator.getAstNodePath(refValue)
                     }
-                } as unknown as IntermediateReference;
+                };
             } else {
                 return {
                     $refText,
@@ -152,7 +105,7 @@ export class UmlDiagramJsonSerializer implements JsonSerializer {
                 astNode = this.addAstNodeRegionWithAssignmentsTo({ ...value });
                 if ((!key || value.$document) && astNode?.$textRegion) {
                     try {
-                        astNode.$textRegion.documentURI = getDocument(value).uri.path;
+                        astNode.$textRegion.documentURI = AstUtils.getDocument(value).uri.path;
                     } catch (e) {
                         /* do nothing */
                     }
@@ -182,7 +135,7 @@ export class UmlDiagramJsonSerializer implements JsonSerializer {
             Object.keys(node)
                 .filter(key => !key.startsWith('$'))
                 .forEach(key => {
-                    const propertyAssignments = findNodesForProperty(node.$cstNode, key).map(createDocumentSegment);
+                    const propertyAssignments = GrammarUtils.findNodesForProperty(node.$cstNode, key).map(createDocumentSegment);
                     if (propertyAssignments.length !== 0) {
                         assignments[key] = propertyAssignments;
                     }
@@ -231,16 +184,15 @@ export class UmlDiagramJsonSerializer implements JsonSerializer {
             return {
                 $refText: refText ?? '',
                 ref
-            };
+            } satisfies Mutable<Reference> as Reference;
         } else if (reference.$error) {
             const ref: Mutable<Reference> = {
-                $refText: refText ?? ''
+                $refText: refText ?? '',
+                ref: undefined
             };
             ref.error = {
-                container,
-                property,
-                message: reference.$error,
-                reference: ref
+                message: reference.$error ?? '',
+                info: { container, property, reference: ref }
             };
             return ref;
         } else {
@@ -251,14 +203,14 @@ export class UmlDiagramJsonSerializer implements JsonSerializer {
     protected getRefNode<T extends AstNode>(root: AstNode, ref: Language.Reference<T>): AstNode {
         if (ref[properties.referenceProperty] as string) {
             if (ref.__documentUri) {
-                const doc = this.langiumDocs.getOrCreateDocument(URI.parse(ref.__documentUri));
-                return this.getAstNodeById(doc.parseResult.value, ref[properties.referenceProperty] as string)!;
+                const doc = this.langiumDocs.getDocument(URI.parse(ref.__documentUri));
+                return this.getAstNodeById(doc!.parseResult.value, ref[properties.referenceProperty] as string)!;
             }
             return this.getAstNodeById(root, ref[properties.referenceProperty] as string)!;
         } else if (ref.__path) {
             if (ref.__documentUri) {
-                const doc = this.langiumDocs.getOrCreateDocument(URI.parse(ref.__documentUri));
-                return this.astNodeLocator.getAstNode(doc.parseResult.value, ref.__path)!;
+                const doc = this.langiumDocs.getDocument(URI.parse(ref.__documentUri));
+                return this.astNodeLocator.getAstNode(doc!.parseResult.value, ref.__path)!;
             }
             return this.astNodeLocator.getAstNode(root, ref.__path.substring(1))!;
         }
@@ -266,7 +218,7 @@ export class UmlDiagramJsonSerializer implements JsonSerializer {
     }
 
     private getAstNodeById<T extends AstNode = AstNode>(node: AstNode, id: string): T | undefined {
-        const retNode = streamAst(node).find((astNode: any) => astNode[properties.referenceProperty] === id);
+        const retNode = AstUtils.streamAst(node).find((astNode: any) => astNode[properties.referenceProperty] === id);
         if (retNode) return retNode as T;
         return node as T;
     }

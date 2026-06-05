@@ -161,9 +161,37 @@ export function transformDeclarationsToLangiumGrammar(
     const typeRules = declarationsToTypeRules(declarations);
 
     const parserRules = declarations
-        .filter(d => d.type === 'class' && !d.isAbstract && !Decorator.has(d.decorators, 'root'))
+        .filter(d => d.type === 'class' && !d.isAbstract && !Decorator.has(d.decorators, 'root') && !Decorator.has(d.decorators, 'alias'))
         .map(d => {
-            const properties: Array<Definition> = d.properties!.map(property => ({
+            // Merge inherited properties from parent classes
+            const allProperties = new Map<string, Property>();
+
+            // Recursively collect properties from parent class chain
+            function collectParentProperties(decl: Declaration) {
+                if (decl.extends && decl.extends.length > 0) {
+                    for (const parentName of decl.extends) {
+                        const parent = declarations.find(x => x.name === parentName);
+                        if (parent) {
+                            collectParentProperties(parent);
+                            for (const prop of parent.properties ?? []) {
+                                if (!allProperties.has(prop.name)) {
+                                    allProperties.set(prop.name, prop);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // First collect parent properties
+            collectParentProperties(d);
+
+            // Then add own properties (which can override parent properties)
+            for (const prop of d.properties ?? []) {
+                allProperties.set(prop.name, prop);
+            }
+
+            const properties: Array<Definition> = Array.from(allProperties.values()).map(property => ({
                 name: property.name,
                 type: property.types[0],
                 multiplicity: property.multiplicity,
@@ -181,10 +209,16 @@ export function transformDeclarationsToLangiumGrammar(
                 });
             }
 
+            // Exclude aliased subtypes from the union—they serialize with parent's $type value
+            const extendedBy = (d.extendedBy ?? []).filter(subclassName => {
+                const subclass = declarations.find(decl => decl.name === subclassName);
+                return !Decorator.has(subclass?.decorators ?? [], 'alias');
+            });
+
             return {
                 name: d.name!,
                 isAbstract: !!d.isAbstract,
-                extendedBy: d.extendedBy ?? [],
+                extendedBy,
                 definitions: properties
             };
         });

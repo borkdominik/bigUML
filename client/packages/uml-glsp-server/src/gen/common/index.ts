@@ -8,4 +8,11 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
+export * from './model-types/activity-diagram-model-types.js';
 export * from './model-types/class-diagram-model-types.js';
+export * from './model-types/communication-diagram-model-types.js';
+export * from './model-types/deployment-diagram-model-types.js';
+export * from './model-types/information-flow-diagram-model-types.js';
+export * from './model-types/package-diagram-model-types.js';
+export * from './model-types/state-machine-diagram-model-types.js';
+export * from './model-types/use-case-diagram-model-types.js';

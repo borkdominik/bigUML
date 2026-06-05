@@ -3,6 +3,7 @@
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
 import { type Association } from '@borkdominik-biguml/uml-model-server/grammar';
 import {
+    type GetPropertyPaletteHandlerContext,
     ChoiceProperty,
     PropertyPalette,
     PropertyPaletteChoices,
@@ -10,62 +11,63 @@ import {
 } from '@borkdominik-biguml/big-property-palette/glsp-server';
 
 export namespace AssociationPropertyPaletteHandler {
-    export function getPropertyPalette(semanticElement: Association): SetPropertyPaletteAction[] {
+    export function getPropertyPalette(context: GetPropertyPaletteHandlerContext<Association>): SetPropertyPaletteAction[] {
         return [
             SetPropertyPaletteAction.create(
-                <PropertyPalette elementId={semanticElement.__id} label={(semanticElement as any).name ?? semanticElement.$type}>
-                    <TextProperty elementId={semanticElement.__id} propertyId='name' text={semanticElement.name!} label='Name' />
+                <PropertyPalette
+                    elementId={context.semanticElement.__id}
+                    label={(context.semanticElement as any).name ?? context.semanticElement.$type}
+                >
                     <TextProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
+                        propertyId='name'
+                        text={context.semanticElement.name!}
+                        label='Name'
+                    />
+                    <TextProperty
+                        elementId={context.semanticElement.__id}
                         propertyId='sourceMultiplicity'
-                        text={semanticElement.sourceMultiplicity!}
+                        text={context.semanticElement.sourceMultiplicity!}
                         label='Source Multiplicity'
                     />
                     <TextProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='targetMultiplicity'
-                        text={semanticElement.targetMultiplicity!}
+                        text={context.semanticElement.targetMultiplicity!}
                         label='Target Multiplicity'
                     />
                     <TextProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='sourceName'
-                        text={semanticElement.sourceName!}
+                        text={context.semanticElement.sourceName!}
                         label='Source Name'
                     />
                     <TextProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='targetName'
-                        text={semanticElement.targetName!}
+                        text={context.semanticElement.targetName!}
                         label='Target Name'
                     />
                     <ChoiceProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='sourceAggregation'
-                        choices={PropertyPaletteChoices.AGGREGATION_TYPE}
-                        choice={semanticElement.sourceAggregation!}
+                        choices={PropertyPaletteChoices.AGGREGATION}
+                        choice={context.semanticElement.sourceAggregation!}
                         label='Aggregation Type'
                     />
                     <ChoiceProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='targetAggregation'
-                        choices={PropertyPaletteChoices.AGGREGATION_TYPE}
-                        choice={semanticElement.targetAggregation!}
+                        choices={PropertyPaletteChoices.AGGREGATION}
+                        choice={context.semanticElement.targetAggregation!}
                         label='Aggregation Type'
                     />
                     <ChoiceProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='visibility'
                         choices={PropertyPaletteChoices.VISIBILITY}
-                        choice={semanticElement.visibility!}
+                        choice={context.semanticElement.visibility!}
                         label='Visibility'
-                    />
-                    <ChoiceProperty
-                        elementId={semanticElement.__id}
-                        propertyId='relationType'
-                        choices={PropertyPaletteChoices.RELATION_TYPE}
-                        choice={semanticElement.relationType!}
-                        label='Relation Type'
                     />
                 </PropertyPalette>
             )

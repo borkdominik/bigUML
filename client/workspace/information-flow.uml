@@ -1,0 +1,44 @@
+{
+	"diagram": {
+		"__type": "InformationFlowDiagram",
+		"__id": "diagram_8ebfa820-a6ce-44cc-80b1-3fd972d8a965",
+		"diagramType": "INFORMATION_FLOW",
+		"entities": [
+			{
+				"__type": "Class",
+				"__id": "Class_0f42a69b-30c2-4df6-9069-24b3d401bc80",
+				"name": "NewClass1",
+				"isAbstract": false,
+				"properties": [],
+				"operations": [],
+				"isActive": false,
+				"visibility": "PUBLIC"
+			}
+		],
+		"relations": []
+	},
+	"metaInfos": [
+		{
+			"__type": "Size",
+			"__id": "size_Class_0f42a69b-30c2-4df6-9069-24b3d401bc80",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Class_0f42a69b-30c2-4df6-9069-24b3d401bc80"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_Class_0f42a69b-30c2-4df6-9069-24b3d401bc80",
+			"x": 490,
+			"y": 200,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Class_0f42a69b-30c2-4df6-9069-24b3d401bc80"
+			}
+		}
+	]
+}

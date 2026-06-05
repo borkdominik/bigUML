@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { type AstNode, type ValidationAcceptor, type ValidationChecks, streamAllContents } from 'langium';
+import { AstUtils, type AstNode, type ValidationAcceptor, type ValidationChecks } from 'langium';
 import { properties } from '../generator-config.js';
 import { type Diagram, type UmlDiagramAstType } from '../grammar.js';
 import type { UmlDiagramServices } from './uml-diagram-module.js';
@@ -30,7 +30,7 @@ export function registerValidationChecks(services: UmlDiagramServices) {
 export class UmlDiagramValidator {
     checkNoDuplicateIds(model: Diagram, accept: ValidationAcceptor): void {
         const reported = new Set();
-        streamAllContents(model).forEach((astNode: AstNode & { __id?: string }) => {
+        AstUtils.streamAllContents(model).forEach((astNode: AstNode & { __id?: string }) => {
             if (astNode[properties.referenceProperty as keyof AstNode] !== undefined) {
                 if (reported.has(astNode[properties.referenceProperty as keyof AstNode])) {
                     accept('error', `Element has non-unique __id ${astNode[properties.referenceProperty as keyof AstNode]}.`, {

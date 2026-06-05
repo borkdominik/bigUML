@@ -12,7 +12,7 @@ import { GCompartmentElement, GLabelElement } from '@borkdominik-biguml/uml-glsp
 import type { Operation } from '@borkdominik-biguml/uml-model-server/grammar';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';
-import { getVisibilitySymbol, InlineCompartment } from './shared-components.js';
+import { getVisibilitySymbol, InlineCompartment } from './core/index.js';
 
 export class GOperationNode extends GNode {
     override type = ClassDiagramNodeTypes.OPERATION;

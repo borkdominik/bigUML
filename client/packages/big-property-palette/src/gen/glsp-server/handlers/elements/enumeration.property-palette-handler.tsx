@@ -3,8 +3,8 @@
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
 import { CreateNodeOperation, DeleteElementOperation } from '@eclipse-glsp/server';
 import { type Enumeration } from '@borkdominik-biguml/uml-model-server/grammar';
-import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import {
+    type GetPropertyPaletteHandlerContext,
     BoolProperty,
     ChoiceProperty,
     PropertyPalette,
@@ -14,29 +14,37 @@ import {
 } from '@borkdominik-biguml/big-property-palette/glsp-server';
 
 export namespace EnumerationPropertyPaletteHandler {
-    export function getPropertyPalette(semanticElement: Enumeration): SetPropertyPaletteAction[] {
+    export function getPropertyPalette(context: GetPropertyPaletteHandlerContext<Enumeration>): SetPropertyPaletteAction[] {
         return [
             SetPropertyPaletteAction.create(
-                <PropertyPalette elementId={semanticElement.__id} label={(semanticElement as any).name ?? semanticElement.$type}>
-                    <TextProperty elementId={semanticElement.__id} propertyId='name' text={semanticElement.name!} label='Name' />
+                <PropertyPalette
+                    elementId={context.semanticElement.__id}
+                    label={(context.semanticElement as any).name ?? context.semanticElement.$type}
+                >
+                    <TextProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='name'
+                        text={context.semanticElement.name!}
+                        label='Name'
+                    />
                     <BoolProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='isAbstract'
-                        value={!!semanticElement.isAbstract}
+                        value={!!context.semanticElement.isAbstract}
                         label='isAbstract'
                     />
                     <ChoiceProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='visibility'
                         choices={PropertyPaletteChoices.VISIBILITY}
-                        choice={semanticElement.visibility!}
+                        choice={context.semanticElement.visibility!}
                         label='Visibility'
                     />
                     <ReferenceProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='values'
                         label='Values'
-                        references={(semanticElement.values ?? [])
+                        references={(context.semanticElement.values ?? [])
                             .filter((e: any) => !!e && !!e.__id)
                             .map((e: any) => ({
                                 elementId: e.__id,
@@ -47,8 +55,8 @@ export namespace EnumerationPropertyPaletteHandler {
                         creates={[
                             {
                                 label: 'Create Enumeration Literal',
-                                action: CreateNodeOperation.create(ClassDiagramNodeTypes.ENUMERATION_LITERAL, {
-                                    containerId: semanticElement.__id
+                                action: CreateNodeOperation.create(context.languageMetadata.convertToElementType('EnumerationLiteral'), {
+                                    containerId: context.semanticElement.__id
                                 })
                             }
                         ]}

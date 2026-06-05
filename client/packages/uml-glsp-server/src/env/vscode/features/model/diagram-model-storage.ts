@@ -29,7 +29,7 @@ import {
     type SourceModelStorage
 } from '@eclipse-glsp/server';
 import { inject, injectable, postConstruct } from 'inversify';
-import { findRootNode, streamReferences } from 'langium';
+import { AstUtils, type Reference, isReference } from 'langium';
 import { DiagramModelState } from './diagram-model-state.js';
 
 @injectable()
@@ -63,10 +63,11 @@ export class DiagramModelStorage implements SourceModelStorage, ClientSessionLis
 
         // save document and all related documents
         this.state.modelService.save(saveUri, this.state.semanticRoot);
-        streamReferences(this.state.semanticRoot)
-            .map(refInfo => refInfo.reference.ref)
+        AstUtils.streamReferences(this.state.semanticRoot)
+            .filter(refInfo => isReference(refInfo.reference))
+            .map(refInfo => (refInfo.reference as Reference).ref)
             .nonNullable()
-            .map(ref => findRootNode(ref))
+            .map(ref => AstUtils.findRootNode(ref))
             .forEach(root => this.state.modelService.save(root.$document!.uri.toString(), root));
     }
 

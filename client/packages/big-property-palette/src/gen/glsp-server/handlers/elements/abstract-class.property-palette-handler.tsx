@@ -3,8 +3,8 @@
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
 import { CreateNodeOperation, DeleteElementOperation } from '@eclipse-glsp/server';
 import { type AbstractClass } from '@borkdominik-biguml/uml-model-server/grammar';
-import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import {
+    type GetPropertyPaletteHandlerContext,
     BoolProperty,
     ChoiceProperty,
     PropertyPalette,
@@ -14,36 +14,36 @@ import {
 } from '@borkdominik-biguml/big-property-palette/glsp-server';
 
 export namespace AbstractClassPropertyPaletteHandler {
-    export function getPropertyPalette(semanticElement: AbstractClass): SetPropertyPaletteAction[] {
+    export function getPropertyPalette(context: GetPropertyPaletteHandlerContext<AbstractClass>): SetPropertyPaletteAction[] {
         return [
             SetPropertyPaletteAction.create(
-                <PropertyPalette elementId={semanticElement.__id} label={(semanticElement as any).name ?? semanticElement.$type}>
+                <PropertyPalette
+                    elementId={context.semanticElement.__id}
+                    label={(context.semanticElement as any).name ?? context.semanticElement.$type}
+                >
                     <BoolProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='isAbstract'
-                        value={!!semanticElement.isAbstract}
+                        value={!!context.semanticElement.isAbstract}
                         label='isAbstract'
                     />
-                    <TextProperty elementId={semanticElement.__id} propertyId='label' text={semanticElement.label!} label='Label' />
-                    <ChoiceProperty
-                        elementId={semanticElement.__id}
-                        propertyId='visibility'
-                        choices={PropertyPaletteChoices.VISIBILITY}
-                        choice={semanticElement.visibility!}
-                        label='Visibility'
+                    <TextProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='label'
+                        text={context.semanticElement.label!}
+                        label='Label'
                     />
-                    <TextProperty elementId={semanticElement.__id} propertyId='name' text={semanticElement.name!} label='Name' />
-                    <BoolProperty
-                        elementId={semanticElement.__id}
-                        propertyId='isAbstract'
-                        value={!!semanticElement.isAbstract}
-                        label='isAbstract'
+                    <TextProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='name'
+                        text={context.semanticElement.name!}
+                        label='Name'
                     />
                     <ReferenceProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='properties'
                         label='Properties'
-                        references={(semanticElement.properties ?? [])
+                        references={(context.semanticElement.properties ?? [])
                             .filter((e: any) => !!e && !!e.__id)
                             .map((e: any) => ({
                                 elementId: e.__id,
@@ -54,15 +54,17 @@ export namespace AbstractClassPropertyPaletteHandler {
                         creates={[
                             {
                                 label: 'Create Property',
-                                action: CreateNodeOperation.create(ClassDiagramNodeTypes.PROPERTY, { containerId: semanticElement.__id })
+                                action: CreateNodeOperation.create(context.languageMetadata.convertToElementType('Property'), {
+                                    containerId: context.semanticElement.__id
+                                })
                             }
                         ]}
                     />
                     <ReferenceProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='operations'
                         label='Operations'
-                        references={(semanticElement.operations ?? [])
+                        references={(context.semanticElement.operations ?? [])
                             .filter((e: any) => !!e && !!e.__id)
                             .map((e: any) => ({
                                 elementId: e.__id,
@@ -73,21 +75,23 @@ export namespace AbstractClassPropertyPaletteHandler {
                         creates={[
                             {
                                 label: 'Create Operation',
-                                action: CreateNodeOperation.create(ClassDiagramNodeTypes.OPERATION, { containerId: semanticElement.__id })
+                                action: CreateNodeOperation.create(context.languageMetadata.convertToElementType('Operation'), {
+                                    containerId: context.semanticElement.__id
+                                })
                             }
                         ]}
                     />
                     <BoolProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='isActive'
-                        value={!!semanticElement.isActive}
+                        value={!!context.semanticElement.isActive}
                         label='isActive'
                     />
                     <ChoiceProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='visibility'
                         choices={PropertyPaletteChoices.VISIBILITY}
-                        choice={semanticElement.visibility!}
+                        choice={context.semanticElement.visibility!}
                         label='Visibility'
                     />
                 </PropertyPalette>

@@ -2,14 +2,22 @@
 
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
 import { type PrimitiveType } from '@borkdominik-biguml/uml-model-server/grammar';
-import { PropertyPalette, TextProperty } from '@borkdominik-biguml/big-property-palette/glsp-server';
+import { type GetPropertyPaletteHandlerContext, PropertyPalette, TextProperty } from '@borkdominik-biguml/big-property-palette/glsp-server';
 
 export namespace PrimitiveTypePropertyPaletteHandler {
-    export function getPropertyPalette(semanticElement: PrimitiveType): SetPropertyPaletteAction[] {
+    export function getPropertyPalette(context: GetPropertyPaletteHandlerContext<PrimitiveType>): SetPropertyPaletteAction[] {
         return [
             SetPropertyPaletteAction.create(
-                <PropertyPalette elementId={semanticElement.__id} label={(semanticElement as any).name ?? semanticElement.$type}>
-                    <TextProperty elementId={semanticElement.__id} propertyId='name' text={semanticElement.name!} label='Name' />
+                <PropertyPalette
+                    elementId={context.semanticElement.__id}
+                    label={(context.semanticElement as any).name ?? context.semanticElement.$type}
+                >
+                    <TextProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='name'
+                        text={context.semanticElement.name!}
+                        label='Name'
+                    />
                 </PropertyPalette>
             )
         ];

@@ -7,39 +7,150 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { ClassDiagramEdgeTypes, CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import {
-    type Class,
-    type ClassDiagram,
-    type DataType,
-    type Enumeration,
-    type InstanceSpecification,
-    type Interface,
-    type Package,
-    type PrimitiveType,
-    type Relation,
+    isAbstractClass,
+    isAbstraction,
+    isAcceptEventAction,
+    isActivity,
+    isActivityFinalNode,
+    isActivityParameterNode,
+    isActivityPartition,
+    isActor,
+    isArtifact,
     isAssociation,
+    isCentralBufferNode,
+    isChoice,
     isClass,
-    isClassDiagram,
+    isCommunicationPath,
+    isControlFlow,
+    isDataType,
+    isDecisionNode,
+    isDeepHistory,
+    isDependency,
+    isDeployment,
+    isDeploymentModel,
+    isDeploymentNode,
+    isDeploymentPackage,
+    isDeploymentSpecification,
+    isDevice,
+    isElementImport,
+    isEnumeration,
+    isExecutionEnvironment,
+    isExtend,
+    isFinalState,
+    isFlowFinalNode,
+    isFork,
+    isForkNode,
     isGeneralization,
-    isPackage
+    isInclude,
+    isInformationFlow,
+    isInitialNode,
+    isInitialState,
+    isInputPin,
+    isInstanceSpecification,
+    isInteraction,
+    isInterface,
+    isInterfaceRealization,
+    isJoin,
+    isJoinNode,
+    isLifeline,
+    isLiteralSpecification,
+    isManifestation,
+    isMergeNode,
+    isMessage,
+    isOpaqueAction,
+    isOutputPin,
+    isPackage,
+    isPackageImport,
+    isPackageMerge,
+    isParameter,
+    isPrimitiveType,
+    isRealization,
+    isRegion,
+    isSendSignalAction,
+    isShallowHistory,
+    isState,
+    isStateMachine,
+    isSubject,
+    isSubstitution,
+    isTransition,
+    isUsage,
+    isUseCase,
+    type Class
 } from '@borkdominik-biguml/uml-model-server/grammar';
-import { type GEdge, type GGraph, type GModelElement, type GModelFactory } from '@eclipse-glsp/server';
+import type { GEdge, GGraph, GModelElement, GModelFactory } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
-import { GEdgeElement, GGraphElement, GLabelElement } from '../../../jsx/index.js';
-import { GClassNodeElement } from '../../elements/class.element.js';
-import { GDataTypeNodeElement } from '../../elements/data-type.element.js';
-import { GEnumerationLiteralNodeElement } from '../../elements/enumeration-literal.element.js';
-import { GEnumerationNodeElement } from '../../elements/enumeration.element.js';
-import { GInstanceSpecificationNodeElement } from '../../elements/instance-specification.element.js';
-import { GInterfaceNodeElement } from '../../elements/interface.element.js';
-import { GOperationNodeElement } from '../../elements/operation.element.js';
-import { GPackageNodeElement } from '../../elements/package.element.js';
-import { GPrimitiveTypeNodeElement } from '../../elements/primitive-type.element.js';
-import { GPropertyNodeElement } from '../../elements/property.element.js';
-import { SectionCompartment } from '../../elements/shared-components.js';
-import { GSlotNodeElement } from '../../elements/slot.element.js';
+import { GGraphElement } from '../../../jsx/index.js';
+import { createAbstractionRelation } from '../../elements/abstraction-relation.element.js';
+import { createAcceptEventActionElement } from '../../elements/accept-event-action.element.js';
+import { createActivityFinalNodeElement } from '../../elements/activity-final-node.element.js';
+import { createActivityParameterNodeElement } from '../../elements/activity-parameter-node.element.js';
+import { createActivityPartitionElement } from '../../elements/activity-partition.element.js';
+import { createActivityElement } from '../../elements/activity.element.js';
+import { createActorElement } from '../../elements/actor.element.js';
+import { createArtifactElement } from '../../elements/artifact.element.js';
+import { createAssociationRelation } from '../../elements/association-relation.element.js';
+import { createCentralBufferNodeElement } from '../../elements/central-buffer-node.element.js';
+import { createChoiceElement } from '../../elements/choice.element.js';
+import { createClassElement } from '../../elements/class.element.js';
+import { createCommunicationPathRelation } from '../../elements/communication-path.element.js';
+import { createControlFlowRelation } from '../../elements/control-flow.element.js';
+import type { ElementContext } from '../../elements/core/element-context.js';
+import { createDataTypeElement } from '../../elements/data-type.element.js';
+import { createDecisionNodeElement } from '../../elements/decision-node.element.js';
+import { createDeepHistoryElement } from '../../elements/deep-history.element.js';
+import { createDependencyRelation } from '../../elements/dependency-relation.element.js';
+import { createDeploymentModelElement } from '../../elements/deployment-model.element.js';
+import { createDeploymentNodeElement } from '../../elements/deployment-node.element.js';
+import { createDeploymentPackageElement } from '../../elements/deployment-package.element.js';
+import { createDeploymentRelation } from '../../elements/deployment-relation.element.js';
+import { createDeploymentSpecificationElement } from '../../elements/deployment-specification.element.js';
+import { createDeviceElement } from '../../elements/device.element.js';
+import { createElementImportRelation } from '../../elements/element-import.element.js';
+import { createEnumerationElement } from '../../elements/enumeration.element.js';
+import { createExecutionEnvironmentElement } from '../../elements/execution-environment.element.js';
+import { createExtendRelation } from '../../elements/extend-relation.element.js';
+import { createFinalStateElement } from '../../elements/final-state.element.js';
+import { createFlowFinalNodeElement } from '../../elements/flow-final-node.element.js';
+import { createForkNodeElement } from '../../elements/fork-node.element.js';
+import { createForkElement } from '../../elements/fork.element.js';
+import { createGeneralizationRelation } from '../../elements/generalization-relation.element.js';
+import { createIncludeRelation } from '../../elements/include-relation.element.js';
+import { createInformationFlowRelation } from '../../elements/information-flow.element.js';
+import { createInitialNodeElement } from '../../elements/initial-node.element.js';
+import { createInitialStateElement } from '../../elements/initial-state.element.js';
+import { createInputPinElement } from '../../elements/input-pin.element.js';
+import { createInstanceSpecificationElement } from '../../elements/instance-specification.element.js';
+import { createInteractionElement } from '../../elements/interaction.element.js';
+import { createInterfaceRealizationRelation } from '../../elements/interface-realization-relation.element.js';
+import { createInterfaceElement } from '../../elements/interface.element.js';
+import { createJoinNodeElement } from '../../elements/join-node.element.js';
+import { createJoinElement } from '../../elements/join.element.js';
+import { createLifelineElement } from '../../elements/lifeline.element.js';
+import { createLiteralSpecificationElement } from '../../elements/literal-specification.element.js';
+import { createManifestationRelation } from '../../elements/manifestation.element.js';
+import { createMergeNodeElement } from '../../elements/merge-node.element.js';
+import { createMessageRelation } from '../../elements/message.element.js';
+import { createOpaqueActionElement } from '../../elements/opaque-action.element.js';
+import { createOutputPinElement } from '../../elements/output-pin.element.js';
+import { createPackageImportRelation } from '../../elements/package-import-relation.element.js';
+import { createPackageMergeRelation } from '../../elements/package-merge-relation.element.js';
+import { createPackageElement } from '../../elements/package.element.js';
+import { createParameterElement } from '../../elements/parameter.element.js';
+import { createPrimitiveTypeElement } from '../../elements/primitive-type.element.js';
+import { createRealizationRelation } from '../../elements/realization-relation.element.js';
+import { createRegionElement } from '../../elements/region.element.js';
+import { createSendSignalActionElement } from '../../elements/send-signal-action.element.js';
+import { createShallowHistoryElement } from '../../elements/shallow-history.element.js';
+import { createStateMachineElement } from '../../elements/state-machine.element.js';
+import { createStateElement } from '../../elements/state.element.js';
+import { createSubjectElement } from '../../elements/subject.element.js';
+import { createSubstitutionRelation } from '../../elements/substitution-relation.element.js';
+import { createTransitionRelation } from '../../elements/transition.element.js';
+import { createUsageRelation } from '../../elements/usage-relation.element.js';
+import { createUseCaseElement } from '../../elements/use-case.element.js';
 import { DiagramModelState } from '../../features/index.js';
+import { DiagramLanguageMetadata } from '../../features/model/diagram-language-metadata.js';
 import { DiagramModelIndex } from '../../features/model/diagram-model-index.js';
 
 @injectable()
@@ -50,6 +161,9 @@ export class UmlDiagramGModelFactory implements GModelFactory {
     @inject(DiagramModelIndex)
     protected readonly modelIndex: DiagramModelIndex;
 
+    @inject(DiagramLanguageMetadata)
+    protected readonly metadata: DiagramLanguageMetadata;
+
     createModel(): void {
         const newRoot = this.createGraph();
         if (newRoot) {
@@ -58,282 +172,110 @@ export class UmlDiagramGModelFactory implements GModelFactory {
     }
 
     protected createGraph(): GGraph | undefined {
-        const model = this.modelState.semanticRoot;
-        if (!isClassDiagram(model.diagram)) {
-            return undefined;
-        }
+        const diagram = this.modelState.semanticRoot.diagram;
 
-        const entityNodes = this.createEntities(model.diagram);
-        const edgesAndMissing = this.createEdgesAndMissingNodes(model.diagram);
+        const nodes = diagram.entities.map(e => this.createNodeElement(e)).filter(Boolean) as GModelElement[];
+        const edges = diagram.relations
+            .filter((r: any) => r.source?.ref && r.target?.ref)
+            .map(e => this.createEdgeElement(e))
+            .filter(Boolean) as GEdge[];
 
         return (
             <GGraphElement id={this.modelState.semanticUri}>
-                {entityNodes}
-                {edgesAndMissing}
+                {nodes}
+                {edges}
             </GGraphElement>
         ) as GGraph;
     }
 
-    protected createEntities(classDiagram: ClassDiagram): GModelElement[] {
-        return classDiagram.entities
-            .map(entity => {
-                switch (entity.$type) {
-                    case 'Class':
-                        return this.createClass(entity);
-                    case 'Interface':
-                        return this.createInterface(entity);
-                    case 'InstanceSpecification':
-                        return this.createInstanceSpecification(entity);
-                    case 'Enumeration':
-                        return this.createEnumeration(entity);
-                    case 'DataType':
-                        return this.createDataType(entity);
-                    case 'PrimitiveType':
-                        return this.createPrimitiveType(entity);
-                    case 'Package':
-                        return this.createPackage(entity);
-                }
-                return undefined;
-            })
-            .filter(Boolean) as GModelElement[];
+    protected buildCtx<T>(node: T): ElementContext<T> {
+        return {
+            modelIndex: this.modelIndex,
+            node,
+            diagramType: this.modelState.diagramType!,
+            elementType: this.metadata.convertToElementType((node as any).$type)
+        };
     }
 
-    protected createEdgesAndMissingNodes(model: ClassDiagram): GModelElement[] {
-        return model.relations.filter(relation => relation.target && relation.source).map(relation => this.createRelation(relation));
+    protected createNodeElement(element: unknown): GModelElement | undefined {
+        // AbstractClass must come before Class (AbstractClass extends Class)
+        if (isAbstractClass(element)) return createClassElement(this.buildCtx(element as Class));
+        if (isClass(element)) return createClassElement(this.buildCtx(element));
+        if (isInterface(element)) return createInterfaceElement(this.buildCtx(element));
+        if (isDataType(element)) return createDataTypeElement(this.buildCtx(element));
+        if (isEnumeration(element)) return createEnumerationElement(this.buildCtx(element));
+        if (isPrimitiveType(element)) return createPrimitiveTypeElement(this.buildCtx(element));
+        if (isInstanceSpecification(element)) return createInstanceSpecificationElement(this.buildCtx(element));
+        if (isPackage(element)) return createPackageElement(this.buildCtx(element));
+        if (isLiteralSpecification(element)) return createLiteralSpecificationElement(this.buildCtx(element));
+        if (isParameter(element)) return createParameterElement(this.buildCtx(element));
+        // Activity diagram nodes
+        if (isActivity(element)) return createActivityElement(this.buildCtx(element));
+        if (isActivityPartition(element)) return createActivityPartitionElement(this.buildCtx(element));
+        if (isOpaqueAction(element)) return createOpaqueActionElement(this.buildCtx(element));
+        if (isAcceptEventAction(element)) return createAcceptEventActionElement(this.buildCtx(element));
+        if (isSendSignalAction(element)) return createSendSignalActionElement(this.buildCtx(element));
+        if (isInitialNode(element)) return createInitialNodeElement(this.buildCtx(element));
+        if (isDecisionNode(element)) return createDecisionNodeElement(this.buildCtx(element));
+        if (isMergeNode(element)) return createMergeNodeElement(this.buildCtx(element));
+        if (isJoinNode(element)) return createJoinNodeElement(this.buildCtx(element));
+        if (isForkNode(element)) return createForkNodeElement(this.buildCtx(element));
+        if (isActivityFinalNode(element)) return createActivityFinalNodeElement(this.buildCtx(element));
+        if (isFlowFinalNode(element)) return createFlowFinalNodeElement(this.buildCtx(element));
+        if (isCentralBufferNode(element)) return createCentralBufferNodeElement(this.buildCtx(element));
+        if (isActivityParameterNode(element)) return createActivityParameterNodeElement(this.buildCtx(element));
+        if (isInputPin(element)) return createInputPinElement(this.buildCtx(element));
+        if (isOutputPin(element)) return createOutputPinElement(this.buildCtx(element));
+        // UseCase diagram nodes
+        if (isUseCase(element)) return createUseCaseElement(this.buildCtx(element));
+        if (isActor(element)) return createActorElement(this.buildCtx(element));
+        if (isSubject(element)) return createSubjectElement(this.buildCtx(element));
+        // Communication diagram nodes
+        if (isInteraction(element)) return createInteractionElement(this.buildCtx(element));
+        if (isLifeline(element)) return createLifelineElement(this.buildCtx(element));
+        // Deployment diagram nodes
+        if (isArtifact(element)) return createArtifactElement(this.buildCtx(element));
+        if (isDeploymentSpecification(element)) return createDeploymentSpecificationElement(this.buildCtx(element));
+        if (isDevice(element)) return createDeviceElement(this.buildCtx(element));
+        if (isExecutionEnvironment(element)) return createExecutionEnvironmentElement(this.buildCtx(element));
+        if (isDeploymentModel(element)) return createDeploymentModelElement(this.buildCtx(element));
+        if (isDeploymentNode(element)) return createDeploymentNodeElement(this.buildCtx(element));
+        if (isDeploymentPackage(element)) return createDeploymentPackageElement(this.buildCtx(element));
+        // State machine diagram nodes
+        if (isStateMachine(element)) return createStateMachineElement(this.buildCtx(element));
+        if (isRegion(element)) return createRegionElement(this.buildCtx(element));
+        if (isState(element)) return createStateElement(this.buildCtx(element));
+        if (isFinalState(element)) return createFinalStateElement(this.buildCtx(element));
+        if (isInitialState(element)) return createInitialStateElement(this.buildCtx(element));
+        if (isChoice(element)) return createChoiceElement(this.buildCtx(element));
+        if (isJoin(element)) return createJoinElement(this.buildCtx(element));
+        if (isFork(element)) return createForkElement(this.buildCtx(element));
+        if (isDeepHistory(element)) return createDeepHistoryElement(this.buildCtx(element));
+        if (isShallowHistory(element)) return createShallowHistoryElement(this.buildCtx(element));
+        return undefined;
     }
 
-    protected createClass(classElement: Class): GModelElement {
-        const position = this.modelIndex.findPosition(classElement.__id);
-        const size = this.modelIndex.findSize(classElement.__id);
-
-        const propertiesSection =
-            classElement.properties?.length > 0 ? (
-                <SectionCompartment id={classElement.__id + '_count_context_1'} dividerText='Attributes'>
-                    {classElement.properties.map(p => (
-                        <GPropertyNodeElement node={p} />
-                    ))}
-                </SectionCompartment>
-            ) : null;
-
-        const operationsSection =
-            classElement.operations?.length > 0 ? (
-                <SectionCompartment id={classElement.__id + '_count_context_3'} dividerText='Methods'>
-                    {classElement.operations.map(o => (
-                        <GOperationNodeElement node={o} />
-                    ))}
-                </SectionCompartment>
-            ) : null;
-
-        return (
-            <GClassNodeElement node={classElement} position={position} size={size}>
-                {propertiesSection}
-                {operationsSection}
-            </GClassNodeElement>
-        );
-    }
-
-    protected createInterface(interfaceElement: Interface): GModelElement {
-        const position = this.modelIndex.findPosition(interfaceElement.__id);
-        const size = this.modelIndex.findSize(interfaceElement.__id);
-
-        const propertiesSection =
-            interfaceElement.properties?.length > 0 ? (
-                <SectionCompartment id={interfaceElement.__id + '_count_context_1'} dividerText='Attributes'>
-                    {interfaceElement.properties.map(p => (
-                        <GPropertyNodeElement node={p} />
-                    ))}
-                </SectionCompartment>
-            ) : null;
-
-        const operationsSection =
-            interfaceElement.operations?.length > 0 ? (
-                <SectionCompartment id={interfaceElement.__id + '_count_context_3'} dividerText='Methods'>
-                    {interfaceElement.operations.map(o => (
-                        <GOperationNodeElement node={o} />
-                    ))}
-                </SectionCompartment>
-            ) : null;
-
-        return (
-            <GInterfaceNodeElement node={interfaceElement} position={position} size={size}>
-                {propertiesSection}
-                {operationsSection}
-            </GInterfaceNodeElement>
-        );
-    }
-
-    protected createInstanceSpecification(instanceSpecification: InstanceSpecification): GModelElement {
-        const position = this.modelIndex.findPosition(instanceSpecification.__id);
-        const size = this.modelIndex.findSize(instanceSpecification.__id);
-
-        const slotsSection =
-            instanceSpecification.slots?.length > 0 ? (
-                <SectionCompartment id={instanceSpecification.__id + '_count_context_1'} dividerText='Slots'>
-                    {instanceSpecification.slots.map(s => (
-                        <GSlotNodeElement node={s} />
-                    ))}
-                </SectionCompartment>
-            ) : null;
-
-        return (
-            <GInstanceSpecificationNodeElement node={instanceSpecification} position={position} size={size}>
-                {slotsSection}
-            </GInstanceSpecificationNodeElement>
-        );
-    }
-
-    protected createEnumeration(enumerationElement: Enumeration): GModelElement {
-        const position = this.modelIndex.findPosition(enumerationElement.__id);
-        const size = this.modelIndex.findSize(enumerationElement.__id);
-
-        const valuesSection =
-            enumerationElement.values?.length > 0 ? (
-                <SectionCompartment id={enumerationElement.__id + '_literal_component'}>
-                    {enumerationElement.values.map(v => (
-                        <GEnumerationLiteralNodeElement node={v} />
-                    ))}
-                </SectionCompartment>
-            ) : null;
-
-        return (
-            <GEnumerationNodeElement node={enumerationElement} position={position} size={size}>
-                {valuesSection}
-            </GEnumerationNodeElement>
-        );
-    }
-
-    protected createPrimitiveType(primitiveType: PrimitiveType): GModelElement {
-        const position = this.modelIndex.findPosition(primitiveType.__id);
-        const size = this.modelIndex.findSize(primitiveType.__id);
-
-        return <GPrimitiveTypeNodeElement node={primitiveType} position={position} size={size} />;
-    }
-
-    protected createDataType(dataType: DataType): GModelElement {
-        const position = this.modelIndex.findPosition(dataType.__id);
-        const size = this.modelIndex.findSize(dataType.__id);
-
-        const propertiesSection =
-            dataType.properties?.length > 0 ? (
-                <SectionCompartment id={dataType.__id + '_count_context_1'} dividerText='Attributes'>
-                    {dataType.properties.map(p => (
-                        <GPropertyNodeElement node={p} />
-                    ))}
-                </SectionCompartment>
-            ) : null;
-
-        const operationsSection =
-            dataType.operations?.length > 0 ? (
-                <SectionCompartment id={dataType.__id + '_count_context_3'} dividerText='Methods'>
-                    {dataType.operations.map(o => (
-                        <GOperationNodeElement node={o} />
-                    ))}
-                </SectionCompartment>
-            ) : null;
-
-        return (
-            <GDataTypeNodeElement node={dataType} position={position} size={size}>
-                {propertiesSection}
-                {operationsSection}
-            </GDataTypeNodeElement>
-        );
-    }
-
-    protected createPackage(_package: Package): GModelElement {
-        const position = this.modelIndex.findPosition(_package.__id);
-        const size = this.modelIndex.findSize(_package.__id);
-
-        const freeformChildren: GModelElement[] = [];
-        if (_package.entities?.length > 0) {
-            for (const entity of _package.entities) {
-                if (isPackage(entity)) {
-                    freeformChildren.push(this.createPackage(entity));
-                } else if (isClass(entity)) {
-                    freeformChildren.push(this.createClass(entity));
-                }
-            }
-        }
-
-        return (
-            <GPackageNodeElement
-                node={_package}
-                position={position}
-                size={size}
-                freeformChildren={freeformChildren.length > 0 ? freeformChildren : undefined}
-            />
-        );
-    }
-
-    protected createRelation(edge: Relation): GEdge {
-        if (!edge.source || !edge.target) {
-            throw new Error('Source and target must be set');
-        }
-
-        const cssClasses = ['uml-edge'];
-        const args: Record<string, any> = {};
-        let labelChild: GModelElement | undefined;
-
-        if (isAssociation(edge)) {
-            if (edge.sourceAggregation === 'COMPOSITE') {
-                cssClasses.push('marker-diamond-start');
-            } else if (edge.sourceAggregation === 'SHARED') {
-                cssClasses.push('marker-diamond-empty-start');
-            }
-            if (edge.targetAggregation === 'COMPOSITE') {
-                cssClasses.push('marker-diamond-end');
-            } else if (edge.targetAggregation === 'SHARED') {
-                cssClasses.push('marker-diamond-empty-end');
-            }
-        } else if (isGeneralization(edge)) {
-            cssClasses.push('marker-triangle-empty-end');
-        } else {
-            cssClasses.push('uml-edge-dashed', 'marker-tent-end');
-            args.edgePadding = 10;
-            labelChild = <GLabelElement type={CommonModelTypes.LABEL_TEXT} text='<<abstraction>>' />;
-        }
-
-        return (
-            <GEdgeElement
-                id={edge.__id}
-                type={this.getElementTypeIdFromRelationType(edge.relationType)}
-                sourceId={edge.source.ref!.__id}
-                targetId={edge.target.ref!.__id}
-                cssClasses={cssClasses}
-                args={Object.keys(args).length > 0 ? args : undefined}
-            >
-                {labelChild}
-            </GEdgeElement>
-        ) as GEdge;
-    }
-
-    private getElementTypeIdFromRelationType(relationType: string): string {
-        switch (relationType) {
-            case 'ABSRACTION':
-                return ClassDiagramEdgeTypes.ABSTRACTION;
-            case 'AGGREGRATION':
-                return ClassDiagramEdgeTypes.AGGREGATION;
-            case 'ASSOCIATION':
-                return ClassDiagramEdgeTypes.ASSOCIATION;
-            case 'COMPOSITION':
-                return ClassDiagramEdgeTypes.COMPOSITION;
-            case 'DEPENDENCY':
-                return ClassDiagramEdgeTypes.DEPENDENCY;
-            case 'GENERALIZATION':
-                return ClassDiagramEdgeTypes.GENERALIZATION;
-            case 'INTERFACE_REALIZATION':
-                return ClassDiagramEdgeTypes.INTERFACE_REALIZATION;
-            case 'PACKAGE_IMPORT':
-                return ClassDiagramEdgeTypes.PACKAGE_IMPORT;
-            case 'PACKAGE_MERGE':
-                return ClassDiagramEdgeTypes.PACKAGE_MERGE;
-            case 'REALIZATION':
-                return ClassDiagramEdgeTypes.REALIZATION;
-            case 'SUBSTITUTION':
-                return ClassDiagramEdgeTypes.SUBSTITUTION;
-            case 'USAGE':
-                return ClassDiagramEdgeTypes.USAGE;
-            default:
-                return ClassDiagramEdgeTypes.ASSOCIATION;
-        }
+    protected createEdgeElement(edge: unknown): GEdge | undefined {
+        if (isAbstraction(edge)) return createAbstractionRelation(this.buildCtx(edge));
+        if (isAssociation(edge)) return createAssociationRelation(this.buildCtx(edge));
+        if (isDependency(edge)) return createDependencyRelation(this.buildCtx(edge));
+        if (isGeneralization(edge)) return createGeneralizationRelation(this.buildCtx(edge));
+        if (isInterfaceRealization(edge)) return createInterfaceRealizationRelation(this.buildCtx(edge));
+        if (isPackageImport(edge)) return createPackageImportRelation(this.buildCtx(edge));
+        if (isPackageMerge(edge)) return createPackageMergeRelation(this.buildCtx(edge));
+        if (isRealization(edge)) return createRealizationRelation(this.buildCtx(edge));
+        if (isSubstitution(edge)) return createSubstitutionRelation(this.buildCtx(edge));
+        if (isUsage(edge)) return createUsageRelation(this.buildCtx(edge));
+        if (isElementImport(edge)) return createElementImportRelation(this.buildCtx(edge));
+        if (isControlFlow(edge)) return createControlFlowRelation(this.buildCtx(edge));
+        if (isInclude(edge)) return createIncludeRelation(this.buildCtx(edge));
+        if (isExtend(edge)) return createExtendRelation(this.buildCtx(edge));
+        if (isMessage(edge)) return createMessageRelation(this.buildCtx(edge));
+        if (isCommunicationPath(edge)) return createCommunicationPathRelation(this.buildCtx(edge));
+        if (isManifestation(edge)) return createManifestationRelation(this.buildCtx(edge));
+        if (isDeployment(edge)) return createDeploymentRelation(this.buildCtx(edge));
+        if (isTransition(edge)) return createTransitionRelation(this.buildCtx(edge));
+        if (isInformationFlow(edge)) return createInformationFlowRelation(this.buildCtx(edge));
+        return undefined;
     }
 }

@@ -3,6 +3,7 @@
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
 import { type Property } from '@borkdominik-biguml/uml-model-server/grammar';
 import {
+    type GetPropertyPaletteHandlerContext,
     BoolProperty,
     ChoiceProperty,
     PropertyPalette,
@@ -11,82 +12,93 @@ import {
 } from '@borkdominik-biguml/big-property-palette/glsp-server';
 
 export namespace PropertyPropertyPaletteHandler {
-    export function getPropertyPalette(semanticElement: Property, dataTypeChoices: any): SetPropertyPaletteAction[] {
+    export function getPropertyPalette(
+        context: GetPropertyPaletteHandlerContext<Property>,
+        dataTypeChoices: any
+    ): SetPropertyPaletteAction[] {
         return [
             SetPropertyPaletteAction.create(
-                <PropertyPalette elementId={semanticElement.__id} label={(semanticElement as any).name ?? semanticElement.$type}>
-                    <TextProperty elementId={semanticElement.__id} propertyId='name' text={semanticElement.name!} label='Name' />
+                <PropertyPalette
+                    elementId={context.semanticElement.__id}
+                    label={(context.semanticElement as any).name ?? context.semanticElement.$type}
+                >
+                    <TextProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='name'
+                        text={context.semanticElement.name!}
+                        label='Name'
+                    />
                     <BoolProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='isDerived'
-                        value={!!semanticElement.isDerived}
+                        value={!!context.semanticElement.isDerived}
                         label='isDerived'
                     />
                     <BoolProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='isOrdered'
-                        value={!!semanticElement.isOrdered}
+                        value={!!context.semanticElement.isOrdered}
                         label='isOrdered'
                     />
                     <BoolProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='isStatic'
-                        value={!!semanticElement.isStatic}
+                        value={!!context.semanticElement.isStatic}
                         label='isStatic'
                     />
                     <BoolProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='isDerivedUnion'
-                        value={!!semanticElement.isDerivedUnion}
+                        value={!!context.semanticElement.isDerivedUnion}
                         label='isDerivedUnion'
                     />
                     <BoolProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='isReadOnly'
-                        value={!!semanticElement.isReadOnly}
+                        value={!!context.semanticElement.isReadOnly}
                         label='isReadOnly'
                     />
                     <BoolProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='isNavigable'
-                        value={!!semanticElement.isNavigable}
+                        value={!!context.semanticElement.isNavigable}
                         label='isNavigable'
                     />
                     <BoolProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='isUnique'
-                        value={!!semanticElement.isUnique}
+                        value={!!context.semanticElement.isUnique}
                         label='isUnique'
                     />
                     <ChoiceProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='visibility'
                         choices={PropertyPaletteChoices.VISIBILITY}
-                        choice={semanticElement.visibility!}
+                        choice={context.semanticElement.visibility!}
                         label='Visibility'
                     />
                     <TextProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='multiplicity'
-                        text={semanticElement.multiplicity!}
+                        text={context.semanticElement.multiplicity!}
                         label='Multiplicity'
                     />
                     <ChoiceProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='propertyType'
                         choices={dataTypeChoices}
                         choice={
-                            (semanticElement.propertyType as any)?.ref?.__id
-                                ? (semanticElement.propertyType as any).ref.__id + '_refValue'
+                            (context.semanticElement.propertyType as any)?.ref?.__id
+                                ? (context.semanticElement.propertyType as any).ref.__id + '_refValue'
                                 : ''
                         }
                         label='Property Type'
                     />
                     <ChoiceProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='aggregation'
-                        choices={PropertyPaletteChoices.AGGREGATION_TYPE}
-                        choice={semanticElement.aggregation!}
+                        choices={PropertyPaletteChoices.AGGREGATION}
+                        choice={context.semanticElement.aggregation!}
                         label='Aggregation Type'
                     />
                 </PropertyPalette>

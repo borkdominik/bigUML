@@ -20,7 +20,31 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
     Diagram: [
         {
             property: 'diagram',
-            propertyType: 'ClassDiagram'
+            propertyType: 'DiagramType'
+        }
+    ],
+    UseCaseDiagram: [
+        {
+            property: 'diagramType',
+            propertyType: '"USE_CASE"'
+        },
+        {
+            property: 'entities',
+            propertyType: 'UseCaseDiagramNodes'
+        },
+        {
+            property: 'relations',
+            propertyType: 'UseCaseDiagramEdges'
+        }
+    ],
+    UseCase: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
         }
     ],
     Element: [],
@@ -57,123 +81,108 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'ElementWithSizeAndPosition'
         }
     ],
-    ClassDiagram: [
-        {
-            property: 'diagramType',
-            propertyType: '"CLASS"'
-        },
-        {
-            property: 'entities',
-            propertyType: 'ClassDiagramNodes'
-        },
-        {
-            property: 'relations',
-            propertyType: 'ClassDiagramEdges'
-        }
-    ],
-    Enumeration: [
+    Subject: [
         {
             property: 'name',
             propertyType: 'string'
-        },
-        {
-            property: 'isAbstract',
-            propertyType: 'boolean',
-            defaultValue: false
         },
         {
             property: 'visibility',
             propertyType: 'Visibility'
         },
         {
-            property: 'values',
-            propertyType: 'EnumerationLiteral'
+            property: 'useCases',
+            propertyType: 'UseCase'
         }
     ],
-    EnumerationLiteral: [
+    Include: [
         {
-            property: 'name',
-            propertyType: 'string'
+            property: 'source',
+            propertyType: 'Node'
         },
         {
-            property: 'value',
-            propertyType: 'string'
-        },
-        {
-            property: 'visibility',
-            propertyType: 'Visibility'
+            property: 'target',
+            propertyType: 'Node'
         }
     ],
-    Class: [
+    Relation: [
         {
-            property: 'name',
-            propertyType: 'string'
+            property: 'source',
+            propertyType: 'Node'
         },
         {
-            property: 'isAbstract',
-            propertyType: 'boolean',
-            defaultValue: false
-        },
+            property: 'target',
+            propertyType: 'Node'
+        }
+    ],
+    Generalization: [
         {
-            property: 'properties',
-            propertyType: 'Property'
-        },
-        {
-            property: 'operations',
-            propertyType: 'Operation'
-        },
-        {
-            property: 'isActive',
+            property: 'isSubstitutable',
             propertyType: 'boolean'
         },
         {
-            property: 'visibility',
-            propertyType: 'Visibility'
+            property: 'source',
+            propertyType: 'Node'
+        },
+        {
+            property: 'target',
+            propertyType: 'Node'
         }
     ],
-    AbstractClass: [
+    Extend: [
         {
-            property: 'isAbstract',
-            propertyType: 'boolean',
-            defaultValue: true
+            property: 'source',
+            propertyType: 'Node'
         },
         {
-            property: 'label',
-            propertyType: 'string'
-        },
-        {
-            property: 'visibility',
-            propertyType: 'Visibility'
-        },
+            property: 'target',
+            propertyType: 'Node'
+        }
+    ],
+    Association: [
         {
             property: 'name',
             propertyType: 'string'
         },
         {
-            property: 'properties',
-            propertyType: 'Property'
+            property: 'sourceMultiplicity',
+            propertyType: 'string',
+            defaultValue: '*'
         },
         {
-            property: 'operations',
-            propertyType: 'Operation'
+            property: 'targetMultiplicity',
+            propertyType: 'string',
+            defaultValue: '*'
         },
         {
-            property: 'isActive',
-            propertyType: 'boolean'
-        }
-    ],
-    Interface: [
-        {
-            property: 'name',
+            property: 'sourceName',
             propertyType: 'string'
         },
         {
-            property: 'properties',
-            propertyType: 'Property'
+            property: 'targetName',
+            propertyType: 'string'
         },
         {
-            property: 'operations',
-            propertyType: 'Operation'
+            property: 'sourceAggregation',
+            propertyType: 'AggregationType',
+            defaultValue: 'NONE'
+        },
+        {
+            property: 'targetAggregation',
+            propertyType: 'AggregationType',
+            defaultValue: 'NONE'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'source',
+            propertyType: 'Node'
+        },
+        {
+            property: 'target',
+            propertyType: 'Node'
         }
     ],
     Property: [
@@ -220,6 +229,34 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             property: 'visibility',
             propertyType: 'Visibility',
             defaultValue: 'PUBLIC'
+        }
+    ],
+    DataType: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'properties',
+            propertyType: 'Property'
+        },
+        {
+            property: 'operations',
+            propertyType: 'Operation'
+        },
+        {
+            property: 'isAbstract',
+            propertyType: 'boolean'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    PrimitiveType: [
+        {
+            property: 'name',
+            propertyType: 'string'
         }
     ],
     Operation: [
@@ -294,7 +331,7 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'string'
         }
     ],
-    DataType: [
+    Interface: [
         {
             property: 'name',
             propertyType: 'string'
@@ -306,9 +343,61 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
         {
             property: 'operations',
             propertyType: 'Operation'
+        }
+    ],
+    Enumeration: [
+        {
+            property: 'name',
+            propertyType: 'string'
         },
         {
             property: 'isAbstract',
+            propertyType: 'boolean',
+            defaultValue: false
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'values',
+            propertyType: 'EnumerationLiteral'
+        }
+    ],
+    EnumerationLiteral: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'value',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    Class: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'isAbstract',
+            propertyType: 'boolean',
+            defaultValue: false
+        },
+        {
+            property: 'properties',
+            propertyType: 'Property'
+        },
+        {
+            property: 'operations',
+            propertyType: 'Operation'
+        },
+        {
+            property: 'isActive',
             propertyType: 'boolean'
         },
         {
@@ -316,13 +405,31 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'Visibility'
         }
     ],
-    PrimitiveType: [
+    Actor: [
         {
             property: 'name',
             propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
         }
     ],
-    InstanceSpecification: [
+    StateMachineDiagram: [
+        {
+            property: 'diagramType',
+            propertyType: '"STATE_MACHINE"'
+        },
+        {
+            property: 'entities',
+            propertyType: 'StateMachineDiagramNodes'
+        },
+        {
+            property: 'relations',
+            propertyType: 'StateMachineDiagramEdges'
+        }
+    ],
+    Transition: [
         {
             property: 'name',
             propertyType: 'string'
@@ -332,8 +439,603 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'Visibility'
         },
         {
-            property: 'slots',
-            propertyType: 'Slot'
+            property: 'kind',
+            propertyType: 'TransitionKind',
+            defaultValue: 'EXTERNAL'
+        },
+        {
+            property: 'source',
+            propertyType: 'Node'
+        },
+        {
+            property: 'target',
+            propertyType: 'Node'
+        }
+    ],
+    StateMachine: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'regions',
+            propertyType: 'Region'
+        }
+    ],
+    Region: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'subvertices',
+            propertyType: 'Node'
+        },
+        {
+            property: 'transitions',
+            propertyType: 'Transition'
+        }
+    ],
+    State: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'regions',
+            propertyType: 'Region'
+        }
+    ],
+    ShallowHistory: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    Join: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    InitialState: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    Fork: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    FinalState: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    DeepHistory: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    Choice: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    PackageDiagram: [
+        {
+            property: 'diagramType',
+            propertyType: '"PACKAGE"'
+        },
+        {
+            property: 'entities',
+            propertyType: 'PackageDiagramNodes'
+        },
+        {
+            property: 'relations',
+            propertyType: 'PackageDiagramEdges'
+        }
+    ],
+    Usage: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'source',
+            propertyType: 'Node'
+        },
+        {
+            property: 'target',
+            propertyType: 'Node'
+        }
+    ],
+    PackageMerge: [
+        {
+            property: 'source',
+            propertyType: 'Node'
+        },
+        {
+            property: 'target',
+            propertyType: 'Node'
+        }
+    ],
+    PackageImport: [
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'source',
+            propertyType: 'Node'
+        },
+        {
+            property: 'target',
+            propertyType: 'Node'
+        }
+    ],
+    Package: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'uri',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'entities',
+            propertyType: 'Node'
+        }
+    ],
+    ElementImport: [
+        {
+            property: 'alias',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'source',
+            propertyType: 'Node'
+        },
+        {
+            property: 'target',
+            propertyType: 'Node'
+        }
+    ],
+    Dependency: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'source',
+            propertyType: 'Node'
+        },
+        {
+            property: 'target',
+            propertyType: 'Node'
+        }
+    ],
+    Abstraction: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'source',
+            propertyType: 'Node'
+        },
+        {
+            property: 'target',
+            propertyType: 'Node'
+        }
+    ],
+    InformationFlowDiagram: [
+        {
+            property: 'diagramType',
+            propertyType: '"INFORMATION_FLOW"'
+        },
+        {
+            property: 'entities',
+            propertyType: 'InformationFlowDiagramNodes'
+        },
+        {
+            property: 'relations',
+            propertyType: 'InformationFlowDiagramEdges'
+        }
+    ],
+    InformationFlow: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'source',
+            propertyType: 'Actor'
+        },
+        {
+            property: 'target',
+            propertyType: 'Actor'
+        }
+    ],
+    DeploymentDiagram: [
+        {
+            property: 'diagramType',
+            propertyType: '"DEPLOYMENT"'
+        },
+        {
+            property: 'entities',
+            propertyType: 'DeploymentDiagramNodes'
+        },
+        {
+            property: 'relations',
+            propertyType: 'DeploymentDiagramEdges'
+        }
+    ],
+    Manifestation: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'source',
+            propertyType: 'Node'
+        },
+        {
+            property: 'target',
+            propertyType: 'Node'
+        }
+    ],
+    ExecutionEnvironment: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'nestedEnvironments',
+            propertyType: 'ExecutionEnvironment'
+        },
+        {
+            property: 'artifacts',
+            propertyType: 'Artifact'
+        },
+        {
+            property: 'deploymentSpecifications',
+            propertyType: 'DeploymentSpecification'
+        }
+    ],
+    DeploymentSpecification: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'properties',
+            propertyType: 'Property'
+        },
+        {
+            property: 'operations',
+            propertyType: 'Operation'
+        }
+    ],
+    Artifact: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'properties',
+            propertyType: 'Property'
+        },
+        {
+            property: 'operations',
+            propertyType: 'Operation'
+        },
+        {
+            property: 'nestedArtifacts',
+            propertyType: 'Artifact'
+        }
+    ],
+    Device: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'nodes',
+            propertyType: 'DeploymentNode'
+        },
+        {
+            property: 'executionEnvironments',
+            propertyType: 'ExecutionEnvironment'
+        },
+        {
+            property: 'deploymentSpecifications',
+            propertyType: 'DeploymentSpecification'
+        }
+    ],
+    DeploymentNode: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'nestedNodes',
+            propertyType: 'DeploymentNode'
+        },
+        {
+            property: 'artifacts',
+            propertyType: 'Artifact'
+        },
+        {
+            property: 'devices',
+            propertyType: 'Device'
+        },
+        {
+            property: 'deploymentSpecifications',
+            propertyType: 'DeploymentSpecification'
+        },
+        {
+            property: 'executionEnvironments',
+            propertyType: 'ExecutionEnvironment'
+        }
+    ],
+    DeploymentPackage: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'uri',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'entities',
+            propertyType: 'Node'
+        }
+    ],
+    DeploymentModel: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'uri',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'entities',
+            propertyType: 'Node'
+        }
+    ],
+    Deployment: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'source',
+            propertyType: 'Node'
+        },
+        {
+            property: 'target',
+            propertyType: 'Node'
+        }
+    ],
+    CommunicationPath: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'source',
+            propertyType: 'Node'
+        },
+        {
+            property: 'target',
+            propertyType: 'Node'
+        }
+    ],
+    CommunicationDiagram: [
+        {
+            property: 'diagramType',
+            propertyType: '"COMMUNICATION"'
+        },
+        {
+            property: 'entities',
+            propertyType: 'CommunicationDiagramNodes'
+        },
+        {
+            property: 'relations',
+            propertyType: 'CommunicationDiagramEdges'
+        }
+    ],
+    Message: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'source',
+            propertyType: 'Lifeline'
+        },
+        {
+            property: 'target',
+            propertyType: 'Lifeline'
+        }
+    ],
+    Lifeline: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    Interaction: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'lifelines',
+            propertyType: 'Lifeline'
+        },
+        {
+            property: 'messages',
+            propertyType: 'Message'
+        }
+    ],
+    ClassDiagram: [
+        {
+            property: 'diagramType',
+            propertyType: '"CLASS"'
+        },
+        {
+            property: 'entities',
+            propertyType: 'ClassDiagramNodes'
+        },
+        {
+            property: 'relations',
+            propertyType: 'ClassDiagramEdges'
+        }
+    ],
+    Substitution: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'source',
+            propertyType: 'Node'
+        },
+        {
+            property: 'target',
+            propertyType: 'Node'
         }
     ],
     Slot: [
@@ -357,21 +1059,7 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'string'
         }
     ],
-    Relation: [
-        {
-            property: 'source',
-            propertyType: 'Node'
-        },
-        {
-            property: 'target',
-            propertyType: 'Node'
-        },
-        {
-            property: 'relationType',
-            propertyType: 'RelationType'
-        }
-    ],
-    Abstraction: [
+    Realization: [
         {
             property: 'name',
             propertyType: 'string'
@@ -387,182 +1075,6 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
         {
             property: 'target',
             propertyType: 'Node'
-        },
-        {
-            property: 'relationType',
-            propertyType: 'RelationType'
-        }
-    ],
-    Dependency: [
-        {
-            property: 'name',
-            propertyType: 'string'
-        },
-        {
-            property: 'visibility',
-            propertyType: 'Visibility'
-        },
-        {
-            property: 'source',
-            propertyType: 'Node'
-        },
-        {
-            property: 'target',
-            propertyType: 'Node'
-        },
-        {
-            property: 'relationType',
-            propertyType: 'RelationType'
-        }
-    ],
-    Association: [
-        {
-            property: 'name',
-            propertyType: 'string'
-        },
-        {
-            property: 'sourceMultiplicity',
-            propertyType: 'string',
-            defaultValue: '*'
-        },
-        {
-            property: 'targetMultiplicity',
-            propertyType: 'string',
-            defaultValue: '*'
-        },
-        {
-            property: 'sourceName',
-            propertyType: 'string'
-        },
-        {
-            property: 'targetName',
-            propertyType: 'string'
-        },
-        {
-            property: 'sourceAggregation',
-            propertyType: 'AggregationType',
-            defaultValue: 'NONE'
-        },
-        {
-            property: 'targetAggregation',
-            propertyType: 'AggregationType',
-            defaultValue: 'NONE'
-        },
-        {
-            property: 'visibility',
-            propertyType: 'Visibility'
-        },
-        {
-            property: 'source',
-            propertyType: 'Node'
-        },
-        {
-            property: 'target',
-            propertyType: 'Node'
-        },
-        {
-            property: 'relationType',
-            propertyType: 'RelationType'
-        }
-    ],
-    Aggregation: [
-        {
-            property: 'name',
-            propertyType: 'string'
-        },
-        {
-            property: 'sourceMultiplicity',
-            propertyType: 'string',
-            defaultValue: '*'
-        },
-        {
-            property: 'targetMultiplicity',
-            propertyType: 'string',
-            defaultValue: '*'
-        },
-        {
-            property: 'sourceName',
-            propertyType: 'string'
-        },
-        {
-            property: 'targetName',
-            propertyType: 'string'
-        },
-        {
-            property: 'sourceAggregation',
-            propertyType: 'AggregationType',
-            defaultValue: 'SHARED'
-        },
-        {
-            property: 'targetAggregation',
-            propertyType: 'AggregationType',
-            defaultValue: 'NONE'
-        },
-        {
-            property: 'visibility',
-            propertyType: 'Visibility'
-        },
-        {
-            property: 'source',
-            propertyType: 'Node'
-        },
-        {
-            property: 'target',
-            propertyType: 'Node'
-        },
-        {
-            property: 'relationType',
-            propertyType: 'RelationType'
-        }
-    ],
-    Composition: [
-        {
-            property: 'name',
-            propertyType: 'string'
-        },
-        {
-            property: 'sourceMultiplicity',
-            propertyType: 'string',
-            defaultValue: '*'
-        },
-        {
-            property: 'targetMultiplicity',
-            propertyType: 'string',
-            defaultValue: '*'
-        },
-        {
-            property: 'sourceName',
-            propertyType: 'string'
-        },
-        {
-            property: 'targetName',
-            propertyType: 'string'
-        },
-        {
-            property: 'sourceAggregation',
-            propertyType: 'AggregationType',
-            defaultValue: 'COMPOSITE'
-        },
-        {
-            property: 'targetAggregation',
-            propertyType: 'AggregationType',
-            defaultValue: 'NONE'
-        },
-        {
-            property: 'visibility',
-            propertyType: 'Visibility'
-        },
-        {
-            property: 'source',
-            propertyType: 'Node'
-        },
-        {
-            property: 'target',
-            propertyType: 'Node'
-        },
-        {
-            property: 'relationType',
-            propertyType: 'RelationType'
         }
     ],
     InterfaceRealization: [
@@ -581,183 +1093,286 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
         {
             property: 'target',
             propertyType: 'Node'
-        },
-        {
-            property: 'relationType',
-            propertyType: 'RelationType'
         }
     ],
-    Generalization: [
+    InstanceSpecification: [
         {
-            property: 'isSubstitutable',
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'slots',
+            propertyType: 'Slot'
+        }
+    ],
+    AbstractClass: [
+        {
+            property: 'isAbstract',
+            propertyType: 'boolean',
+            defaultValue: true
+        },
+        {
+            property: 'label',
+            propertyType: 'string'
+        },
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'properties',
+            propertyType: 'Property'
+        },
+        {
+            property: 'operations',
+            propertyType: 'Operation'
+        },
+        {
+            property: 'isActive',
             propertyType: 'boolean'
         },
         {
-            property: 'source',
-            propertyType: 'Node'
-        },
-        {
-            property: 'target',
-            propertyType: 'Node'
-        },
-        {
-            property: 'relationType',
-            propertyType: 'RelationType'
-        }
-    ],
-    PackageImport: [
-        {
             property: 'visibility',
             propertyType: 'Visibility'
-        },
-        {
-            property: 'source',
-            propertyType: 'Node'
-        },
-        {
-            property: 'target',
-            propertyType: 'Node'
-        },
-        {
-            property: 'relationType',
-            propertyType: 'RelationType'
         }
     ],
-    PackageMerge: [
+    ActivityDiagram: [
         {
-            property: 'source',
-            propertyType: 'Node'
-        },
-        {
-            property: 'target',
-            propertyType: 'Node'
-        },
-        {
-            property: 'relationType',
-            propertyType: 'RelationType'
-        }
-    ],
-    ElementImport: [
-        {
-            property: 'alias',
-            propertyType: 'string'
-        },
-        {
-            property: 'visibility',
-            propertyType: 'Visibility'
-        },
-        {
-            property: 'source',
-            propertyType: 'Node'
-        },
-        {
-            property: 'target',
-            propertyType: 'Node'
-        },
-        {
-            property: 'relationType',
-            propertyType: 'RelationType'
-        }
-    ],
-    Realization: [
-        {
-            property: 'name',
-            propertyType: 'string'
-        },
-        {
-            property: 'visibility',
-            propertyType: 'Visibility'
-        },
-        {
-            property: 'source',
-            propertyType: 'Node'
-        },
-        {
-            property: 'target',
-            propertyType: 'Node'
-        },
-        {
-            property: 'relationType',
-            propertyType: 'RelationType'
-        }
-    ],
-    Substitution: [
-        {
-            property: 'name',
-            propertyType: 'string'
-        },
-        {
-            property: 'visibility',
-            propertyType: 'Visibility'
-        },
-        {
-            property: 'source',
-            propertyType: 'Node'
-        },
-        {
-            property: 'target',
-            propertyType: 'Node'
-        },
-        {
-            property: 'relationType',
-            propertyType: 'RelationType'
-        }
-    ],
-    Usage: [
-        {
-            property: 'name',
-            propertyType: 'string'
-        },
-        {
-            property: 'visibility',
-            propertyType: 'Visibility'
-        },
-        {
-            property: 'source',
-            propertyType: 'Node'
-        },
-        {
-            property: 'target',
-            propertyType: 'Node'
-        },
-        {
-            property: 'relationType',
-            propertyType: 'RelationType'
-        }
-    ],
-    Package: [
-        {
-            property: 'name',
-            propertyType: 'string'
-        },
-        {
-            property: 'uri',
-            propertyType: 'string'
-        },
-        {
-            property: 'visibility',
-            propertyType: 'Visibility'
+            property: 'diagramType',
+            propertyType: '"ACTIVITY"'
         },
         {
             property: 'entities',
+            propertyType: 'ActivityDiagramNodes'
+        },
+        {
+            property: 'relations',
+            propertyType: 'ActivityDiagramEdges'
+        }
+    ],
+    SendSignalAction: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    OutputPin: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    OpaqueAction: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'inputPins',
+            propertyType: 'InputPin'
+        },
+        {
+            property: 'outputPins',
+            propertyType: 'OutputPin'
+        }
+    ],
+    InputPin: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    MergeNode: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    JoinNode: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    InitialNode: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    ForkNode: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    FlowFinalNode: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    DecisionNode: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    ControlFlow: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'guard',
+            propertyType: 'string'
+        },
+        {
+            property: 'weight',
+            propertyType: 'number'
+        },
+        {
+            property: 'source',
             propertyType: 'Node'
+        },
+        {
+            property: 'target',
+            propertyType: 'Node'
+        }
+    ],
+    CentralBufferNode: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    ActivityPartition: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'subpartitions',
+            propertyType: 'ActivityPartition'
+        },
+        {
+            property: 'nodes',
+            propertyType: 'Node'
+        }
+    ],
+    ActivityParameterNode: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    ActivityFinalNode: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    Activity: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'partitions',
+            propertyType: 'ActivityPartition'
+        },
+        {
+            property: 'nodes',
+            propertyType: 'Node'
+        },
+        {
+            property: 'edges',
+            propertyType: 'ControlFlow'
+        }
+    ],
+    AcceptEventAction: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
         }
     ]
 };
 
-export const noBoundsClasses = new Set<string>([
-    'EnumerationLiteral',
-    'Property',
-    'Operation',
-    'Parameter',
-    'Slot',
-    'LiteralSpecification'
-]);
+export const noBoundsClasses = new Set<string>(['Property', 'Parameter', 'EnumerationLiteral', 'Slot', 'LiteralSpecification']);
 
-export const astTypeMapping: Record<string, string> = {
-    aggregation: 'Association',
-    composition: 'Association'
-};
+export const astTypeMapping: Record<string, string> = {};
 
 export function isNoBounds(typeId: string): boolean {
     return noBoundsClasses.has(stripPrefix(typeId));

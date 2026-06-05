@@ -6,7 +6,24 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { ClassDiagramLanguageMetadata, ClassDiagramToolPaletteItemProvider } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
+import {
+    ActivityDiagramLanguageMetadata,
+    ActivityDiagramToolPaletteItemProvider,
+    ClassDiagramLanguageMetadata,
+    ClassDiagramToolPaletteItemProvider,
+    CommunicationDiagramLanguageMetadata,
+    CommunicationDiagramToolPaletteItemProvider,
+    DeploymentDiagramLanguageMetadata,
+    DeploymentDiagramToolPaletteItemProvider,
+    InformationFlowDiagramLanguageMetadata,
+    InformationFlowDiagramToolPaletteItemProvider,
+    PackageDiagramLanguageMetadata,
+    PackageDiagramToolPaletteItemProvider,
+    StateMachineDiagramLanguageMetadata,
+    StateMachineDiagramToolPaletteItemProvider,
+    UseCaseDiagramLanguageMetadata,
+    UseCaseDiagramToolPaletteItemProvider
+} from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
 import {
     type ActionHandlerConstructor,
     type BindingTarget,
@@ -22,6 +39,7 @@ import {
     type ToolPaletteItemProvider
 } from '@eclipse-glsp/server';
 import { injectable, type interfaces } from 'inversify';
+import { DefaultDiagramLanguageMetadata } from '../features/model/default-diagram-language-metadata.js';
 import { DiagramLanguageMetadata } from '../features/model/diagram-language-metadata.js';
 import { BigDiagramModule } from '../features/module/module.js';
 import { UmlDiagramConfiguration } from './diagram-configuration.js';
@@ -39,8 +57,27 @@ export class UmlDiagramModule extends BigDiagramModule {
         rebind: interfaces.Rebind
     ): void {
         super.configure(bind, unbind, isBound, rebind);
-        bind(DiagramLanguageMetadata).to(ClassDiagramLanguageMetadata).inSingletonScope();
+        // Bind each concrete metadata class by its own type (used by the factory)
+        bind(ActivityDiagramLanguageMetadata).toSelf().inSingletonScope();
+        bind(ClassDiagramLanguageMetadata).toSelf().inSingletonScope();
+        bind(CommunicationDiagramLanguageMetadata).toSelf().inSingletonScope();
+        bind(DeploymentDiagramLanguageMetadata).toSelf().inSingletonScope();
+        bind(InformationFlowDiagramLanguageMetadata).toSelf().inSingletonScope();
+        bind(PackageDiagramLanguageMetadata).toSelf().inSingletonScope();
+        bind(StateMachineDiagramLanguageMetadata).toSelf().inSingletonScope();
+        bind(UseCaseDiagramLanguageMetadata).toSelf().inSingletonScope();
+        // Proxy that delegates to the correct metadata based on the active diagram type
+        bind(DefaultDiagramLanguageMetadata).toSelf().inSingletonScope();
+        bind(DiagramLanguageMetadata).toService(DefaultDiagramLanguageMetadata);
+        // Tool palette providers
+        bind(ActivityDiagramToolPaletteItemProvider).toSelf().inSingletonScope();
         bind(ClassDiagramToolPaletteItemProvider).toSelf().inSingletonScope();
+        bind(CommunicationDiagramToolPaletteItemProvider).toSelf().inSingletonScope();
+        bind(DeploymentDiagramToolPaletteItemProvider).toSelf().inSingletonScope();
+        bind(InformationFlowDiagramToolPaletteItemProvider).toSelf().inSingletonScope();
+        bind(PackageDiagramToolPaletteItemProvider).toSelf().inSingletonScope();
+        bind(StateMachineDiagramToolPaletteItemProvider).toSelf().inSingletonScope();
+        bind(UseCaseDiagramToolPaletteItemProvider).toSelf().inSingletonScope();
     }
 
     protected bindDiagramConfiguration(): BindingTarget<DiagramConfiguration> {

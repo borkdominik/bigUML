@@ -21,7 +21,7 @@ import {
 } from '@borkdominik-biguml/uml-model-server';
 import { type Diagram } from '@borkdominik-biguml/uml-model-server/grammar';
 import { UmlDiagramLSPServices } from '@borkdominik-biguml/uml-model-server/integration';
-import { ActionDispatcher, DefaultModelState, type JsonModelState, MessageAction, type SeverityLevel } from '@eclipse-glsp/server';
+import { ActionDispatcher, DefaultModelState, Emitter, type JsonModelState, MessageAction, type SeverityLevel } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 import { URI } from 'vscode-uri';
 import { DiagramModelIndex } from './diagram-model-index.js';
@@ -45,6 +45,9 @@ export class DiagramModelState extends DefaultModelState implements JsonModelSta
     protected _semanticRoot: Diagram;
     protected _packageId: string;
 
+    protected readonly onDidLoadSourceModelEmitter = new Emitter<void>();
+    readonly onDidLoadSourceModel = this.onDidLoadSourceModelEmitter.event;
+
     @inject(ActionDispatcher)
     protected readonly actionDispatcher!: ActionDispatcher;
 
@@ -54,6 +57,7 @@ export class DiagramModelState extends DefaultModelState implements JsonModelSta
         this._packageId = this.services.shared.workspace.PackageManager.getPackageIdByUri(URI.parse(uri));
 
         this.index.indexSemanticRoot(this.semanticRoot);
+        this.onDidLoadSourceModelEmitter.fire();
     }
 
     get semanticUri(): string {
@@ -62,6 +66,10 @@ export class DiagramModelState extends DefaultModelState implements JsonModelSta
 
     get semanticRoot(): Diagram {
         return this._semanticRoot;
+    }
+
+    get diagramType(): string | undefined {
+        return this._semanticRoot?.diagram?.diagramType;
     }
 
     get packageId(): string {

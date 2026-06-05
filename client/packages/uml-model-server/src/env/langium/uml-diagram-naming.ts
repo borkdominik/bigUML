@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { type AstNode, type CstNode, findNodeForProperty, getDocument, isNamed, type NameProvider } from 'langium';
+import { AstUtils, GrammarUtils, type AstNode, type CstNode, isNamed, type NameProvider } from 'langium';
 import { properties } from '../generator-config.js';
 import { type UmlDiagramServices } from './uml-diagram-module.js';
 import { UNKNOWN_PROJECT_REFERENCE } from './uml-diagram-package-manager.js';
@@ -81,7 +81,7 @@ export class QualifiedNameProvider implements NameProvider {
      */
     getFullyQualifiedName(
         node: AstNode,
-        packageName = this.packageManager.getPackageInfoByDocument(getDocument(node))?.referenceName ?? UNKNOWN_PROJECT_REFERENCE
+        packageName = this.packageManager.getPackageInfoByDocument(AstUtils.getDocument(node))?.referenceName ?? UNKNOWN_PROJECT_REFERENCE
     ): string | undefined {
         const packageLocalName = this.getQualifiedName(node);
         return packageName + '/' + packageLocalName;
@@ -92,6 +92,6 @@ export class QualifiedNameProvider implements NameProvider {
     }
 
     getNameNode(node: AstNode): CstNode | undefined {
-        return findNodeForProperty(node.$cstNode, '__id');
+        return GrammarUtils.findNodeForProperty(node.$cstNode, '__id');
     }
 }

@@ -8,14 +8,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import {
-    type AstNode,
-    type AstNodeDescription,
-    DefaultScopeComputation,
-    type LangiumDocument,
-    type PrecomputedScopes,
-    streamAllContents
-} from 'langium';
+import { type AstNode, type AstNodeDescription, AstUtils, DefaultScopeComputation, type LangiumDocument, type MultiMap } from 'langium';
 import { CancellationToken } from 'vscode-jsonrpc';
 import { type UmlDiagramServices } from './uml-diagram-module.js';
 import { type QualifiedNameProvider } from './uml-diagram-naming.js';
@@ -77,17 +70,17 @@ export class UmlDiagramScopeComputation extends DefaultScopeComputation {
     }
 
     // overridden because we use 'streamAllContents' as children retrieval instead of 'streamContents'
-    override async computeExportsForNode(
+    override async collectExportedSymbolsForNode(
         parentNode: AstNode,
         document: LangiumDocument<AstNode>,
-        children: (root: AstNode) => Iterable<AstNode> = streamAllContents,
+        children: (root: AstNode) => Iterable<AstNode> = AstUtils.streamAllContents,
         cancelToken: CancellationToken = CancellationToken.None
     ): Promise<AstNodeDescription[]> {
         // const docRoot = document.parseResult.value;
-        return super.computeExportsForNode(parentNode, document, children, cancelToken);
+        return super.collectExportedSymbolsForNode(parentNode, document, children, cancelToken);
     }
 
-    protected override exportNode(node: AstNode, exports: AstNodeDescription[], document: LangiumDocument<AstNode>): void {
+    protected override addExportedSymbol(node: AstNode, exports: AstNodeDescription[], document: LangiumDocument<AstNode>): void {
         const packageInfo = this.packageManager.getPackageInfoByDocument(document);
         const packageId = packageInfo?.id ?? UNKNOWN_PROJECT_ID;
         const packageName = packageInfo?.referenceName ?? UNKNOWN_PROJECT_REFERENCE;
@@ -108,12 +101,12 @@ export class UmlDiagramScopeComputation extends DefaultScopeComputation {
         }
     }
 
-    protected override processNode(node: AstNode, document: LangiumDocument, scopes: PrecomputedScopes): void {
+    protected override addLocalSymbol(node: AstNode, document: LangiumDocument, symbols: MultiMap<AstNode, AstNodeDescription>): void {
         const container = node.$container;
         if (container) {
             const name = this.nameProvider.getLocalName(node);
             if (name) {
-                scopes.add(container, this.descriptions.createDescription(node, name, document));
+                symbols.add(container, this.descriptions.createDescription(node, name, document));
             }
         }
     }

@@ -3,6 +3,7 @@
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
 import { type Realization } from '@borkdominik-biguml/uml-model-server/grammar';
 import {
+    type GetPropertyPaletteHandlerContext,
     ChoiceProperty,
     PropertyPalette,
     PropertyPaletteChoices,
@@ -10,24 +11,25 @@ import {
 } from '@borkdominik-biguml/big-property-palette/glsp-server';
 
 export namespace RealizationPropertyPaletteHandler {
-    export function getPropertyPalette(semanticElement: Realization): SetPropertyPaletteAction[] {
+    export function getPropertyPalette(context: GetPropertyPaletteHandlerContext<Realization>): SetPropertyPaletteAction[] {
         return [
             SetPropertyPaletteAction.create(
-                <PropertyPalette elementId={semanticElement.__id} label={(semanticElement as any).name ?? semanticElement.$type}>
-                    <TextProperty elementId={semanticElement.__id} propertyId='name' text={semanticElement.name!} label='Name' />
-                    <ChoiceProperty
-                        elementId={semanticElement.__id}
-                        propertyId='visibility'
-                        choices={PropertyPaletteChoices.VISIBILITY}
-                        choice={semanticElement.visibility!}
-                        label='Visibility'
+                <PropertyPalette
+                    elementId={context.semanticElement.__id}
+                    label={(context.semanticElement as any).name ?? context.semanticElement.$type}
+                >
+                    <TextProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='name'
+                        text={context.semanticElement.name!}
+                        label='Name'
                     />
                     <ChoiceProperty
-                        elementId={semanticElement.__id}
-                        propertyId='relationType'
-                        choices={PropertyPaletteChoices.RELATION_TYPE}
-                        choice={semanticElement.relationType!}
-                        label='Relation Type'
+                        elementId={context.semanticElement.__id}
+                        propertyId='visibility'
+                        choices={PropertyPaletteChoices.VISIBILITY}
+                        choice={context.semanticElement.visibility!}
+                        label='Visibility'
                     />
                 </PropertyPalette>
             )

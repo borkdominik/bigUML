@@ -11,6 +11,7 @@ import type { GeneratorContext, GeneratorResult } from '@borkdominik-biguml/uml-
 import { renderCreationPath } from './render/creation-path.renderer.js';
 import { renderDefaultValue } from './render/default-value.renderer.js';
 import { renderDiagramLanguageMetadata } from './render/diagram-language-metadata.renderer.js';
+import { renderEmptyDiagram } from './render/empty-diagram.renderer.js';
 import { renderModelTypes } from './render/model-types.renderer.js';
 import { renderToolPaletteItemProvider } from './render/tool-palette.renderer.js';
 
@@ -19,6 +20,7 @@ export function generate({ outputPath, declarations }: GeneratorContext): Genera
 
     results.push(...renderCreationPath(outputPath, declarations));
     results.push(...renderDefaultValue(outputPath, declarations));
+    results.push(...renderEmptyDiagram(outputPath, declarations));
     results.push(...renderModelTypes(outputPath, declarations));
     results.push(...renderDiagramLanguageMetadata(outputPath, declarations));
     results.push(...renderToolPaletteItemProvider(outputPath, declarations));

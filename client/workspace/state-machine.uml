@@ -1,0 +1,70 @@
+{
+	"diagram": {
+		"__type": "StateMachineDiagram",
+		"__id": "diagram_a11bdf81-edaf-40f7-a53f-3732a885869a",
+		"diagramType": "STATE_MACHINE",
+		"entities": [
+			{
+				"__type": "Region",
+				"__id": "Region_af67d9fd-36aa-4b79-9013-d3a3c45119a4",
+				"name": "NewRegion1",
+				"visibility": "PUBLIC",
+				"subvertices": [],
+				"transitions": []
+			},
+			{
+				"__type": "Choice",
+				"__id": "Choice_ba8b2673-9854-492e-b63d-722cd02bc7f7",
+				"name": "NewChoice1",
+				"visibility": "PUBLIC"
+			}
+		],
+		"relations": []
+	},
+	"metaInfos": [
+		{
+			"__type": "Size",
+			"__id": "size_Region_af67d9fd-36aa-4b79-9013-d3a3c45119a4",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Region_af67d9fd-36aa-4b79-9013-d3a3c45119a4"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_Region_af67d9fd-36aa-4b79-9013-d3a3c45119a4",
+			"x": 600,
+			"y": 150,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Region_af67d9fd-36aa-4b79-9013-d3a3c45119a4"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_Choice_ba8b2673-9854-492e-b63d-722cd02bc7f7",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Choice_ba8b2673-9854-492e-b63d-722cd02bc7f7"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_Choice_ba8b2673-9854-492e-b63d-722cd02bc7f7",
+			"x": 900,
+			"y": 250,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Choice_ba8b2673-9854-492e-b63d-722cd02bc7f7"
+			}
+		}
+	]
+}

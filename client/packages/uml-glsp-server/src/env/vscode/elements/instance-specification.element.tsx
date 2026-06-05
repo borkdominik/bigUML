@@ -12,7 +12,9 @@ import { normalizeChildren } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { InstanceSpecification } from '@borkdominik-biguml/uml-model-server/grammar';
 import { type Dimension, type Point } from '@eclipse-glsp/protocol';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';
-import { CompartmentHeader } from './shared-components.js';
+import type { ElementContext } from './core/element-context.js';
+import { CompartmentHeader, SectionCompartment } from './core/index.js';
+import { GSlotNodeElement } from './slot.element.js';
 
 export class GInstanceSpecificationNode extends GNode {
     override type = ClassDiagramNodeTypes.INSTANCE_SPECIFICATION;
@@ -55,4 +57,26 @@ export function GInstanceSpecificationNodeElement(props: GInstanceSpecificationN
     }
 
     return instNode;
+}
+
+export function createInstanceSpecificationElement(
+    ctx: ElementContext<InstanceSpecification>
+): GModelElement {
+    const position = ctx.modelIndex.findPosition(ctx.node.__id);
+    const size = ctx.modelIndex.findSize(ctx.node.__id);
+
+    const slotsSection =
+        ctx.node.slots?.length > 0 ? (
+            <SectionCompartment id={ctx.node.__id + '_count_context_1'} dividerText='Slots'>
+                {ctx.node.slots.map(s => (
+                    <GSlotNodeElement node={s} />
+                ))}
+            </SectionCompartment>
+        ) : null;
+
+    return (
+        <GInstanceSpecificationNodeElement node={ctx.node} position={position} size={size}>
+            {slotsSection}
+        </GInstanceSpecificationNodeElement>
+    );
 }

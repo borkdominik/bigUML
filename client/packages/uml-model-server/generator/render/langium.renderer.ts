@@ -66,15 +66,16 @@ function getJsonRule(rule: ParserRule | EntryRule, rules: LangiumGrammar, entry:
 
     text.push(" '{' ");
     text.push(entry ? '' : `'"__type"' ':' '"${rule.name}"' `);
-    text.push(
-        ` ${rule.definitions
-            .map(
-                (property, index) =>
-                    `( ${entry && index === 0 ? '' : "','"}  ${getProperty(property, rules)} )` +
-                    (property.optional || property.multiplicity == Multiplicity.ZERO_TO_N ? '?' : '')
-            )
-            .join(' ')} `
+
+    const SKIP = `( ',' __unknown += UnknownProperty )*`;
+    const propertyParts = rule.definitions.map(
+        (property, index) =>
+            `( ${entry && index === 0 ? '' : "','"}  ${getProperty(property, rules)} )` +
+            (property.optional || property.multiplicity == Multiplicity.ZERO_TO_N ? '?' : '')
     );
+    // Insert unknown-field skip between every pair of known fields and at the end
+    text.push(` ${propertyParts.join(` ${SKIP} `)} ${SKIP} `);
+
     text.push(" '}' ;");
     return text.join(' ');
 }

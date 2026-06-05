@@ -1,0 +1,99 @@
+{
+	"diagram": {
+		"__type": "ActivityDiagram",
+		"__id": "diagram_a79bc7b5-f0c9-4198-b12f-a27dc5ab4d75",
+		"diagramType": "ACTIVITY",
+		"entities": [
+			{
+				"__type": "AcceptEventAction",
+				"__id": "AcceptEventAction_afc81366-d3e2-4c0b-868d-ddeee80508c4",
+				"name": "NewAcceptEventAction1",
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "Activity",
+				"__id": "Activity_0ba82120-a0a1-4a23-83fb-a7b9878fdc69",
+				"name": "NewActivity1",
+				"visibility": "PUBLIC",
+				"partitions": [],
+				"nodes": [],
+				"edges": []
+			},
+			{
+				"__type": "ActivityFinalNode",
+				"__id": "ActivityFinalNode_fb6db018-ebff-49f9-a10f-864eb03de661",
+				"name": "NewActivityFinalNode1",
+				"visibility": "PUBLIC"
+			}
+		],
+		"relations": []
+	},
+	"metaInfos": [
+		{
+			"__type": "Size",
+			"__id": "size_AcceptEventAction_afc81366-d3e2-4c0b-868d-ddeee80508c4",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "AcceptEventAction_afc81366-d3e2-4c0b-868d-ddeee80508c4"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_AcceptEventAction_afc81366-d3e2-4c0b-868d-ddeee80508c4",
+			"x": 660,
+			"y": 200,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "AcceptEventAction_afc81366-d3e2-4c0b-868d-ddeee80508c4"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_Activity_0ba82120-a0a1-4a23-83fb-a7b9878fdc69",
+			"height": 24.16666603088379,
+			"width": 84.38801574707031,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Activity_0ba82120-a0a1-4a23-83fb-a7b9878fdc69"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_Activity_0ba82120-a0a1-4a23-83fb-a7b9878fdc69",
+			"x": 679,
+			"y": 293,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Activity_0ba82120-a0a1-4a23-83fb-a7b9878fdc69"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_ActivityFinalNode_fb6db018-ebff-49f9-a10f-864eb03de661",
+			"height": 24.16666603088379,
+			"width": 143.61978149414062,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "ActivityFinalNode_fb6db018-ebff-49f9-a10f-864eb03de661"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_ActivityFinalNode_fb6db018-ebff-49f9-a10f-864eb03de661",
+			"x": 509,
+			"y": 218,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "ActivityFinalNode_fb6db018-ebff-49f9-a10f-864eb03de661"
+			}
+		}
+	]
+}

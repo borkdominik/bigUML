@@ -7,14 +7,14 @@
 import {
     type ElementWithSizeAndPosition,
     type Relation,
+    isEdge,
     isElement,
     isElementWithSizeAndPosition,
-    isRelation,
     isUnbounded
 } from '@borkdominik-biguml/uml-model-server/grammar';
 import { type Command, DeleteElementOperation, OperationHandler } from '@eclipse-glsp/server';
 import { injectable } from 'inversify';
-import { streamAst } from 'langium';
+import { AstUtils } from 'langium';
 import { ModelPatchCommand } from '../../command/model-patch-command.js';
 import { type DiagramModelState } from '../../model/diagram-model-state.js';
 
@@ -58,7 +58,7 @@ export class GenericDeleteOperationHandler extends OperationHandler {
                 if (nodePath) removes.push({ op: 'remove', path: nodePath });
 
                 metaRemoves.push(...this.deleteSizeAndPosition(semanticId));
-            } else if (isRelation(element)) {
+            } else if (isEdge(element)) {
                 const relPath = this.modelState.index.findPath(semanticId);
                 if (relPath) removes.push({ op: 'remove', path: relPath });
                 metaRemoves.push(...this.deleteSizeAndPosition(semanticId));
@@ -113,7 +113,7 @@ export class GenericDeleteOperationHandler extends OperationHandler {
 
     protected deleteDescendantSizeAndPosition(element: ElementWithSizeAndPosition): RemoveOp[] {
         const ops: RemoveOp[] = [];
-        for (const child of streamAst(element)) {
+        for (const child of AstUtils.streamAst(element)) {
             if (child === element) continue;
             if (!isElementWithSizeAndPosition(child)) continue;
             const childId: string | undefined = (child as any).__id;

@@ -13,13 +13,3 @@ export class GAssociationEdge extends GEdge {}
 
 @injectable()
 export class GAssociationEdgeView extends GEdgeView {}
-
-export class GAggregationEdge extends GEdge {}
-
-@injectable()
-export class GAggregationEdgeView extends GEdgeView {}
-
-export class GCompositionEdge extends GEdge {}
-
-@injectable()
-export class GCompositionEdgeView extends GEdgeView {}

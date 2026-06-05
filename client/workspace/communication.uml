@@ -1,0 +1,114 @@
+{
+	"diagram": {
+		"__type": "CommunicationDiagram",
+		"__id": "diagram_6e24c12a-c9ff-43d2-adf6-0a3d0b953948",
+		"diagramType": "COMMUNICATION",
+		"entities": [
+			{
+				"__type": "Interaction",
+				"__id": "Interaction_251321f0-d6a8-4762-a1d4-8b28cc29f41a",
+				"name": "NewInteraction1",
+				"visibility": "PUBLIC",
+				"lifelines": [],
+				"messages": []
+			},
+			{
+				"__type": "Lifeline",
+				"__id": "Lifeline_cd72c531-16cf-4a6d-b80b-3c7447532619",
+				"name": "NewLifeline1",
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "Lifeline",
+				"__id": "Lifeline_b0d55547-4de3-4935-a616-db5fc9a132c2",
+				"name": "NewLifeline2",
+				"visibility": "PUBLIC"
+			}
+		],
+		"relations": [
+			{
+				"__type": "Message",
+				"__id": "Message_6a47f28b-567e-4f36-bac4-35f74d7e06c9",
+				"visibility": "PUBLIC",
+				"source": {
+					"__type": "Reference",
+					"__refType": "Lifeline",
+					"__value": "Lifeline_b0d55547-4de3-4935-a616-db5fc9a132c2"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "Lifeline",
+					"__value": "Lifeline_cd72c531-16cf-4a6d-b80b-3c7447532619"
+				}
+			}
+		]
+	},
+	"metaInfos": [
+		{
+			"__type": "Size",
+			"__id": "size_Interaction_251321f0-d6a8-4762-a1d4-8b28cc29f41a",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Interaction_251321f0-d6a8-4762-a1d4-8b28cc29f41a"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_Interaction_251321f0-d6a8-4762-a1d4-8b28cc29f41a",
+			"x": 500,
+			"y": 130,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Interaction_251321f0-d6a8-4762-a1d4-8b28cc29f41a"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_Lifeline_cd72c531-16cf-4a6d-b80b-3c7447532619",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Lifeline_cd72c531-16cf-4a6d-b80b-3c7447532619"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_Lifeline_cd72c531-16cf-4a6d-b80b-3c7447532619",
+			"x": 790,
+			"y": 200,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Lifeline_cd72c531-16cf-4a6d-b80b-3c7447532619"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_Lifeline_b0d55547-4de3-4935-a616-db5fc9a132c2",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Lifeline_b0d55547-4de3-4935-a616-db5fc9a132c2"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_Lifeline_b0d55547-4de3-4935-a616-db5fc9a132c2",
+			"x": 700,
+			"y": 310,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Lifeline_b0d55547-4de3-4935-a616-db5fc9a132c2"
+			}
+		}
+	]
+}

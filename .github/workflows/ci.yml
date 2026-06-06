@@ -25,10 +25,6 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install dependencies
+      - name: Run full setup
         working-directory: ./client
-        run: npm install
-
-      - name: Build
-        working-directory: ./client
-        run: npm run build
+        run: npm run setup

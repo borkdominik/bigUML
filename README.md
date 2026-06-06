@@ -191,7 +191,6 @@ Get started with bigUML, learn fundamentals, explore advanced topics, or go thro
 **Build steps:**
 
 - [Client](./client/README.md)
-- [Server](./server/README.md)
 
 ## Contributors ✨
 

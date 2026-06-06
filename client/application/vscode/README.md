@@ -51,9 +51,7 @@ Get in touch if you want to contribute!
 
 ## Requirements
 
-This extension requires Java JRE 17+ to run.
-
-_In the background, the GLSP and the ModelServer will be started. You can get the port of the started server from the `output` channel `bigUML Modeling Tool`._
+In the background, the GLSP and the ModelServer will be started. You can get the port of the started server from the `output` channel `bigUML Modeling Tool`.
 
 ```
 Registered server launchers: ModelServer, GLSPServer

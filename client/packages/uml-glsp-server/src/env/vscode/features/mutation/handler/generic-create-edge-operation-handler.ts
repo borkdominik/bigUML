@@ -53,10 +53,8 @@ export class GenericCreateEdgeOperationHandler extends OperationHandler implemen
             throw new Error('Source or target node not found for creating edge');
         }
 
-        const id = createRandomUUID();
-
         const astType = getRelationTypeFromElementId(operation.elementTypeId, false);
-        const relationType = getRelationTypeFromElementId(operation.elementTypeId, true);
+        const id = createRandomUUID(astType);
 
         const value: any = {
             $type: astType,
@@ -68,8 +66,7 @@ export class GenericCreateEdgeOperationHandler extends OperationHandler implemen
             target: {
                 ref: { __id: targetNode.__id, __documentUri: targetNode.$document?.uri },
                 $refText: this.modelState.nameProvider.getLocalName(targetNode) ?? targetNode.__id
-            },
-            relationType
+            }
         };
 
         for (const { property, defaultValue } of getDefaultProperties(operation.elementTypeId)) {

@@ -3,6 +3,7 @@
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
 import { type Parameter } from '@borkdominik-biguml/uml-model-server/grammar';
 import {
+    type GetPropertyPaletteHandlerContext,
     BoolProperty,
     ChoiceProperty,
     PropertyPalette,
@@ -11,71 +12,82 @@ import {
 } from '@borkdominik-biguml/big-property-palette/glsp-server';
 
 export namespace ParameterPropertyPaletteHandler {
-    export function getPropertyPalette(semanticElement: Parameter, dataTypeChoices: any): SetPropertyPaletteAction[] {
+    export function getPropertyPalette(
+        context: GetPropertyPaletteHandlerContext<Parameter>,
+        dataTypeChoices: any
+    ): SetPropertyPaletteAction[] {
         return [
             SetPropertyPaletteAction.create(
-                <PropertyPalette elementId={semanticElement.__id} label={(semanticElement as any).name ?? semanticElement.$type}>
-                    <TextProperty elementId={semanticElement.__id} propertyId='name' text={semanticElement.name!} label='Name' />
+                <PropertyPalette
+                    elementId={context.semanticElement.__id}
+                    label={(context.semanticElement as any).name ?? context.semanticElement.$type}
+                >
+                    <TextProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='name'
+                        text={context.semanticElement.name!}
+                        label='Name'
+                    />
                     <BoolProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='isException'
-                        value={!!semanticElement.isException}
+                        value={!!context.semanticElement.isException}
                         label='isException'
                     />
                     <BoolProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='isStream'
-                        value={!!semanticElement.isStream}
+                        value={!!context.semanticElement.isStream}
                         label='isStream'
                     />
                     <BoolProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='isOrdered'
-                        value={!!semanticElement.isOrdered}
+                        value={!!context.semanticElement.isOrdered}
                         label='isOrdered'
                     />
                     <BoolProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='isUnique'
-                        value={!!semanticElement.isUnique}
+                        value={!!context.semanticElement.isUnique}
                         label='isUnique'
                     />
                     <ChoiceProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='direction'
                         choices={PropertyPaletteChoices.PARAMETER_DIRECTION}
-                        choice={semanticElement.direction!}
+                        choice={context.semanticElement.direction!}
                         label='Parameter Direction'
                     />
                     <ChoiceProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='effect'
                         choices={PropertyPaletteChoices.EFFECT}
-                        choice={semanticElement.effect!}
+                        choice={context.semanticElement.effect!}
                         label='Effect Type'
                     />
                     <ChoiceProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='visibility'
                         choices={PropertyPaletteChoices.VISIBILITY}
-                        choice={semanticElement.visibility!}
+                        choice={context.semanticElement.visibility!}
                         label='Visibility'
                     />
                     <ChoiceProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='parameterType'
                         choices={dataTypeChoices}
                         choice={
-                            (semanticElement.parameterType as any)?.ref?.__id
-                                ? (semanticElement.parameterType as any).ref.__id + '_refValue'
+                            (context.semanticElement.parameterType as any)?.ref?.__id
+                                ? (context.semanticElement.parameterType as any).ref.__id + '_refValue'
                                 : ''
                         }
                         label='Parameter Type'
                     />
                     <TextProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='multiplicity'
-                        text={semanticElement.multiplicity!}
+                        text={context.semanticElement.multiplicity!}
                         label='Multiplicity'
                     />
                 </PropertyPalette>

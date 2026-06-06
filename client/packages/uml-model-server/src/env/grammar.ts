@@ -7,3 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 export * from '@borkdominik-biguml/uml-model-server/gen/langium';
+
+import type { DiagramType } from '@borkdominik-biguml/uml-model-server/gen/langium';
+
+export type DiagramKind = DiagramType['$type'];

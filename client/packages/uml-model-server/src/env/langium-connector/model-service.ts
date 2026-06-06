@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import type * as jsonpatch from 'fast-json-patch';
-import { type AstNode, isAstNode } from 'langium';
+import { type AstNode, isAstNode, isReference } from 'langium';
 import { type Disposable } from 'vscode-languageserver';
 import { URI } from 'vscode-uri';
 import { type ExtendedLangiumServices, type SharedServices } from './model-module.js';
@@ -86,7 +86,7 @@ export class ModelService {
             await this.open(uri);
         }
         // request the document from LangiumDocuments to deliver the AST
-        const document = this.documents.getOrCreateDocument(URI.parse(uri));
+        const document = this.documents.getDocument(URI.parse(uri))!;
         const root = document.parseResult.value;
         const check = guard ?? isAstNode;
         return check(root) ? root : undefined;
@@ -98,14 +98,14 @@ export class ModelService {
 
     async getCrossReferences(uri: string, ref: string): Promise<{ references: AstNode[] } | undefined> {
         await this.open(uri);
-        const document = this.documents.getOrCreateDocument(URI.parse(uri));
+        const document = this.documents.getDocument(URI.parse(uri))!;
         await this.indexManager.updateReferences(document);
 
         const references: AstNode[] = [];
         document.references.forEach(reference => {
-            if (reference.$nodeDescription?.name === ref) {
+            if (isReference(reference) && reference.$nodeDescription?.name === ref) {
                 if (reference.$refNode) {
-                    references.push(reference.$refNode.element);
+                    references.push(reference.$refNode.astNode);
                 }
             }
         });
@@ -114,7 +114,7 @@ export class ModelService {
 
     async test(uri: string): Promise<string> {
         await this.open(uri);
-        const document = this.documents.getOrCreateDocument(URI.parse(uri));
+        const document = this.documents.getDocument(URI.parse(uri))!;
         const jsonSerializer = this.shared.ServiceRegistry.getServices(URI.parse(uri)).serializer.JsonSerializer;
         await this.close(uri);
         return jsonSerializer.serialize(document.parseResult.value);
@@ -149,7 +149,7 @@ export class ModelService {
             await this.open(uri);
         }
         // get the current LangiumDocument
-        const document = this.documents.getOrCreateDocument(URI.parse(uri));
+        const document = this.documents.getDocument(URI.parse(uri))!;
         const root = document.parseResult.value;
         if (!isAstNode(root)) {
             throw new Error(`No AST node to update exists in '${uri}'`);
@@ -209,7 +209,7 @@ export class ModelService {
             } else {
                 await this.open(uri);
             }
-            const document = this.documents.getOrCreateDocument(URI.parse(uri));
+            const document = this.documents.getDocument(URI.parse(uri))!;
             return this.documentManager.save(uri, document.textDocument.getText());
         }
     }

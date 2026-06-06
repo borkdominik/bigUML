@@ -2,29 +2,30 @@
 
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
 <% if (it.needsGlspImport) { %>
+<% if (it.hasCreateOperations) { %>
 import { CreateNodeOperation, DeleteElementOperation } from '@eclipse-glsp/server';
+<% } else { %>
+import { DeleteElementOperation } from '@eclipse-glsp/server';
+<% } %>
 <% } %>
 import { type <%~ it.name %> } from '@borkdominik-biguml/uml-model-server/grammar';
-<% if (it.needsModelTypes) { %>
-import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
-<% } %>
-import { <%~ it.componentImports.join(', ') %> } from '@borkdominik-biguml/big-property-palette/glsp-server';
+import { type GetPropertyPaletteHandlerContext, <%~ it.componentImports.join(', ') %> } from '@borkdominik-biguml/big-property-palette/glsp-server';
 
 export namespace <%~ it.name %>PropertyPaletteHandler {
     export function getPropertyPalette(
-        semanticElement: <%~ it.name %><%~ it.sigExtras %>
+        context: GetPropertyPaletteHandlerContext<<%~ it.name %>><%~ it.sigExtras %>
     ): SetPropertyPaletteAction[] {
         return [
             SetPropertyPaletteAction.create(
-                <PropertyPalette elementId={semanticElement.__id} label={(semanticElement as any).name ?? semanticElement.$type}>
+                <PropertyPalette elementId={context.semanticElement.__id} label={(context.semanticElement as any).name ?? context.semanticElement.$type}>
 <% it.properties.forEach(function(prop) { %>
 <% if (prop.type === 'text') { %>
-                    <TextProperty elementId={semanticElement.__id} propertyId="<%~ prop.id %>" text={<%~ prop.valueExpr %>} label="<%~ prop.label %>" />
+                    <TextProperty elementId={context.semanticElement.__id} propertyId="<%~ prop.id %>" text={<%~ prop.valueExpr %>} label="<%~ prop.label %>" />
 <% } else if (prop.type === 'bool') { %>
-                    <BoolProperty elementId={semanticElement.__id} propertyId="<%~ prop.id %>" value={<%~ prop.valueExpr %>} label="<%~ prop.label %>" />
+                    <BoolProperty elementId={context.semanticElement.__id} propertyId="<%~ prop.id %>" value={<%~ prop.valueExpr %>} label="<%~ prop.label %>" />
 <% } else if (prop.type === 'choice') { %>
                     <ChoiceProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId="<%~ prop.id %>"
                         choices={<%~ prop.choicesExpr %>}
                         choice={<%~ prop.choiceExpr %>}
@@ -32,7 +33,7 @@ export namespace <%~ it.name %>PropertyPaletteHandler {
                     />
 <% } else if (prop.type === 'reference') { %>
                     <ReferenceProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId="<%~ prop.id %>"
                         label="<%~ prop.label %>"
                         references={<%~ prop.referencesExpr %>}

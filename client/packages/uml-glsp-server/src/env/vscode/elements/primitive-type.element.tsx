@@ -10,7 +10,8 @@ import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import type { PrimitiveType } from '@borkdominik-biguml/uml-model-server/grammar';
 import { type Dimension, type Point } from '@eclipse-glsp/protocol';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';
-import { CompartmentHeader } from './shared-components.js';
+import type { ElementContext } from './core/element-context.js';
+import { CompartmentHeader } from './core/index.js';
 
 export class GPrimitiveTypeNode extends GNode {
     override type = ClassDiagramNodeTypes.PRIMITIVE_TYPE;
@@ -47,4 +48,11 @@ export function GPrimitiveTypeNodeElement(props: GPrimitiveTypeNodeElementProps)
     primNode.children.push(header);
 
     return primNode;
+}
+
+export function createPrimitiveTypeElement(ctx: ElementContext<PrimitiveType>): GModelElement {
+    const position = ctx.modelIndex.findPosition(ctx.node.__id);
+    const size = ctx.modelIndex.findSize(ctx.node.__id);
+
+    return <GPrimitiveTypeNodeElement node={ctx.node} position={position} size={size} />;
 }

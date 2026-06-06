@@ -8,8 +8,16 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { ArrayMaxSize, Matches, MinLength, ValidateIf } from 'class-validator';
+import { MinLength, ArrayMaxSize, Matches, ValidateIf } from 'class-validator';
 import { Class, DataType, Property } from '../langium/language/ast.js';
+
+export class DataTypeValidationElement {
+    constructor(src: DataType) {
+        Object.assign(this, src);
+    }
+
+    @MinLength(5) name: string;
+}
 
 export class ClassValidationElement {
     constructor(src: Class) {
@@ -27,12 +35,4 @@ export class ClassValidationElement {
     })
     properties?: Array<Property>;
     isActive?: boolean;
-}
-
-export class DataTypeValidationElement {
-    constructor(src: DataType) {
-        Object.assign(this, src);
-    }
-
-    @MinLength(5) name: string;
 }

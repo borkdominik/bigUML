@@ -12,7 +12,10 @@ import { normalizeChildren } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { DataType } from '@borkdominik-biguml/uml-model-server/grammar';
 import { type Dimension, type Point } from '@eclipse-glsp/protocol';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';
-import { CompartmentHeader } from './shared-components.js';
+import type { ElementContext } from './core/element-context.js';
+import { CompartmentHeader, SectionCompartment } from './core/index.js';
+import { GOperationNodeElement } from './operation.element.js';
+import { GPropertyNodeElement } from './property.element.js';
 
 export class GDataTypeNode extends GNode {
     override type = ClassDiagramNodeTypes.DATA_TYPE;
@@ -55,4 +58,34 @@ export function GDataTypeNodeElement(props: GDataTypeNodeElementProps): GModelEl
     }
 
     return dataTypeNode;
+}
+
+export function createDataTypeElement(ctx: ElementContext<DataType>): GModelElement {
+    const position = ctx.modelIndex.findPosition(ctx.node.__id);
+    const size = ctx.modelIndex.findSize(ctx.node.__id);
+
+    const propertiesSection =
+        ctx.node.properties?.length > 0 ? (
+            <SectionCompartment id={ctx.node.__id + '_count_context_1'} dividerText='Attributes'>
+                {ctx.node.properties.map(p => (
+                    <GPropertyNodeElement node={p} />
+                ))}
+            </SectionCompartment>
+        ) : null;
+
+    const operationsSection =
+        ctx.node.operations?.length > 0 ? (
+            <SectionCompartment id={ctx.node.__id + '_count_context_3'} dividerText='Methods'>
+                {ctx.node.operations.map(o => (
+                    <GOperationNodeElement node={o} />
+                ))}
+            </SectionCompartment>
+        ) : null;
+
+    return (
+        <GDataTypeNodeElement node={ctx.node} position={position} size={size}>
+            {propertiesSection}
+            {operationsSection}
+        </GDataTypeNodeElement>
+    );
 }

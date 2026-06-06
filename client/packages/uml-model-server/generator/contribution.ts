@@ -7,42 +7,40 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import type { UmlToolingContributionResult } from '@borkdominik-biguml/uml-language-tooling';
-import { type LangiumDeclaration, transformLangiumDeclarationsToLangiumGrammar } from '@borkdominik-biguml/uml-language-tooling';
+import type { GeneratorContext, GeneratorResult } from '@borkdominik-biguml/uml-language-tooling';
 import path from 'path';
-import { fileURLToPath } from 'url';
-import { generateLangiumText } from './langium-generator.js';
-import { generateSerializer } from './serializer-generator.js';
-import { buildValidationFiles } from './validation-generator.js';
+import { transformDeclarationsToLangiumGrammar } from './builder/grammar-transformer.js';
+import { renderDiagramSerializer } from './render/diagram-serializer.renderer.js';
+import { renderLangiumText } from './render/langium.renderer.js';
+import { renderValidation } from './render/validation.renderer.js';
 
-export function umlToolingContribution(extensionPath: string, declarations: LangiumDeclaration[]): UmlToolingContributionResult {
+export function generate({ outputPath, declarations, definitionPath }: GeneratorContext): GeneratorResult {
     const results: { path: string; content: string }[] = [];
 
     const generatorConfig = { referenceProperty: '__id' };
     const languageId = 'uml-diagram';
     const languageName = 'UmlDiagram';
 
-    const langiumGrammar = transformLangiumDeclarationsToLangiumGrammar(declarations, generatorConfig);
+    const langiumGrammar = transformDeclarationsToLangiumGrammar(declarations, generatorConfig);
 
-    const grammarText = generateLangiumText(langiumGrammar, languageId, languageName);
+    const grammarText = renderLangiumText(langiumGrammar, languageId, languageName);
     results.push({
-        path: path.join(extensionPath, 'langium', `${languageId}.langium`),
+        path: path.join(outputPath, 'langium', `${languageId}.langium`),
         content: grammarText
     });
 
-    const serializerText = generateSerializer(langiumGrammar, languageId, languageName, generatorConfig);
+    const serializerText = renderDiagramSerializer(langiumGrammar, languageId, languageName, generatorConfig);
     results.push({
-        path: path.join(extensionPath, 'langium', `${languageId}-serializer.ts`),
+        path: path.join(outputPath, 'langium', `${languageId}-serializer.ts`),
         content: serializerText
     });
 
-    const defPath = fileURLToPath(import.meta.resolve('@borkdominik-biguml/uml-language/definition'));
-    const validationFiles = buildValidationFiles(extensionPath, defPath);
+    const validationFiles = renderValidation(outputPath, definitionPath);
     results.push(...validationFiles);
 
     // Langium CLI generates additional files (ast.ts, grammar.ts, module.ts) after this generator runs.
     // Declare them so the tooling includes them in per-env index.ts barrel files.
-    const additionalIndexPaths = ['ast.ts', 'grammar.ts', 'module.ts'].map(f => path.join(extensionPath, 'langium', 'language', f));
+    const additionalIndexPaths = ['ast.ts', 'grammar.ts', 'module.ts'].map(f => path.join(outputPath, 'langium', 'language', f));
 
     return { files: results, additionalIndexPaths };
 }

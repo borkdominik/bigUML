@@ -7,18 +7,10 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { representationTypeId } from '@borkdominik-biguml/uml-glsp-server';
-import { configureModelElement, FeatureModule } from '@eclipse-glsp/client';
+import { configureModelElement, FeatureModule, GEdge, PolylineEdgeView } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
-import {
-    GInteractionNode,
-    GInteractionNodeView,
-    GLifelineNode,
-    GLifelineNodeView,
-    GMessageEdge,
-    GMessageEdgeView,
-    MessageArrowLabelView
-} from '../../elements/index.js';
-import { GEditableLabel } from '../../views/uml-label.view.js';
+import { NamedElement, NamedElementView } from '../../elements/index.js';
+import { GEditableLabel, GEditableLabelView } from '../../views/uml-label.view.js';
 
 const R = 'Communication';
 
@@ -26,15 +18,19 @@ export const umlCommunicationDiagramModule = new FeatureModule((bind, unbind, is
     const context = { bind, unbind, isBound, rebind };
 
     // Nodes
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Interaction'), GInteractionNode, GInteractionNodeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Lifeline'), GLifelineNode, GLifelineNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Interaction'), NamedElement, NamedElementView);
+    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Interaction'), GInteractionNode, GInteractionNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Lifeline'), NamedElement, NamedElementView);
+    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Lifeline'), GLifelineNode, GLifelineNodeView);
 
     // Edges
     configureModelElement(
         context,
         representationTypeId(R, DefaultTypes.LABEL, 'message-arrow-edge-name'),
         GEditableLabel,
-        MessageArrowLabelView
+        GEditableLabelView
     );
-    configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Message'), GMessageEdge, GMessageEdgeView);
+    // configureModelElement(context, representationTypeId(R, DefaultTypes.LABEL, 'message-arrow-edge-name'), GEditableLabel, MessageArrowLabelView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Message'), GEdge, PolylineEdgeView);
+    // configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Message'), GMessageEdge, GMessageEdgeView);
 });

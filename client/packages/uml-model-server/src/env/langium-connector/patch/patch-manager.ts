@@ -7,6 +7,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+import { loggerFactory } from '@borkdominik-biguml/big-common';
 import { v4 as uuidv4 } from 'uuid';
 import { URI } from 'vscode-uri';
 import { type SharedServices } from '../model-module.js';
@@ -28,6 +29,8 @@ interface RedoUndo {
     undo?: Map<string, string>;
 }
 
+const logger = loggerFactory('PatchManager');
+
 export class PatchManager {
     redoUndoMap: Map<string, RedoUndo> = new Map<string, RedoUndo>();
 
@@ -40,6 +43,7 @@ export class PatchManager {
     ) {}
 
     async applyPatch(_patch: jsonPatch.Operation | Array<jsonPatch.Operation>, _uri: string, client?: string) {
+        logger.log(`Applying patch to document: ${_uri}`, _patch);
         await this.documentManager.open(_uri, undefined, client);
         let documents = new Set<string>();
         documents = await this.collectAffectedDocuments(documents, _uri);
@@ -48,7 +52,7 @@ export class PatchManager {
         for (const uri of documents) {
             const documentUri = URI.parse(uri).path;
             await this.documentManager.open(documentUri, undefined, client);
-            const document = this.documents.getOrCreateDocument(URI.parse(documentUri));
+            const document = await this.documents.getOrCreateDocument(URI.parse(documentUri));
             const jsonSerializer = this.shared.ServiceRegistry.getServices(URI.parse(documentUri)).serializer.JsonSerializer;
             documentMap.set(documentUri, JSON.parse(jsonSerializer.serialize(document.parseResult.value)));
             originalDocumentMap.set(documentUri, document.textDocument.getText());
@@ -114,7 +118,7 @@ export class PatchManager {
         let retVal;
         for (const [key, value] of documentMap.entries()) {
             const serializers = this.shared.ServiceRegistry.getServices(URI.parse(key)).serializer;
-            const document = this.documents.getOrCreateDocument(URI.parse(key));
+            const document = await this.documents.getOrCreateDocument(URI.parse(key));
             const text = serializers.Serializer.serialize(value);
             const version = this.documentManager.getClientDocumentVersion(key, client ?? 'text');
 
@@ -166,7 +170,7 @@ export class PatchManager {
             this.redoUndoMap.set(URI.parse(uri).path, redoUndo);
             return retVal;
         } else {
-            const document = this.documents.getOrCreateDocument(URI.parse(uri));
+            const document = await this.documents.getOrCreateDocument(URI.parse(uri));
             return document.parseResult.value;
         }
     }
@@ -179,7 +183,7 @@ export class PatchManager {
             this.redoUndoMap.set(URI.parse(uri).path, redoUndo);
             return retVal;
         } else {
-            const document = this.documents.getOrCreateDocument(URI.parse(uri));
+            const document = await this.documents.getOrCreateDocument(URI.parse(uri));
             return document.parseResult.value;
         }
     }
@@ -188,7 +192,7 @@ export class PatchManager {
         let retVal;
         for (const [key, value] of map.entries()) {
             await this.documentManager.open(URI.parse(key).path, undefined, client ?? 'glsp');
-            const document = this.documents.getOrCreateDocument(URI.parse(key));
+            const document = await this.documents.getOrCreateDocument(URI.parse(key));
             await this.documentManager.update(URI.parse(key).path, document.textDocument.version + 1, value, client ?? 'glsp');
             await this.documentManager.save(URI.parse(key).path, value);
             if (URI.parse(key).path === URI.parse(uri).path) {

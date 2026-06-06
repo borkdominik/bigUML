@@ -7,14 +7,17 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import {
+    DiagramModule,
+    OperationHandlerRegistryInitializer,
     type ActionHandlerConstructor,
     type BindingTarget,
-    DiagramModule,
+    type ClientSessionInitializer,
     type GModelIndex,
     type GModelSerializer,
     type InstanceMultiBinding,
     type ModelState,
     type ModelValidator,
+    type MultiBinding,
     type OperationHandlerConstructor,
     type SourceModelStorage
 } from '@eclipse-glsp/server';
@@ -23,6 +26,7 @@ import { DiagramGModelSerializer } from '../model/diagram-gmodel-serializer.js';
 import { DiagramModelIndex } from '../model/diagram-model-index.js';
 import { DiagramModelState } from '../model/diagram-model-state.js';
 import { DiagramModelStorage } from '../model/diagram-model-storage.js';
+import { DiagramOperationHandlerRegistryInitializer } from '../model/diagram-operation-handler-registry-initializer.js';
 import { CreateNewFileActionHandler } from '../model/handler/create-new-file-action-handler.js';
 import { RequestSemanticModelActionHandler } from '../model/index.js';
 import {
@@ -66,6 +70,11 @@ export abstract class BigDiagramModule extends DiagramModule {
 
     protected override bindModelValidator(): BindingTarget<ModelValidator> | undefined {
         return GenericDiagramModelValidator;
+    }
+
+    override configureClientSessionInitializers(binding: MultiBinding<ClientSessionInitializer>): void {
+        super.configureClientSessionInitializers(binding);
+        binding.rebind(OperationHandlerRegistryInitializer, DiagramOperationHandlerRegistryInitializer);
     }
 
     protected override configureOperationHandlers(binding: InstanceMultiBinding<OperationHandlerConstructor>): void {

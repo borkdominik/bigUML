@@ -6,8 +6,8 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { randomUUID } from 'crypto';
+import { v4 } from 'uuid';
 
-export function createRandomUUID() {
-    return 'a' + randomUUID();
+export function createRandomUUID(prefix: string) {
+    return `${prefix}_${v4()}`;
 }

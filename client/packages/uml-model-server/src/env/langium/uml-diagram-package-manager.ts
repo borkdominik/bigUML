@@ -50,7 +50,7 @@ export function createPackageId(name?: string, version = '0.0.0'): string {
 export function createPackageReferenceName(packageJson?: PackageJson): string {
     // we prefer the our custom-introduced alias if it is specified, otherwise we will fall back on the package name
     // we do not care about the package version as we do not allow to install multiple versions of the same package
-    const name = ((packageJson as any)?.['alias'] as string | undefined) || packageJson?.name || UNKNOWN_PROJECT_ID;
+    const name = (packageJson as Record<string, unknown> | undefined)?.['alias'] as string | undefined ?? packageJson?.name ?? UNKNOWN_PROJECT_ID;
     // ensure we only have characters that are supported by our ID rule in the grammar and still look good to the user
     return name.split(' ').join('_').split('.').join('-');
 }
@@ -89,6 +89,7 @@ export class PackageInfo {
 export class UmlDiagramPackageManager {
     protected uriToPackage = new Map<string, PackageInfo>();
     protected idToPackage = new MultiMap<string, PackageInfo>();
+    protected documentPackageUri = new WeakMap<LangiumDocument, URI>();
 
     constructor(
         protected shared: UmlDiagramSharedServices,
@@ -137,8 +138,7 @@ export class UmlDiagramPackageManager {
     }
 
     getPackageInfoByDocument(doc: LangiumDocument): PackageInfo | undefined {
-        // during document parsing we store the package URI in the document
-        const packageUri = (doc as any)['packageUri'] as URI | undefined;
+        const packageUri = this.documentPackageUri.get(doc);
         return this.getPackageInfoByURI(packageUri ?? doc.uri);
     }
 
@@ -262,9 +262,12 @@ export class UmlDiagramPackageManager {
     }
 
     protected documentParsed(built: LangiumDocument[], _cancelToken: CancellationToken): void {
-        // we only do this so we can quickly find the package info for a given document
+        // cache the package URI for each parsed document for fast lookup
         for (const doc of built) {
-            (doc as any)['packageUri'] = this.getPackageInfoByURI(doc.uri)?.uri;
+            const packageUri = this.getPackageInfoByURI(doc.uri)?.uri;
+            if (packageUri) {
+                this.documentPackageUri.set(doc, packageUri);
+            }
         }
     }
 }

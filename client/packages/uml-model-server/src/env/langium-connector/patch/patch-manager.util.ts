@@ -11,15 +11,15 @@
 /* eslint-disable no-prototype-builtins */
 
 import {
+    AstUtils,
+    isAstNode,
     type AstNode,
     type AstNodeLocator,
     type GenericAstNode,
     type LangiumDocuments,
     type Mutable,
     type NameProvider,
-    type Reference,
-    isAstNode,
-    streamAst
+    type Reference
 } from 'langium';
 import { v4 as uuidv4 } from 'uuid';
 import { URI } from 'vscode-uri';
@@ -236,16 +236,15 @@ export function rebuildLangiumReferences(
             return {
                 $refText: refText ?? '',
                 ref
-            };
+            } satisfies Mutable<Reference> as Reference;
         } else if (reference.$error) {
             const ref: Mutable<Reference> = {
-                $refText: refText ?? ''
+                $refText: refText ?? '',
+                ref: undefined
             };
             ref.error = {
-                container,
-                property,
-                message: reference.$error,
-                reference: ref
+                message: reference.$error ?? '',
+                info: { container, property, reference: ref }
             };
             return ref;
         } else {
@@ -260,8 +259,8 @@ export function rebuildLangiumReferences(
                     const doc = map.get(ref.__documentUri);
                     return getAstNodeById(doc, ref.__id)!;
                 } else {
-                    const doc = documents.getOrCreateDocument(URI.parse(ref.__documentUri));
-                    return getAstNodeById(doc.parseResult.value, ref.__id)!;
+                    const doc = documents.getDocument(URI.parse(ref.__documentUri));
+                    return getAstNodeById(doc!.parseResult.value, ref.__id)!;
                 }
             }
             return getAstNodeById(root, ref.__id)!;
@@ -276,7 +275,7 @@ export function rebuildLangiumReferences(
     }
 
     function getAstNodeById<T extends AstNode = AstNode>(node: AstNode, id: string): T | undefined {
-        const retNode = streamAst(node).find((astNode: any) => astNode.__id === id);
+        const retNode = AstUtils.streamAst(node).find((astNode: any) => astNode.__id === id);
         if (retNode) return retNode as T;
         return node as T;
     }

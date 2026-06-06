@@ -12,7 +12,9 @@ import { normalizeChildren } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { Enumeration } from '@borkdominik-biguml/uml-model-server/grammar';
 import { type Dimension, type Point } from '@eclipse-glsp/protocol';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';
-import { CompartmentHeader } from './shared-components.js';
+import type { ElementContext } from './core/element-context.js';
+import { CompartmentHeader, SectionCompartment } from './core/index.js';
+import { GEnumerationLiteralNodeElement } from './enumeration-literal.element.js';
 
 export class GEnumerationNode extends GNode {
     override type = ClassDiagramNodeTypes.ENUMERATION;
@@ -55,4 +57,24 @@ export function GEnumerationNodeElement(props: GEnumerationNodeElementProps): GM
     }
 
     return enumNode;
+}
+
+export function createEnumerationElement(ctx: ElementContext<Enumeration>): GModelElement {
+    const position = ctx.modelIndex.findPosition(ctx.node.__id);
+    const size = ctx.modelIndex.findSize(ctx.node.__id);
+
+    const valuesSection =
+        ctx.node.values?.length > 0 ? (
+            <SectionCompartment id={ctx.node.__id + '_literal_component'}>
+                {ctx.node.values.map(v => (
+                    <GEnumerationLiteralNodeElement node={v} />
+                ))}
+            </SectionCompartment>
+        ) : null;
+
+    return (
+        <GEnumerationNodeElement node={ctx.node} position={position} size={size}>
+            {valuesSection}
+        </GEnumerationNodeElement>
+    );
 }

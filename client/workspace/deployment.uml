@@ -1,0 +1,121 @@
+{
+	"diagram": {
+		"__type": "DeploymentDiagram",
+		"__id": "diagram_ea6a43b8-6b46-4b7d-8be0-985ab29c5ad5",
+		"diagramType": "DEPLOYMENT",
+		"entities": [
+			{
+				"__type": "Artifact",
+				"__id": "Artifact_74f65a5d-77d0-44d0-b7c0-2d8dc968ef78",
+				"name": "NewArtifact1",
+				"visibility": "PUBLIC",
+				"properties": [],
+				"operations": [],
+				"nestedArtifacts": []
+			},
+			{
+				"__type": "Device",
+				"__id": "Device_57099129-e806-4d33-b1ae-4c2af3981bd1",
+				"name": "NewDevice1",
+				"visibility": "PUBLIC",
+				"nodes": [],
+				"executionEnvironments": [],
+				"deploymentSpecifications": []
+			},
+			{
+				"__type": "ExecutionEnvironment",
+				"__id": "ExecutionEnvironment_a468aa00-f4b3-4bf5-96f3-4cc330e29aba",
+				"name": "NewExecutionEnvironment1",
+				"visibility": "PUBLIC",
+				"nestedEnvironments": [],
+				"artifacts": [],
+				"deploymentSpecifications": []
+			}
+		],
+		"relations": [
+			{
+				"__type": "Dependency",
+				"__id": "Dependency_a05299ae-5f18-4512-b39d-d0066e4ea4a6",
+				"source": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "ExecutionEnvironment_a468aa00-f4b3-4bf5-96f3-4cc330e29aba"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "Artifact_74f65a5d-77d0-44d0-b7c0-2d8dc968ef78"
+				},
+				"visibility": "PUBLIC"
+			}
+		]
+	},
+	"metaInfos": [
+		{
+			"__type": "Size",
+			"__id": "size_Artifact_74f65a5d-77d0-44d0-b7c0-2d8dc968ef78",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Artifact_74f65a5d-77d0-44d0-b7c0-2d8dc968ef78"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_Artifact_74f65a5d-77d0-44d0-b7c0-2d8dc968ef78",
+			"x": 660,
+			"y": 180,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Artifact_74f65a5d-77d0-44d0-b7c0-2d8dc968ef78"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_Device_57099129-e806-4d33-b1ae-4c2af3981bd1",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Device_57099129-e806-4d33-b1ae-4c2af3981bd1"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_Device_57099129-e806-4d33-b1ae-4c2af3981bd1",
+			"x": 870,
+			"y": 240,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Device_57099129-e806-4d33-b1ae-4c2af3981bd1"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_ExecutionEnvironment_a468aa00-f4b3-4bf5-96f3-4cc330e29aba",
+			"height": 24.16666603088379,
+			"width": 173.2421875,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "ExecutionEnvironment_a468aa00-f4b3-4bf5-96f3-4cc330e29aba"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_ExecutionEnvironment_a468aa00-f4b3-4bf5-96f3-4cc330e29aba",
+			"x": 622,
+			"y": 297,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "ExecutionEnvironment_a468aa00-f4b3-4bf5-96f3-4cc330e29aba"
+			}
+		}
+	]
+}

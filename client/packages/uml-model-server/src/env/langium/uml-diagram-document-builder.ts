@@ -10,12 +10,16 @@
 import { DefaultDocumentBuilder } from 'langium';
 import { type CancellationToken } from 'vscode-languageclient';
 import { type URI, Utils as UriUtils } from 'vscode-uri';
+import { type UmlDiagramSharedServices } from './uml-diagram-module.js';
 import { Utils } from './util/uri-util.js';
 
 /**
  * A document builder that can also handle directories by flattening out directories to an array of file URIs.
  */
 export class UmlDiagramDocumentBuilder extends DefaultDocumentBuilder {
+    constructor(services: UmlDiagramSharedServices) {
+        super(services);
+    }
     override update(changed: URI[], deleted: URI[], cancelToken?: CancellationToken | undefined): Promise<void> {
         return super.update(
             changed.flatMap(uri => this.flattenAndAdaptURI(uri)),

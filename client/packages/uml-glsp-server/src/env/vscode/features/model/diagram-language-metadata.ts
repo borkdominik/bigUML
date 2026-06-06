@@ -11,6 +11,7 @@ export interface DiagramLanguageMetadata {
     readonly nodeTypeIds: string[];
     readonly edgeTypeIds: string[];
     convertToAst(elementTypeId: string): string;
+    convertToElementType(astType: string): string;
 }
 
 export const DiagramLanguageMetadata = Symbol('DiagramLanguageMetadata');

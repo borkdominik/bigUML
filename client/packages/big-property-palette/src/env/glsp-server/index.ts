@@ -9,5 +9,6 @@
 
 export * from '@borkdominik-biguml/big-property-palette/gen/glsp-server';
 export * from './components.js';
+export * from './property-palette-handler.context.js';
 export * from './property-palette-util.js';
 export * from './property-palette.module.js';

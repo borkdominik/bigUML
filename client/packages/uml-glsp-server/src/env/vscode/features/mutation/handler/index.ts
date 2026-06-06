@@ -8,6 +8,6 @@
  **********************************************************************************/
 export * from './generic-change-bounds-operation-handler.js';
 export * from './generic-create-edge-operation-handler.js';
-export * from './generic-create-node-opertation-handler.js';
+export * from './generic-create-node-operation-handler.js';
 export * from './generic-delete-operation-handler.js';
 export * from './generic-update-operation-handler.js';

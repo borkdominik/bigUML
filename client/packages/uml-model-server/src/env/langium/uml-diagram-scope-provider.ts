@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { type AstNodeDescription, DefaultScopeProvider, getDocument, type ReferenceInfo, type Scope, StreamScope } from 'langium';
+import { type AstNodeDescription, AstUtils, DefaultScopeProvider, type ReferenceInfo, type Scope, StreamScope } from 'langium';
 import { type UmlDiagramServices } from './uml-diagram-module.js';
 import { PackageAstNodeDescription, PackageExternalAstNodeDescription } from './uml-diagram-scope.js';
 
@@ -40,7 +40,7 @@ export class PackageScopeProvider extends DefaultScopeProvider {
         const globalScope = super.getGlobalScope(referenceType, context);
 
         // see from which package this request is coming from based on the given context
-        const source = getDocument(context.container);
+        const source = AstUtils.getDocument(context.container);
         const sourcePackage = this.packageManager.getPackageIdByUri(source.uri);
 
         // dependencyScope: hide those elements from the global scope that are not visible from the requesting package

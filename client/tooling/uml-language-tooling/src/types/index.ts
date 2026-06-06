@@ -6,18 +6,6 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-export * from './declaration.js';
-export * from './decorators.js';
-export * from './langium-types.js';
-export * from './multiplicity.js';
-export * from './path.js';
-export * from './property.js';
-export * from './reference.js';
-
-export interface ABSTRACT_ELEMENT {}
-export interface ROOT_ELEMENT {}
-
-export interface UmlToolingContributionResult {
-    files: { path: string; content: string }[];
-    additionalIndexPaths?: string[];
-}
+export * from './decorators/index.js';
+export * from './definition.types.js';
+export * from './generator.types.js';

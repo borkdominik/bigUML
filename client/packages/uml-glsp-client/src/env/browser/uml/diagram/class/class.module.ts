@@ -11,14 +11,10 @@ import { configureModelElement, FeatureModule } from '@eclipse-glsp/client';
 import {
     GAbstractionEdge,
     GAbstractionEdgeView,
-    GAggregationEdge,
-    GAggregationEdgeView,
     GAssociationEdge,
     GAssociationEdgeView,
     GClassNode,
     GClassNodeView,
-    GCompositionEdge,
-    GCompositionEdgeView,
     GDataTypeNode,
     GDataTypeNodeView,
     GDependencyEdge,
@@ -85,8 +81,6 @@ export const umlClassDiagramModule = new FeatureModule((bind, unbind, isBound, r
     // Edges
     configureModelElement(context, ClassDiagramEdgeTypes.ABSTRACTION, GAbstractionEdge, GAbstractionEdgeView);
     configureModelElement(context, ClassDiagramEdgeTypes.ASSOCIATION, GAssociationEdge, GAssociationEdgeView);
-    configureModelElement(context, ClassDiagramEdgeTypes.AGGREGATION, GAggregationEdge, GAggregationEdgeView);
-    configureModelElement(context, ClassDiagramEdgeTypes.COMPOSITION, GCompositionEdge, GCompositionEdgeView);
     configureModelElement(context, ClassDiagramEdgeTypes.DEPENDENCY, GDependencyEdge, GDependencyEdgeView);
     configureModelElement(context, ClassDiagramEdgeTypes.INTERFACE_REALIZATION, GInterfaceRealizationEdge, GInterfaceRealizationEdgeView);
     configureModelElement(context, ClassDiagramEdgeTypes.GENERALIZATION, GGeneralizationEdge, GGeneralizationEdgeView);

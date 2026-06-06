@@ -7,14 +7,23 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { DefaultLangiumDocuments } from 'langium';
+import { Cancellation, DefaultLangiumDocuments, type LangiumDocument } from 'langium';
 import { type URI } from 'vscode-uri';
+
+type CancellationToken = Cancellation.CancellationToken;
+import { type UmlDiagramSharedServices } from './uml-diagram-module.js';
 import { isPackageUri } from './uml-diagram-package-manager.js';
 import { Utils } from './util/uri-util.js';
 
 export class UmlDiagramLangiumDocuments extends DefaultLangiumDocuments {
-    override getOrCreateDocument(uri: URI): any {
-        // only create documents for actual language files but not for package.json
-        return isPackageUri(uri) ? undefined : super.getOrCreateDocument(Utils.toRealURI(uri));
+    constructor(services: UmlDiagramSharedServices) {
+        super(services);
+    }
+
+    override async getOrCreateDocument(uri: URI, cancelToken?: CancellationToken): Promise<LangiumDocument> {
+        if (isPackageUri(uri)) {
+            throw new Error(`Cannot create a Langium document for package file: ${uri.toString()}`);
+        }
+        return super.getOrCreateDocument(Utils.toRealURI(uri), cancelToken);
     }
 }

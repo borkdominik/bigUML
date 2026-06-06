@@ -1,41 +1,19 @@
 {
   "name": "uml-diagram",
   "scopeName": "source.uml-diagram",
-  "fileTypes": [
-    ".uml"
-  ],
+  "fileTypes": [".uml"],
   "patterns": [
     {
       "include": "#comments"
     },
     {
       "name": "keyword.control.uml-diagram",
-      "match": "\\b(ABSTRACTION|AGGREGATION|ASSOCIATION|CLASS|COMPOSITE|COMPOSITION|CONCURRENT|CREATE|DELETE|DEPENDENCY|ELEMENT_IMPORT|GENERALIZATION|GUARDED|IN|INOUT|INTERFACE_REALIZATION|NONE|OUT|PACKAGE|PACKAGE_IMPORT|PACKAGE_MERGE|PRIVATE|PROTECTED|PUBLIC|READ|REALIZATION|RETURN|SEQUENTIAL|SHARED|STATE_MACHINE|SUBSTITUTION|UPDATE|USAGE)\\b|\\B(\"AbstractClass\"|\"Abstraction\"|\"Aggregation\"|\"Association\"|\"Class\"|\"ClassDiagram\"|\"Composition\"|\"DataType\"|\"DataTypeReference\"|\"Dependency\"|\"ElementWithSizeAndPosition\"|\"Entity\"|\"Enumeration\"|\"EnumerationLiteral\"|\"Generalization\"|\"InstanceSpecification\"|\"Interface\"|\"InterfaceRealization\"|\"LiteralSpecification\"|\"Operation\"|\"Package\"|\"PackageDiagram\"|\"PackageImport\"|\"PackageMerge\"|\"Parameter\"|\"Position\"|\"PrimitiveType\"|\"Property\"|\"Realization\"|\"Reference\"|\"Relation\"|\"Size\"|\"Slot\"|\"SlotDefiningFeature\"|\"StateMachineDiagram\"|\"Substitution\"|\"Usage\"|\"__id\"|\"__refType\"|\"__type\"|\"__value\"|\"aggregation\"|\"concurrency\"|\"definingFeature\"|\"diagram\"|\"diagramType\"|\"direction\"|\"effect\"|\"element\"|\"entities\"|\"height\"|\"isAbstract\"|\"isActive\"|\"isDerived\"|\"isDerivedUnion\"|\"isException\"|\"isOrdered\"|\"isQuery\"|\"isReadOnly\"|\"isStatic\"|\"isStream\"|\"isSubstitutable\"|\"isUnique\"|\"label\"|\"metaInfos\"|\"multiplicity\"|\"name\"|\"operations\"|\"parameterType\"|\"parameters\"|\"properties\"|\"propertyType\"|\"relationType\"|\"relations\"|\"skip\"|\"slots\"|\"source\"|\"sourceAggregation\"|\"sourceMultiplicity\"|\"sourceName\"|\"target\"|\"targetAggregation\"|\"targetMultiplicity\"|\"targetName\"|\"uri\"|\"value\"|\"values\"|\"visibility\"|\"width\"|\"x\"|\"y\")\\B"
+      "match": "\\b(ACTIVITY|CLASS|COMMUNICATION|COMPOSITE|CONCURRENT|CREATE|DELETE|DEPLOYMENT|EXTERNAL|GUARDED|IN|INFORMATION_FLOW|INOUT|INTERNAL|LOCAL|NONE|OUT|PACKAGE|PRIVATE|PROTECTED|PUBLIC|READ|RETURN|SEQUENTIAL|SHARED|STATE_MACHINE|UPDATE|USE_CASE|null)\\b|\\B(\"AbstractClass\"|\"Abstraction\"|\"AcceptEventAction\"|\"Activity\"|\"ActivityDiagram\"|\"ActivityFinalNode\"|\"ActivityParameterNode\"|\"ActivityPartition\"|\"Actor\"|\"Artifact\"|\"Association\"|\"CentralBufferNode\"|\"Choice\"|\"Class\"|\"ClassDiagram\"|\"CommunicationDiagram\"|\"CommunicationPath\"|\"ControlFlow\"|\"DataType\"|\"DataTypeReference\"|\"DecisionNode\"|\"DeepHistory\"|\"Dependency\"|\"Deployment\"|\"DeploymentDiagram\"|\"DeploymentModel\"|\"DeploymentNode\"|\"DeploymentPackage\"|\"DeploymentSpecification\"|\"Device\"|\"ElementImport\"|\"ElementWithSizeAndPosition\"|\"Enumeration\"|\"EnumerationLiteral\"|\"ExecutionEnvironment\"|\"Extend\"|\"FinalState\"|\"FlowFinalNode\"|\"Fork\"|\"ForkNode\"|\"Generalization\"|\"Include\"|\"InformationFlow\"|\"InformationFlowDiagram\"|\"InitialNode\"|\"InitialState\"|\"InputPin\"|\"InstanceSpecification\"|\"Interaction\"|\"Interface\"|\"InterfaceRealization\"|\"Join\"|\"JoinNode\"|\"Lifeline\"|\"LiteralSpecification\"|\"Manifestation\"|\"MergeNode\"|\"Message\"|\"Node\"|\"OpaqueAction\"|\"Operation\"|\"OutputPin\"|\"Package\"|\"PackageDiagram\"|\"PackageImport\"|\"PackageMerge\"|\"Parameter\"|\"Position\"|\"PrimitiveType\"|\"Property\"|\"Realization\"|\"Reference\"|\"Region\"|\"SendSignalAction\"|\"ShallowHistory\"|\"Size\"|\"Slot\"|\"SlotDefiningFeature\"|\"State\"|\"StateMachine\"|\"StateMachineDiagram\"|\"Subject\"|\"Substitution\"|\"Transition\"|\"UnionType_0\"|\"UnionType_1\"|\"Usage\"|\"UseCase\"|\"UseCaseDiagram\"|\"__id\"|\"__refType\"|\"__type\"|\"__value\"|\"aggregation\"|\"alias\"|\"artifacts\"|\"concurrency\"|\"definingFeature\"|\"deploymentSpecifications\"|\"devices\"|\"diagram\"|\"diagramType\"|\"direction\"|\"edges\"|\"effect\"|\"element\"|\"entities\"|\"executionEnvironments\"|\"guard\"|\"height\"|\"inputPins\"|\"isAbstract\"|\"isActive\"|\"isDerived\"|\"isDerivedUnion\"|\"isException\"|\"isNavigable\"|\"isOrdered\"|\"isQuery\"|\"isReadOnly\"|\"isStatic\"|\"isStream\"|\"isSubstitutable\"|\"isUnique\"|\"kind\"|\"label\"|\"lifelines\"|\"messages\"|\"metaInfos\"|\"multiplicity\"|\"name\"|\"nestedArtifacts\"|\"nestedEnvironments\"|\"nestedNodes\"|\"nodes\"|\"operations\"|\"outputPins\"|\"parameterType\"|\"parameters\"|\"partitions\"|\"properties\"|\"propertyType\"|\"regions\"|\"relations\"|\"slots\"|\"source\"|\"sourceAggregation\"|\"sourceMultiplicity\"|\"sourceName\"|\"subpartitions\"|\"subvertices\"|\"target\"|\"targetAggregation\"|\"targetMultiplicity\"|\"targetName\"|\"transitions\"|\"uri\"|\"useCases\"|\"value\"|\"values\"|\"visibility\"|\"weight\"|\"width\"|\"x\"|\"y\")\\B"
     }
   ],
   "repository": {
     "comments": {
       "patterns": [
-        {
-          "begin": "",
-          "beginCaptures": {
-            "1": {
-              "name": "punctuation.whitespace.comment.leading.uml-diagram"
-            }
-          },
-          "end": "(?=$)",
-          "name": "comment.line.uml-diagram"
-        },
-        {
-          "begin": "",
-          "beginCaptures": {
-            "1": {
-              "name": "punctuation.whitespace.comment.leading.uml-diagram"
-            }
-          },
-          "end": "(?=$)",
-          "name": "comment.line.uml-diagram"
-        },
         {
           "name": "comment.block.uml-diagram",
           "begin": "/\\*",

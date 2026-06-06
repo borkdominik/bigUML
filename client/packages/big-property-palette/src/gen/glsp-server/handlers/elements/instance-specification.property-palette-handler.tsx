@@ -3,8 +3,8 @@
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
 import { CreateNodeOperation, DeleteElementOperation } from '@eclipse-glsp/server';
 import { type InstanceSpecification } from '@borkdominik-biguml/uml-model-server/grammar';
-import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import {
+    type GetPropertyPaletteHandlerContext,
     ChoiceProperty,
     PropertyPalette,
     PropertyPaletteChoices,
@@ -13,23 +13,31 @@ import {
 } from '@borkdominik-biguml/big-property-palette/glsp-server';
 
 export namespace InstanceSpecificationPropertyPaletteHandler {
-    export function getPropertyPalette(semanticElement: InstanceSpecification): SetPropertyPaletteAction[] {
+    export function getPropertyPalette(context: GetPropertyPaletteHandlerContext<InstanceSpecification>): SetPropertyPaletteAction[] {
         return [
             SetPropertyPaletteAction.create(
-                <PropertyPalette elementId={semanticElement.__id} label={(semanticElement as any).name ?? semanticElement.$type}>
-                    <TextProperty elementId={semanticElement.__id} propertyId='name' text={semanticElement.name!} label='Name' />
+                <PropertyPalette
+                    elementId={context.semanticElement.__id}
+                    label={(context.semanticElement as any).name ?? context.semanticElement.$type}
+                >
+                    <TextProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='name'
+                        text={context.semanticElement.name!}
+                        label='Name'
+                    />
                     <ChoiceProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='visibility'
                         choices={PropertyPaletteChoices.VISIBILITY}
-                        choice={semanticElement.visibility!}
+                        choice={context.semanticElement.visibility!}
                         label='Visibility'
                     />
                     <ReferenceProperty
-                        elementId={semanticElement.__id}
+                        elementId={context.semanticElement.__id}
                         propertyId='slots'
                         label='Slots'
-                        references={(semanticElement.slots ?? [])
+                        references={(context.semanticElement.slots ?? [])
                             .filter((e: any) => !!e && !!e.__id)
                             .map((e: any) => ({
                                 elementId: e.__id,
@@ -40,7 +48,9 @@ export namespace InstanceSpecificationPropertyPaletteHandler {
                         creates={[
                             {
                                 label: 'Create Slot',
-                                action: CreateNodeOperation.create(ClassDiagramNodeTypes.SLOT, { containerId: semanticElement.__id })
+                                action: CreateNodeOperation.create(context.languageMetadata.convertToElementType('Slot'), {
+                                    containerId: context.semanticElement.__id
+                                })
                             }
                         ]}
                     />

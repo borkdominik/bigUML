@@ -7,14 +7,13 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import { CreateNewFileAction, CreateNewFileResponseAction } from '@borkdominik-biguml/uml-glsp-server';
-import type { SerializeAstNode } from '@borkdominik-biguml/uml-model-server';
-import type { ClassDiagram, Diagram } from '@borkdominik-biguml/uml-model-server/grammar';
 import { UmlDiagramLSPServices } from '@borkdominik-biguml/uml-model-server/integration';
 import { type Action, type ActionHandler, type MaybePromise } from '@eclipse-glsp/server';
 import * as fs from 'fs';
 import { inject, injectable } from 'inversify';
 import * as path from 'path';
 import { URI } from 'vscode-uri';
+import { getEmptyDiagram } from '../../../../../gen/vscode/get-empty-diagram.js';
 
 @injectable()
 export class CreateNewFileActionHandler implements ActionHandler {
@@ -28,23 +27,13 @@ export class CreateNewFileActionHandler implements ActionHandler {
         const filePath = `${URI.parse(sourceUri).fsPath}.uml`;
         const dirPath = path.dirname(filePath);
 
+        const model = getEmptyDiagram(action.diagramType);
+        if (!model) {
+            throw new Error(`Unsupported diagram type: ${action.diagramType}`);
+        }
+
         fs.mkdirSync(dirPath, { recursive: true });
-
-        const diagram: SerializeAstNode<ClassDiagram> = {
-            $type: 'ClassDiagram',
-            __id: 'ClassDiagram1',
-            diagramType: 'CLASS',
-            entities: [],
-            relations: []
-        };
-
-        const minimalModel: SerializeAstNode<Diagram> = {
-            $type: 'Diagram',
-            diagram,
-            metaInfos: []
-        };
-
-        fs.writeFileSync(filePath, this.services.language.serializer.Serializer.serialize(minimalModel));
+        fs.writeFileSync(filePath, this.services.language.serializer.Serializer.serialize(model));
 
         return [CreateNewFileResponseAction.create(sourceUri, action.requestId)];
     }

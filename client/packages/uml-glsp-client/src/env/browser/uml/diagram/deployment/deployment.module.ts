@@ -7,40 +7,9 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { representationTypeId } from '@borkdominik-biguml/uml-glsp-server';
-import { configureModelElement, FeatureModule } from '@eclipse-glsp/client';
+import { configureModelElement, FeatureModule, GEdge, PolylineEdgeView } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
-import {
-    GArtifactNode,
-    GArtifactNodeView,
-    GCommunicationPathEdge,
-    GCommunicationPathEdgeView,
-    GDependencyEdge,
-    GDependencyEdgeView,
-    GDeploymentEdge,
-    GDeploymentEdgeView,
-    GDeploymentSpecificationNode,
-    GDeploymentSpecificationNodeView,
-    GDeviceNode,
-    GDeviceNodeView,
-    GExecutionEnvironmentNode,
-    GExecutionEnvironmentNodeView,
-    GGeneralizationEdge,
-    GGeneralizationEdgeView,
-    GManifestationEdge,
-    GManifestationEdgeView,
-    GModelNode,
-    GModelNodeView,
-    GOperationNode,
-    GOperationNodeView,
-    GPackageNode,
-    GPackageNodeView,
-    GParameterNode,
-    GParameterNodeView,
-    GPropertyNode,
-    GPropertyNodeView,
-    GUmlNodeNode,
-    GUmlNodeNodeView
-} from '../../elements/index.js';
+import { NamedElement, NamedElementView } from '../../elements/index.js';
 import { GEditableLabel, GEditableLabelView } from '../../views/uml-label.view.js';
 
 const R = 'Deployment';
@@ -49,43 +18,38 @@ export const umlDeploymentDiagramModule = new FeatureModule((bind, unbind, isBou
     const context = { bind, unbind, isBound, rebind };
 
     // Nodes
-    configureModelElement(
-        context,
-        representationTypeId(R, DefaultTypes.NODE, 'DeploymentSpecification'),
-        GDeploymentSpecificationNode,
-        GDeploymentSpecificationNodeView
-    );
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Artifact'), GArtifactNode, GArtifactNodeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Device'), GDeviceNode, GDeviceNodeView);
-    configureModelElement(
-        context,
-        representationTypeId(R, DefaultTypes.NODE, 'ExecutionEnvironment'),
-        GExecutionEnvironmentNode,
-        GExecutionEnvironmentNodeView
-    );
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Model'), GModelNode, GModelNodeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Node'), GUmlNodeNode, GUmlNodeNodeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Package'), GPackageNode, GPackageNodeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Property'), GPropertyNode, GPropertyNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'DeploymentSpecification'), NamedElement, NamedElementView);
+    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'DeploymentSpecification'), GDeploymentSpecificationNode, GDeploymentSpecificationNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Artifact'), NamedElement, NamedElementView);
+    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Artifact'), GArtifactNode, GArtifactNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Device'), NamedElement, NamedElementView);
+    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Device'), GDeviceNode, GDeviceNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'ExecutionEnvironment'), NamedElement, NamedElementView);
+    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'ExecutionEnvironment'), GExecutionEnvironmentNode, GExecutionEnvironmentNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Model'), NamedElement, NamedElementView);
+    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Model'), GModelNode, GModelNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Node'), NamedElement, NamedElementView);
+    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Node'), GUmlNodeNode, GUmlNodeNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Package'), NamedElement, NamedElementView);
+    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Package'), GPackageNode, GPackageNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Property'), NamedElement, NamedElementView);
+    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Property'), GPropertyNode, GPropertyNodeView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'PropertyType'), GEditableLabel, GEditableLabelView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'PropertyMultiplicity'), GEditableLabel, GEditableLabelView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Operation'), GOperationNode, GOperationNodeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Parameter'), GParameterNode, GParameterNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Operation'), NamedElement, NamedElementView);
+    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Operation'), GOperationNode, GOperationNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Parameter'), NamedElement, NamedElementView);
+    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Parameter'), GParameterNode, GParameterNodeView);
 
     // Edges
-    configureModelElement(
-        context,
-        representationTypeId(R, DefaultTypes.EDGE, 'CommunicationPath'),
-        GCommunicationPathEdge,
-        GCommunicationPathEdgeView
-    );
-    configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Dependency'), GDependencyEdge, GDependencyEdgeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Manifestation'), GManifestationEdge, GManifestationEdgeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Deployment'), GDeploymentEdge, GDeploymentEdgeView);
-    configureModelElement(
-        context,
-        representationTypeId(R, DefaultTypes.EDGE, 'Generalization'),
-        GGeneralizationEdge,
-        GGeneralizationEdgeView
-    );
+    configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'CommunicationPath'), GEdge, PolylineEdgeView);
+    // configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'CommunicationPath'), GCommunicationPathEdge, GCommunicationPathEdgeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Dependency'), GEdge, PolylineEdgeView);
+    // configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Dependency'), GDependencyEdge, GDependencyEdgeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Manifestation'), GEdge, PolylineEdgeView);
+    // configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Manifestation'), GManifestationEdge, GManifestationEdgeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Deployment'), GEdge, PolylineEdgeView);
+    // configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Deployment'), GDeploymentEdge, GDeploymentEdgeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Generalization'), GEdge, PolylineEdgeView);
+    // configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Generalization'), GGeneralizationEdge, GGeneralizationEdgeView);
 });

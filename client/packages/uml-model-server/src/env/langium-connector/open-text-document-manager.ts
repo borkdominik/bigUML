@@ -13,9 +13,9 @@ import {
     type DocumentBuilder,
     DocumentState,
     type FileSystemProvider,
-    type LangiumDefaultSharedServices,
     type LangiumDocuments
 } from 'langium';
+import { type LangiumSharedServices } from 'langium/lsp';
 import { type Connection, type Disposable, WorkspaceChange } from 'vscode-languageserver';
 import { TextDocumentIdentifier, TextDocumentItem, VersionedTextDocumentIdentifier } from 'vscode-languageserver-protocol';
 import { type TextDocument } from 'vscode-languageserver-textdocument';
@@ -82,7 +82,7 @@ export class OpenTextDocumentManager {
     // normalized URIs and clients of open documents mapped to their version and semantic text
     protected openDocuments: ModelServerOpenDocuments;
 
-    constructor(services: AddedSharedModelServices & LangiumDefaultSharedServices) {
+    constructor(services: AddedSharedModelServices & LangiumSharedServices) {
         this.documentBuilder = services.workspace.DocumentBuilder;
         this.textDocuments = services.workspace.TextDocuments;
         this.fileSystemProvider = services.workspace.FileSystemProvider;

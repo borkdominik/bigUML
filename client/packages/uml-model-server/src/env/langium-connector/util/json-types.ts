@@ -19,7 +19,7 @@ export { GenericAstNode, jsonPatch };
  * Moreover, all runtime specific properties (like $container) are omitted to ensure that the serialized version only contains data that can be safely transmitted and reconstructed on the other side.
  */
 export type SerializeAstNode<T extends AstNode> = T extends unknown
-    ? Omit<{ [K in keyof T]: SerializeValue<T[K]> }, Exclude<Extract<keyof T, `$${string}`>, '$type'>>
+    ? Omit<{ [K in keyof T]: SerializeValue<T[K]> }, Exclude<Extract<keyof T, `$${string}`>, '$type'> | '__unknown'>
     : never;
 
 /**
@@ -27,7 +27,7 @@ export type SerializeAstNode<T extends AstNode> = T extends unknown
  * This is used by the serialized AST nodes on disk.
  */
 export type SourceAstNode<T extends AstNode> = T extends unknown
-    ? Omit<{ [K in keyof T]: SourceValue<T[K]> }, Extract<keyof T, `$${string}`>> & { __type: T['$type'] }
+    ? Omit<{ [K in keyof T]: SourceValue<T[K]> }, Extract<keyof T, `$${string}`> | '__unknown'> & { __type: T['$type'] }
     : never;
 
 export interface SerializedRecordNode extends SerializeAstNode<AstNode> {

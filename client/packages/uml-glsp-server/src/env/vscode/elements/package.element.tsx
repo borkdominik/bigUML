@@ -8,10 +8,12 @@
  **********************************************************************************/
 import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { GCompartmentElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
-import type { Package } from '@borkdominik-biguml/uml-model-server/grammar';
+import { isClass, isPackage, type Package } from '@borkdominik-biguml/uml-model-server/grammar';
 import { DefaultTypes, type Dimension, type Point } from '@eclipse-glsp/protocol';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';
-import { CompartmentHeader } from './shared-components.js';
+import { createClassElement } from './class.element.js';
+import type { ElementContext } from './core/element-context.js';
+import { CompartmentHeader } from './core/index.js';
 
 export class GPackageNode extends GNode {
     override type = ClassDiagramNodeTypes.PACKAGE;
@@ -69,4 +71,29 @@ export function GPackageNodeElement(props: GPackageNodeElementProps): GModelElem
     }
 
     return packageNode;
+}
+
+export function createPackageElement(ctx: ElementContext<Package>): GModelElement {
+    const position = ctx.modelIndex.findPosition(ctx.node.__id);
+    const size = ctx.modelIndex.findSize(ctx.node.__id);
+
+    const freeformChildren: GModelElement[] = [];
+    if (ctx.node.entities?.length > 0) {
+        for (const entity of ctx.node.entities) {
+            if (isPackage(entity)) {
+                freeformChildren.push(createPackageElement({ ...ctx, node: entity }));
+            } else if (isClass(entity)) {
+                freeformChildren.push(createClassElement({ ...ctx, node: entity }));
+            }
+        }
+    }
+
+    return (
+        <GPackageNodeElement
+            node={ctx.node}
+            position={position}
+            size={size}
+            freeformChildren={freeformChildren.length > 0 ? freeformChildren : undefined}
+        />
+    );
 }

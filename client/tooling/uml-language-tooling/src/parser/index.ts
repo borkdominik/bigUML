@@ -6,13 +6,6 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-export * from "./class-parser.js";
-export * from "./generator-config-parser.js";
-export * from "./interface-parser.js";
-export * from "./parser.js";
-export * from "./property-parser.js";
-export * from "./type-parser.js";
-export * from "./type-reference-parser.js";
-export * from "./typescript-file-parser.js";
-export * from "./union-parser.js";
+export * from './definition.parser.js';
+export * from './transformer.js';
 

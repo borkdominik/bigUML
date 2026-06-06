@@ -20,4 +20,8 @@ export class <%~ it.diagramName %>DiagramLanguageMetadata implements DiagramLang
     convertToAst(elementTypeId: string): string {
         return <%~ it.diagramName %>AstTypes.convertToAst(elementTypeId);
     }
+
+    convertToElementType(astType: string): string {
+        return <%~ it.diagramName %>AstTypes.convertToElementType(astType);
+    }
 }

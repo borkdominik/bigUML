@@ -11,7 +11,8 @@ import { RequestPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdom
 import { type ActionHandler, type MaybePromise } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 <%~ it.astImport %>
-import { <%~ it.modelStateClass %> } from '<%~ it.modelStateImportPath %>';
+import { <%~ it.modelStateClass %>, DiagramLanguageMetadata } from '<%~ it.modelStateImportPath %>';
+import type { DiagramLanguageMetadata as DiagramLanguageMetadataType } from '<%~ it.modelStateImportPath %>';
 <%~ it.handlerImports %>
 
 @injectable()
@@ -20,6 +21,9 @@ export class <%~ it.className %> implements ActionHandler {
 
     @inject(<%~ it.modelStateClass %>)
     protected modelState!: <%~ it.modelStateClass %>;
+
+    @inject(DiagramLanguageMetadata)
+    protected languageMetadata!: DiagramLanguageMetadataType;
 
     execute(action: RequestPropertyPaletteAction): MaybePromise<any[]> {
         try {
@@ -39,6 +43,8 @@ export class <%~ it.className %> implements ActionHandler {
             if (!semanticElement) {
                 return [SetPropertyPaletteAction.create()];
             }
+
+            const context = { semanticElement, languageMetadata: this.languageMetadata };
 
 <%~ it.dynamicBuilders %>
 

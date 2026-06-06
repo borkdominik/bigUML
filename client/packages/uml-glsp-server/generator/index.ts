@@ -8,8 +8,7 @@
  **********************************************************************************/
 
 export * from './contribution.js';
-export * from './decorators/language.js';
-export * from './decorators/tool-palette.decorator.js';
-export * from './diagram-language-metadata-generator.js';
-export * from './model-types-generator.js';
-export * from './tool-palette-generator.js';
+export * from './decorator/glsp-server.decorator.js';
+export * from './render/diagram-language-metadata.renderer.js';
+export * from './render/model-types.renderer.js';
+export * from './render/tool-palette.renderer.js';

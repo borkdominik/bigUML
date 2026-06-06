@@ -10,7 +10,7 @@ import { isIdAstNode, type IdAstNode } from '@borkdominik-biguml/uml-model-serve
 import { validateNode } from '@borkdominik-biguml/uml-model-server/validation';
 import { MarkerKind, ModelState, type GModelElement, type Marker, type ModelValidator } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
-import { streamAst } from 'langium';
+import { AstUtils } from 'langium';
 import type { DiagramModelState } from '../model/diagram-model-state.js';
 
 @injectable()
@@ -22,7 +22,7 @@ export class GenericDiagramModelValidator implements ModelValidator {
         const markers: Marker[] = [];
         const semanticRoot = this.modelState.semanticRoot;
 
-        for (const node of streamAst(semanticRoot)) {
+        for (const node of AstUtils.streamAst(semanticRoot)) {
             if (!isIdAstNode(node)) {
                 continue;
             }

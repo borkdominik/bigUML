@@ -69,7 +69,6 @@ export class BigGlspVSCodeConnector<
 
     /**
      * Set of actions that are handled by vscode and should not be propagated to the server.
-     * This is a workaround till the java server has been replaced by a node server.
      */
     protected readonly vscodeHandledActions = new Set<string>();
 

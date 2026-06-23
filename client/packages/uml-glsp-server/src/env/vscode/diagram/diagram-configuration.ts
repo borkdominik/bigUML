@@ -40,6 +40,7 @@ export class UmlDiagramConfiguration implements DiagramConfiguration {
         mapping.set(CommonModelTypes.COMP_HEADER, GCompartment);
         mapping.set(CommonModelTypes.LABEL_ICON, GLabel);
         mapping.set(CommonModelTypes.ICON, GCompartment);
+        mapping.set(CommonModelTypes.LABEL_NAME, GLabel);
         mapping.set(ClassDiagramNodeTypes.CLASS, GClassNode);
         mapping.set(ClassDiagramNodeTypes.ABSTRACT_CLASS, GClassNode);
         mapping.set(ClassDiagramNodeTypes.PROPERTY, GPropertyNode);

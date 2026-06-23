@@ -8,7 +8,7 @@
  *********************************************************************************/
 import { TYPES, type BigGlspVSCodeConnector, type GlspDiagramSettings } from '@borkdominik-biguml/big-vscode/vscode';
 import { EnableToolsAction, FocusDomAction } from '@borkdominik-biguml/uml-glsp-server';
-import { CenterAction, FitToScreenAction, RequestExportSvgAction, SelectAllAction } from '@eclipse-glsp/protocol';
+import { CenterAction, FitToScreenAction, LayoutOperation, RequestExportSvgAction, SelectAllAction } from '@eclipse-glsp/protocol';
 import { inject, injectable, postConstruct } from 'inversify';
 import { SetUIExtensionVisibilityAction } from 'sprotty/lib/base/ui-extensions/ui-extension-registry.js';
 import * as vscode from 'vscode';
@@ -67,12 +67,10 @@ export class DefaultCommandsProvider {
             }),
             vscode.commands.registerCommand(`${this.diagramSettings.name}.editor.enableSecondaryElementNavigator`, () => {
                 this.connector.sendActionToActiveClient(EnableToolsAction.create(['uml.secondary-element-navigator-tool']));
+            }),
+            vscode.commands.registerCommand(`${this.diagramSettings.name}.layout`, () => {
+                this.connector.sendActionToActiveClient(LayoutOperation.create([]));
             })
-            /*
-        vscode.commands.registerCommand(`${this.diagramSettings.name}.layout`, () => {
-            this.connector.sendActionToActiveClient(LayoutOperation.create([]));
-        })
-        */
         );
 
         this.extensionContext.subscriptions.push(

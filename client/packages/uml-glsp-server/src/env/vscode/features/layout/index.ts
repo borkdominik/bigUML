@@ -7,3 +7,4 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 export * from './layered-layout-configurator.js';
+export * from './big-layout-operation-handler.js';

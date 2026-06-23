@@ -8,6 +8,7 @@
  **********************************************************************************/
 import {
     DiagramModule,
+    LayoutOperationHandler,
     OperationHandlerRegistryInitializer,
     type ActionHandlerConstructor,
     type BindingTarget,
@@ -21,6 +22,7 @@ import {
     type OperationHandlerConstructor,
     type SourceModelStorage
 } from '@eclipse-glsp/server';
+import { BigLayoutOperationHandler } from '../layout/index.js';
 import { GenericLabelEditOperationHandler } from '../labeledit/generic-label-edit-operation-handler.js';
 import { DiagramGModelSerializer } from '../model/diagram-gmodel-serializer.js';
 import { DiagramModelIndex } from '../model/diagram-model-index.js';
@@ -79,6 +81,7 @@ export abstract class BigDiagramModule extends DiagramModule {
 
     protected override configureOperationHandlers(binding: InstanceMultiBinding<OperationHandlerConstructor>): void {
         super.configureOperationHandlers(binding);
+        binding.rebind(LayoutOperationHandler, BigLayoutOperationHandler);
         binding.add(GenericChangeBoundsOperationHandler);
         binding.add(GenericCreateNodeOperationHandler);
         binding.add(GenericCreateEdgeOperationHandler);

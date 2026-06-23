@@ -108,6 +108,12 @@
         "command": "timeline.export",
         "title": "Export Timeline",
         "icon": "$(cloud-download)"
+      },
+      {
+        "command": "bigUML.layout",
+        "title": "Auto-layout",
+        "category": "bigUML",
+        "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
       }
     ],
     "configuration": {
@@ -197,6 +203,12 @@
         "mac": "alt+n",
         "command": "bigUML.editor.enableSecondaryElementNavigator",
         "when": "activeCustomEditorId == 'bigUML.diagramView' && bigUML.editorSelectedElementsAmount == 1"
+      },
+      {
+        "key": "alt+l",
+        "mac": "alt+l",
+        "command": "bigUML.layout",
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
       }
     ],
     "languages": [

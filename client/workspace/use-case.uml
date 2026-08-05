@@ -5,44 +5,22 @@
 		"diagramType": "USE_CASE",
 		"entities": [
 			{
-				"__type": "Subject",
-				"__id": "Subject_8ddb55d7-1f59-450b-aafb-48cbe780be40",
-				"name": "NewSubject1",
-				"visibility": "PUBLIC",
-				"useCases": []
-			},
-			{
 				"__type": "UseCase",
 				"__id": "UseCase_8dda2d1f-993c-4b65-a5a0-b2794c1b754a",
 				"name": "NewUseCase1",
 				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "Subject",
+				"__id": "Subject_c86de89a-fbc2-4c10-93aa-3b74bd2958c8",
+				"name": "NewSubject2",
+				"visibility": "PUBLIC",
+				"useCases": []
 			}
 		],
 		"relations": []
 	},
 	"metaInfos": [
-		{
-			"__type": "Size",
-			"__id": "size_Subject_8ddb55d7-1f59-450b-aafb-48cbe780be40",
-			"height": 30,
-			"width": 80,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Subject_8ddb55d7-1f59-450b-aafb-48cbe780be40"
-			}
-		},
-		{
-			"__type": "Position",
-			"__id": "pos_Subject_8ddb55d7-1f59-450b-aafb-48cbe780be40",
-			"x": 610,
-			"y": 170,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Subject_8ddb55d7-1f59-450b-aafb-48cbe780be40"
-			}
-		},
 		{
 			"__type": "Size",
 			"__id": "size_UseCase_8dda2d1f-993c-4b65-a5a0-b2794c1b754a",
@@ -63,6 +41,28 @@
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
 				"__value": "UseCase_8dda2d1f-993c-4b65-a5a0-b2794c1b754a"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_Subject_c86de89a-fbc2-4c10-93aa-3b74bd2958c8",
+			"height": 600,
+			"width": 400,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Subject_c86de89a-fbc2-4c10-93aa-3b74bd2958c8"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_Subject_c86de89a-fbc2-4c10-93aa-3b74bd2958c8",
+			"x": 680,
+			"y": 210,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Subject_c86de89a-fbc2-4c10-93aa-3b74bd2958c8"
 			}
 		}
 	]

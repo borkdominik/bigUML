@@ -33,6 +33,23 @@ import { GridSnapper } from '../../grid/grid-snapper.js';
 import { DiagramLanguageMetadata } from '../../model/diagram-language-metadata.js';
 import { type DiagramModelState } from '../../model/diagram-model-state.js';
 
+const DEFAULT_NODE_SIZE = { width: 80, height: 30 };
+
+/** Node types that need a bigger default size than the generic fallback to read well on the canvas. */
+const NODE_SIZE_OVERRIDES: Record<string, { width: number; height: number }> = {
+    Subject: { width: 400, height: 600 },
+    UseCase: { width: 160, height: 100 }
+};
+
+/**
+ * Node types that only visually contain other nodes through absolute position/size overlap
+ * on the canvas (the diagram model renders `diagram.entities` flatly). Creating a node "inside"
+ * one of these must still add it as a flat sibling, never nested into the container's own
+ * containment property (e.g. `Subject.useCases`) - such nested nodes are never traversed by the
+ * gmodel factory and would silently disappear from the rendered diagram.
+ */
+const FLAT_CONTAINER_TYPES = new Set<string>(['Subject']);
+
 @injectable()
 export class GenericCreateNodeOperationHandler extends OperationHandler implements CreateNodeOperationHandler {
     readonly operationType = CreateNodeOperation.KIND;
@@ -93,6 +110,7 @@ export class GenericCreateNodeOperationHandler extends OperationHandler implemen
         nodeDocumentUri: string
     ): jsonpatch.AddOperation<SerializeAstNode<MetaInfo>>[] {
         const location = GridSnapper.snap(this.getRelativeLocation(operation));
+        const { width, height } = NODE_SIZE_OVERRIDES[this.stripPrefix(operation.elementTypeId)] ?? DEFAULT_NODE_SIZE;
         const patch: jsonpatch.AddOperation<SerializeAstNode<MetaInfo>>[] = [
             {
                 op: 'add',
@@ -101,8 +119,8 @@ export class GenericCreateNodeOperationHandler extends OperationHandler implemen
                     $type: 'Size',
                     __id: 'size_' + id,
                     element: { $ref: { __id: id, __documentUri: nodeDocumentUri } },
-                    width: 80,
-                    height: 30
+                    width,
+                    height
                 }
             },
             {
@@ -140,7 +158,7 @@ export class GenericCreateNodeOperationHandler extends OperationHandler implemen
         if (operation.containerId) {
             const container = this.modelState.index.find(operation.containerId);
             const containerPath = this.modelState.index.findPath(operation.containerId);
-            if (container?.type === 'graph') {
+            if (container?.type === 'graph' || (container?.type && FLAT_CONTAINER_TYPES.has(this.stripPrefix(container.type)))) {
                 return '/diagram/entities/-';
             }
 

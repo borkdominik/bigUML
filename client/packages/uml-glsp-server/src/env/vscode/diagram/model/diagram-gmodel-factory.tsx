@@ -174,7 +174,10 @@ export class UmlDiagramGModelFactory implements GModelFactory {
     protected createGraph(): GGraph | undefined {
         const diagram = this.modelState.semanticRoot.diagram;
 
-        const nodes = diagram.entities.map(e => this.createNodeElement(e)).filter(Boolean) as GModelElement[];
+        // Subjects act as containers drawn around other nodes, so they must always paint behind them,
+        // regardless of the order in which they were created relative to their contained use cases.
+        const entities = [...diagram.entities].sort((a, b) => Number(isSubject(b)) - Number(isSubject(a)));
+        const nodes = entities.map(e => this.createNodeElement(e)).filter(Boolean) as GModelElement[];
         const edges = diagram.relations
             .filter((r: any) => r.source?.ref && r.target?.ref)
             .map(e => this.createEdgeElement(e))

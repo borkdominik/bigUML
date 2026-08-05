@@ -24,4 +24,5 @@
 @import 'extensions/shift-tool.css';
 
 @import 'diagram/package/style.css';
+@import 'diagram/usecase/style.css';
 @import 'diagram//sequence/sequence-diagram.css';

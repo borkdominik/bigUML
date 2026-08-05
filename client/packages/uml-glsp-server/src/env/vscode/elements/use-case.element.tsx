@@ -17,14 +17,23 @@ export interface GUseCaseNodeElementProps extends BaseElementProps {
 }
 
 export function GUseCaseNodeElement(props: GUseCaseNodeElementProps): GModelElement {
+    const { size } = props;
+
     return (
         <GNodeElement
             id={props.node.__id}
             type={props.type}
             position={props.position}
-            size={props.size}
+            size={size}
             cssClasses={['uml-node']}
             layout='vbox'
+            layoutOptions={{
+                paddingLeft: 20,
+                paddingRight: 20,
+                paddingTop: 15,
+                paddingBottom: 15,
+                ...(size ? { prefWidth: size.width, prefHeight: size.height } : {})
+            }}
         >
             <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={props.node.name} />
         </GNodeElement>

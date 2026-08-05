@@ -9,7 +9,9 @@
 import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { GLabelElement, GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { Actor } from '@borkdominik-biguml/uml-model-server/grammar';
+import { DefaultTypes } from '@eclipse-glsp/protocol';
 import type { GModelElement } from '@eclipse-glsp/server';
+import { representationTypeId } from '../../common/model/model-type-utils.js';
 import type { BaseElementProps, ElementContext } from './core/element-context.js';
 
 export interface GActorNodeElementProps extends BaseElementProps {
@@ -26,6 +28,7 @@ export function GActorNodeElement(props: GActorNodeElementProps): GModelElement 
             cssClasses={['uml-node']}
             layout='vbox'
         >
+            <GNodeElement id={`${props.node.__id}_stickfigure`} type={representationTypeId('UseCase', DefaultTypes.NODE, 'ActorStickfigure')} />
             <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={props.node.name} />
         </GNodeElement>
     );

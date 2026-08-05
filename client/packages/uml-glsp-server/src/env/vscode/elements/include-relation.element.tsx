@@ -9,6 +9,7 @@
 import { GEdgeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { Include } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { GEdge } from '@eclipse-glsp/server';
+import { EdgeStereotypeLabel } from './core/index.js';
 import type { ElementContext } from './core/element-context.js';
 
 export function createIncludeRelation(ctx: ElementContext<Include>): GEdge {
@@ -18,7 +19,10 @@ export function createIncludeRelation(ctx: ElementContext<Include>): GEdge {
             type={ctx.elementType}
             sourceId={ctx.node.source!.ref!.__id}
             targetId={ctx.node.target!.ref!.__id}
-            cssClasses={['uml-edge']}
-        />
+            cssClasses={['uml-edge', 'uml-edge-dashed', 'marker-tent-end']}
+            args={{ edgePadding: 10 }}
+        >
+            <EdgeStereotypeLabel id={ctx.node.__id} stereotype='include' />
+        </GEdgeElement>
     ) as GEdge;
 }

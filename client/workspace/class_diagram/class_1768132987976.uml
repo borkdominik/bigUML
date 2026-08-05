@@ -21,8 +21,7 @@
 						"isReadOnly": false,
 						"isNavigable": false,
 						"isUnique": false,
-						"visibility": "PUBLIC",
-						"multiplicity": "0..1",
+						"visibility": "NONE",
 						"propertyType": {
 							"__type": "Reference",
 							"__refType": "DataTypeReference",
@@ -54,13 +53,35 @@
 				"visibility": "PUBLIC"
 			}
 		],
-		"relations": []
+		"relations": [
+			{
+				"__type": "Association",
+				"__id": "Association_37e80749-fea0-42c7-8489-f06ed3250a68",
+				"source": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "Class_84d3bb3a-23c4-4199-8e28-4a4778d01520"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "Class_ca32daf9-03f3-4bc5-b91e-2a3b5e0d4930"
+				},
+				"name": "kjgsldfg",
+				"sourceMultiplicity": "1",
+				"targetMultiplicity": "2..*43875897543",
+				"sourceName": "undefineddfsdf",
+				"sourceAggregation": "NONE",
+				"targetAggregation": "NONE",
+				"visibility": "PUBLIC"
+			}
+		]
 	},
 	"metaInfos": [
 		{
 			"__type": "Size",
 			"__id": "size_Class_84d3bb3a-23c4-4199-8e28-4a4778d01520",
-			"height": 33.46284103393555,
+			"height": 35,
 			"width": 80,
 			"element": {
 				"__type": "Reference",
@@ -71,8 +92,8 @@
 		{
 			"__type": "Position",
 			"__id": "pos_Class_84d3bb3a-23c4-4199-8e28-4a4778d01520",
-			"x": 360,
-			"y": -120,
+			"x": 159.5086122934227,
+			"y": 34.69528414293883,
 			"element": {
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
@@ -93,8 +114,8 @@
 		{
 			"__type": "Position",
 			"__id": "pos_Class_ca32daf9-03f3-4bc5-b91e-2a3b5e0d4930",
-			"x": 610.6458465430959,
-			"y": -63.915140941344774,
+			"x": 626.9461603437209,
+			"y": -13.216335153256978,
 			"element": {
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
@@ -104,8 +125,8 @@
 		{
 			"__type": "Size",
 			"__id": "size_Class_73c7702f-aedf-44a4-93db-df8a66632fb5",
-			"height": 30,
-			"width": 80,
+			"height": 35,
+			"width": 88.65625,
 			"element": {
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",

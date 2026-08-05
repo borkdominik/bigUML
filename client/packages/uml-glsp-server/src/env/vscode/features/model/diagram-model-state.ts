@@ -22,6 +22,7 @@ import {
 import { type Diagram } from '@borkdominik-biguml/uml-model-server/grammar';
 import { UmlDiagramLSPServices } from '@borkdominik-biguml/uml-model-server/integration';
 import { ActionDispatcher, DefaultModelState, Emitter, type JsonModelState, MessageAction, type SeverityLevel } from '@eclipse-glsp/server';
+import { type Point } from '@eclipse-glsp/protocol';
 import { inject, injectable } from 'inversify';
 import { URI } from 'vscode-uri';
 import { DiagramModelIndex } from './diagram-model-index.js';
@@ -44,6 +45,13 @@ export class DiagramModelState extends DefaultModelState implements JsonModelSta
     protected _semanticUri: string;
     protected _semanticRoot: Diagram;
     protected _packageId: string;
+
+    /**
+     * Manually routed edge points, kept in memory only for the lifetime of this session.
+     * The GModel is rebuilt from the semantic model after every operation, so without this,
+     * routing points would be lost as soon as any other operation (e.g. moving a connected node) runs.
+     */
+    protected readonly _routingPoints = new Map<string, Point[]>();
 
     protected readonly onDidLoadSourceModelEmitter = new Emitter<void>();
     readonly onDidLoadSourceModel = this.onDidLoadSourceModelEmitter.event;
@@ -143,5 +151,13 @@ export class DiagramModelState extends DefaultModelState implements JsonModelSta
     async redo() {
         this._semanticRoot = await this.modelService.redo(this.semanticUri);
         this.index.indexSemanticRoot(this.semanticRoot);
+    }
+
+    getRoutingPoints(edgeId: string): Point[] | undefined {
+        return this._routingPoints.get(edgeId);
+    }
+
+    setRoutingPoints(edgeId: string, points: Point[]): void {
+        this._routingPoints.set(edgeId, points);
     }
 }

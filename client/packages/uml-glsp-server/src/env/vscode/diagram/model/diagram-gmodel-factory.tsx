@@ -256,6 +256,14 @@ export class UmlDiagramGModelFactory implements GModelFactory {
     }
 
     protected createEdgeElement(edge: unknown): GEdge | undefined {
+        const gEdge = this.buildEdgeElement(edge);
+        if (gEdge) {
+            gEdge.routingPoints = this.modelState.getRoutingPoints(gEdge.id) ?? [];
+        }
+        return gEdge;
+    }
+
+    protected buildEdgeElement(edge: unknown): GEdge | undefined {
         if (isAbstraction(edge)) return createAbstractionRelation(this.buildCtx(edge));
         if (isAssociation(edge)) return createAssociationRelation(this.buildCtx(edge));
         if (isDependency(edge)) return createDependencyRelation(this.buildCtx(edge));

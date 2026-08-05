@@ -32,6 +32,10 @@ const STEREOTYPE_PLACEMENT = { rotate: true, side: 'top', position: 0.5, offset:
 const SOURCE_MULTIPLICITY_PLACEMENT = { rotate: true, side: 'bottom', position: 0, offset: 7 } as const;
 const TARGET_MULTIPLICITY_PLACEMENT = { rotate: true, side: 'bottom', position: 1, offset: 7 } as const;
 
+/** Below the edge, at its two ends, so a role name does not overlap the multiplicity above it. */
+const SOURCE_ROLE_NAME_PLACEMENT = { rotate: true, side: 'top', position: 0, offset: 7 } as const;
+const TARGET_ROLE_NAME_PLACEMENT = { rotate: true, side: 'top', position: 1, offset: 7 } as const;
+
 export interface EdgeNameLabelProps {
     id: string;
     name?: string;
@@ -79,6 +83,32 @@ export function EdgeMultiplicityLabel(props: EdgeMultiplicityLabelProps): GModel
             type={CommonModelTypes.LABEL_TEXT}
             text={props.multiplicity}
             edgePlacement={props.end === 'source' ? SOURCE_MULTIPLICITY_PLACEMENT : TARGET_MULTIPLICITY_PLACEMENT}
+        />
+    );
+}
+
+export interface EdgeRoleNameLabelProps {
+    id: string;
+    /** Which end of the relation the role name belongs to. */
+    end: 'source' | 'target';
+    name?: string;
+}
+
+/**
+ * Renders the role name of one relation end below that end of the edge. Returns `null`
+ * when the end has no role name, so that no empty label is added to the edge.
+ */
+export function EdgeRoleNameLabel(props: EdgeRoleNameLabelProps): GModelElement | null {
+    if (!props.name) {
+        return null;
+    }
+
+    return (
+        <GLabelElement
+            id={`${props.id}_${props.end}_role_name_label`}
+            type={CommonModelTypes.LABEL_TEXT}
+            text={props.name}
+            edgePlacement={props.end === 'source' ? SOURCE_ROLE_NAME_PLACEMENT : TARGET_ROLE_NAME_PLACEMENT}
         />
     );
 }

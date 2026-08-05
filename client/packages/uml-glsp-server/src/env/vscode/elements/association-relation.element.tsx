@@ -9,7 +9,7 @@
 import { GEdgeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { Relation } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { GEdge } from '@eclipse-glsp/server';
-import { EdgeMultiplicityLabel, EdgeNameLabel } from './core/index.js';
+import { EdgeMultiplicityLabel, EdgeNameLabel, EdgeRoleNameLabel } from './core/index.js';
 import type { ElementContext } from './core/element-context.js';
 
 export function createAssociationRelation(ctx: ElementContext<Relation>): GEdge {
@@ -35,6 +35,8 @@ export function createAssociationRelation(ctx: ElementContext<Relation>): GEdge 
             cssClasses={cssClasses}
         >
             <EdgeNameLabel id={ctx.node.__id} name={(ctx.node as any).name} />
+            <EdgeRoleNameLabel id={ctx.node.__id} end='source' name={(ctx.node as any).sourceName} />
+            <EdgeRoleNameLabel id={ctx.node.__id} end='target' name={(ctx.node as any).targetName} />
             <EdgeMultiplicityLabel id={ctx.node.__id} end='source' multiplicity={(ctx.node as any).sourceMultiplicity} />
             <EdgeMultiplicityLabel id={ctx.node.__id} end='target' multiplicity={(ctx.node as any).targetMultiplicity} />
         </GEdgeElement>

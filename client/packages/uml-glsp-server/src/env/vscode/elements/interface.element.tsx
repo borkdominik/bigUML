@@ -50,7 +50,7 @@ export function GInterfaceNodeElement(props: GInterfaceNodeElementProps): GModel
         interfaceNode.layoutOptions = { prefWidth: size.width, prefHeight: size.height };
     }
 
-    const header = <CompartmentHeader id={id} name={node.name} />;
+    const header = <CompartmentHeader id={id} name={node.name} stereotype='interface' stereotypeCssClasses={['uml-font-italic']} />;
     header.parent = interfaceNode;
     interfaceNode.children.push(header);
 

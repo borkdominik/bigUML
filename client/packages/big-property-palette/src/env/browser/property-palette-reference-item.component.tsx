@@ -18,7 +18,7 @@ import {
     VSCodeContext
 } from '@borkdominik-biguml/big-components';
 import { UpdateElementPropertyAction, type ElementReferenceProperty } from '@borkdominik-biguml/big-property-palette';
-import { CompoundOperation } from '@eclipse-glsp/protocol';
+import { CompoundOperation, DeleteElementOperation } from '@eclipse-glsp/protocol';
 import { useCallback, useContext, useEffect, useRef, useState, type ChangeEvent, type ReactElement } from 'react';
 import Sortable from 'sortablejs';
 
@@ -98,7 +98,19 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
 
     const onDelete = useCallback(
         (references: ElementReferenceProperty.Reference[]) => {
-            dispatchAction(CompoundOperation.create(references.flatMap(r => r.deleteActions) as any));
+            const actions = references.flatMap(r => r.deleteActions);
+            // Merge every DeleteElementOperation into one so the server removes all targeted
+            // elements from a single, consistently-indexed patch instead of N patches whose
+            // array indices go stale as soon as an earlier one in the batch is applied.
+            const elementIds = actions.filter(DeleteElementOperation.is).flatMap(action => action.elementIds);
+            const otherActions = actions.filter(action => !DeleteElementOperation.is(action));
+            const mergedActions = elementIds.length > 0 ? [DeleteElementOperation.create(elementIds), ...otherActions] : otherActions;
+
+            if (mergedActions.length === 0) {
+                return;
+            }
+
+            dispatchAction(mergedActions.length === 1 ? mergedActions[0] : CompoundOperation.create(mergedActions as any));
         },
         [dispatchAction]
     );

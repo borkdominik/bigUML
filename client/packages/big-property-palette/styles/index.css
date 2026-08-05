@@ -7,6 +7,11 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
+html,
+body {
+    overflow-x: hidden;
+}
+
 .body {
     display: flex;
     flex-direction: column;
@@ -16,14 +21,21 @@
     margin-top: 6px;
 }
 
+header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
 #navigate-back {
-    position: absolute;
-    left: 0;
-    top: 18px;
+    flex-shrink: 0;
+    --vscode-button-border: var(--vscode-button-secondaryBackground, #313131);
 }
 
 #search {
     margin-bottom: 6px;
+    width: 100%;
+    max-width: 100%;
 }
 
 .grid {
@@ -41,15 +53,26 @@
 
 .grid-label {
     grid-column-start: label-start;
+    overflow-wrap: break-word;
 }
 
 .grid-value {
     grid-column-start: value-start;
+    min-width: 0;
 }
 
 .grid-flex {
     display: flex;
     flex-direction: column;
+    min-width: 0;
+}
+
+.grid-flex > vscode-textfield,
+.grid-flex > vscode-single-select {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
 }
 
 .dropdown-option {
@@ -98,6 +121,18 @@ h4.secondary-title {
     flex-direction: row;
 }
 
+.reference-header-actions vscode-button,
+.reference-item-actions vscode-button,
+.reference-body-actions vscode-button {
+    --vscode-button-background: var(--vscode-settings-dropdownBackground, #313131);
+    --vscode-button-hoverBackground: var(--vscode-settings-dropdownListBorder, #454545);
+    --vscode-button-foreground: var(--vscode-settings-dropdownForeground, #cccccc);
+    --vscode-button-border: var(--vscode-settings-dropdownBorder, #3c3c3c);
+    --vscode-button-secondaryBackground: var(--vscode-settings-dropdownBackground, #313131);
+    --vscode-button-secondaryHoverBackground: var(--vscode-settings-dropdownListBorder, #454545);
+    --vscode-button-secondaryForeground: var(--vscode-settings-dropdownForeground, #cccccc);
+}
+
 .sortable-drag {
     opacity: 0.6;
     background: var(--vscode-editor-background);
@@ -113,6 +148,7 @@ h4.secondary-title {
 .reference-item-body > .reference-item-name {
     flex: 1;
     margin-right: 6px;
+    min-width: 0;
 }
 
 .reference-item-body > .reference-item-label {
@@ -124,6 +160,13 @@ h4.secondary-title {
     flex-direction: column;
 }
 
+.reference-item-name > vscode-textfield {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
 .reference-item-body {
     display: flex;
     flex-direction: row;
@@ -133,6 +176,7 @@ h4.secondary-title {
 .reference-item-body > .reference-item-actions {
     display: flex;
     flex-direction: row;
+    gap: 4px;
 }
 
 .reference-item-body .action-delete {

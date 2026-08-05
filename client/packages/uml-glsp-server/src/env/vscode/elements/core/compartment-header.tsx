@@ -35,7 +35,6 @@ export function CompartmentHeader(props: CompartmentHeaderProps): GModelElement 
             layout='vbox'
             layoutOptions={{ hAlign: 'center' }}
         >
-            {isAbstract && !stereotype && <GLabelElement type={CommonModelTypes.LABEL_TEXT} text='<<abstract>>' />}
             {stereotype && (
                 <GLabelElement
                     id={id + '_annotation_label'}

@@ -8,6 +8,7 @@
  **********************************************************************************/
 
 export * from './compartment-header.js';
+export * from './edge-label.js';
 export * from './element-context.js';
 export * from './inline-compartment.js';
 export * from './section-compartment.js';

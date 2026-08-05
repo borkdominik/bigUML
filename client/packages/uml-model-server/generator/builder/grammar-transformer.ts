@@ -43,6 +43,8 @@ export interface Definition {
     multiplicity: Multiplicity;
     crossReference: boolean;
     optional: boolean;
+    /** `true` for string properties marked with `@Language.text` (free-form value). */
+    freeText: boolean;
 }
 
 // ============================================================================
@@ -89,7 +91,8 @@ function declarationToEntryRule(declaration: Declaration): EntryRule {
             types: property.types,
             multiplicity: property.multiplicity,
             crossReference: Decorator.has(property.decorators, 'reference'),
-            optional: property.isOptional
+            optional: property.isOptional,
+            freeText: Decorator.has(property.decorators, 'text')
         }))
     };
 }
@@ -196,7 +199,8 @@ export function transformDeclarationsToLangiumGrammar(
                 type: property.types[0],
                 multiplicity: property.multiplicity,
                 crossReference: Decorator.has(property.decorators, 'reference'),
-                optional: property.isOptional
+                optional: property.isOptional,
+                freeText: Decorator.has(property.decorators, 'text')
             }));
 
             if (!properties.find(property => property.name === generatorConfig.referenceProperty)) {
@@ -205,7 +209,8 @@ export function transformDeclarationsToLangiumGrammar(
                     type: { typeName: 'string', type: 'simple' },
                     multiplicity: Multiplicity.ONE_TO_ONE,
                     crossReference: false,
-                    optional: false
+                    optional: false,
+                    freeText: false
                 });
             }
 

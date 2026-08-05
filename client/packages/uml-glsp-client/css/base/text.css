@@ -10,6 +10,15 @@
     font-style: italic;
 }
 
+/*
+ * Attributes and operations. Set on the member node so that every label in the row
+ * (visibility symbol, name, type, multiplicity) scales together; `.sprotty text` uses a
+ * relative size, so the value inherits down.
+ */
+.uml-theme .uml-font-member {
+    font-size: 110%;
+}
+
 .uml-theme .uml-divider-subtitle {
     fill: var(--uml-divider-subtitle);
     font-size: small;

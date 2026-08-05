@@ -11,8 +11,9 @@ export const UmlDiagramTerminals = {
     NEW_LINE: /\n+/,
     TAB: /\t+/,
     LANGIUM_BOOL: /true|false/,
-    LANGIUM_INT: /(-)?[0-9]+(\.[0-9]*)?/,
-    LANGIUM_ID: /[\w_\*-]+/,
+    LANGIUM_INT: /(-)?[0-9]+(\.[0-9]+)?/,
+    LANGIUM_ID: /[\w_\*-]+( +[\w_\*-]+)*/,
+    LANGIUM_PUNCT: /[.+#()<>=?!|~^&%$@;'`]+/,
     ML_COMMENT: /\/\*[\s\S]*?\*\//,
     SL_COMMENT: /\/\/[^\n\r]*/,
 };
@@ -510,11 +511,11 @@ export interface Association extends Relation {
     name?: string;
     source: langium.Reference<Node>;
     sourceAggregation?: AggregationType;
-    sourceMultiplicity?: string;
+    sourceMultiplicity?: LangiumText;
     sourceName?: string;
     target: langium.Reference<Node>;
     targetAggregation?: AggregationType;
-    targetMultiplicity?: string;
+    targetMultiplicity?: LangiumText;
     targetName?: string;
     visibility?: Visibility;
 }
@@ -1733,7 +1734,7 @@ export function isJsonObjectPair(item: unknown): item is JsonObjectPair {
 export interface JsonStringValue extends langium.AstNode {
     readonly $container: JsonValue;
     readonly $type: 'JsonStringValue';
-    content: string;
+    content: LangiumText;
 }
 
 export const JsonStringValue = {
@@ -1768,6 +1769,12 @@ export const JsonValue = {
 
 export function isJsonValue(item: unknown): item is JsonValue {
     return reflection.isInstance(item, JsonValue.$type);
+}
+
+export type LangiumText = string;
+
+export function isLangiumText(item: unknown): item is LangiumText {
+    return typeof item === 'string';
 }
 
 export interface Lifeline extends langium.AstNode {
@@ -2113,7 +2120,7 @@ export interface Parameter extends langium.AstNode {
     isOrdered: boolean;
     isStream: boolean;
     isUnique: boolean;
-    multiplicity?: string;
+    multiplicity?: LangiumText;
     name: string;
     parameterType?: langium.Reference<DataTypeReference>;
     visibility?: Visibility;
@@ -2200,7 +2207,7 @@ export interface Property extends langium.AstNode {
     isReadOnly: boolean;
     isStatic: boolean;
     isUnique: boolean;
-    multiplicity?: string;
+    multiplicity?: LangiumText;
     name: string;
     propertyType?: langium.Reference<DataTypeReference>;
     visibility?: Visibility;
@@ -2723,10 +2730,10 @@ export function isUseCaseDiagramNodes(item: unknown): item is UseCaseDiagramNode
     return reflection.isInstance(item, UseCaseDiagramNodes.$type);
 }
 
-export type Visibility = 'PACKAGE' | 'PRIVATE' | 'PROTECTED' | 'PUBLIC';
+export type Visibility = 'NONE' | 'PACKAGE' | 'PRIVATE' | 'PROTECTED' | 'PUBLIC';
 
 export function isVisibility(item: unknown): item is Visibility {
-    return item === 'PUBLIC' || item === 'PRIVATE' || item === 'PROTECTED' || item === 'PACKAGE';
+    return item === 'PUBLIC' || item === 'PRIVATE' || item === 'PROTECTED' || item === 'PACKAGE' || item === 'NONE';
 }
 
 export type UmlDiagramAstType = {

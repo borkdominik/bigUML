@@ -68,7 +68,7 @@ export function createInterfaceElement(ctx: ElementContext<Interface>): GModelEl
 
     const propertiesSection =
         ctx.node.properties?.length > 0 ? (
-            <SectionCompartment id={ctx.node.__id + '_count_context_1'} dividerText='Attributes'>
+            <SectionCompartment id={ctx.node.__id + '_count_context_1'} divider>
                 {ctx.node.properties.map(p => (
                     <GPropertyNodeElement node={p} />
                 ))}
@@ -77,7 +77,7 @@ export function createInterfaceElement(ctx: ElementContext<Interface>): GModelEl
 
     const operationsSection =
         ctx.node.operations?.length > 0 ? (
-            <SectionCompartment id={ctx.node.__id + '_count_context_3'} dividerText='Methods'>
+            <SectionCompartment id={ctx.node.__id + '_count_context_3'} divider>
                 {ctx.node.operations.map(o => (
                     <GOperationNodeElement node={o} />
                 ))}

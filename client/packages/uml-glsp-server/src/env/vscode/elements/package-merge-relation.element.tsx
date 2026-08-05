@@ -6,10 +6,10 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
-import { GEdgeElement, GLabelElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
+import { GEdgeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { Relation } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { GEdge } from '@eclipse-glsp/server';
+import { EdgeStereotypeLabel } from './core/index.js';
 import type { ElementContext } from './core/element-context.js';
 
 export function createPackageMergeRelation(ctx: ElementContext<Relation>): GEdge {
@@ -21,7 +21,7 @@ export function createPackageMergeRelation(ctx: ElementContext<Relation>): GEdge
             targetId={ctx.node.target!.ref!.__id}
             cssClasses={['uml-edge', 'uml-edge-dashed', 'marker-tent-end']}
         >
-            <GLabelElement type={CommonModelTypes.LABEL_TEXT} text='<<merge>>' />
+            <EdgeStereotypeLabel id={ctx.node.__id} stereotype='merge' />
         </GEdgeElement>
     ) as GEdge;
 }

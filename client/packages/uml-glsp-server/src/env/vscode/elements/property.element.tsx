@@ -43,20 +43,24 @@ export function GPropertyNodeElement(props: GPropertyNodeElementProps): GModelEl
     propNode.visibility = visibility;
     propNode.multiplicity = multiplicity;
     propNode.args = { build_by: 'dave' };
-    propNode.cssClasses = [];
+    propNode.cssClasses = ['uml-font-member'];
     propNode.children = [];
 
-    // Left side: visibility + name
+    // Left side: visibility + name. A visibility of `NONE` renders no symbol at all — the label
+    // is left out entirely so the name does not keep the compartment gap as an indent.
+    const visibilitySymbol = getVisibilitySymbol(visibility);
     const leftSide = (
         <InlineCompartment id={id + '_count_context_1'}>
-            <GLabelElement id={id + '_count_context_2'} type={CommonModelTypes.LABEL_TEXT} text={getVisibilitySymbol(visibility)} />
+            {visibilitySymbol ? (
+                <GLabelElement id={id + '_count_context_2'} type={CommonModelTypes.LABEL_TEXT} text={visibilitySymbol} />
+            ) : null}
             <GLabelElement id={id + '_name_label'} type={CommonModelTypes.LABEL_NAME} text={node.name!} args={{ highlight: true }} />
         </InlineCompartment>
     );
     leftSide.parent = propNode;
     propNode.children.push(leftSide);
 
-    // Right side: : type multiplicity (only if type exists)
+    // Right side: : type[multiplicity] (only if type exists)
     const rightSideChildren: GModelElement[] = [];
     if (propertyTypeName) {
         const colonLabel = <GLabelElement type={CommonModelTypes.LABEL_TEXT} text=':' />;
@@ -65,7 +69,8 @@ export function GPropertyNodeElement(props: GPropertyNodeElementProps): GModelEl
                 type={DefaultTypes.COMPARTMENT}
                 layout='hbox'
                 layoutOptions={{
-                    hGap: 3,
+                    // No gap: the bracketed multiplicity reads as part of the type (`String[0..1]`).
+                    hGap: 0,
                     paddingTop: 0,
                     paddingBottom: 0,
                     paddingLeft: 0,
@@ -74,7 +79,7 @@ export function GPropertyNodeElement(props: GPropertyNodeElementProps): GModelEl
                 }}
             >
                 <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={propertyTypeName} />
-                {multiplicity !== '1' ? <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={multiplicity} /> : null}
+                {multiplicity !== '1' ? <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={`[${multiplicity}]`} /> : null}
             </GCompartmentElement>
         );
         rightSideChildren.push(colonLabel, detailComp);

@@ -6,10 +6,10 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
-import { GEdgeElement, GLabelElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
+import { GEdgeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { Relation } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { GEdge } from '@eclipse-glsp/server';
+import { EdgeNameLabel, EdgeStereotypeLabel } from './core/index.js';
 import type { ElementContext } from './core/element-context.js';
 
 export function createDependencyRelation(ctx: ElementContext<Relation>): GEdge {
@@ -22,7 +22,8 @@ export function createDependencyRelation(ctx: ElementContext<Relation>): GEdge {
             cssClasses={['uml-edge', 'uml-edge-dashed', 'marker-tent-end']}
             args={{ edgePadding: 10 }}
         >
-            <GLabelElement type={CommonModelTypes.LABEL_TEXT} text='<<dependency>>' />
+            <EdgeStereotypeLabel id={ctx.node.__id} stereotype='dependency' />
+            <EdgeNameLabel id={ctx.node.__id} name={(ctx.node as any).name} />
         </GEdgeElement>
     ) as GEdge;
 }

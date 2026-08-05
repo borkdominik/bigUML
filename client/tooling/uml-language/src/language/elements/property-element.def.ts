@@ -34,7 +34,7 @@ export class Property extends Unbounded {
     isNavigable?: boolean = false;
     isUnique?: boolean = false;
     visibility?: Visibility = 'PUBLIC';
-    multiplicity?: string;
+    @Language.text multiplicity?: string;
     @PropertyPalette.dynamic('DataType') @Language.reference propertyType?: DataTypeReference;
     aggregation?: AggregationType;
 }

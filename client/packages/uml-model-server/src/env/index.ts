@@ -21,6 +21,7 @@ export * from './langium/uml-diagram-naming.js';
 export * from './langium/uml-diagram-package-manager.js';
 export * from './langium/uml-diagram-scope-provider.js';
 export * from './langium/uml-diagram-scope.js';
+export * from './langium/uml-diagram-token-builder.js';
 export * from './langium/uml-diagram-validator.js';
 export * from './langium/uml-diagram-workspace-manager.js';
 export * from './langium/util/dimension.js';

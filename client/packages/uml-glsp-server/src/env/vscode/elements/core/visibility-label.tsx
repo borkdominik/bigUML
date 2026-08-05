@@ -21,6 +21,7 @@ export function getVisibilitySymbol(visibility: string): string {
             return '#';
         case 'PACKAGE':
             return '~';
+        case 'NONE':
         default:
             return '';
     }

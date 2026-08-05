@@ -15,7 +15,8 @@ export const PropertyPaletteChoices = {
         { label: 'public', value: 'PUBLIC' },
         { label: 'private', value: 'PRIVATE' },
         { label: 'protected', value: 'PROTECTED' },
-        { label: 'package', value: 'PACKAGE' }
+        { label: 'package', value: 'PACKAGE' },
+        { label: 'none', value: 'NONE' }
     ],
     AGGREGATION: [
         { label: 'none', value: 'NONE' },

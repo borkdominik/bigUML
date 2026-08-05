@@ -67,7 +67,7 @@ export function createInstanceSpecificationElement(
 
     const slotsSection =
         ctx.node.slots?.length > 0 ? (
-            <SectionCompartment id={ctx.node.__id + '_count_context_1'} dividerText='Slots'>
+            <SectionCompartment id={ctx.node.__id + '_count_context_1'} divider>
                 {ctx.node.slots.map(s => (
                     <GSlotNodeElement node={s} />
                 ))}

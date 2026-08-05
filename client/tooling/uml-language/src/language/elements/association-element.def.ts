@@ -8,6 +8,7 @@
  *********************************************************************************/
 
 import { Glsp } from '@borkdominik-biguml/uml-glsp-server/generator';
+import { Language } from '@borkdominik-biguml/uml-language-tooling';
 import 'reflect-metadata';
 import { type Visibility } from '../core/element.def.js';
 import type { AggregationType } from './property-element.def.js';
@@ -23,8 +24,8 @@ import { Relation } from './relation-element.def.js';
 @Glsp.defaults
 export class Association extends Relation {
     name?: string;
-    sourceMultiplicity?: string = '*';
-    targetMultiplicity?: string = '*';
+    @Language.text sourceMultiplicity?: string = '*';
+    @Language.text targetMultiplicity?: string = '*';
     sourceName?: string;
     targetName?: string;
     sourceAggregation?: AggregationType = 'NONE';

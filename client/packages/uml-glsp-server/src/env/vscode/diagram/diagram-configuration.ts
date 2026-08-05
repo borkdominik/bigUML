@@ -117,11 +117,13 @@ export class UmlDiagramConfiguration implements DiagramConfiguration {
                 reparentable: false,
                 containableElementTypeIds: []
             },
+            // Members of a classifier are laid out by their container, so they are neither
+            // repositionable nor resizable — only the owning classifier is.
             {
                 elementTypeId: ClassDiagramNodeTypes.SLOT,
                 repositionable: false,
                 deletable: true,
-                resizable: true,
+                resizable: false,
                 reparentable: false,
                 containableElementTypeIds: []
             },
@@ -129,7 +131,7 @@ export class UmlDiagramConfiguration implements DiagramConfiguration {
                 elementTypeId: ClassDiagramNodeTypes.ENUMERATION_LITERAL,
                 repositionable: false,
                 deletable: true,
-                resizable: true,
+                resizable: false,
                 reparentable: false,
                 containableElementTypeIds: []
             },
@@ -137,7 +139,7 @@ export class UmlDiagramConfiguration implements DiagramConfiguration {
                 elementTypeId: ClassDiagramNodeTypes.OPERATION,
                 repositionable: false,
                 deletable: true,
-                resizable: true,
+                resizable: false,
                 reparentable: false,
                 containableElementTypeIds: []
             },
@@ -145,7 +147,7 @@ export class UmlDiagramConfiguration implements DiagramConfiguration {
                 elementTypeId: ClassDiagramNodeTypes.PROPERTY,
                 repositionable: false,
                 deletable: true,
-                resizable: true,
+                resizable: false,
                 reparentable: false,
                 containableElementTypeIds: []
             }

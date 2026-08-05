@@ -91,7 +91,7 @@ function getProperty(property: Definition, rules: LangiumGrammar): string {
             text.push(`'"'`);
             text.push(property.name);
             text.push('=');
-            text.push(getLangiumType(property.type!.typeName));
+            text.push(getLangiumType(property.type!.typeName, property.freeText));
             text.push(`'"'`);
         } else {
             if (property.type!.type === 'constant') {
@@ -125,7 +125,7 @@ function getProperty(property: Definition, rules: LangiumGrammar): string {
             text.push(isString(rules, property.type!) ? `'"'` : '');
             text.push(property.name);
             text.push('+=');
-            text.push(getLangiumType(property.type!.typeName));
+            text.push(getLangiumType(property.type!.typeName, property.freeText));
             text.push(isString(rules, property.type!) ? `'"'` : '');
             text.push(')');
 
@@ -134,7 +134,7 @@ function getProperty(property: Definition, rules: LangiumGrammar): string {
             text.push(isString(rules, property.type!) ? `'"'` : '');
             text.push(property.name);
             text.push('+=');
-            text.push(getLangiumType(property.type!.typeName));
+            text.push(getLangiumType(property.type!.typeName, property.freeText));
             text.push(isString(rules, property.type!) ? `'"'` : '');
             text.push(')*');
         }
@@ -164,8 +164,16 @@ function getReference(property: Definition): string[] {
     return text;
 }
 
-function getLangiumType(type: string) {
-    return type === 'string' ? 'LANGIUM_ID' : type === 'number' ? 'LANGIUM_INT' : type === 'boolean' ? 'LANGIUM_BOOL' : type;
+function getLangiumType(type: string, freeText: boolean = false) {
+    return type === 'string'
+        ? freeText
+            ? 'LangiumText'
+            : 'LANGIUM_ID'
+        : type === 'number'
+          ? 'LANGIUM_INT'
+          : type === 'boolean'
+            ? 'LANGIUM_BOOL'
+            : type;
 }
 
 /** Wrap a constant value as a Langium keyword (e.g., `"CLASS"`). */

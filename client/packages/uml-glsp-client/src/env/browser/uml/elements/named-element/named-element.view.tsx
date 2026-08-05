@@ -96,14 +96,14 @@ export class NamedElementView extends RectangularNodeView {
             return undefined;
         }
 
-        const compartment = element.children.find(
+        const compartments = element.children.filter(
             c =>
                 c instanceof GCompartment &&
                 c.type !== DefaultTypes.COMPARTMENT_HEADER &&
                 c.children.length > 0 &&
                 hasArgs(c) &&
                 c.args['divider'] === true
-        ) as GCompartment | undefined;
+        ) as GCompartment[];
 
         // TODO: Remove after switching to builder based approach for all gmodels
         return (
@@ -120,12 +120,12 @@ export class NamedElementView extends RectangularNodeView {
                     />
                 )}
 
-                {compartment && (
+                {compartments.map(compartment => (
                     <path
                         class-uml-comp-separator
                         d={`M 0,${compartment.position.y}  L ${element.bounds.width},${compartment.position.y}`}
                     ></path>
-                )}
+                ))}
 
                 {context.renderChildren(element)}
             </g>

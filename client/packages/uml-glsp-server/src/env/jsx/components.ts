@@ -50,6 +50,7 @@ export interface GLabelElementProps {
     cssClasses?: string[];
     args?: Args;
     alignment?: Point;
+    edgePlacement?: GLabel['edgePlacement'];
 }
 
 export function GLabelElement(props: GLabelElementProps): GLabel {
@@ -61,6 +62,9 @@ export function GLabelElement(props: GLabelElementProps): GLabel {
     label.args = props.args;
     if (props.alignment) {
         label.alignment = props.alignment;
+    }
+    if (props.edgePlacement) {
+        label.edgePlacement = props.edgePlacement;
     }
     label.children = [];
     return label;

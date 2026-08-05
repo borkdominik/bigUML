@@ -33,5 +33,5 @@ export class Parameter extends Unbounded {
     @PropertyPalette.dynamic('DataType')
     @Language.reference
     parameterType?: DataTypeReference;
-    multiplicity?: string;
+    @Language.text multiplicity?: string;
 }

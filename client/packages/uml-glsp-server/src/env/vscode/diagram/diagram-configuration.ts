@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { ClassDiagramNodeTypes, CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
+import { ClassDiagramNodeTypes, CommonModelTypes, UseCaseDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { DefaultTypes, type EdgeTypeHint, type ShapeTypeHint } from '@eclipse-glsp/protocol';
 import {
     type DiagramConfiguration,
@@ -146,6 +146,30 @@ export class UmlDiagramConfiguration implements DiagramConfiguration {
             {
                 elementTypeId: ClassDiagramNodeTypes.PROPERTY,
                 repositionable: false,
+                deletable: true,
+                resizable: false,
+                reparentable: false,
+                containableElementTypeIds: []
+            },
+            {
+                elementTypeId: UseCaseDiagramNodeTypes.SUBJECT,
+                repositionable: true,
+                deletable: true,
+                resizable: true,
+                reparentable: false,
+                containableElementTypeIds: []
+            },
+            {
+                elementTypeId: UseCaseDiagramNodeTypes.USE_CASE,
+                repositionable: true,
+                deletable: true,
+                resizable: false,
+                reparentable: false,
+                containableElementTypeIds: []
+            },
+            {
+                elementTypeId: UseCaseDiagramNodeTypes.ACTOR,
+                repositionable: true,
                 deletable: true,
                 resizable: false,
                 reparentable: false,

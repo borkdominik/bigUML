@@ -19,6 +19,10 @@
     font-size: 110%;
 }
 
+.uml-theme .uml-font-usecase-name {
+    font-size: 120%;
+}
+
 .uml-theme .uml-divider-subtitle {
     fill: var(--uml-divider-subtitle);
     font-size: small;

@@ -32,6 +32,10 @@ export class GenericUpdateOperationHandler extends OperationHandler {
             return undefined;
         }
 
+        if (operation.property === 'name' && typeof operation.value === 'string' && operation.value.trim().length === 0) {
+            return undefined;
+        }
+
         const element = this.modelState.index.findIdElement(operation.elementId);
         const value = this.transformValue(operation, element);
         const opKind = this.chooseOp(element, operation.property, value);

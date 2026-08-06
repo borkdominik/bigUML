@@ -5,12 +5,6 @@
 		"diagramType": "USE_CASE",
 		"entities": [
 			{
-				"__type": "UseCase",
-				"__id": "UseCase_8dda2d1f-993c-4b65-a5a0-b2794c1b754a",
-				"name": "NewUseCase1",
-				"visibility": "PUBLIC"
-			},
-			{
 				"__type": "Subject",
 				"__id": "Subject_c86de89a-fbc2-4c10-93aa-3b74bd2958c8",
 				"name": "NewSubject2",
@@ -21,28 +15,6 @@
 		"relations": []
 	},
 	"metaInfos": [
-		{
-			"__type": "Size",
-			"__id": "size_UseCase_8dda2d1f-993c-4b65-a5a0-b2794c1b754a",
-			"height": 30,
-			"width": 80,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "UseCase_8dda2d1f-993c-4b65-a5a0-b2794c1b754a"
-			}
-		},
-		{
-			"__type": "Position",
-			"__id": "pos_UseCase_8dda2d1f-993c-4b65-a5a0-b2794c1b754a",
-			"x": 830,
-			"y": 210,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "UseCase_8dda2d1f-993c-4b65-a5a0-b2794c1b754a"
-			}
-		},
 		{
 			"__type": "Size",
 			"__id": "size_Subject_c86de89a-fbc2-4c10-93aa-3b74bd2958c8",

@@ -40,6 +40,9 @@ export class GenericLabelEditOperationHandler extends OperationHandler {
             return JSON.stringify([]);
         }
         const prop = this.getLabelPropertyName(node);
+        if (prop === 'name' && operation.text.trim().length === 0) {
+            return JSON.stringify([]);
+        }
         const path = this.modelState.index.findPath(semanticId) + '/' + prop;
 
         return JSON.stringify([

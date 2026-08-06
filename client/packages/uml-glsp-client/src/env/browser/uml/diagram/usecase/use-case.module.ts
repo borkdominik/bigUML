@@ -49,6 +49,11 @@ export const umlUseCaseDiagramModule = new FeatureModule((bind, unbind, isBound,
     // Edges
     configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Association'), GAssociationEdge, GAssociationEdgeView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Extend'), GExtendEdge, GExtendEdgeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Generalization'), GGeneralizationEdge, GGeneralizationEdgeView);
+    configureModelElement(
+        context,
+        representationTypeId(R, DefaultTypes.EDGE, 'Generalization'),
+        GGeneralizationEdge,
+        GGeneralizationEdgeView
+    );
     configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Include'), GIncludeEdge, GIncludeEdgeView);
 });

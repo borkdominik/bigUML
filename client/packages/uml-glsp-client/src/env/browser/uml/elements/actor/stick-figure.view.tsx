@@ -45,7 +45,7 @@ export class StickFigureView extends ShapeView {
         const actorParentNode = (element.parent as GCompartment).parent as GNode;
 
         return (
-            <g class-selected={actorParentNode.selected} class-mouseover={actorParentNode.hoverFeedback}>
+            <g class-selected={actorParentNode.selected} class-mouseover={actorParentNode.hoverFeedback} transform='scale(1.15)'>
                 <line x1='0' y1='0' x2='43' y2='0' visibility='hidden' /> {/* For alignment */}
                 {/* Stickfigure https://commons.wikimedia.org/wiki/File:UML-UseCase-Generalisierung3.svg */}
                 <circle cx='21' cy='15' r='8' />

@@ -38,7 +38,7 @@ const DEFAULT_NODE_SIZE = { width: 80, height: 30 };
 /** Node types that need a bigger default size than the generic fallback to read well on the canvas. */
 const NODE_SIZE_OVERRIDES: Record<string, { width: number; height: number }> = {
     Subject: { width: 400, height: 600 },
-    UseCase: { width: 160, height: 100 }
+    UseCase: { width: 140, height: 85 }
 };
 
 /**

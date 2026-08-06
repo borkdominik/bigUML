@@ -35,7 +35,7 @@ export function GUseCaseNodeElement(props: GUseCaseNodeElementProps): GModelElem
                 ...(size ? { prefWidth: size.width, prefHeight: size.height } : {})
             }}
         >
-            <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={props.node.name} />
+            <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={props.node.name} cssClasses={['uml-font-usecase-name']} />
         </GNodeElement>
     );
 }

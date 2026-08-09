@@ -18,10 +18,16 @@ export interface CompartmentHeaderProps {
     stereotype?: string;
     stereotypeCssClasses?: string[];
     isAbstract?: boolean;
+    /**
+     * Writes a name of several words over several lines, one word per line, instead of on a single
+     * line. A shape that does this can be dragged narrower than its name reads on one line, which is
+     * why it is asked for per shape rather than done for every name.
+     */
+    wrapName?: boolean;
 }
 
 export function CompartmentHeader(props: CompartmentHeaderProps): GModelElement {
-    const { id, name, stereotype, stereotypeCssClasses, isAbstract } = props;
+    const { id, name, stereotype, stereotypeCssClasses, isAbstract, wrapName } = props;
 
     const nameLabelCssClasses = ['uml-font-bold'];
     if (isAbstract) {
@@ -47,7 +53,7 @@ export function CompartmentHeader(props: CompartmentHeaderProps): GModelElement 
                 id={id + '_name_label'}
                 type={CommonModelTypes.LABEL_NAME}
                 text={name}
-                args={{ highlight: true }}
+                args={wrapName ? { highlight: true, wrapAtSpaces: true } : { highlight: true }}
                 cssClasses={nameLabelCssClasses}
             />
         </GCompartmentElement>

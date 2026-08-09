@@ -75,21 +75,14 @@ export class RequestDeploymentPropertyPaletteActionHandler implements ActionHand
 
             const context = { semanticElement, languageMetadata: this.languageMetadata };
 
-            const dataTypeChoices = (this.modelState.index.getAllDataTypes?.() ?? [])
-                .filter((item: any) => !!item && !!item.__id && !!item.name)
-                .map((item: any) => ({
-                    label: item.name,
-                    value: item.__id + '_refValue',
-                    secondaryText: item.$type
-                }));
             if (isGeneralization(semanticElement)) {
                 return GeneralizationPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isProperty(semanticElement)) {
-                return PropertyPropertyPaletteHandler.getPropertyPalette(context, dataTypeChoices);
+                return PropertyPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isParameter(semanticElement)) {
+                return ParameterPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isOperation(semanticElement)) {
                 return OperationPropertyPaletteHandler.getPropertyPalette(context);
-            } else if (isParameter(semanticElement)) {
-                return ParameterPropertyPaletteHandler.getPropertyPalette(context, dataTypeChoices);
             } else if (isDependency(semanticElement)) {
                 return DependencyPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isManifestation(semanticElement)) {

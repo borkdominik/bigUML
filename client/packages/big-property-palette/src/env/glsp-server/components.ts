@@ -123,6 +123,7 @@ export interface ReferencePropertyProps {
     disabled?: boolean;
     isOrderable?: boolean;
     isAutocomplete?: boolean;
+    isNavigable?: boolean;
 }
 
 export function ReferenceProperty(props: ReferencePropertyProps): ElementReferenceProperty {
@@ -135,6 +136,7 @@ export function ReferenceProperty(props: ReferencePropertyProps): ElementReferen
         references: props.references,
         creates: props.creates,
         isOrderable: props.isOrderable ?? false,
-        isAutocomplete: props.isAutocomplete ?? false
+        isAutocomplete: props.isAutocomplete ?? false,
+        isNavigable: props.isNavigable ?? true
     };
 }

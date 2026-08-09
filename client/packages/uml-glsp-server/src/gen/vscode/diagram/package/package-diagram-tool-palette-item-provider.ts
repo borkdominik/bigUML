@@ -45,29 +45,6 @@ export class PackageDiagramToolPaletteItemProvider extends ToolPaletteItemProvid
                 actions: []
             },
             {
-                id: 'uml.container',
-                sortString: 'A',
-                label: 'Container',
-                icon: 'symbol-property',
-                children: [
-                    {
-                        id: 'class',
-                        sortString: 'A',
-                        label: 'Class',
-                        icon: 'uml-class-icon',
-                        actions: [TriggerNodeCreationAction.create(PackageDiagramNodeTypes.CLASS)]
-                    },
-                    {
-                        id: 'package',
-                        sortString: 'A',
-                        label: 'Package',
-                        icon: 'uml-package-icon',
-                        actions: [TriggerNodeCreationAction.create(PackageDiagramNodeTypes.PACKAGE)]
-                    }
-                ],
-                actions: []
-            },
-            {
                 id: 'uml.relations',
                 sortString: 'A',
                 label: 'Relations',
@@ -114,6 +91,29 @@ export class PackageDiagramToolPaletteItemProvider extends ToolPaletteItemProvid
                         label: 'Abstraction',
                         icon: 'uml-abstraction-icon',
                         actions: [TriggerEdgeCreationAction.create(PackageDiagramEdgeTypes.ABSTRACTION)]
+                    }
+                ],
+                actions: []
+            },
+            {
+                id: 'uml.container',
+                sortString: 'A',
+                label: 'Container',
+                icon: 'symbol-property',
+                children: [
+                    {
+                        id: 'package',
+                        sortString: 'A',
+                        label: 'Package',
+                        icon: 'uml-package-icon',
+                        actions: [TriggerNodeCreationAction.create(PackageDiagramNodeTypes.PACKAGE)]
+                    },
+                    {
+                        id: 'class',
+                        sortString: 'A',
+                        label: 'Class',
+                        icon: 'uml-class-icon',
+                        actions: [TriggerNodeCreationAction.create(PackageDiagramNodeTypes.CLASS)]
                     }
                 ],
                 actions: []

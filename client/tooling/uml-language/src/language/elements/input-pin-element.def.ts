@@ -9,7 +9,7 @@
 
 import { Glsp } from '@borkdominik-biguml/uml-glsp-server/generator';
 import 'reflect-metadata';
-import { Node, type Visibility } from '../core/element.def.js';
+import { Unbounded, type Visibility } from '../core/element.def.js';
 
 // @ts-nocheck
 
@@ -19,7 +19,12 @@ import { Node, type Visibility } from '../core/element.def.js';
     icon: 'uml-input-pin-icon'
 })
 @Glsp.defaults
-export class InputPin extends Node {
+// A pin is placed by the action that owns it - on the boundary, at the middle of its input side - so it
+// has no bounds of its own to store. Writing them was worse than pointless: a pin lives inside the
+// action's `inputPins`, and a `Size` or `Position` at the diagram root cannot reach a nested element to
+// name it, so the reference went out as the word `undefined` and the file no longer parsed.
+@Glsp.noBounds
+export class InputPin extends Unbounded {
     name: string;
     visibility?: Visibility;
 }

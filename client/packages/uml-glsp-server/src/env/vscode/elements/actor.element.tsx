@@ -19,6 +19,10 @@ export interface GActorNodeElementProps extends BaseElementProps {
 }
 
 export function GActorNodeElement(props: GActorNodeElementProps): GModelElement {
+    // The figure is typed for the diagram the actor is in, not always for the use case one, so that each
+    // diagram can draw it its own way - the information flow actor is a bigger figure with no box.
+    const representation = props.type.split('__')[0];
+
     return (
         <GNodeElement
             id={props.node.__id}
@@ -28,7 +32,10 @@ export function GActorNodeElement(props: GActorNodeElementProps): GModelElement 
             cssClasses={['uml-node']}
             layout='vbox'
         >
-            <GNodeElement id={`${props.node.__id}_stickfigure`} type={representationTypeId('UseCase', DefaultTypes.NODE, 'ActorStickfigure')} />
+            <GNodeElement
+                id={`${props.node.__id}_stickfigure`}
+                type={representationTypeId(representation, DefaultTypes.NODE, 'ActorStickfigure')}
+            />
             <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={props.node.name} />
         </GNodeElement>
     );

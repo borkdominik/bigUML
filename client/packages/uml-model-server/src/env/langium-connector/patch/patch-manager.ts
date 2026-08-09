@@ -62,7 +62,9 @@ export class PatchManager {
         const patch = Array.isArray(_patch) ? _patch : [_patch];
         addUUID(documentMap);
         updateReferences(documentMap);
-        let result;
+        // Typed rather than left to be inferred: it is assigned inside the callback below, which the
+        // compiler does not follow, so an untyped `let` never widens past `undefined`.
+        let result: jsonPatch.OperationResult<any> | undefined;
         patch.forEach(patchOp => {
             if ((patchOp.op === 'replace' || patchOp.op === 'add') && typeof patchOp.value === 'object') {
                 if (patchOp.op === 'replace') {
@@ -73,7 +75,12 @@ export class PatchManager {
             }
             result = jsonPatch.applyOperation(documentMap.get(_uri), patchOp);
         });
-        documentMap.set(_uri, result!.newDocument);
+        // Only when something was applied. `result` is the outcome of the last operation, so a patch that
+        // carries none leaves it unset - and reading a new document off nothing failed the whole edit
+        // rather than doing nothing to it, which is what an empty patch asks for.
+        if (result) {
+            documentMap.set(_uri, result.newDocument);
+        }
         rebuildReferences(documentMap);
         removeUUID(documentMap);
         cleanJSON(documentMap);

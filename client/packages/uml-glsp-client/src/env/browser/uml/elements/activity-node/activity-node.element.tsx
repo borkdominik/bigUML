@@ -6,21 +6,34 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { CircularNode, DiamondNode } from '@eclipse-glsp/client';
+import { DiamondNode } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
+// eslint-disable-next-line no-restricted-imports
+import { ELLIPTIC_ANCHOR_KIND } from 'sprotty';
+import { UML_BAR_ANCHOR_KIND } from '../../../features/routing/uml-bar-anchor.js';
+import { ActivityFinalNodeView, FlowFinalNodeView, InitialControlNodeView } from '../../views/control-node.view.js';
+import { DiamondNodeView } from '../../views/diamond-node.view.js';
+import { ForkJoinNodeView } from '../../views/fork-join-node.view.js';
+import { RoundedNodeView } from '../../views/rounded-node.view.js';
 import { NamedElement, NamedElementView } from '../named-element/index.js';
 import { AcceptEventActionView } from './actions/accept_event_action_view.js';
 import { SendSignalActionView } from './actions/send_signal_action_view.js';
-import { ActivityFinalNodeView } from './control-nodes/activity_final_node_view.js';
-import { DecisionMergeNodeView } from './control-nodes/decision-merge-node-view.js';
-import { FlowFinalNodeView } from './control-nodes/flow-final-node-view.js';
-import { ForkJoinNodeView } from './control-nodes/fork-join-node-view.js';
-import { InitialNodeView } from './control-nodes/initial-node-view.js';
+
+/** A control flow runs to the edge of the circle rather than to the box around it. */
+class GCircularControlNode extends NamedElement {
+    override get anchorKind(): string {
+        return ELLIPTIC_ANCHOR_KIND;
+    }
+}
 
 export class GOpaqueActionNode extends NamedElement {}
 
+/**
+ * The rounded box UML draws for an action - the same shape as a state, drawn by the same view. Its name
+ * and the pins on its boundary are its children, so both come through `renderChildren`.
+ */
 @injectable()
-export class GOpaqueActionNodeView extends NamedElementView {}
+export class GOpaqueActionNodeView extends RoundedNodeView {}
 
 export class GAcceptEventActionNode extends NamedElement {}
 
@@ -32,37 +45,49 @@ export class GSendSignalActionNode extends NamedElement {}
 @injectable()
 export class GSendSignalActionNodeView extends SendSignalActionView {}
 
-export class GActivityFinalNode extends CircularNode {}
+export class GActivityFinalNode extends GCircularControlNode {}
 
 @injectable()
 export class GActivityFinalNodeView extends ActivityFinalNodeView {}
 
-export class GInitialActivityNode extends CircularNode {}
+export class GInitialActivityNode extends GCircularControlNode {}
 
 @injectable()
-export class GInitialActivityNodeView extends InitialNodeView {}
+export class GInitialActivityNodeView extends InitialControlNodeView {}
 
 export class GDecisionNode extends DiamondNode {}
 
 @injectable()
-export class GDecisionNodeView extends DecisionMergeNodeView {}
+export class GDecisionNodeView extends DiamondNodeView {}
 
 export class GMergeNode extends DiamondNode {}
 
 @injectable()
-export class GMergeNodeView extends DecisionMergeNodeView {}
+export class GMergeNodeView extends DiamondNodeView {}
 
-export class GForkNode extends NamedElement {}
+/**
+ * The activity fork and join are the same bar as the state machine pseudostates, drawn by the same
+ * view, so their control flows anchor to it the same way - see `UmlBarAnchor`.
+ */
+export class GForkNode extends NamedElement {
+    override get anchorKind(): string {
+        return UML_BAR_ANCHOR_KIND;
+    }
+}
 
 @injectable()
 export class GForkNodeView extends ForkJoinNodeView {}
 
-export class GJoinNode extends NamedElement {}
+export class GJoinNode extends NamedElement {
+    override get anchorKind(): string {
+        return UML_BAR_ANCHOR_KIND;
+    }
+}
 
 @injectable()
 export class GJoinNodeView extends ForkJoinNodeView {}
 
-export class GFlowFinalNode extends CircularNode {}
+export class GFlowFinalNode extends GCircularControlNode {}
 
 @injectable()
 export class GFlowFinalNodeView extends FlowFinalNodeView {}

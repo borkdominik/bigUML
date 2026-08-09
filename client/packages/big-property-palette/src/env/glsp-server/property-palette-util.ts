@@ -44,5 +44,18 @@ export const PropertyPaletteChoices = {
         { label: 'internal', value: 'INTERNAL' },
         { label: 'external', value: 'EXTERNAL' },
         { label: 'local', value: 'LOCAL' }
+    ],
+    /** Which named point of a shape an end of the transition is pinned to; unset means it is not pinned. */
+    CONNECTION_POINT: [
+        { label: 'automatic', value: '' },
+        { label: 'top', value: 'NORTH' },
+        { label: 'right', value: 'EAST' },
+        { label: 'bottom', value: 'SOUTH' },
+        { label: 'left', value: 'WEST' }
+    ],
+    /** Not stored on the element - read off the shape's bounds, and set by swapping them. */
+    ORIENTATION: [
+        { label: 'horizontal', value: 'HORIZONTAL' },
+        { label: 'vertical', value: 'VERTICAL' }
     ]
 } as const;

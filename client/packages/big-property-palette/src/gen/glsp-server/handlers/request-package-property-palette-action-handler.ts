@@ -67,33 +67,26 @@ export class RequestPackagePropertyPaletteActionHandler implements ActionHandler
 
             const context = { semanticElement, languageMetadata: this.languageMetadata };
 
-            const dataTypeChoices = (this.modelState.index.getAllDataTypes?.() ?? [])
-                .filter((item: any) => !!item && !!item.__id && !!item.name)
-                .map((item: any) => ({
-                    label: item.name,
-                    value: item.__id + '_refValue',
-                    secondaryText: item.$type
-                }));
             if (isProperty(semanticElement)) {
-                return PropertyPropertyPaletteHandler.getPropertyPalette(context, dataTypeChoices);
-            } else if (isOperation(semanticElement)) {
-                return OperationPropertyPaletteHandler.getPropertyPalette(context);
-            } else if (isParameter(semanticElement)) {
-                return ParameterPropertyPaletteHandler.getPropertyPalette(context, dataTypeChoices);
-            } else if (isClass(semanticElement)) {
-                return ClassPropertyPaletteHandler.getPropertyPalette(context);
+                return PropertyPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isUsage(semanticElement)) {
                 return UsagePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isParameter(semanticElement)) {
+                return ParameterPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isPackageMerge(semanticElement)) {
                 return PackageMergePropertyPaletteHandler.getPropertyPalette(context);
             } else if (isPackageImport(semanticElement)) {
                 return PackageImportPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isPackage(semanticElement)) {
                 return PackagePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isOperation(semanticElement)) {
+                return OperationPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isElementImport(semanticElement)) {
                 return ElementImportPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isDependency(semanticElement)) {
                 return DependencyPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isClass(semanticElement)) {
+                return ClassPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isAbstraction(semanticElement)) {
                 return AbstractionPropertyPaletteHandler.getPropertyPalette(context);
             }

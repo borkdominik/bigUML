@@ -27,6 +27,7 @@ import {
     isMergeNode,
     isOpaqueAction,
     isOutputPin,
+    isProperty,
     isSendSignalAction
 } from '@borkdominik-biguml/uml-model-server/grammar';
 import { DiagramModelState, DiagramLanguageMetadata } from '@borkdominik-biguml/uml-glsp-server/vscode';
@@ -47,6 +48,7 @@ import { JoinNodePropertyPaletteHandler } from './elements/join-node.property-pa
 import { MergeNodePropertyPaletteHandler } from './elements/merge-node.property-palette-handler.js';
 import { OpaqueActionPropertyPaletteHandler } from './elements/opaque-action.property-palette-handler.js';
 import { OutputPinPropertyPaletteHandler } from './elements/output-pin.property-palette-handler.js';
+import { PropertyPropertyPaletteHandler } from './elements/property.property-palette-handler.js';
 import { SendSignalActionPropertyPaletteHandler } from './elements/send-signal-action.property-palette-handler.js';
 @injectable()
 export class RequestActivityPropertyPaletteActionHandler implements ActionHandler {
@@ -79,7 +81,9 @@ export class RequestActivityPropertyPaletteActionHandler implements ActionHandle
 
             const context = { semanticElement, languageMetadata: this.languageMetadata };
 
-            if (isSendSignalAction(semanticElement)) {
+            if (isProperty(semanticElement)) {
+                return PropertyPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isSendSignalAction(semanticElement)) {
                 return SendSignalActionPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isOutputPin(semanticElement)) {
                 return OutputPinPropertyPaletteHandler.getPropertyPalette(context);

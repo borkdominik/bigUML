@@ -8,7 +8,7 @@
  **********************************************************************************/
 
 import { type Args, DefaultTypes, type Dimension, type Point } from '@eclipse-glsp/protocol';
-import { GCompartment, GEdge, GGraph, GLabel, GNode } from '@eclipse-glsp/server';
+import { GCompartment, GEdge, GGraph, GLabel, GNode, GPort } from '@eclipse-glsp/server';
 import * as uuid from 'uuid';
 import type { GlspNode } from './jsx-namespace.js';
 import { normalizeChildren, wireParent } from './utils.js';
@@ -103,6 +103,41 @@ export function GNodeElement(props: GNodeElementProps): GNode {
     node.children = normalizeChildren(props.children);
     wireParent(node);
     return node;
+}
+
+// ============================================================================
+// GPortElement
+// ============================================================================
+
+export interface GPortElementProps {
+    id?: string;
+    type?: string;
+    position?: Point;
+    size?: Dimension;
+    cssClasses?: string[];
+    args?: Args;
+    children?: GlspNode;
+}
+
+/**
+ * A connection point on a node. Unlike a node's other children a port is not laid out - `GPort` carries
+ * no layoutable-child feature - so the position given here is where it stays, relative to its owner.
+ */
+export function GPortElement(props: GPortElementProps): GPort {
+    const port = new GPort();
+    port.id = props.id ?? uuid.v4();
+    port.type = props.type ?? DefaultTypes.PORT;
+    port.cssClasses = props.cssClasses ?? [];
+    if (props.position) {
+        port.position = props.position;
+    }
+    if (props.size) {
+        port.size = props.size;
+    }
+    port.args = props.args;
+    port.children = normalizeChildren(props.children);
+    wireParent(port);
+    return port;
 }
 
 // ============================================================================

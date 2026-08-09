@@ -50,23 +50,16 @@ export class RequestInformationFlowPropertyPaletteActionHandler implements Actio
 
             const context = { semanticElement, languageMetadata: this.languageMetadata };
 
-            const dataTypeChoices = (this.modelState.index.getAllDataTypes?.() ?? [])
-                .filter((item: any) => !!item && !!item.__id && !!item.name)
-                .map((item: any) => ({
-                    label: item.name,
-                    value: item.__id + '_refValue',
-                    secondaryText: item.$type
-                }));
             if (isProperty(semanticElement)) {
-                return PropertyPropertyPaletteHandler.getPropertyPalette(context, dataTypeChoices);
-            } else if (isOperation(semanticElement)) {
-                return OperationPropertyPaletteHandler.getPropertyPalette(context);
-            } else if (isParameter(semanticElement)) {
-                return ParameterPropertyPaletteHandler.getPropertyPalette(context, dataTypeChoices);
-            } else if (isClass(semanticElement)) {
-                return ClassPropertyPaletteHandler.getPropertyPalette(context);
+                return PropertyPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isActor(semanticElement)) {
                 return ActorPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isParameter(semanticElement)) {
+                return ParameterPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isOperation(semanticElement)) {
+                return OperationPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isClass(semanticElement)) {
+                return ClassPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isInformationFlow(semanticElement)) {
                 return InformationFlowPropertyPaletteHandler.getPropertyPalette(context);
             }

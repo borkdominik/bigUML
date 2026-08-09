@@ -53,14 +53,14 @@ export namespace AssociationPropertyPaletteHandler {
                         propertyId='sourceAggregation'
                         choices={PropertyPaletteChoices.AGGREGATION}
                         choice={context.semanticElement.sourceAggregation!}
-                        label='Aggregation Type'
+                        label='Source Aggregation'
                     />
                     <ChoiceProperty
                         elementId={context.semanticElement.__id}
                         propertyId='targetAggregation'
                         choices={PropertyPaletteChoices.AGGREGATION}
                         choice={context.semanticElement.targetAggregation!}
-                        label='Aggregation Type'
+                        label='Target Aggregation'
                     />
                     <ChoiceProperty
                         elementId={context.semanticElement.__id}

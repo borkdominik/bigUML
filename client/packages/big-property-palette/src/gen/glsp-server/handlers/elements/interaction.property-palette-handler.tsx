@@ -1,7 +1,7 @@
 // AUTO-GENERATED – DO NOT EDIT
 
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
-import { CreateNodeOperation, DeleteElementOperation } from '@eclipse-glsp/server';
+import { CreateNodeOperation, DeleteElementOperation, TriggerEdgeCreationAction } from '@eclipse-glsp/server';
 import { type Interaction } from '@borkdominik-biguml/uml-model-server/grammar';
 import {
     type GetPropertyPaletteHandlerContext,
@@ -69,9 +69,7 @@ export namespace InteractionPropertyPaletteHandler {
                         creates={[
                             {
                                 label: 'Create Message',
-                                action: CreateNodeOperation.create(context.languageMetadata.convertToElementType('Message'), {
-                                    containerId: context.semanticElement.__id
-                                })
+                                action: TriggerEdgeCreationAction.create(context.languageMetadata.convertToElementType('Message'))
                             }
                         ]}
                     />

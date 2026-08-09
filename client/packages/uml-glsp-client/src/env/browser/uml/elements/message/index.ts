@@ -7,5 +7,6 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 export * from './message-arrow-label.view.js';
+export * from './message-arrow-placement.js';
 export * from './message-edge.view.js';
 export * from './message.element.js';

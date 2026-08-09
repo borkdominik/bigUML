@@ -25,4 +25,26 @@ export namespace CommonModelTypes {
     export const DIVIDER = 'uml-divider';
     export const STRUCTURE = 'uml-struct';
     export const MISSING_NODE = 'uml-missingNode';
+    /** A named connection point of a shape that has them - one of the four tips of a choice diamond. */
+    export const CONNECTION_POINT = 'uml-port:connection-point';
 }
+
+/**
+ * Key of the `args` entry a node carries its name in when the name belongs beside the shape rather
+ * than inside it - a fork/join bar, a choice diamond. Those shapes are too small to hold a name, and
+ * a label child placed outside them would be measured back into the node's own size, growing it on
+ * every render, so the view draws the name itself and reads it from here.
+ */
+export const OUTSIDE_LABEL_ARG = 'outsideLabel';
+
+/**
+ * The height of the tab a package is drawn with - the flap along its top edge that makes the shape
+ * read as a folder, which is how UML draws a package.
+ *
+ * The tab is drawn inside the node's own bounds rather than above them, so that a package is the size
+ * it says it is and is picked up and resized by the whole of what is drawn. Its contents are laid out
+ * clear of the tab by exactly this much (see `createPackageElement`), and the view draws the tab to
+ * the same height (see `GPackageNodeView`) - which is why the measure is shared rather than written
+ * on both sides.
+ */
+export const PACKAGE_TAB_HEIGHT = 16;

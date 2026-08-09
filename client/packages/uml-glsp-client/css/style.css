@@ -23,6 +23,8 @@
 @import 'extensions/uml-toast.css';
 @import 'extensions/shift-tool.css';
 
+@import 'diagram/activity/style.css';
 @import 'diagram/package/style.css';
+@import 'diagram/statemachine/style.css';
 @import 'diagram/usecase/style.css';
 @import 'diagram//sequence/sequence-diagram.css';

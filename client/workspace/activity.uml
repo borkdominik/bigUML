@@ -11,18 +11,135 @@
 				"visibility": "PUBLIC"
 			},
 			{
-				"__type": "Activity",
-				"__id": "Activity_0ba82120-a0a1-4a23-83fb-a7b9878fdc69",
-				"name": "NewActivity1",
+				"__type": "SendSignalAction",
+				"__id": "SendSignalAction_f63fdf92-37d8-479b-b672-f2c3ad3e32ab",
+				"name": "NewSendSignalAction1",
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "OpaqueAction",
+				"__id": "OpaqueAction_e85485e9-67aa-4a09-a0cc-bb0f6c645ae9",
+				"name": "NewOpaqueAction1",
 				"visibility": "PUBLIC",
-				"partitions": [],
-				"nodes": [],
-				"edges": []
+				"inputPins": [],
+				"outputPins": []
+			},
+			{
+				"__type": "ActivityPartition",
+				"__id": "ActivityPartition_38e99e48-b2c6-4230-b80a-60547ac60293",
+				"name": "NewActivityPartition1",
+				"visibility": "PUBLIC",
+				"subpartitions": [],
+				"nodes": []
+			},
+			{
+				"__type": "ActivityPartition",
+				"__id": "ActivityPartition_c379684b-5937-4be2-a580-3ad62bdb5069",
+				"name": "NewActivityPartition2",
+				"visibility": "PUBLIC",
+				"subpartitions": [],
+				"nodes": []
+			},
+			{
+				"__type": "ActivityPartition",
+				"__id": "ActivityPartition_26f83270-3f5d-4756-b840-a5555a297f18",
+				"name": "NewActivityPartition3",
+				"visibility": "PUBLIC",
+				"subpartitions": [],
+				"nodes": []
+			},
+			{
+				"__type": "ActivityPartition",
+				"__id": "ActivityPartition_f4a89389-6ad7-4705-99eb-5b365f66b57b",
+				"name": "NewActivityPartition4",
+				"visibility": "PUBLIC",
+				"subpartitions": [],
+				"nodes": []
+			},
+			{
+				"__type": "ActivityPartition",
+				"__id": "ActivityPartition_ae4fb6d5-6391-43aa-b951-8a2796b03aac",
+				"name": "NewActivityPartition5",
+				"visibility": "PUBLIC",
+				"subpartitions": [],
+				"nodes": []
+			},
+			{
+				"__type": "ActivityPartition",
+				"__id": "ActivityPartition_97d17570-1558-4cd4-bc6f-78dd3b9e2f02",
+				"name": "NewActivityPartition6",
+				"visibility": "PUBLIC",
+				"orientation": "HORIZONTAL",
+				"subpartitions": [
+					{
+						"__type": "ActivityPartition",
+						"__id": "ActivityPartition_4ef12007-9682-4199-93c8-580ecc970176",
+						"name": "NewActivityPartition7",
+						"subpartitions": [],
+						"nodes": []
+					},
+					{
+						"__type": "ActivityPartition",
+						"__id": "ActivityPartition_75f97569-f493-4409-ab6c-4e1a59be3357",
+						"name": "NewActivityPartition8",
+						"subpartitions": [],
+						"nodes": []
+					}
+				],
+				"nodes": []
+			},
+			{
+				"__type": "JoinNode",
+				"__id": "JoinNode_5604d813-22ad-45d8-9d9c-cc868eafeea9",
+				"name": "NewJoinNode1",
+				"visibility": "PUBLIC"
 			},
 			{
 				"__type": "ActivityFinalNode",
-				"__id": "ActivityFinalNode_fb6db018-ebff-49f9-a10f-864eb03de661",
+				"__id": "ActivityFinalNode_060dca93-0417-470d-9126-b9afeac801f5",
 				"name": "NewActivityFinalNode1",
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "JoinNode",
+				"__id": "JoinNode_f110c4af-02ea-4c49-b7c1-20bad9f04df7",
+				"name": "NewJoinNode2",
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "MergeNode",
+				"__id": "MergeNode_da5f70a3-9029-463c-8cbb-1a3a25b2cb26",
+				"name": "NewMergeNode1",
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "InitialNode",
+				"__id": "InitialNode_c330255f-1c22-4aae-8d89-f4c06cb575fb",
+				"name": "NewInitialNode1",
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "FlowFinalNode",
+				"__id": "FlowFinalNode_481763d9-8eca-4e15-8550-fecf2f36fc34",
+				"name": "NewFlowFinalNode1",
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "DecisionNode",
+				"__id": "DecisionNode_256b6a31-df52-41c0-a1e3-37a673d4b343",
+				"name": "NewDecisionNode1",
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "ActivityParameterNode",
+				"__id": "ActivityParameterNode_42d2c083-557e-4b3f-8ace-49d3c7a5de06",
+				"name": "NewActivityParameterNode1",
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "CentralBufferNode",
+				"__id": "CentralBufferNode_2359318e-cc10-4ecd-845d-f8d5651a51f5",
+				"name": "NewCentralBufferNode1",
 				"visibility": "PUBLIC"
 			}
 		],
@@ -53,46 +170,376 @@
 		},
 		{
 			"__type": "Size",
-			"__id": "size_Activity_0ba82120-a0a1-4a23-83fb-a7b9878fdc69",
-			"height": 24.16666603088379,
-			"width": 84.38801574707031,
+			"__id": "size_SendSignalAction_f63fdf92-37d8-479b-b672-f2c3ad3e32ab",
+			"height": 30,
+			"width": 80,
 			"element": {
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Activity_0ba82120-a0a1-4a23-83fb-a7b9878fdc69"
+				"__value": "SendSignalAction_f63fdf92-37d8-479b-b672-f2c3ad3e32ab"
 			}
 		},
 		{
 			"__type": "Position",
-			"__id": "pos_Activity_0ba82120-a0a1-4a23-83fb-a7b9878fdc69",
-			"x": 679,
-			"y": 293,
+			"__id": "pos_SendSignalAction_f63fdf92-37d8-479b-b672-f2c3ad3e32ab",
+			"x": 1040,
+			"y": 410,
 			"element": {
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Activity_0ba82120-a0a1-4a23-83fb-a7b9878fdc69"
+				"__value": "SendSignalAction_f63fdf92-37d8-479b-b672-f2c3ad3e32ab"
 			}
 		},
 		{
 			"__type": "Size",
-			"__id": "size_ActivityFinalNode_fb6db018-ebff-49f9-a10f-864eb03de661",
-			"height": 24.16666603088379,
-			"width": 143.61978149414062,
+			"__id": "size_OpaqueAction_e85485e9-67aa-4a09-a0cc-bb0f6c645ae9",
+			"height": 60,
+			"width": 80,
 			"element": {
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
-				"__value": "ActivityFinalNode_fb6db018-ebff-49f9-a10f-864eb03de661"
+				"__value": "OpaqueAction_e85485e9-67aa-4a09-a0cc-bb0f6c645ae9"
 			}
 		},
 		{
 			"__type": "Position",
-			"__id": "pos_ActivityFinalNode_fb6db018-ebff-49f9-a10f-864eb03de661",
-			"x": 509,
-			"y": 218,
+			"__id": "pos_OpaqueAction_e85485e9-67aa-4a09-a0cc-bb0f6c645ae9",
+			"x": 510,
+			"y": 610,
 			"element": {
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
-				"__value": "ActivityFinalNode_fb6db018-ebff-49f9-a10f-864eb03de661"
+				"__value": "OpaqueAction_e85485e9-67aa-4a09-a0cc-bb0f6c645ae9"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_ActivityPartition_38e99e48-b2c6-4230-b80a-60547ac60293",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "ActivityPartition_38e99e48-b2c6-4230-b80a-60547ac60293"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_ActivityPartition_38e99e48-b2c6-4230-b80a-60547ac60293",
+			"x": 0,
+			"y": 0,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "ActivityPartition_38e99e48-b2c6-4230-b80a-60547ac60293"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_ActivityPartition_c379684b-5937-4be2-a580-3ad62bdb5069",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "ActivityPartition_c379684b-5937-4be2-a580-3ad62bdb5069"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_ActivityPartition_c379684b-5937-4be2-a580-3ad62bdb5069",
+			"x": 0,
+			"y": 0,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "ActivityPartition_c379684b-5937-4be2-a580-3ad62bdb5069"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_ActivityPartition_26f83270-3f5d-4756-b840-a5555a297f18",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "ActivityPartition_26f83270-3f5d-4756-b840-a5555a297f18"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_ActivityPartition_26f83270-3f5d-4756-b840-a5555a297f18",
+			"x": 0,
+			"y": 0,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "ActivityPartition_26f83270-3f5d-4756-b840-a5555a297f18"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_ActivityPartition_f4a89389-6ad7-4705-99eb-5b365f66b57b",
+			"height": 150,
+			"width": 600,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "ActivityPartition_f4a89389-6ad7-4705-99eb-5b365f66b57b"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_ActivityPartition_f4a89389-6ad7-4705-99eb-5b365f66b57b",
+			"x": 950,
+			"y": -30,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "ActivityPartition_f4a89389-6ad7-4705-99eb-5b365f66b57b"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_ActivityPartition_ae4fb6d5-6391-43aa-b951-8a2796b03aac",
+			"height": 150,
+			"width": 600,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "ActivityPartition_ae4fb6d5-6391-43aa-b951-8a2796b03aac"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_ActivityPartition_ae4fb6d5-6391-43aa-b951-8a2796b03aac",
+			"x": 950,
+			"y": 120,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "ActivityPartition_ae4fb6d5-6391-43aa-b951-8a2796b03aac"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_ActivityPartition_97d17570-1558-4cd4-bc6f-78dd3b9e2f02",
+			"height": 289.6116215199215,
+			"width": 435.08449162875445,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "ActivityPartition_97d17570-1558-4cd4-bc6f-78dd3b9e2f02"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_ActivityPartition_97d17570-1558-4cd4-bc6f-78dd3b9e2f02",
+			"x": 174.10988120012956,
+			"y": -476.419477880161,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "ActivityPartition_97d17570-1558-4cd4-bc6f-78dd3b9e2f02"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_JoinNode_5604d813-22ad-45d8-9d9c-cc868eafeea9",
+			"height": 10,
+			"width": 120,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "JoinNode_5604d813-22ad-45d8-9d9c-cc868eafeea9"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_JoinNode_5604d813-22ad-45d8-9d9c-cc868eafeea9",
+			"x": 1030,
+			"y": -280,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "JoinNode_5604d813-22ad-45d8-9d9c-cc868eafeea9"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_ActivityFinalNode_060dca93-0417-470d-9126-b9afeac801f5",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "ActivityFinalNode_060dca93-0417-470d-9126-b9afeac801f5"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_ActivityFinalNode_060dca93-0417-470d-9126-b9afeac801f5",
+			"x": 1180,
+			"y": -450,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "ActivityFinalNode_060dca93-0417-470d-9126-b9afeac801f5"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_JoinNode_f110c4af-02ea-4c49-b7c1-20bad9f04df7",
+			"height": 10,
+			"width": 120,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "JoinNode_f110c4af-02ea-4c49-b7c1-20bad9f04df7"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_JoinNode_f110c4af-02ea-4c49-b7c1-20bad9f04df7",
+			"x": 1370,
+			"y": -190,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "JoinNode_f110c4af-02ea-4c49-b7c1-20bad9f04df7"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_MergeNode_da5f70a3-9029-463c-8cbb-1a3a25b2cb26",
+			"height": 40,
+			"width": 40,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "MergeNode_da5f70a3-9029-463c-8cbb-1a3a25b2cb26"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_MergeNode_da5f70a3-9029-463c-8cbb-1a3a25b2cb26",
+			"x": 1300,
+			"y": -130,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "MergeNode_da5f70a3-9029-463c-8cbb-1a3a25b2cb26"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_InitialNode_c330255f-1c22-4aae-8d89-f4c06cb575fb",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "InitialNode_c330255f-1c22-4aae-8d89-f4c06cb575fb"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_InitialNode_c330255f-1c22-4aae-8d89-f4c06cb575fb",
+			"x": 1250,
+			"y": -260,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "InitialNode_c330255f-1c22-4aae-8d89-f4c06cb575fb"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_FlowFinalNode_481763d9-8eca-4e15-8550-fecf2f36fc34",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "FlowFinalNode_481763d9-8eca-4e15-8550-fecf2f36fc34"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_FlowFinalNode_481763d9-8eca-4e15-8550-fecf2f36fc34",
+			"x": 1260,
+			"y": -400,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "FlowFinalNode_481763d9-8eca-4e15-8550-fecf2f36fc34"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_DecisionNode_256b6a31-df52-41c0-a1e3-37a673d4b343",
+			"height": 40,
+			"width": 40,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "DecisionNode_256b6a31-df52-41c0-a1e3-37a673d4b343"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_DecisionNode_256b6a31-df52-41c0-a1e3-37a673d4b343",
+			"x": 1390,
+			"y": -400,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "DecisionNode_256b6a31-df52-41c0-a1e3-37a673d4b343"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_ActivityParameterNode_42d2c083-557e-4b3f-8ace-49d3c7a5de06",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "ActivityParameterNode_42d2c083-557e-4b3f-8ace-49d3c7a5de06"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_ActivityParameterNode_42d2c083-557e-4b3f-8ace-49d3c7a5de06",
+			"x": 1610,
+			"y": -560,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "ActivityParameterNode_42d2c083-557e-4b3f-8ace-49d3c7a5de06"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_CentralBufferNode_2359318e-cc10-4ecd-845d-f8d5651a51f5",
+			"height": 60,
+			"width": 156.671875,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "CentralBufferNode_2359318e-cc10-4ecd-845d-f8d5651a51f5"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_CentralBufferNode_2359318e-cc10-4ecd-845d-f8d5651a51f5",
+			"x": 1456.101795309091,
+			"y": -419.38455867034276,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "CentralBufferNode_2359318e-cc10-4ecd-845d-f8d5651a51f5"
 			}
 		}
 	]

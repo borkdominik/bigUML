@@ -21,6 +21,12 @@ import type { GModelElement } from '@eclipse-glsp/server';
 /** Above the edge, at its center. */
 const NAME_PLACEMENT = { rotate: true, side: 'bottom', position: 0.5, offset: 7 } as const;
 
+/**
+ * The same spot, but written upright rather than turned along the edge. GLSP/sprotty picks the side by
+ * the quadrant the edge runs in, so the name stays clear of the line whichever way it goes.
+ */
+const HORIZONTAL_NAME_PLACEMENT = { rotate: false, side: 'bottom', position: 0.5, offset: 7 } as const;
+
 /** Below the edge, so a stereotype does not overlap the name. */
 const STEREOTYPE_PLACEMENT = { rotate: true, side: 'top', position: 0.5, offset: 7 } as const;
 
@@ -39,6 +45,12 @@ const TARGET_ROLE_NAME_PLACEMENT = { rotate: true, side: 'top', position: 1, off
 export interface EdgeNameLabelProps {
     id: string;
     name?: string;
+    /**
+     * How the name is written. `along-edge` (the default) turns it to follow the line, the way the
+     * structural diagrams draw relation names. `horizontal` keeps it upright whichever way the line
+     * runs - a state machine transition is read as `trigger [guard] / effect`, not as a line caption.
+     */
+    orientation?: 'along-edge' | 'horizontal';
 }
 
 /**
@@ -56,7 +68,7 @@ export function EdgeNameLabel(props: EdgeNameLabelProps): GModelElement | null {
             type={CommonModelTypes.LABEL_EDGE_NAME}
             text={props.name}
             args={{ highlight: true }}
-            edgePlacement={NAME_PLACEMENT}
+            edgePlacement={props.orientation === 'horizontal' ? HORIZONTAL_NAME_PLACEMENT : NAME_PLACEMENT}
         />
     );
 }

@@ -7,9 +7,10 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
+import { type ConnectionPoint, parseConnectionPointId } from '@borkdominik-biguml/uml-glsp-server';
 import { getDefaultProperties, getRelationTypeFromElementId } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
-import { createRandomUUID, type jsonPatch, type SerializeAstNode } from '@borkdominik-biguml/uml-model-server';
-import type { Edge } from '@borkdominik-biguml/uml-model-server/grammar';
+import { createRandomUUID, type IdAstNode, type jsonPatch, type SerializeAstNode } from '@borkdominik-biguml/uml-model-server';
+import { type Edge, isPackageMerge } from '@borkdominik-biguml/uml-model-server/grammar';
 import {
     type Command,
     CreateEdgeOperation,
@@ -47,8 +48,16 @@ export class GenericCreateEdgeOperationHandler extends OperationHandler implemen
     }
 
     protected createSemantic(operation: CreateEdgeOperation): jsonPatch.AddOperation<SerializeAstNode<Edge>> {
-        const sourceNode = this.modelState.index.findIdElement(operation.sourceElementId);
-        const targetNode = this.modelState.index.findIdElement(operation.targetElementId);
+        // An end dropped on a connection point names the port, not the shape. The edge is still between
+        // the two shapes - a transition runs to the choice, not to a point on it - so the port is split
+        // back into its owner, and which point it was records the pin.
+        const source = parseConnectionPointId(operation.sourceElementId);
+        const target = parseConnectionPointId(operation.targetElementId);
+
+        const { source: sourceNode, target: targetNode } = this.findEnds(
+            source?.ownerId ?? operation.sourceElementId,
+            target?.ownerId ?? operation.targetElementId
+        );
         if (!sourceNode || !targetNode) {
             throw new Error('Source or target node not found for creating edge');
         }
@@ -75,10 +84,61 @@ export class GenericCreateEdgeOperationHandler extends OperationHandler implemen
             }
         }
 
+        // Written after the defaults, and removed rather than left unset, because the generated
+        // defaults do not know what a connection point is: `getDefaultProperties` falls through to an
+        // empty array for any property type it has no case for, so an unpinned end would be stored as
+        // `sourcePoint: []` - which the grammar, expecting one of four names, cannot read back.
+        // An absent property is what marks an end as unpinned.
+        setConnectionPoint(value, 'sourcePoint', source?.point);
+        setConnectionPoint(value, 'targetPoint', target?.point);
+
         return {
             op: 'add',
             path: '/diagram/relations/-',
             value
         };
+    }
+
+    /**
+     * The two elements the new edge is to run between.
+     *
+     * Usually the two that were clicked, the way round they were clicked. A package merge is the
+     * exception: the merges into one package are drawn as a single connector, and an end dropped on it
+     * names that connector rather than a package - so it is read back to the package the connector
+     * runs into, and the merge joins the set instead of ending on one of its lines.
+     *
+     * A connector also says which way round the new merge goes, whichever end it was dropped on. It
+     * gathers packages into the one it runs into, so the package is what the merge runs from and that
+     * one is what it runs to - clicking the connector first and the package second is the same thing
+     * said in the other order. Nothing but a merge can be dropped on a connector; the client sees to
+     * that (see `GPackageMergeEdge`).
+     */
+    protected findEnds(sourceId: string, targetId: string): { source?: IdAstNode; target?: IdAstNode } {
+        const source = this.modelState.index.findIdElement(sourceId);
+        const target = this.modelState.index.findIdElement(targetId);
+        const sourceConnector = isPackageMerge(source) ? source : undefined;
+        const targetConnector = isPackageMerge(target) ? target : undefined;
+
+        if (sourceConnector && targetConnector) {
+            // Both ends on a connector, and so no package to gather. Left unresolved, which is
+            // reported rather than stored.
+            return {};
+        }
+        if (sourceConnector) {
+            return { source: target, target: sourceConnector.target?.ref };
+        }
+        if (targetConnector) {
+            return { source, target: targetConnector.target?.ref };
+        }
+        return { source, target };
+    }
+}
+
+/** Stores a pinned connection point, or removes the property entirely when the end is not pinned. */
+function setConnectionPoint(value: Record<string, unknown>, property: string, point: ConnectionPoint | undefined): void {
+    if (point) {
+        value[property] = point;
+    } else {
+        delete value[property];
     }
 }

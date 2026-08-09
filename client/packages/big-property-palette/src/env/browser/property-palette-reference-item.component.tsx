@@ -7,16 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import {
-    BButton,
-    BCheckbox,
-    BContextMenu,
-    BContextMenuItem,
-    BOption,
-    BTextfield,
-    classNames,
-    VSCodeContext
-} from '@borkdominik-biguml/big-components';
+import { BButton, BCheckbox, BContextMenu, BOption, BTextfield, classNames, VSCodeContext } from '@borkdominik-biguml/big-components';
 import { UpdateElementPropertyAction, type ElementReferenceProperty } from '@borkdominik-biguml/big-property-palette';
 import { CompoundOperation, DeleteElementOperation } from '@eclipse-glsp/protocol';
 import { useCallback, useContext, useEffect, useRef, useState, type ChangeEvent, type ReactElement } from 'react';
@@ -51,6 +42,7 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
     const [item, setItem] = useState<ElementReferenceProperty | undefined>(undefined);
     const itemsElementRef = useRef<HTMLDivElement | null>(null);
     const [_sortable, setSortable] = useState<Sortable | undefined>(undefined);
+    const [isCreateMenuOpen, setCreateMenuOpen] = useState(false);
 
     useEffect(() => {
         setItem(props.item);
@@ -91,10 +83,29 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
 
     const onCreate = useCallback(
         (create: ElementReferenceProperty.CreateReference) => {
+            setCreateMenuOpen(false);
             dispatchAction(create.action);
         },
         [dispatchAction]
     );
+
+    // The menu takes itself down again on the next click anywhere outside it. Closing it here as well
+    // keeps the button in step with it: left thinking the menu was still open, the button would want a
+    // click to close a menu that had already gone before it would open one again.
+    useEffect(() => {
+        if (!isCreateMenuOpen) {
+            return;
+        }
+
+        const close = (): void => setCreateMenuOpen(false);
+        // Listened for a frame late, so that the click opening the menu is not the one closing it.
+        const frame = requestAnimationFrame(() => document.addEventListener('click', close, { once: true }));
+
+        return () => {
+            cancelAnimationFrame(frame);
+            document.removeEventListener('click', close);
+        };
+    }, [isCreateMenuOpen]);
 
     const onDelete = useCallback(
         (references: ElementReferenceProperty.Reference[]) => {
@@ -222,7 +233,9 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
                             {ref.deleteActions.length > 0 && (
                                 <BButton secondary icon='trash' className='action-delete' title='Delete' onClick={() => onDelete([ref])} />
                             )}
-                            <BButton secondary icon='chevron-right' title='Navigate' onClick={() => onNavigate(ref)} />
+                            {item.isNavigable && (
+                                <BButton secondary icon='chevron-right' title='Navigate' onClick={() => onNavigate(ref)} />
+                            )}
                         </div>
                     </div>
                     {ref.hint !== undefined && (
@@ -236,22 +249,51 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
 
     const renderHeader = useCallback(
         (item: ElementReferenceProperty) => {
+            // Added from the section's own header, beside the button that clears it: the list below is
+            // what is being added to, and on a long one an action underneath it is scrolled away from
+            // the heading that says what it would add. The autocomplete field is its own way in, so a
+            // section offering one is left with it alone.
+            const creates = item.isAutocomplete ? [] : item.creates;
+            const deletable = item.references.filter(r => r.deleteActions.length > 0);
+
+            if (creates.length === 0 && deletable.length === 0) {
+                return (
+                    <div className='reference-header'>
+                        <h4 className='reference-header-title'>{item.label}</h4>
+                    </div>
+                );
+            }
+
             return (
                 <div className='reference-header'>
                     <h4 className='reference-header-title'>{item.label}</h4>
-                    {item.references.some(r => r.deleteActions.length > 0) && (
-                        <div className='reference-header-actions'>
-                            <BButton
-                                secondary
-                                icon='trash'
-                                onClick={() => onDelete(item.references.filter(r => r.deleteActions.length > 0))}
-                            />
-                        </div>
-                    )}
+                    <div className='reference-header-actions'>
+                        {creates.length > 0 && (
+                            <div className='reference-create'>
+                                <BButton
+                                    secondary
+                                    icon='add'
+                                    title={creates.length === 1 ? creates[0].label : 'Add'}
+                                    onClick={() => (creates.length === 1 ? onCreate(creates[0]) : setCreateMenuOpen(open => !open))}
+                                />
+                                {/* Where there is more than one thing to add - a message can join a link
+                                    running either way, say - the choice is offered rather than guessed at. */}
+                                {isCreateMenuOpen && creates.length > 1 && (
+                                    <BContextMenu
+                                        className='reference-create-menu'
+                                        show
+                                        data={creates.map((create, index) => ({ label: create.label, value: `${index}` }))}
+                                        onVscContextMenuSelect={event => onCreate(creates[Number(event.detail.value)])}
+                                    />
+                                )}
+                            </div>
+                        )}
+                        {deletable.length > 0 && <BButton secondary icon='trash' title='Delete all' onClick={() => onDelete(deletable)} />}
+                    </div>
                 </div>
             );
         },
-        [onDelete]
+        [isCreateMenuOpen, onCreate, onDelete]
     );
 
     const renderBody = useCallback(
@@ -260,25 +302,10 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
                 <div className='reference-body'>
                     {item.isAutocomplete && renderAutocomplete(item)}
                     <div ref={itemsElementRef}>{item.references.map(ref => renderItem(item, ref))}</div>
-                    {item.creates.length > 0 && !item.isAutocomplete && (
-                        <div className='reference-body-actions'>
-                            {item.creates.length === 1 ? (
-                                <BButton onClick={() => onCreate(item.creates[0])}>Add</BButton>
-                            ) : (
-                                <BContextMenu>
-                                    {item.creates.map(c => (
-                                        <BContextMenuItem key={c.label} onClick={() => onCreate(c)}>
-                                            {c.label}
-                                        </BContextMenuItem>
-                                    ))}
-                                </BContextMenu>
-                            )}
-                        </div>
-                    )}
                 </div>
             );
         },
-        [renderAutocomplete, renderItem, onCreate]
+        [renderAutocomplete, renderItem]
     );
 
     if (!props.item) {

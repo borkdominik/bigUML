@@ -112,18 +112,30 @@ h4.secondary-title {
 
 .reference-header > .reference-header-actions {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
 }
 
-.reference-body > .reference-body-actions {
+/*
+ * The menu of things a section can be added to hangs off the button that opens it, which is what the
+ * relative position is for: the menu itself is positioned absolutely, and would otherwise be laid out
+ * against the panel rather than under the button.
+ */
+.reference-header-actions > .reference-create {
+    position: relative;
     display: flex;
-    flex-direction: row;
+}
+
+.reference-create > .reference-create-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 10;
 }
 
 .reference-header-actions vscode-button,
-.reference-item-actions vscode-button,
-.reference-body-actions vscode-button {
+.reference-item-actions vscode-button {
     --vscode-button-background: var(--vscode-settings-dropdownBackground, #313131);
     --vscode-button-hoverBackground: var(--vscode-settings-dropdownListBorder, #454545);
     --vscode-button-foreground: var(--vscode-settings-dropdownForeground, #cccccc);

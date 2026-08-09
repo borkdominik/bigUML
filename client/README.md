@@ -50,7 +50,8 @@ You can create a new `.uml` file in two ways:
 ## Scripts
 
 Key scripts defined in the root `package.json`:
-
+5
+5
 | Script                  | Description                                                                |
 | ----------------------- | -------------------------------------------------------------------------- |
 | `npm run build`         | Clean build of all packages via Lerna (slower, full rebuild)               |

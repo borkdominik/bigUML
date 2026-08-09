@@ -9,7 +9,7 @@
 import { GEdgeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { ControlFlow } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { GEdge } from '@eclipse-glsp/server';
-import { EdgeNameLabel } from './core/index.js';
+import { EdgeNameLabel, pinnedEndpointId } from './core/index.js';
 import type { ElementContext } from './core/element-context.js';
 
 export function createControlFlowRelation(ctx: ElementContext<ControlFlow>): GEdge {
@@ -17,9 +17,13 @@ export function createControlFlowRelation(ctx: ElementContext<ControlFlow>): GEd
         <GEdgeElement
             id={ctx.node.__id}
             type={ctx.elementType}
-            sourceId={ctx.node.source!.ref!.__id}
-            targetId={ctx.node.target!.ref!.__id}
-            cssClasses={['uml-edge']}
+            // Pinned exactly as a transition is - the fork and join a control flow runs between are the
+            // same bar as the state machine's, and offer the same two points to pin to.
+            sourceId={pinnedEndpointId(ctx, ctx.node.source!.ref!.__id, ctx.node.source!.ref!, ctx.node.sourcePoint)}
+            targetId={pinnedEndpointId(ctx, ctx.node.target!.ref!.__id, ctx.node.target!.ref!, ctx.node.targetPoint)}
+            // An activity edge carries an open arrow head at its target end, the same one the state
+            // machine draws on a transition.
+            cssClasses={['uml-edge', 'marker-tent-end']}
         >
             <EdgeNameLabel id={ctx.node.__id} name={ctx.node.name} />
         </GEdgeElement>

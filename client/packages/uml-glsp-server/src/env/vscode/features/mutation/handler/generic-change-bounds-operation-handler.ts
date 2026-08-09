@@ -6,7 +6,15 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { isSubject, isUseCase } from '@borkdominik-biguml/uml-model-server/grammar';
+import {
+    isInteraction,
+    isLifeline,
+    isStateMachine,
+    isStateMachineDiagramNodes,
+    isSubject,
+    isUseCase
+} from '@borkdominik-biguml/uml-model-server/grammar';
+import { isNoBounds } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
 import { ChangeBoundsOperation, type Command, OperationHandler } from '@eclipse-glsp/server';
 import { injectable } from 'inversify';
 import { URI } from 'vscode-uri';
@@ -15,17 +23,45 @@ import { type DiagramModelState } from '../../model/diagram-model-state.js';
 
 type BoundsPatch = { op: 'add'; path: string; value: unknown } | { op: 'replace'; path: string; value: unknown };
 
+/**
+ * The entity types a moved container drags along, or `undefined` if the element is not such a container.
+ * A state machine frame contains every node of its own diagram - including nested frames, whose contents
+ * are covered as well since they also lie within the outer frame's bounds.
+ */
+function containedTypePredicate(container: unknown): ((entity: unknown) => boolean) | undefined {
+    if (isSubject(container)) {
+        return isUseCase;
+    }
+    if (isStateMachine(container)) {
+        return isStateMachineDiagramNodes;
+    }
+    if (isInteraction(container)) {
+        return isLifeline;
+    }
+    return undefined;
+}
+
 @injectable()
 export class GenericChangeBoundsOperationHandler extends OperationHandler {
     readonly operationType = ChangeBoundsOperation.KIND;
 
     declare readonly modelState: DiagramModelState;
 
-    override createCommand(operation: ChangeBoundsOperation): Command {
-        return new ModelPatchCommand(this.modelState, this.changeBounds(operation));
+    override createCommand(operation: ChangeBoundsOperation): Command | undefined {
+        const patch = this.changeBounds(operation);
+
+        // Nothing to write, because every element the operation carried stores no bounds of its own -
+        // dragging a pin is the whole of such an operation. An empty patch is not the harmless no-op it
+        // looks like: `PatchManager` applies the operations one by one and then reads the result of the
+        // last one, so with none to apply it reads `newDocument` off nothing and the edit fails outright.
+        if (patch.length === 0) {
+            return undefined;
+        }
+
+        return new ModelPatchCommand(this.modelState, JSON.stringify(patch));
     }
 
-    protected changeBounds(operation: ChangeBoundsOperation): string {
+    protected changeBounds(operation: ChangeBoundsOperation): BoundsPatch[] {
         const patch: BoundsPatch[] = [];
 
         const defaultDocPath = URI.parse(this.modelState.semanticUri).path;
@@ -46,6 +82,15 @@ export class GenericChangeBoundsOperationHandler extends OperationHandler {
         );
 
         operation.newBounds.forEach(({ elementId, newSize, newPosition }) => {
+            // An element declared `noBounds` is placed by whatever owns it - a pin by its action, a
+            // property by its class - so there is nothing of its own to store. Writing bounds anyway is
+            // what leaves a `Size` at the diagram root naming an element nested inside another one, which
+            // nothing at that level can reach: the reference goes out as the word `undefined` and the
+            // file stops parsing. `GenericCreateNodeOperationHandler` skips these for the same reason.
+            if (this.hasNoBounds(elementId)) {
+                return;
+            }
+
             const sizePath = this.modelState.index.findSizePath(elementId);
             const size = (this.modelState.index as any).findSize ? (this.modelState.index as any).findSize(elementId) : undefined;
 
@@ -61,8 +106,11 @@ export class GenericChangeBoundsOperationHandler extends OperationHandler {
                             __documentUri: size?.element?.$nodeDescription?.documentUri.path ?? defaultDocPath
                         }
                     },
-                    width: newSize?.width,
-                    height: newSize?.height
+                    // An operation that carries no new size (a pure move) must keep the stored one: writing
+                    // `undefined` back would leave a Size metaInfo without usable dimensions behind, which
+                    // silently collapses every node whose layout is driven by its persisted size.
+                    width: newSize?.width ?? size?.width,
+                    height: newSize?.height ?? size?.height
                 }
             });
 
@@ -88,7 +136,7 @@ export class GenericChangeBoundsOperationHandler extends OperationHandler {
                 }
             });
 
-            // Only a genuine move - the Subject keeping its current size - should drag its contents
+            // Only a genuine move - the container keeping its current size - should drag its contents
             // along. A resize (even one that also shifts the anchor corner's position, e.g. dragging
             // the top-left handle) must not translate the contents, since the box didn't uniformly
             // translate: it stretched.
@@ -97,58 +145,66 @@ export class GenericChangeBoundsOperationHandler extends OperationHandler {
                 const dx = newPosition.x - position.x;
                 const dy = newPosition.y - position.y;
                 if (dx !== 0 || dy !== 0) {
-                    this.cascadeToContainedUseCases(elementId, position, size, dx, dy, nonZeroMovedElementIds, defaultDocPath, patch);
+                    this.cascadeToContainedNodes(elementId, position, size, dx, dy, nonZeroMovedElementIds, defaultDocPath, patch);
                 }
             }
         });
 
-        return JSON.stringify(patch);
+        return patch;
+    }
+
+    /** Whether the element is one that stores no bounds of its own, by the type it was drawn as. */
+    protected hasNoBounds(elementId: string): boolean {
+        const type = this.modelState.index.get(elementId)?.type;
+        return !!type && isNoBounds(type);
     }
 
     /**
-     * Subject and UseCase are flat, independently positioned siblings in the gmodel (visual
-     * containment is purely absolute (x,y)/size overlap, not real parent/child nesting - see
-     * `diagram-gmodel-factory.tsx`). Moving a Subject therefore does not move the use cases drawn
-     * inside its boundary unless we explicitly shift them here by the same delta. Only use cases
-     * whose center falls within the Subject's bounds *before* the move are considered contained,
-     * and any use case already being genuinely repositioned by this same operation (e.g. multi-
-     * selected together with the Subject) is left alone since its own explicit newPosition already
-     * applies - cascading on top of that would move it twice.
+     * A container (a Subject, a StateMachine frame) and the nodes drawn inside it are flat,
+     * independently positioned siblings in the gmodel (visual containment is purely absolute
+     * (x,y)/size overlap, not real parent/child nesting - see `diagram-gmodel-factory.tsx`). Moving
+     * the container therefore does not move the nodes drawn inside its boundary unless we explicitly
+     * shift them here by the same delta. Only nodes whose center falls within the container's bounds
+     * *before* the move are considered contained, and any node already being genuinely repositioned
+     * by this same operation (e.g. multi-selected together with the container) is left alone since
+     * its own explicit newPosition already applies - cascading on top of that would move it twice.
+     * That guard is also what keeps the container itself out of its own cascade.
      */
-    protected cascadeToContainedUseCases(
-        subjectId: string,
-        oldSubjectPosition: { x: number; y: number },
-        oldSubjectSize: { width?: number; height?: number } | undefined,
+    protected cascadeToContainedNodes(
+        containerId: string,
+        oldContainerPosition: { x: number; y: number },
+        oldContainerSize: { width?: number; height?: number } | undefined,
         dx: number,
         dy: number,
         nonZeroMovedElementIds: Set<string>,
         defaultDocPath: string,
         patch: BoundsPatch[]
     ): void {
-        const subject = this.modelState.index.findIdElement(subjectId);
-        if (!isSubject(subject) || !oldSubjectSize?.width || !oldSubjectSize?.height) {
+        const container = this.modelState.index.findIdElement(containerId);
+        const isContained = containedTypePredicate(container);
+        if (!isContained || !oldContainerSize?.width || !oldContainerSize?.height) {
             return;
         }
 
         const bounds = {
-            left: oldSubjectPosition.x,
-            top: oldSubjectPosition.y,
-            right: oldSubjectPosition.x + oldSubjectSize.width,
-            bottom: oldSubjectPosition.y + oldSubjectSize.height
+            left: oldContainerPosition.x,
+            top: oldContainerPosition.y,
+            right: oldContainerPosition.x + oldContainerSize.width,
+            bottom: oldContainerPosition.y + oldContainerSize.height
         };
 
         for (const entity of this.modelState.semanticRoot.diagram.entities) {
-            if (!isUseCase(entity) || nonZeroMovedElementIds.has(entity.__id)) {
+            if (!isContained(entity) || nonZeroMovedElementIds.has(entity.__id)) {
                 continue;
             }
 
-            const useCasePosition = this.modelState.index.findPosition(entity.__id);
-            if (!useCasePosition) {
+            const entityPosition = this.modelState.index.findPosition(entity.__id);
+            if (!entityPosition) {
                 continue;
             }
-            const useCaseSize = this.modelState.index.findSize(entity.__id);
-            const centerX = useCasePosition.x + (useCaseSize?.width ?? 0) / 2;
-            const centerY = useCasePosition.y + (useCaseSize?.height ?? 0) / 2;
+            const entitySize = this.modelState.index.findSize(entity.__id);
+            const centerX = entityPosition.x + (entitySize?.width ?? 0) / 2;
+            const centerY = entityPosition.y + (entitySize?.height ?? 0) / 2;
             if (centerX < bounds.left || centerX > bounds.right || centerY < bounds.top || centerY > bounds.bottom) {
                 continue;
             }
@@ -163,11 +219,11 @@ export class GenericChangeBoundsOperationHandler extends OperationHandler {
                     element: {
                         $ref: {
                             __id: entity.__id,
-                            __documentUri: useCasePosition.element?.$nodeDescription?.documentUri.path ?? defaultDocPath
+                            __documentUri: entityPosition.element?.$nodeDescription?.documentUri.path ?? defaultDocPath
                         }
                     },
-                    x: useCasePosition.x + dx,
-                    y: useCasePosition.y + dy
+                    x: entityPosition.x + dx,
+                    y: entityPosition.y + dy
                 }
             });
         }

@@ -13,6 +13,10 @@ terminal LANGIUM_ID: /[\w_\*-]+( +[\w_\*-]+)*/;
 // be a terminal so that characters such as `.` can be lexed at all. `/` is deliberately
 // excluded so that it does not shadow the comment terminals below.
 terminal LANGIUM_PUNCT: /[.+#()<>=?!|~^&%$@;'`]+/;
+// A lone `/`, as in a transition's `trigger / effect` or a derived property's `/name`. Only the
+// runs that start a comment are held back, so the terminals below keep matching exactly what
+// they did before - a `/` that is not the start of one was never theirs to lex.
+terminal LANGIUM_SLASH: /\/(?![/*])/;
 
 hidden terminal ML_COMMENT: /\/\*[\s\S]*?\*\//;
 hidden terminal SL_COMMENT: /\/\/[^\n\r]*/;
@@ -22,7 +26,7 @@ hidden terminal SL_COMMENT: /\/\/[^\n\r]*/;
 // terminals are matched without parser context, so a value like `"1"` would always be lexed
 // as LANGIUM_INT and never as LANGIUM_ID. A data type rule is resolved by the parser instead
 // and returns the concatenation of the matched tokens.
-LangiumText returns string: (LANGIUM_ID | LANGIUM_INT | LANGIUM_BOOL | LANGIUM_PUNCT)+;
+LangiumText returns string: (LANGIUM_ID | LANGIUM_INT | LANGIUM_BOOL | LANGIUM_PUNCT | LANGIUM_SLASH)+;
 
 // Rules for skipping unknown/unsupported JSON fields during parsing.
 // Unknown fields are silently consumed so that files with extra properties

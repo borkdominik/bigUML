@@ -13,9 +13,36 @@
 				"operations": [],
 				"isActive": false,
 				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "Class",
+				"__id": "Class_c0706706-ed53-421a-bc82-51299f402740",
+				"name": "NewClass2",
+				"isAbstract": false,
+				"properties": [],
+				"operations": [],
+				"isActive": false,
+				"visibility": "PUBLIC"
 			}
 		],
-		"relations": []
+		"relations": [
+			{
+				"__type": "InformationFlow",
+				"__id": "InformationFlow_45c33547-a128-4614-af2f-f31b0241a278",
+				"name": "jdskhfsd dfasdf",
+				"visibility": "PUBLIC",
+				"source": {
+					"__type": "Reference",
+					"__refType": "UnionType_1",
+					"__value": "Class_c0706706-ed53-421a-bc82-51299f402740"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "UnionType_1",
+					"__value": "Class_0f42a69b-30c2-4df6-9069-24b3d401bc80"
+				}
+			}
+		]
 	},
 	"metaInfos": [
 		{
@@ -38,6 +65,28 @@
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
 				"__value": "Class_0f42a69b-30c2-4df6-9069-24b3d401bc80"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_Class_c0706706-ed53-421a-bc82-51299f402740",
+			"height": 34.46711254119873,
+			"width": 88.62288665771484,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Class_c0706706-ed53-421a-bc82-51299f402740"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_Class_c0706706-ed53-421a-bc82-51299f402740",
+			"x": 466.0320479555154,
+			"y": 463.7489173536399,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Class_c0706706-ed53-421a-bc82-51299f402740"
 			}
 		}
 	]

@@ -54,18 +54,18 @@ export class InformationFlowDiagramToolPaletteItemProvider extends ToolPaletteIt
                 icon: 'symbol-property',
                 children: [
                     {
-                        id: 'class',
-                        sortString: 'A',
-                        label: 'Class',
-                        icon: 'uml-class-icon',
-                        actions: [TriggerNodeCreationAction.create(InformationFlowDiagramNodeTypes.CLASS)]
-                    },
-                    {
                         id: 'actor',
                         sortString: 'A',
                         label: 'Actor',
                         icon: 'uml-actor-icon',
                         actions: [TriggerNodeCreationAction.create(InformationFlowDiagramNodeTypes.ACTOR)]
+                    },
+                    {
+                        id: 'class',
+                        sortString: 'A',
+                        label: 'Class',
+                        icon: 'uml-class-icon',
+                        actions: [TriggerNodeCreationAction.create(InformationFlowDiagramNodeTypes.CLASS)]
                     }
                 ],
                 actions: []

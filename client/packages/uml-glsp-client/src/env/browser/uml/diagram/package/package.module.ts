@@ -9,7 +9,7 @@
 import { representationTypeId } from '@borkdominik-biguml/uml-glsp-server';
 import { configureModelElement, FeatureModule, GEdge, PolylineEdgeView } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
-import { NamedElement, NamedElementView } from '../../elements/index.js';
+import { GPackageMergeEdge, GPackageMergeEdgeView, NamedElement, NamedElementView } from '../../elements/index.js';
 
 const R = 'Package';
 
@@ -31,6 +31,7 @@ export const umlPackageDiagramModule = new FeatureModule((bind, unbind, isBound,
     // configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'ElementImport'), GElementImportEdge, GElementImportEdgeView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'PackageImport'), GEdge, PolylineEdgeView);
     // configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'PackageImport'), GPackageImportEdge, GPackageImportEdgeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'PackageMerge'), GEdge, PolylineEdgeView);
-    // configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'PackageMerge'), GPackageMergeEdge, GPackageMergeEdgeView);
+    // Its own class rather than a plain edge, as in the class diagram: the router picks the merges out
+    // by it, to draw the ones running into the same package as branches off a single connector.
+    configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'PackageMerge'), GPackageMergeEdge, GPackageMergeEdgeView);
 });

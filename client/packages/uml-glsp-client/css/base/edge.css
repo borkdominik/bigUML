@@ -4,6 +4,17 @@
     stroke: var(--uml-edge) !important;
 }
 
+/*
+ * The arrow drawn under a message label on a communication diagram. Stroked with an open head, which
+ * is how UML draws a message - and it must take back the fill it would otherwise inherit, or the open
+ * head would be closed up into a solid triangle.
+ */
+.uml-message-arrow {
+    fill: none;
+    stroke: var(--uml-edge);
+    stroke-width: 1.5;
+}
+
 .uml-edge.mouseover:not(.selected) {
     stroke-width: 2;
     opacity: 1;

@@ -25,6 +25,7 @@ import type { JoinNode } from '../elements/join-node-element.def.js';
 import type { MergeNode } from '../elements/merge-node-element.def.js';
 import type { OpaqueAction } from '../elements/opaque-action-element.def.js';
 import type { OutputPin } from '../elements/output-pin-element.def.js';
+import type { Property } from '../elements/property-element.def.js';
 import type { SendSignalAction } from '../elements/send-signal-action-element.def.js';
 
 // @ts-nocheck
@@ -54,6 +55,10 @@ type ActivityDiagramNodes =
     | CentralBufferNode
     | ActivityParameterNode
     | InputPin
-    | OutputPin;
+    | OutputPin
+    // Written on the activity's frame rather than drawn on the canvas. Named here because this list is
+    // what tells the property palette generator which types the diagram can create - without it the
+    // `Parameters` section is a list with no way to add to it.
+    | Property;
 
 type ActivityDiagramEdges = ControlFlow;

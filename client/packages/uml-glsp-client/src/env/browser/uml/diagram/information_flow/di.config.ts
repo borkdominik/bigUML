@@ -7,9 +7,18 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { representationTypeId } from '@borkdominik-biguml/uml-glsp-server';
-import { configureModelElement, FeatureModule, GEdge, PolylineEdgeView } from '@eclipse-glsp/client';
+import { configureModelElement, FeatureModule } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
-import { NamedElement, NamedElementView } from '../../elements/index.js';
+import {
+    GActorNode,
+    GActorNodeView,
+    GInformationFlowEdge,
+    GInformationFlowEdgeView,
+    InformationFlowStickFigureView,
+    NamedElement,
+    NamedElementView,
+    StickFigureNode
+} from '../../elements/index.js';
 
 const R = 'informationflow';
 
@@ -19,12 +28,19 @@ export const umlInformationFlowDiagramModule = new FeatureModule((bind, unbind, 
     // Nodes
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Class'), NamedElement, NamedElementView);
     // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Class'), GClassNode, GClassNodeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Actor'), NamedElement, NamedElementView);
-    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Actor'), GActorNode, GActorNodeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'ActorStickfigure'), NamedElement, NamedElementView);
-    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'ActorStickfigure'), StickFigureNode, StickFigureView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Actor'), GActorNode, GActorNodeView);
+    configureModelElement(
+        context,
+        representationTypeId(R, DefaultTypes.NODE, 'ActorStickfigure'),
+        StickFigureNode,
+        InformationFlowStickFigureView
+    );
 
     // Edges
-    configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'InformationFlow'), GEdge, PolylineEdgeView);
-    // configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'InformationFlow'), GInformationFlowEdge, GInformationFlowEdgeView);
+    configureModelElement(
+        context,
+        representationTypeId(R, DefaultTypes.EDGE, 'InformationFlow'),
+        GInformationFlowEdge,
+        GInformationFlowEdgeView
+    );
 });

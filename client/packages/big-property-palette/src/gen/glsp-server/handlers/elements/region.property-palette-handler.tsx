@@ -1,7 +1,7 @@
 // AUTO-GENERATED – DO NOT EDIT
 
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
-import { CreateNodeOperation, DeleteElementOperation } from '@eclipse-glsp/server';
+import { DeleteElementOperation, TriggerEdgeCreationAction } from '@eclipse-glsp/server';
 import { type Region } from '@borkdominik-biguml/uml-model-server/grammar';
 import {
     type GetPropertyPaletteHandlerContext,
@@ -62,9 +62,7 @@ export namespace RegionPropertyPaletteHandler {
                         creates={[
                             {
                                 label: 'Create Transition',
-                                action: CreateNodeOperation.create(context.languageMetadata.convertToElementType('Transition'), {
-                                    containerId: context.semanticElement.__id
-                                })
+                                action: TriggerEdgeCreationAction.create(context.languageMetadata.convertToElementType('Transition'))
                             }
                         ]}
                     />

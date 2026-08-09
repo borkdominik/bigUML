@@ -22,6 +22,20 @@ export const noBoundsClasses = new Set<string>(<%~ JSON.stringify(it.noBoundsCla
 
 export const astTypeMapping: Record<string, string> = <%~ JSON.stringify(it.astTypeMap, null, 2) %>;
 
+/**
+ * The AST types UML lets go unnamed - the pseudostates, the activity control nodes, the relations -
+ * whose `name` the grammar therefore writes as an optional property.
+ *
+ * Everything else is required to carry one, and there is no way to store an empty name in its place:
+ * `LangiumText` matches one token or more, so a `"name": ""` written out could never be read back.
+ */
+export const optionalNameClasses = new Set<string>(<%~ JSON.stringify(it.optionalNameClasses, null, 2) %>);
+
+/** Whether clearing this AST type's name can be stored, by removing the property altogether. */
+export function hasOptionalName(astType: string): boolean {
+    return optionalNameClasses.has(astType);
+}
+
 export function isNoBounds(typeId: string): boolean {
     return noBoundsClasses.has(stripPrefix(typeId));
 }

@@ -18,7 +18,8 @@ import { GEnumerationLiteralNodeElement } from './enumeration-literal.element.js
 
 export class GEnumerationNode extends GNode {
     override type = ClassDiagramNodeTypes.ENUMERATION;
-    override layout = 'vbox';
+    // Kept in the middle of the box at whatever height it is dragged to, as for a class - see `GClassNode`.
+    override layout = 'uml-centered-vbox';
     name: string = 'UNDEFINED ENUMERATION NAME';
 }
 

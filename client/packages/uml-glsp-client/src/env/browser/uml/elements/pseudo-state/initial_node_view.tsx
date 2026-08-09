@@ -20,8 +20,8 @@ export class InitialNodeView extends CircularNodeView {
         const intitalNode: any = (
             <g>
                 <circle
-                    stroke='#4E81B4'
-                    fill='#4E81B4'
+                    stroke='white'
+                    fill='white'
                     class-node={true}
                     class-mouseover={node.hoverFeedback}
                     class-selected={node.selected}

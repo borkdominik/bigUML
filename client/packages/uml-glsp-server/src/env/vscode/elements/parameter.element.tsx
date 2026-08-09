@@ -1,11 +1,11 @@
-/**********************************************************************************
- * Copyright (c) 2026 borkdominik and others.
+/*********************************************************************************
+ * Copyright (c) 2023 borkdominik and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
  *
  * SPDX-License-Identifier: MIT
- **********************************************************************************/
+ ********************************************************************************/
 import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { GLabelElement, GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { Parameter } from '@borkdominik-biguml/uml-model-server/grammar';

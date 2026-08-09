@@ -14,6 +14,7 @@ export const UmlDiagramTerminals = {
     LANGIUM_INT: /(-)?[0-9]+(\.[0-9]+)?/,
     LANGIUM_ID: /[\w_\*-]+( +[\w_\*-]+)*/,
     LANGIUM_PUNCT: /[.+#()<>=?!|~^&%$@;'`]+/,
+    LANGIUM_SLASH: /\/(?![/*])/,
     ML_COMMENT: /\/\*[\s\S]*?\*\//,
     SL_COMMENT: /\/\/[^\n\r]*/,
 };
@@ -41,7 +42,6 @@ export type UmlDiagramKeywordNames =
     | "\"CommunicationPath\""
     | "\"ControlFlow\""
     | "\"DataType\""
-    | "\"DataTypeReference\""
     | "\"DecisionNode\""
     | "\"DeepHistory\""
     | "\"Dependency\""
@@ -125,7 +125,6 @@ export type UmlDiagramKeywordNames =
     | "\"diagram\""
     | "\"diagramType\""
     | "\"direction\""
-    | "\"edges\""
     | "\"effect\""
     | "\"element\""
     | "\"entities\""
@@ -158,10 +157,10 @@ export type UmlDiagramKeywordNames =
     | "\"nestedNodes\""
     | "\"nodes\""
     | "\"operations\""
+    | "\"orientation\""
     | "\"outputPins\""
     | "\"parameterType\""
     | "\"parameters\""
-    | "\"partitions\""
     | "\"properties\""
     | "\"propertyType\""
     | "\"regions\""
@@ -171,13 +170,16 @@ export type UmlDiagramKeywordNames =
     | "\"sourceAggregation\""
     | "\"sourceMultiplicity\""
     | "\"sourceName\""
+    | "\"sourcePoint\""
     | "\"subpartitions\""
     | "\"subvertices\""
     | "\"target\""
     | "\"targetAggregation\""
     | "\"targetMultiplicity\""
     | "\"targetName\""
+    | "\"targetPoint\""
     | "\"transitions\""
+    | "\"trigger\""
     | "\"uri\""
     | "\"useCases\""
     | "\"value\""
@@ -197,14 +199,17 @@ export type UmlDiagramKeywordNames =
     | "CREATE"
     | "DELETE"
     | "DEPLOYMENT"
+    | "EAST"
     | "EXTERNAL"
     | "GUARDED"
+    | "HORIZONTAL"
     | "IN"
     | "INFORMATION_FLOW"
     | "INOUT"
     | "INTERNAL"
     | "LOCAL"
     | "NONE"
+    | "NORTH"
     | "OUT"
     | "PACKAGE"
     | "PRIVATE"
@@ -214,9 +219,12 @@ export type UmlDiagramKeywordNames =
     | "RETURN"
     | "SEQUENTIAL"
     | "SHARED"
+    | "SOUTH"
     | "STATE_MACHINE"
     | "UPDATE"
     | "USE_CASE"
+    | "VERTICAL"
+    | "WEST"
     | "["
     | "]"
     | "null"
@@ -307,10 +315,9 @@ export interface Activity extends langium.AstNode {
     readonly $type: 'Activity';
     __id: string;
     __unknown: Array<UnknownProperty>;
-    edges: Array<ControlFlow>;
     name: string;
     nodes: Array<Node>;
-    partitions: Array<ActivityPartition>;
+    parameters: Array<Property>;
     visibility?: Visibility;
 }
 
@@ -318,10 +325,9 @@ export const Activity = {
     $type: 'Activity',
     __id: '__id',
     __unknown: '__unknown',
-    edges: 'edges',
     name: 'name',
     nodes: 'nodes',
-    partitions: 'partitions',
+    parameters: 'parameters',
     visibility: 'visibility'
 } as const;
 
@@ -372,7 +378,7 @@ export function isActivityDiagramElements(item: unknown): item is ActivityDiagra
     return reflection.isInstance(item, ActivityDiagramElements.$type);
 }
 
-export type ActivityDiagramNodes = AcceptEventAction | Activity | ActivityFinalNode | ActivityParameterNode | ActivityPartition | CentralBufferNode | DecisionNode | FlowFinalNode | ForkNode | InitialNode | InputPin | JoinNode | MergeNode | OpaqueAction | OutputPin | SendSignalAction;
+export type ActivityDiagramNodes = AcceptEventAction | Activity | ActivityFinalNode | ActivityParameterNode | ActivityPartition | CentralBufferNode | DecisionNode | FlowFinalNode | ForkNode | InitialNode | InputPin | JoinNode | MergeNode | OpaqueAction | OutputPin | Property | SendSignalAction;
 
 export const ActivityDiagramNodes = {
     $type: 'ActivityDiagramNodes'
@@ -431,6 +437,7 @@ export interface ActivityPartition extends langium.AstNode {
     __unknown: Array<UnknownProperty>;
     name: string;
     nodes: Array<Node>;
+    orientation?: Orientation;
     subpartitions: Array<ActivityPartition>;
     visibility?: Visibility;
 }
@@ -441,6 +448,7 @@ export const ActivityPartition = {
     __unknown: '__unknown',
     name: 'name',
     nodes: 'nodes',
+    orientation: 'orientation',
     subpartitions: 'subpartitions',
     visibility: 'visibility'
 } as const;
@@ -748,15 +756,23 @@ export function isConcurrency(item: unknown): item is Concurrency {
     return item === 'SEQUENTIAL' || item === 'GUARDED' || item === 'CONCURRENT';
 }
 
+export type ConnectionPoint = 'EAST' | 'NORTH' | 'SOUTH' | 'WEST';
+
+export function isConnectionPoint(item: unknown): item is ConnectionPoint {
+    return item === 'NORTH' || item === 'EAST' || item === 'SOUTH' || item === 'WEST';
+}
+
 export interface ControlFlow extends langium.AstNode {
-    readonly $container: Activity | ActivityDiagram;
+    readonly $container: ActivityDiagram;
     readonly $type: 'ControlFlow';
     __id: string;
     __unknown: Array<UnknownProperty>;
     guard?: string;
     name?: string;
-    source: langium.Reference<Node>;
-    target: langium.Reference<Node>;
+    source: langium.Reference<UnionType_0>;
+    sourcePoint?: ConnectionPoint;
+    target: langium.Reference<UnionType_0>;
+    targetPoint?: ConnectionPoint;
     visibility?: Visibility;
     weight?: number;
 }
@@ -768,7 +784,9 @@ export const ControlFlow = {
     guard: 'guard',
     name: 'name',
     source: 'source',
+    sourcePoint: 'sourcePoint',
     target: 'target',
+    targetPoint: 'targetPoint',
     visibility: 'visibility',
     weight: 'weight'
 } as const;
@@ -1412,7 +1430,7 @@ export interface InformationFlow extends langium.AstNode {
     __unknown: Array<UnknownProperty>;
     name?: string;
     source: langium.Reference<UnionType_1>;
-    target: langium.Reference<Actor>;
+    target: langium.Reference<UnionType_1>;
     visibility?: Visibility;
 }
 
@@ -1526,7 +1544,7 @@ export function isInitialState(item: unknown): item is InitialState {
 }
 
 export interface InputPin extends langium.AstNode {
-    readonly $container: Activity | ActivityDiagram | ActivityPartition | DeploymentModel | DeploymentPackage | OpaqueAction | Package | Region;
+    readonly $container: ActivityDiagram | OpaqueAction;
     readonly $type: 'InputPin';
     __id: string;
     __unknown: Array<UnknownProperty>;
@@ -1900,7 +1918,7 @@ export function isMetaInfo(item: unknown): item is MetaInfo {
     return reflection.isInstance(item, MetaInfo.$type);
 }
 
-export type Node = AcceptEventAction | Activity | ActivityFinalNode | ActivityParameterNode | ActivityPartition | Actor | Artifact | CentralBufferNode | Choice | Class | DataType | DecisionNode | DeepHistory | DeploymentModel | DeploymentNode | DeploymentPackage | DeploymentSpecification | Device | Enumeration | ExecutionEnvironment | FinalState | FlowFinalNode | Fork | ForkNode | InitialNode | InitialState | InputPin | InstanceSpecification | Interaction | Interface | Join | JoinNode | Lifeline | MergeNode | OpaqueAction | Operation | OutputPin | Package | PrimitiveType | Region | SendSignalAction | ShallowHistory | State | StateMachine | Subject | UseCase;
+export type Node = AcceptEventAction | Activity | ActivityFinalNode | ActivityParameterNode | ActivityPartition | Actor | Artifact | CentralBufferNode | Choice | Class | DataType | DecisionNode | DeepHistory | DeploymentModel | DeploymentNode | DeploymentPackage | DeploymentSpecification | Device | Enumeration | ExecutionEnvironment | FinalState | FlowFinalNode | Fork | ForkNode | InitialNode | InitialState | InstanceSpecification | Interaction | Interface | Join | JoinNode | Lifeline | MergeNode | OpaqueAction | Operation | Package | PrimitiveType | Region | SendSignalAction | ShallowHistory | State | StateMachine | Subject | UseCase;
 
 export const Node = {
     $type: 'Node'
@@ -1966,8 +1984,14 @@ export function isOperation(item: unknown): item is Operation {
     return reflection.isInstance(item, Operation.$type);
 }
 
+export type Orientation = 'HORIZONTAL' | 'VERTICAL';
+
+export function isOrientation(item: unknown): item is Orientation {
+    return item === 'HORIZONTAL' || item === 'VERTICAL';
+}
+
 export interface OutputPin extends langium.AstNode {
-    readonly $container: Activity | ActivityDiagram | ActivityPartition | DeploymentModel | DeploymentPackage | OpaqueAction | Package | Region;
+    readonly $container: ActivityDiagram | OpaqueAction;
     readonly $type: 'OutputPin';
     __id: string;
     __unknown: Array<UnknownProperty>;
@@ -2122,7 +2146,7 @@ export interface Parameter extends langium.AstNode {
     isUnique: boolean;
     multiplicity?: LangiumText;
     name: string;
-    parameterType?: langium.Reference<DataTypeReference>;
+    parameterType?: LangiumText;
     visibility?: Visibility;
 }
 
@@ -2195,7 +2219,7 @@ export function isPrimitiveType(item: unknown): item is PrimitiveType {
 }
 
 export interface Property extends langium.AstNode {
-    readonly $container: AbstractClass | Artifact | Class | ClassDiagram | DataType | DeploymentDiagram | DeploymentSpecification | InformationFlowDiagram | Interface | PackageDiagram;
+    readonly $container: AbstractClass | Activity | ActivityDiagram | Artifact | Class | ClassDiagram | DataType | DeploymentDiagram | DeploymentSpecification | InformationFlowDiagram | Interface | PackageDiagram;
     readonly $type: 'Property';
     __id: string;
     __unknown: Array<UnknownProperty>;
@@ -2209,7 +2233,7 @@ export interface Property extends langium.AstNode {
     isUnique: boolean;
     multiplicity?: LangiumText;
     name: string;
-    propertyType?: langium.Reference<DataTypeReference>;
+    propertyType?: LangiumText;
     visibility?: Visibility;
 }
 
@@ -2556,10 +2580,15 @@ export interface Transition extends langium.AstNode {
     readonly $type: 'Transition';
     __id: string;
     __unknown: Array<UnknownProperty>;
+    effect?: LangiumText;
+    guard?: LangiumText;
     kind?: TransitionKind;
-    name?: string;
+    name?: LangiumText;
     source: langium.Reference<UnionType_0>;
-    target: langium.Reference<Node>;
+    sourcePoint?: ConnectionPoint;
+    target: langium.Reference<UnionType_0>;
+    targetPoint?: ConnectionPoint;
+    trigger?: LangiumText;
     visibility?: Visibility;
 }
 
@@ -2567,10 +2596,15 @@ export const Transition = {
     $type: 'Transition',
     __id: '__id',
     __unknown: '__unknown',
+    effect: 'effect',
+    guard: 'guard',
     kind: 'kind',
     name: 'name',
     source: 'source',
+    sourcePoint: 'sourcePoint',
     target: 'target',
+    targetPoint: 'targetPoint',
+    trigger: 'trigger',
     visibility: 'visibility'
 } as const;
 
@@ -2584,7 +2618,7 @@ export function isTransitionKind(item: unknown): item is TransitionKind {
     return item === 'INTERNAL' || item === 'EXTERNAL' || item === 'LOCAL';
 }
 
-export type Unbounded = EnumerationLiteral | LiteralSpecification | Parameter | Property | Slot;
+export type Unbounded = EnumerationLiteral | InputPin | LiteralSpecification | OutputPin | Parameter | Property | Slot;
 
 export const Unbounded = {
     $type: 'Unbounded'
@@ -2960,10 +2994,6 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
                     name: Activity.__unknown,
                     defaultValue: []
                 },
-                edges: {
-                    name: Activity.edges,
-                    defaultValue: []
-                },
                 name: {
                     name: Activity.name
                 },
@@ -2971,8 +3001,8 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
                     name: Activity.nodes,
                     defaultValue: []
                 },
-                partitions: {
-                    name: Activity.partitions,
+                parameters: {
+                    name: Activity.parameters,
                     defaultValue: []
                 },
                 visibility: {
@@ -3077,6 +3107,9 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
                 nodes: {
                     name: ActivityPartition.nodes,
                     defaultValue: []
+                },
+                orientation: {
+                    name: ActivityPartition.orientation
                 },
                 subpartitions: {
                     name: ActivityPartition.subpartitions,
@@ -3385,11 +3418,17 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
                 },
                 source: {
                     name: ControlFlow.source,
-                    referenceType: Node.$type
+                    referenceType: UnionType_0.$type
+                },
+                sourcePoint: {
+                    name: ControlFlow.sourcePoint
                 },
                 target: {
                     name: ControlFlow.target,
-                    referenceType: Node.$type
+                    referenceType: UnionType_0.$type
+                },
+                targetPoint: {
+                    name: ControlFlow.targetPoint
                 },
                 visibility: {
                     name: ControlFlow.visibility
@@ -4030,7 +4069,7 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
                 },
                 target: {
                     name: InformationFlow.target,
-                    referenceType: Actor.$type
+                    referenceType: UnionType_1.$type
                 },
                 visibility: {
                     name: InformationFlow.visibility
@@ -4135,7 +4174,7 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
                     name: InputPin.visibility
                 }
             },
-            superTypes: [ActivityDiagramNodes.$type, Node.$type]
+            superTypes: [ActivityDiagramNodes.$type, Unbounded.$type]
         },
         InstanceSpecification: {
             name: InstanceSpecification.$type,
@@ -4548,7 +4587,7 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
                     name: OutputPin.visibility
                 }
             },
-            superTypes: [ActivityDiagramNodes.$type, Node.$type]
+            superTypes: [ActivityDiagramNodes.$type, Unbounded.$type]
         },
         Package: {
             name: Package.$type,
@@ -4702,8 +4741,7 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
                     name: Parameter.name
                 },
                 parameterType: {
-                    name: Parameter.parameterType,
-                    referenceType: DataTypeReference.$type
+                    name: Parameter.parameterType
                 },
                 visibility: {
                     name: Parameter.visibility
@@ -4798,14 +4836,13 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
                     name: Property.name
                 },
                 propertyType: {
-                    name: Property.propertyType,
-                    referenceType: DataTypeReference.$type
+                    name: Property.propertyType
                 },
                 visibility: {
                     name: Property.visibility
                 }
             },
-            superTypes: [ClassDiagramNodes.$type, DeploymentDiagramNodes.$type, InformationFlowDiagramNodes.$type, PackageDiagramNodes.$type, SlotDefiningFeature.$type, Unbounded.$type]
+            superTypes: [ActivityDiagramNodes.$type, ClassDiagramNodes.$type, DeploymentDiagramNodes.$type, InformationFlowDiagramNodes.$type, PackageDiagramNodes.$type, SlotDefiningFeature.$type, Unbounded.$type]
         },
         Realization: {
             name: Realization.$type,
@@ -5121,6 +5158,12 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
                     name: Transition.__unknown,
                     defaultValue: []
                 },
+                effect: {
+                    name: Transition.effect
+                },
+                guard: {
+                    name: Transition.guard
+                },
                 kind: {
                     name: Transition.kind
                 },
@@ -5131,9 +5174,18 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
                     name: Transition.source,
                     referenceType: UnionType_0.$type
                 },
+                sourcePoint: {
+                    name: Transition.sourcePoint
+                },
                 target: {
                     name: Transition.target,
-                    referenceType: Node.$type
+                    referenceType: UnionType_0.$type
+                },
+                targetPoint: {
+                    name: Transition.targetPoint
+                },
+                trigger: {
+                    name: Transition.trigger
                 },
                 visibility: {
                     name: Transition.visibility

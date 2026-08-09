@@ -108,17 +108,7 @@ export class NamedElementView extends RectangularNodeView {
         // TODO: Remove after switching to builder based approach for all gmodels
         return (
             <g class-selected={element.selected} class-mouseover={element.hoverFeedback}>
-                {(element.args['border'] === true || element.args['build_by'] === undefined) && (
-                    <rect
-                        x={0}
-                        y={0}
-                        rx={2}
-                        ry={2}
-                        width={Math.max(0, element.bounds.width)}
-                        height={Math.max(0, element.bounds.height)}
-                        class-uml-node-background
-                    />
-                )}
+                {(element.args['border'] === true || element.args['build_by'] === undefined) && this.renderBackground(element)}
 
                 {compartments.map(compartment => (
                     <path
@@ -127,8 +117,34 @@ export class NamedElementView extends RectangularNodeView {
                     ></path>
                 ))}
 
-                {context.renderChildren(element)}
+                {this.renderContent(element, context)}
             </g>
+        ) as any;
+    }
+
+    /**
+     * The element's own children, drawn over its shape. Split out from `render` so that a node can
+     * draw one of them differently - a class scales its name with the box, see `GClassNodeView`.
+     */
+    protected renderContent(element: NamedElement, context: RenderingContext): (VNode | undefined)[] {
+        return context.renderChildren(element);
+    }
+
+    /**
+     * The shape the element is drawn as, behind its labels and compartments. A rounded box unless an
+     * element says otherwise - a package draws itself as a folder, see `GPackageNodeView`.
+     */
+    protected renderBackground(element: NamedElement): VNode {
+        return (
+            <rect
+                x={0}
+                y={0}
+                rx={2}
+                ry={2}
+                width={Math.max(0, element.bounds.width)}
+                height={Math.max(0, element.bounds.height)}
+                class-uml-node-background
+            />
         ) as any;
     }
 }

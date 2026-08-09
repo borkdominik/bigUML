@@ -37,6 +37,7 @@ import { UmlContainerManager } from './features/creation/uml-container-manager.j
 import { umlEditModule } from './features/edit/uml-edit.module.js';
 import { umlTypeHintsModule } from './features/hints/uml-type-hints.module.js';
 import { umlLoadingModule } from './features/loading/uml-loading.module.js';
+import { umlRoutingModule } from './features/routing/uml-routing.module.js';
 import { umlThemeModule } from './features/theme/uml-theme.module.js';
 import { umlToolPaletteModule } from './features/tool-palette/uml-tool-palette.module.js';
 import { umlToolManagerModule } from './features/tools/tool-manager/uml-tool-manager.module.js';
@@ -94,6 +95,7 @@ export function initializeUmlDiagramContainer(
         umlCopyPasteModule,
         umlEditModule,
         umlLoadingModule,
+        umlRoutingModule,
         umlThemeModule,
         umlToolManagerModule,
         umlTypeHintsModule,

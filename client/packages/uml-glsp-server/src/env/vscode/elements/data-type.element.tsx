@@ -19,7 +19,8 @@ import { GPropertyNodeElement } from './property.element.js';
 
 export class GDataTypeNode extends GNode {
     override type = ClassDiagramNodeTypes.DATA_TYPE;
-    override layout = 'vbox';
+    // Kept in the middle of the box at whatever height it is dragged to, as for a class - see `GClassNode`.
+    override layout = 'uml-centered-vbox';
     name: string = 'UNDEFINED DataType NAME';
 }
 

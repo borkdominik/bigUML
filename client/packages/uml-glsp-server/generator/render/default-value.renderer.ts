@@ -52,10 +52,12 @@ export function renderDefaultValue(extensionPath: string, declarations: Declarat
 function buildDefaultValueMapping(declarations: Declaration[]): {
     defaultMapping: DefaultMapping;
     noBoundsClasses: string[];
+    optionalNameClasses: string[];
     astTypeMap: Record<string, string>;
 } {
     const mapping: DefaultMapping = {};
     const noBoundsClasses: string[] = [];
+    const optionalNameClasses: string[] = [];
     const astTypeMap: Record<string, string> = {};
 
     for (const decl of declarations) {
@@ -73,6 +75,13 @@ function buildDefaultValueMapping(declarations: Declaration[]): {
 
         if (decl.type !== 'class' || !decl.name || !decl.properties) {
             continue;
+        }
+
+        // Whether the grammar can write this element without a name at all. A name declared `name?`
+        // becomes an optional assignment, which is the only case where clearing one can be stored -
+        // there is no way to write an empty name, since `LangiumText` needs at least one token.
+        if (decl.properties.some(prop => prop.name === 'name' && prop.isOptional)) {
+            optionalNameClasses.push(decl.name);
         }
 
         const withDefaultAll = Decorator.has(decl.decorators, 'defaults');
@@ -111,6 +120,7 @@ function buildDefaultValueMapping(declarations: Declaration[]): {
     return {
         defaultMapping: mapping,
         noBoundsClasses,
+        optionalNameClasses,
         astTypeMap
     };
 }

@@ -95,13 +95,6 @@ export class RequestClassPropertyPaletteActionHandler implements ActionHandler {
 
             const context = { semanticElement, languageMetadata: this.languageMetadata };
 
-            const dataTypeChoices = (this.modelState.index.getAllDataTypes?.() ?? [])
-                .filter((item: any) => !!item && !!item.__id && !!item.name)
-                .map((item: any) => ({
-                    label: item.name,
-                    value: item.__id + '_refValue',
-                    secondaryText: item.$type
-                }));
             const definingFeatureChoices = (this.modelState.index.getAllDefiningFeatures?.() ?? [])
                 .filter((item: any) => !!item && !!item.__id && !!item.name)
                 .map((item: any) => ({
@@ -114,35 +107,25 @@ export class RequestClassPropertyPaletteActionHandler implements ActionHandler {
             } else if (isAssociation(semanticElement)) {
                 return AssociationPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isProperty(semanticElement)) {
-                return PropertyPropertyPaletteHandler.getPropertyPalette(context, dataTypeChoices);
-            } else if (isDataType(semanticElement)) {
-                return DataTypePropertyPaletteHandler.getPropertyPalette(context);
-            } else if (isPrimitiveType(semanticElement)) {
-                return PrimitiveTypePropertyPaletteHandler.getPropertyPalette(context);
-            } else if (isOperation(semanticElement)) {
-                return OperationPropertyPaletteHandler.getPropertyPalette(context);
-            } else if (isParameter(semanticElement)) {
-                return ParameterPropertyPaletteHandler.getPropertyPalette(context, dataTypeChoices);
-            } else if (isInterface(semanticElement)) {
-                return InterfacePropertyPaletteHandler.getPropertyPalette(context);
-            } else if (isEnumeration(semanticElement)) {
-                return EnumerationPropertyPaletteHandler.getPropertyPalette(context);
-            } else if (isEnumerationLiteral(semanticElement)) {
-                return EnumerationLiteralPropertyPaletteHandler.getPropertyPalette(context);
-            } else if (isClass(semanticElement)) {
-                return ClassPropertyPaletteHandler.getPropertyPalette(context);
+                return PropertyPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isUsage(semanticElement)) {
                 return UsagePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isParameter(semanticElement)) {
+                return ParameterPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isPackageMerge(semanticElement)) {
                 return PackageMergePropertyPaletteHandler.getPropertyPalette(context);
             } else if (isPackageImport(semanticElement)) {
                 return PackageImportPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isPackage(semanticElement)) {
                 return PackagePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isOperation(semanticElement)) {
+                return OperationPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isElementImport(semanticElement)) {
                 return ElementImportPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isDependency(semanticElement)) {
                 return DependencyPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isClass(semanticElement)) {
+                return ClassPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isAbstraction(semanticElement)) {
                 return AbstractionPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isSubstitution(semanticElement)) {
@@ -151,12 +134,22 @@ export class RequestClassPropertyPaletteActionHandler implements ActionHandler {
                 return SlotPropertyPaletteHandler.getPropertyPalette(context, definingFeatureChoices);
             } else if (isLiteralSpecification(semanticElement)) {
                 return LiteralSpecificationPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isInterface(semanticElement)) {
+                return InterfacePropertyPaletteHandler.getPropertyPalette(context);
             } else if (isRealization(semanticElement)) {
                 return RealizationPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isPrimitiveType(semanticElement)) {
+                return PrimitiveTypePropertyPaletteHandler.getPropertyPalette(context);
             } else if (isInterfaceRealization(semanticElement)) {
                 return InterfaceRealizationPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isInstanceSpecification(semanticElement)) {
                 return InstanceSpecificationPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isEnumerationLiteral(semanticElement)) {
+                return EnumerationLiteralPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isEnumeration(semanticElement)) {
+                return EnumerationPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isDataType(semanticElement)) {
+                return DataTypePropertyPaletteHandler.getPropertyPalette(context);
             } else if (isAbstractClass(semanticElement)) {
                 return AbstractClassPropertyPaletteHandler.getPropertyPalette(context);
             }

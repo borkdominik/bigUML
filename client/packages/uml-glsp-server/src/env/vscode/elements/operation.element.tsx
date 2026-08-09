@@ -39,7 +39,7 @@ export function GOperationNodeElement(props: GOperationNodeElementProps): GModel
     const isAbstract = node.isAbstract ?? false;
     const parameterList = node.parameters.map(param => ({
         key: param.name!,
-        type: param.parameterType?.ref?.name ?? 'Unknown'
+        type: param.parameterType ?? 'Unknown'
     }));
 
     const opNode = new GOperationNode();

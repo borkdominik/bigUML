@@ -29,6 +29,7 @@ export namespace ActivityDiagramNodeTypes {
     export const ACTIVITY_PARAMETER_NODE = representationTypeId('Activity', DefaultTypes.NODE, 'ActivityParameterNode');
     export const INPUT_PIN = representationTypeId('Activity', DefaultTypes.NODE, 'InputPin');
     export const OUTPUT_PIN = representationTypeId('Activity', DefaultTypes.NODE, 'OutputPin');
+    export const PROPERTY = representationTypeId('Activity', DefaultTypes.NODE, 'Property');
 }
 
 export namespace ActivityDiagramEdgeTypes {
@@ -53,6 +54,7 @@ export namespace ActivityDiagramModelTypes {
     export const ACTIVITY_PARAMETER_NODE = ActivityDiagramNodeTypes.ACTIVITY_PARAMETER_NODE;
     export const INPUT_PIN = ActivityDiagramNodeTypes.INPUT_PIN;
     export const OUTPUT_PIN = ActivityDiagramNodeTypes.OUTPUT_PIN;
+    export const PROPERTY = ActivityDiagramNodeTypes.PROPERTY;
 
     // re-export edges
     export const CONTROL_FLOW = ActivityDiagramEdgeTypes.CONTROL_FLOW;
@@ -76,6 +78,7 @@ export namespace ActivityAstTypes {
         ActivityParameterNode: ActivityDiagramModelTypes.ACTIVITY_PARAMETER_NODE,
         InputPin: ActivityDiagramModelTypes.INPUT_PIN,
         OutputPin: ActivityDiagramModelTypes.OUTPUT_PIN,
+        Property: ActivityDiagramModelTypes.PROPERTY,
         ControlFlow: ActivityDiagramModelTypes.CONTROL_FLOW
     };
 

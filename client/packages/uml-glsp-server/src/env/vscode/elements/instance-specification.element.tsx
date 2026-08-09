@@ -18,7 +18,8 @@ import { GSlotNodeElement } from './slot.element.js';
 
 export class GInstanceSpecificationNode extends GNode {
     override type = ClassDiagramNodeTypes.INSTANCE_SPECIFICATION;
-    override layout = 'vbox';
+    // Kept in the middle of the box at whatever height it is dragged to, as for a class - see `GClassNode`.
+    override layout = 'uml-centered-vbox';
     name: string = 'UNDEFINED CLASS NAME';
 }
 

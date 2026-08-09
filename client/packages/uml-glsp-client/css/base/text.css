@@ -23,6 +23,15 @@
     font-size: 120%;
 }
 
+/*
+ * The name of a frame, written along the top of the boundary the rest of the diagram is drawn inside.
+ * Larger than an ordinary node's name because it titles everything within the frame rather than
+ * labelling a shape of its own size. Weight is left to `.uml-font-bold`, as it is everywhere else.
+ */
+.uml-theme .uml-font-frame-title {
+    font-size: 140%;
+}
+
 .uml-theme .uml-divider-subtitle {
     fill: var(--uml-divider-subtitle);
     font-size: small;

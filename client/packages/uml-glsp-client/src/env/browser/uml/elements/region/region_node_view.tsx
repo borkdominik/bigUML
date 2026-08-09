@@ -8,37 +8,15 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-/** @jsx svg */
-import { DefaultTypes, GCompartment, RectangularNodeView, type RenderingContext, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
-import { type VNode } from 'snabbdom';
-import { type GLabeledNode } from '../../views/uml-label.view.js';
+import { FrameNodeView } from '../../views/uml-frame.view.js';
 
+/**
+ * A region of a state machine or a composite state: the area its states are drawn on.
+ *
+ * Drawn like the frame that owns it rather than as an ordinary box, because it is the same kind of
+ * thing - a boundary the diagram's nodes sit on top of, not a shape of its own. See `FrameNodeView`,
+ * which is also where its name tag comes from.
+ */
 @injectable()
-export class RegionNodeView extends RectangularNodeView {
-    override render(node: GLabeledNode, context: RenderingContext): VNode | undefined {
-        if (!this.isVisible(node, context)) {
-            return undefined;
-        }
-
-        const compartment = node.children.find(
-            c => c instanceof GCompartment && c.type !== DefaultTypes.COMPARTMENT_HEADER && c.children.length > 0
-        ) as GCompartment | undefined;
-
-        const regionNode: any = (
-            <g class-node={true} class-selected={node.selected} class-mouseover={node.hoverFeedback}>
-                <rect x={0} y={0} width={Math.max(0, node.bounds.width)} height={Math.max(0, node.bounds.height)} />
-
-                {compartment && (
-                    <path
-                        class-uml-comp-separator
-                        d={`M 0,${compartment.position.y}  L ${node.bounds.width},${compartment.position.y}`}
-                    ></path>
-                )}
-
-                {context.renderChildren(node)}
-            </g>
-        );
-        return regionNode;
-    }
-}
+export class RegionNodeView extends FrameNodeView {}

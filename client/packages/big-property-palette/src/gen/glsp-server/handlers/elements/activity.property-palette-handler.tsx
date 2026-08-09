@@ -35,20 +35,20 @@ export namespace ActivityPropertyPaletteHandler {
                     />
                     <ReferenceProperty
                         elementId={context.semanticElement.__id}
-                        propertyId='partitions'
-                        label='Partitions'
-                        references={(context.semanticElement.partitions ?? [])
+                        propertyId='parameters'
+                        label='Parameters'
+                        references={(context.semanticElement.parameters ?? [])
                             .filter((e: any) => !!e && !!e.__id)
                             .map((e: any) => ({
                                 elementId: e.__id,
-                                label: e.name ?? '(unnamed activity_partition)',
+                                label: e.name ?? '(unnamed property)',
                                 name: e.name ?? '',
                                 deleteActions: [DeleteElementOperation.create([e.__id])]
                             }))}
                         creates={[
                             {
-                                label: 'Create Activity Partition',
-                                action: CreateNodeOperation.create(context.languageMetadata.convertToElementType('ActivityPartition'), {
+                                label: 'Create Property',
+                                action: CreateNodeOperation.create(context.languageMetadata.convertToElementType('Property'), {
                                     containerId: context.semanticElement.__id
                                 })
                             }
@@ -67,27 +67,6 @@ export namespace ActivityPropertyPaletteHandler {
                                 deleteActions: [DeleteElementOperation.create([e.__id])]
                             }))}
                         creates={[]}
-                    />
-                    <ReferenceProperty
-                        elementId={context.semanticElement.__id}
-                        propertyId='edges'
-                        label='Edges'
-                        references={(context.semanticElement.edges ?? [])
-                            .filter((e: any) => !!e && !!e.__id)
-                            .map((e: any) => ({
-                                elementId: e.__id,
-                                label: e.name ?? '(unnamed control_flow)',
-                                name: e.name ?? '',
-                                deleteActions: [DeleteElementOperation.create([e.__id])]
-                            }))}
-                        creates={[
-                            {
-                                label: 'Create Control Flow',
-                                action: CreateNodeOperation.create(context.languageMetadata.convertToElementType('ControlFlow'), {
-                                    containerId: context.semanticElement.__id
-                                })
-                            }
-                        ]}
                     />
                 </PropertyPalette>
             )

@@ -153,6 +153,11 @@ import { DiagramModelState } from '../../features/index.js';
 import { DiagramLanguageMetadata } from '../../features/model/diagram-language-metadata.js';
 import { DiagramModelIndex } from '../../features/model/diagram-model-index.js';
 
+/** Nodes that are drawn as a boundary around other, flatly listed nodes of the same diagram. */
+function isCanvasContainer(element: unknown): boolean {
+    return isSubject(element) || isStateMachine(element) || isRegion(element) || isActivity(element) || isActivityPartition(element);
+}
+
 @injectable()
 export class UmlDiagramGModelFactory implements GModelFactory {
     @inject(DiagramModelState)
@@ -174,11 +179,18 @@ export class UmlDiagramGModelFactory implements GModelFactory {
     protected createGraph(): GGraph | undefined {
         const diagram = this.modelState.semanticRoot.diagram;
 
-        // Subjects act as containers drawn around other nodes, so they must always paint behind them,
-        // regardless of the order in which they were created relative to their contained use cases.
-        const entities = [...diagram.entities].sort((a, b) => Number(isSubject(b)) - Number(isSubject(a)));
+        const collectedNodes: unknown[] = [];
+        const collectedEdges: unknown[] = [...diagram.relations];
+        diagram.entities.forEach(entity => this.collectSemanticElements(entity, collectedNodes, collectedEdges));
+
+        // Subjects, state machine frames and regions act as containers drawn around other nodes, so
+        // they must always paint behind them, regardless of the order in which they were created
+        // relative to the nodes they contain. The sort is stable, so a container nested in another one
+        // keeps the depth-first order `collectSemanticElements` put it in - a region still paints in
+        // front of the frame that owns it, and behind the states that sit on it.
+        const entities = collectedNodes.sort((a, b) => Number(isCanvasContainer(b)) - Number(isCanvasContainer(a)));
         const nodes = entities.map(e => this.createNodeElement(e)).filter(Boolean) as GModelElement[];
-        const edges = diagram.relations
+        const edges = collectedEdges
             .filter((r: any) => r.source?.ref && r.target?.ref)
             .map(e => this.createEdgeElement(e))
             .filter(Boolean) as GEdge[];
@@ -189,6 +201,41 @@ export class UmlDiagramGModelFactory implements GModelFactory {
                 {edges}
             </GGraphElement>
         ) as GGraph;
+    }
+
+    /**
+     * Flattens the semantic model's containment into the flat list the graph is built from.
+     *
+     * The two do not agree on shape. The semantic model nests - a state machine owns regions, a region
+     * owns the states and the transitions drawn inside it, and one of those states can own regions of
+     * its own - while the graph holds every node as a direct child, placed at an absolute position, with
+     * a container drawn *behind* the nodes that sit on it rather than around them.
+     *
+     * Only `diagram.entities` and `diagram.relations` were ever walked, so anything reachable solely
+     * through a container's own properties never became a GModel element: a region and everything put
+     * inside it was stored correctly and then simply never drawn.
+     */
+    protected collectSemanticElements(element: unknown, nodes: unknown[], edges: unknown[]): void {
+        nodes.push(element);
+
+        if (isStateMachine(element) || isState(element)) {
+            element.regions?.forEach(region => this.collectSemanticElements(region, nodes, edges));
+        }
+
+        if (isRegion(element)) {
+            element.subvertices?.forEach(subvertex => this.collectSemanticElements(subvertex, nodes, edges));
+            // A transition between two states of a region is stored on the region, not in the diagram's
+            // flat relation list, so it has to be picked up here or it is never drawn either.
+            element.transitions?.forEach(transition => edges.push(transition));
+        }
+
+        // An interaction owns its lifelines and the messages between them the same way - and that is
+        // where both are put by the property palette's create actions and by `getCreationPath`, so
+        // without this a lifeline or message added there is stored correctly and never appears.
+        if (isInteraction(element)) {
+            element.lifelines?.forEach(lifeline => this.collectSemanticElements(lifeline, nodes, edges));
+            element.messages?.forEach(message => edges.push(message));
+        }
     }
 
     protected buildCtx<T>(node: T): ElementContext<T> {

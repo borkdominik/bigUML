@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+import { type GNode } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { RoundedNodeView } from '../../views/rounded-node.view.js';
 import { NamedElement } from '../named-element/index.js';
@@ -24,7 +25,7 @@ const FRAME_CORNER_RADIUS = 20;
  */
 @injectable()
 export class GActivityNodeView extends RoundedNodeView {
-    protected override cornerRadius(width: number, height: number): number {
+    protected override cornerRadius(_element: Readonly<GNode>, width: number, height: number): number {
         return Math.min(FRAME_CORNER_RADIUS, Math.min(width, height) / 2);
     }
 }

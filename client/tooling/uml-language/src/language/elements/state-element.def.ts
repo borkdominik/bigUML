@@ -31,10 +31,20 @@ export class State extends Node {
      *
      * Held on the state rather than as a `Size` metaInfo, which is where every other dimension in a
      * diagram lives: a metaInfo is keyed by the element it belongs to, and the compartment is not an
-     * element - it is part of how a state is drawn. A region *is* one, so a region's band keeps its
-     * height in the ordinary place (see `GStateRegionCompartment`).
+     * element - it is part of how a state is drawn. `regionHeight` below is held here for the same
+     * reason, even though a region *is* an element (see `GStateRegionCompartment`).
      */
     partsHeight?: number;
     visibility?: Visibility;
     regions?: Array<Region>;
+    /**
+     * How deep each of the state's region bands is drawn.
+     *
+     * One number for all of them rather than one apiece, because the regions of a state are equals -
+     * they divide the same box and run side by side down it, and UML gives none of them a size of its
+     * own. Held on the state for the same reason `partsHeight` is: the depth belongs to the way the
+     * state is drawn, not to any one region, and a region put on a state is a band of it rather than a
+     * shape placed on the canvas with bounds of its own.
+     */
+    regionHeight?: number;
 }

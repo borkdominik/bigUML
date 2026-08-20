@@ -12,6 +12,7 @@ import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { injectable } from 'inversify';
 import { type VNode } from 'snabbdom';
 import { type NamedElement } from '../elements/named-element/index.js';
+import { hitStrokeBox } from './hit-area.js';
 
 /** How far the tag's bottom right corner is cut back - the fold that makes the shape read as a frame tag. */
 const TAG_CORNER_CUT = 12;
@@ -36,6 +37,9 @@ export class FrameNodeView extends RectangularNodeView {
 
         return (
             <g class-selected={element.selected} class-mouseover={element.hoverFeedback}>
+                {/* A frame is drawn as its border and nothing else, so the border is the whole of what
+                    can be aimed at - this is the slack around it. */}
+                {hitStrokeBox(width, height)}
                 <rect x={0} y={0} width={width} height={height} class-uml-node-background />
                 {this.renderNameTag(element)}
                 {context.renderChildren(element)}

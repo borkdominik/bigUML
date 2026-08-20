@@ -11,6 +11,7 @@ import { type GNode, RectangularNodeView, type RenderingContext, svg } from '@ec
 import { injectable } from 'inversify';
 import { type VNode } from 'snabbdom';
 import { renderCompartmentSeparators } from './compartment-separator.js';
+import { hitStrokeBox } from './hit-area.js';
 
 /**
  * The rounded box UML draws for a state and for an action. One view for both: the notation is the same
@@ -34,8 +35,11 @@ export class RoundedNodeView extends RectangularNodeView {
     /**
      * How far the corners are taken off. Proportional, which is what a shape drawn to the size of its own
      * name wants - a frame drawn around other shapes does not, and overrides this with a flat number.
+     *
+     * The element is passed because a shape can be both: a state is a box the size of its name until it
+     * is given a region, and the frame its substates stand on from then on - see `StateNodeView`.
      */
-    protected cornerRadius(width: number, height: number): number {
+    protected cornerRadius(_element: Readonly<GNode>, width: number, height: number): number {
         return Math.min(width, height) * CORNER_RADIUS_RATIO;
     }
 
@@ -46,12 +50,19 @@ export class RoundedNodeView extends RectangularNodeView {
 
         const width = Math.max(0, element.bounds.width);
         const height = Math.max(0, element.bounds.height);
-        const radius = this.cornerRadius(width, height);
+        const radius = this.cornerRadius(element, width, height);
 
         return (
             <g class-selected={element.selected} class-mouseover={element.hoverFeedback}>
+                {/* Under the shape, so a click on the shape itself still reaches it first. It is the
+                    unfilled ones this is for - a composite state is a border around nothing, and a
+                    border is a pixel wide. */}
+                {hitStrokeBox(width, height, radius)}
                 <rect x={0} y={0} rx={radius} ry={radius} width={width} height={height} class-uml-node-background />
-                {renderCompartmentSeparators(element)}
+                {/* The rules stop on the outline rather than running the full width: at the height of a
+                    corner the sides of this shape are not at 0 and at the width, and a rule drawn to
+                    those ran out through the curve and past the border on both sides. */}
+                {renderCompartmentSeparators(element, radius)}
                 {context.renderChildren(element)}
             </g>
         ) as any;

@@ -13,6 +13,8 @@ import { inject, injectable } from 'inversify';
 import {
     isChoice,
     isDeepHistory,
+    isEntryPoint,
+    isExitPoint,
     isFinalState,
     isFork,
     isInitialState,
@@ -22,12 +24,15 @@ import {
     isState,
     isStateMachine,
     isStatePart,
+    isTerminate,
     isTransition
 } from '@borkdominik-biguml/uml-model-server/grammar';
 import { DiagramModelState, DiagramLanguageMetadata } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import type { DiagramLanguageMetadata as DiagramLanguageMetadataType } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import { ChoicePropertyPaletteHandler } from './elements/choice.property-palette-handler.js';
 import { DeepHistoryPropertyPaletteHandler } from './elements/deep-history.property-palette-handler.js';
+import { EntryPointPropertyPaletteHandler } from './elements/entry-point.property-palette-handler.js';
+import { ExitPointPropertyPaletteHandler } from './elements/exit-point.property-palette-handler.js';
 import { FinalStatePropertyPaletteHandler } from './elements/final-state.property-palette-handler.js';
 import { ForkPropertyPaletteHandler } from './elements/fork.property-palette-handler.js';
 import { InitialStatePropertyPaletteHandler } from './elements/initial-state.property-palette-handler.js';
@@ -37,6 +42,7 @@ import { ShallowHistoryPropertyPaletteHandler } from './elements/shallow-history
 import { StatePropertyPaletteHandler } from './elements/state.property-palette-handler.js';
 import { StateMachinePropertyPaletteHandler } from './elements/state-machine.property-palette-handler.js';
 import { StatePartPropertyPaletteHandler } from './elements/state-part.property-palette-handler.js';
+import { TerminatePropertyPaletteHandler } from './elements/terminate.property-palette-handler.js';
 import { TransitionPropertyPaletteHandler } from './elements/transition.property-palette-handler.js';
 @injectable()
 export class RequestStateMachinePropertyPaletteActionHandler implements ActionHandler {
@@ -71,6 +77,8 @@ export class RequestStateMachinePropertyPaletteActionHandler implements ActionHa
 
             if (isTransition(semanticElement)) {
                 return TransitionPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isTerminate(semanticElement)) {
+                return TerminatePropertyPaletteHandler.getPropertyPalette(context);
             } else if (isStatePart(semanticElement)) {
                 return StatePartPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isStateMachine(semanticElement)) {
@@ -89,6 +97,10 @@ export class RequestStateMachinePropertyPaletteActionHandler implements ActionHa
                 return ForkPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isFinalState(semanticElement)) {
                 return FinalStatePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isExitPoint(semanticElement)) {
+                return ExitPointPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isEntryPoint(semanticElement)) {
+                return EntryPointPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isDeepHistory(semanticElement)) {
                 return DeepHistoryPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isChoice(semanticElement)) {

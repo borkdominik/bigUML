@@ -10,6 +10,7 @@
 import { type GNode, RectangularNodeView, type RenderingContext, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { type VNode } from 'snabbdom';
+import { hitStrokePolygon } from './hit-area.js';
 import { outsideLabel } from './outside-label.js';
 
 /**
@@ -33,6 +34,9 @@ export class DiamondNodeView extends RectangularNodeView {
 
         return (
             <g class-selected={node.selected} class-mouseover={node.hoverFeedback}>
+                {/* Slack along the sloped sides, where a diamond narrows to a point and a click lands
+                    beside it rather than on it. */}
+                {hitStrokePolygon(points)}
                 <polygon points={points} class-uml-node-background />
                 {outsideLabel(node, size, 'below')}
                 {context.renderChildren(node)}

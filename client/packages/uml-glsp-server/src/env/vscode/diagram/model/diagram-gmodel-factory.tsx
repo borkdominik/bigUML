@@ -33,8 +33,10 @@ import {
     isDeploymentSpecification,
     isDevice,
     isElementImport,
+    isEntryPoint,
     isEnumeration,
     isExecutionEnvironment,
+    isExitPoint,
     isExtend,
     isFinalState,
     isFlowFinalNode,
@@ -72,6 +74,7 @@ import {
     isStateMachine,
     isSubject,
     isSubstitution,
+    isTerminate,
     isTransition,
     isUsage,
     isUseCase,
@@ -106,8 +109,10 @@ import { createDeploymentRelation } from '../../elements/deployment-relation.ele
 import { createDeploymentSpecificationElement } from '../../elements/deployment-specification.element.js';
 import { createDeviceElement } from '../../elements/device.element.js';
 import { createElementImportRelation } from '../../elements/element-import.element.js';
+import { createEntryPointElement } from '../../elements/entry-point.element.js';
 import { createEnumerationElement } from '../../elements/enumeration.element.js';
 import { createExecutionEnvironmentElement } from '../../elements/execution-environment.element.js';
+import { createExitPointElement } from '../../elements/exit-point.element.js';
 import { createExtendRelation } from '../../elements/extend-relation.element.js';
 import { createFinalStateElement } from '../../elements/final-state.element.js';
 import { createFlowFinalNodeElement } from '../../elements/flow-final-node.element.js';
@@ -145,6 +150,7 @@ import { createStateMachineElement } from '../../elements/state-machine.element.
 import { createStateElement } from '../../elements/state.element.js';
 import { createSubjectElement } from '../../elements/subject.element.js';
 import { createSubstitutionRelation } from '../../elements/substitution-relation.element.js';
+import { createTerminateElement } from '../../elements/terminate.element.js';
 import { createTransitionRelation } from '../../elements/transition.element.js';
 import { createUsageRelation } from '../../elements/usage-relation.element.js';
 import { createUseCaseElement } from '../../elements/use-case.element.js';
@@ -314,6 +320,9 @@ export class UmlDiagramGModelFactory implements GModelFactory {
         if (isFork(element)) return createForkElement(this.buildCtx(element));
         if (isDeepHistory(element)) return createDeepHistoryElement(this.buildCtx(element));
         if (isShallowHistory(element)) return createShallowHistoryElement(this.buildCtx(element));
+        if (isExitPoint(element)) return createExitPointElement(this.buildCtx(element));
+        if (isEntryPoint(element)) return createEntryPointElement(this.buildCtx(element));
+        if (isTerminate(element)) return createTerminateElement(this.buildCtx(element));
         return undefined;
     }
 

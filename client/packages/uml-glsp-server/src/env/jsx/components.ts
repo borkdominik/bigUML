@@ -155,6 +155,17 @@ export interface GEdgeElementProps {
     children?: GlspNode;
 }
 
+/**
+ * How much slack a click on an edge is given, in pixels either side of the line.
+ *
+ * A line is one pixel wide and an arrowhead is a few across, which is a target nothing can be expected
+ * to hit; GLSP draws a transparent band of this width along the route to be clicked instead - but only
+ * for an edge that asks for one, and eleven of the twenty relations here never did. Set for every edge
+ * rather than per relation so that none of them can be left out again, and overridden by any that says
+ * otherwise in its own `args`.
+ */
+export const DEFAULT_EDGE_PADDING = 10;
+
 export function GEdgeElement(props: GEdgeElementProps): GEdge {
     const edge = new GEdge();
     edge.id = props.id ?? uuid.v4();
@@ -163,7 +174,7 @@ export function GEdgeElement(props: GEdgeElementProps): GEdge {
     edge.targetId = props.targetId;
     edge.routerKind = props.routerKind;
     edge.cssClasses = props.cssClasses ?? [];
-    edge.args = props.args;
+    edge.args = { edgePadding: DEFAULT_EDGE_PADDING, ...props.args };
     edge.routingPoints = [];
     edge.children = normalizeChildren(props.children);
     wireParent(edge);

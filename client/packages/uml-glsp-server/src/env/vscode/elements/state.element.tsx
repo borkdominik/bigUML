@@ -14,10 +14,16 @@ import type { GModelElement } from '@eclipse-glsp/server';
 import type { BaseElementProps, ElementContext } from './core/element-context.js';
 import { SectionCompartment } from './core/index.js';
 import { GStatePartNodeElement } from './state-part.element.js';
-import { GStateRegionCompartment } from './state-region.element.js';
+import { DEFAULT_REGION_BAND_HEIGHT, GStateRegionCompartment, MIN_REGION_BAND_HEIGHT, regionBandHeight } from './state-region.element.js';
 
 export interface GStateNodeElementProps extends BaseElementProps {
     node: State;
+    /**
+     * How deep each of this state's bands is drawn, which is what the box has to be tall enough to hold
+     * as many of as it has regions. Worked out by `createStateElement` from the regions themselves; left
+     * out, a band at its default depth is assumed.
+     */
+    bandHeight?: number;
     /** The compartments under the name - the parts, and the region bands (see `createStateElement`). */
     children?: GlspNode;
 }
@@ -33,31 +39,75 @@ const DEFAULT_STATE_SIZE = { width: 160, height: 70 };
  * What a state opens at once it has a region: a frame its substates are drawn inside rather than a box
  * holding a name, so it opens at the size of something that has to contain them. Wide enough for two
  * substates side by side with a transition between them.
- *
- * A state that already carries a size keeps it - the bands push it open from the inside instead, since
- * each opens at a height of its own and the layouter grows the state around its content.
  */
-const DEFAULT_COMPOSITE_STATE_SIZE = { width: 420, height: 300 };
+const DEFAULT_COMPOSITE_STATE_WIDTH = 420;
+
+/**
+ * The room a composite state keeps above its bands, for the name and for a part or two written under it.
+ * A rough allowance rather than a measurement: what the name and the parts actually take is known to the
+ * client once they are laid out, and the state grows to whatever that turns out to be - this only has to
+ * be near enough that a state does not open with its bands already squeezed.
+ */
+const COMPOSITE_STATE_HEADER_ALLOWANCE = 70;
 
 /** Inset of the state name from the state border. */
 const STATE_PADDING = 8;
 
 /**
+ * The depth each band takes when a state of `stateHeight` is divided into `regionCount` of them.
+ *
+ * The inverse of `compositeStateHeight`, and what a drag on the state's own handles is turned into: the
+ * bands are what the box is made of, so stretching the box stretches them rather than leaving them at
+ * the depth they had and opening a gap. Whole pixels, because the height is stored as an integer, and
+ * rounded down so that the bands can never add up to more than the box the user just drew.
+ */
+export function regionHeightWithin(stateHeight: number, regionCount: number): number {
+    if (regionCount <= 0) {
+        return DEFAULT_REGION_BAND_HEIGHT;
+    }
+    return Math.max(MIN_REGION_BAND_HEIGHT, Math.floor((stateHeight - COMPOSITE_STATE_HEADER_ALLOWANCE) / regionCount));
+}
+
+/**
+ * The room a composite state needs for `regionCount` bands of `bandHeight` each, plus what is written
+ * above them.
+ *
+ * This is a floor and not merely a starting size: a state is the box its bands divide, so its height is
+ * their height added up. Adding a region to a state therefore opens the state by a band's worth rather
+ * than sharing out what was already there between one more of them - which is what left a state with two
+ * regions drawing both of them a few pixels deep.
+ */
+function compositeStateHeight(regionCount: number, bandHeight: number): number {
+    return COMPOSITE_STATE_HEADER_ALLOWANCE + regionCount * bandHeight;
+}
+
+/**
  * A `Size` metaInfo can exist while carrying no usable dimensions (see `GenericChangeBoundsOperationHandler`),
  * which a plain `?? default` would happily accept - and the client layouter then collapses the state onto its
  * name label because its preferred size resolves to 0. So only positive dimensions count as a persisted size.
+ *
+ * A composite state is held to the height its bands add up to on top of that. Dragging one taller still
+ * works and is kept; dragging it shorter than its own contents does not, the way it does not for any
+ * other box here - the client grows a container to fit what is in it whatever size it was given.
  */
-function stateSize(size: BaseElementProps['size'], composite: boolean): Dimension {
-    const fallback = composite ? DEFAULT_COMPOSITE_STATE_SIZE : DEFAULT_STATE_SIZE;
-    return {
-        width: size?.width && size.width > 0 ? size.width : fallback.width,
-        height: size?.height && size.height > 0 ? size.height : fallback.height
-    };
+function stateSize(size: BaseElementProps['size'], regionCount: number, bandHeight: number): Dimension {
+    const composite = regionCount > 0;
+    const width = size?.width && size.width > 0 ? size.width : composite ? DEFAULT_COMPOSITE_STATE_WIDTH : DEFAULT_STATE_SIZE.width;
+    const stored = size?.height && size.height > 0 ? size.height : 0;
+
+    if (!composite) {
+        return { width, height: stored > 0 ? stored : DEFAULT_STATE_SIZE.height };
+    }
+    return { width, height: Math.max(stored, compositeStateHeight(regionCount, bandHeight)) };
 }
 
 export function GStateNodeElement(props: GStateNodeElementProps): GModelElement {
-    const composite = (props.node.regions?.length ?? 0) > 0;
-    const size = stateSize(props.size, composite);
+    const regions = props.node.regions ?? [];
+    const composite = regions.length > 0;
+    // Measured against a band at its default depth. `createStateElement` works the real one out from the
+    // regions and hands the band that height directly; what matters here is only that the box opens with
+    // room for them rather than with them already squeezed.
+    const size = stateSize(props.size, regions.length, props.bandHeight ?? DEFAULT_REGION_BAND_HEIGHT);
 
     return (
         <GNodeElement
@@ -122,20 +172,15 @@ export function createStateElement(ctx: ElementContext<State>): GModelElement {
     // the rest from one another - dashed, which is how UML separates the regions of an orthogonal
     // state. Their width is the room inside the state's borders, which is what they open at.
     const regions = ctx.node.regions ?? [];
-    const bandWidth = stateSize(size, regions.length > 0).width - 2 * STATE_PADDING;
+    // One depth for all of them, held by the state rather than by each region - see `regionBandHeight`.
+    const bandHeight = regionBandHeight(ctx.node.regionHeight);
+    const bandWidth = stateSize(size, regions.length, bandHeight).width - 2 * STATE_PADDING;
     const regionBands = regions.map((region, index) => (
-        <GStateRegionCompartment
-            node={region}
-            divided={index > 0}
-            width={bandWidth}
-            // A region carries its own height, dragged on the band and stored the way every other
-            // dimension in a diagram is (see `GenericChangeBoundsOperationHandler`).
-            height={ctx.modelIndex.findSize(region.__id)?.height}
-        />
+        <GStateRegionCompartment node={region} divided={index > 0} width={bandWidth} height={bandHeight} />
     ));
 
     return (
-        <GStateNodeElement node={ctx.node} position={position} size={size} type={ctx.elementType}>
+        <GStateNodeElement node={ctx.node} position={position} size={size} bandHeight={bandHeight} type={ctx.elementType}>
             {partsSection}
             {regionBands}
         </GStateNodeElement>

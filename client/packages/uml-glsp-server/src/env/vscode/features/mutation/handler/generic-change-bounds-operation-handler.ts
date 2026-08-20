@@ -9,6 +9,8 @@
 import {
     isInteraction,
     isLifeline,
+    isRegion,
+    isState,
     isStateMachine,
     isStateMachineDiagramNodes,
     isSubject,
@@ -18,6 +20,7 @@ import { isNoBounds } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
 import { ChangeBoundsOperation, type Command, OperationHandler } from '@eclipse-glsp/server';
 import { injectable } from 'inversify';
 import { URI } from 'vscode-uri';
+import { regionHeightWithin } from '../../../elements/state.element.js';
 import { ModelPatchCommand } from '../../command/model-patch-command.js';
 import { type DiagramModelState } from '../../model/diagram-model-state.js';
 
@@ -101,6 +104,17 @@ export class GenericChangeBoundsOperationHandler extends OperationHandler {
                 return;
             }
 
+            // A band of a composite state is not placed on the canvas and is not sized on its own: its
+            // width is the room inside the state's borders and its depth is one number the state holds
+            // for all of its regions. A drag on one therefore sets that number, and nothing about the
+            // region itself - a `Size` written here would be a dimension nothing ever reads again.
+            if (this.setsRegionHeight(elementId)) {
+                if (newSize?.height) {
+                    this.patchRegionHeight(elementId, newSize.height, patch);
+                }
+                return;
+            }
+
             const sizePath = this.modelState.index.findSizePath(elementId);
             const size = (this.modelState.index as any).findSize ? (this.modelState.index as any).findSize(elementId) : undefined;
 
@@ -146,6 +160,13 @@ export class GenericChangeBoundsOperationHandler extends OperationHandler {
                 }
             });
 
+            // Dragging a state that holds regions stretches the bands it is made of rather than leaving
+            // them where they were: the bands are the box. Written back as the state's own
+            // `regionHeight`, which is the one number all of them are drawn at.
+            if (newSize?.height && newSize.height !== size?.height) {
+                this.stretchRegions(elementId, newSize.height, patch);
+            }
+
             // Only a genuine move - the container keeping its current size - should drag its contents
             // along. A resize (even one that also shifts the anchor corner's position, e.g. dragging
             // the top-left handle) must not translate the contents, since the box didn't uniformly
@@ -161,6 +182,51 @@ export class GenericChangeBoundsOperationHandler extends OperationHandler {
         });
 
         return patch;
+    }
+
+    /** Whether this element is a band of a composite state, whose drag sets the state's region height. */
+    protected setsRegionHeight(elementId: string): boolean {
+        const element = this.modelState.index.findIdElement(elementId);
+        return isRegion(element) && isState(element.$container);
+    }
+
+    /** Writes the depth a band was dragged to onto the state that owns it, for all of its regions. */
+    protected patchRegionHeight(elementId: string, height: number, patch: BoundsPatch[]): void {
+        const region = this.modelState.index.findIdElement(elementId);
+        if (!isRegion(region) || !isState(region.$container)) {
+            return;
+        }
+        this.pushRegionHeight(region.$container, Math.round(height), patch);
+    }
+
+    /** Turns a state's new height into the depth each of its bands is drawn at. */
+    protected stretchRegions(elementId: string, stateHeight: number, patch: BoundsPatch[]): void {
+        const state = this.modelState.index.findIdElement(elementId);
+        if (!isState(state)) {
+            return;
+        }
+        const regions = state.regions ?? [];
+        if (regions.length === 0) {
+            return;
+        }
+        this.pushRegionHeight(state, regionHeightWithin(stateHeight, regions.length), patch);
+    }
+
+    /**
+     * The one patch both of those come down to. Stored as an integer because that is what the grammar
+     * holds, and written with `add` where the state carries no such number yet - `replace` on a property
+     * that is not there is an error, and every state written before this one existed has none.
+     */
+    protected pushRegionHeight(state: { __id: string; regionHeight?: number }, height: number, patch: BoundsPatch[]): void {
+        const statePath = this.modelState.index.findPath(state.__id);
+        if (!statePath || height === state.regionHeight) {
+            return;
+        }
+        patch.push({
+            op: state.regionHeight === undefined ? 'add' : 'replace',
+            path: `${statePath}/regionHeight`,
+            value: height
+        });
     }
 
     /** Whether the element is one that stores no bounds of its own, by the type it was drawn as. */

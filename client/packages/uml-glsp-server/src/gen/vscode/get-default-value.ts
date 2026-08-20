@@ -314,6 +314,16 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'StateMachineDiagramEdges'
         }
     ],
+    Terminate: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
     StatePart: [],
     StateMachine: [
         {
@@ -367,6 +377,10 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
         {
             property: 'regions',
             propertyType: 'Region'
+        },
+        {
+            property: 'regionHeight',
+            propertyType: 'number'
         }
     ],
     ShallowHistory: [
@@ -410,6 +424,26 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
         }
     ],
     FinalState: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    ExitPoint: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    EntryPoint: [
         {
             property: 'name',
             propertyType: 'string'
@@ -1416,6 +1450,7 @@ export const astTypeMapping: Record<string, string> = {};
 export const optionalNameClasses = new Set<string>([
     'Association',
     'Transition',
+    'Terminate',
     'StatePart',
     'Region',
     'ShallowHistory',
@@ -1423,6 +1458,8 @@ export const optionalNameClasses = new Set<string>([
     'InitialState',
     'Fork',
     'FinalState',
+    'ExitPoint',
+    'EntryPoint',
     'DeepHistory',
     'Choice',
     'Usage',

@@ -176,13 +176,41 @@ export class UmlDiagramConfiguration implements DiagramConfiguration {
                 containableElementTypeIds: [
                     StateMachineDiagramNodeTypes.CHOICE,
                     StateMachineDiagramNodeTypes.DEEP_HISTORY,
+                    StateMachineDiagramNodeTypes.ENTRY_POINT,
+                    StateMachineDiagramNodeTypes.EXIT_POINT,
                     StateMachineDiagramNodeTypes.FINAL_STATE,
                     StateMachineDiagramNodeTypes.FORK,
                     StateMachineDiagramNodeTypes.INITIAL_STATE,
                     StateMachineDiagramNodeTypes.JOIN,
                     StateMachineDiagramNodeTypes.REGION,
                     StateMachineDiagramNodeTypes.SHALLOW_HISTORY,
-                    StateMachineDiagramNodeTypes.STATE
+                    StateMachineDiagramNodeTypes.STATE,
+                    StateMachineDiagramNodeTypes.TERMINATE
+                ]
+            },
+            // A region standing on its own - the area a state machine's states are drawn on. Resizable,
+            // which it is not without a hint of its own: `TypeHintProvider` grants `resizeFeature` from
+            // `resizable` and from nothing else, so a region had no handles to be dragged out with at
+            // all. What may be dropped on it is what may stand in a region, which is every vertex of a
+            // state machine but not another region - a region divides a state, not another region.
+            {
+                elementTypeId: StateMachineDiagramNodeTypes.REGION,
+                repositionable: true,
+                deletable: true,
+                resizable: true,
+                reparentable: false,
+                containableElementTypeIds: [
+                    StateMachineDiagramNodeTypes.CHOICE,
+                    StateMachineDiagramNodeTypes.DEEP_HISTORY,
+                    StateMachineDiagramNodeTypes.ENTRY_POINT,
+                    StateMachineDiagramNodeTypes.EXIT_POINT,
+                    StateMachineDiagramNodeTypes.FINAL_STATE,
+                    StateMachineDiagramNodeTypes.FORK,
+                    StateMachineDiagramNodeTypes.INITIAL_STATE,
+                    StateMachineDiagramNodeTypes.JOIN,
+                    StateMachineDiagramNodeTypes.SHALLOW_HISTORY,
+                    StateMachineDiagramNodeTypes.STATE,
+                    StateMachineDiagramNodeTypes.TERMINATE
                 ]
             },
             // A state holding regions is the frame its substates are drawn on, so everything that can
@@ -197,12 +225,15 @@ export class UmlDiagramConfiguration implements DiagramConfiguration {
                 containableElementTypeIds: [
                     StateMachineDiagramNodeTypes.CHOICE,
                     StateMachineDiagramNodeTypes.DEEP_HISTORY,
+                    StateMachineDiagramNodeTypes.ENTRY_POINT,
+                    StateMachineDiagramNodeTypes.EXIT_POINT,
                     StateMachineDiagramNodeTypes.FINAL_STATE,
                     StateMachineDiagramNodeTypes.FORK,
                     StateMachineDiagramNodeTypes.INITIAL_STATE,
                     StateMachineDiagramNodeTypes.JOIN,
                     StateMachineDiagramNodeTypes.SHALLOW_HISTORY,
-                    StateMachineDiagramNodeTypes.STATE
+                    StateMachineDiagramNodeTypes.STATE,
+                    StateMachineDiagramNodeTypes.TERMINATE
                 ]
             },
             // The band a region is drawn as. Resizable and nothing else: it is how tall the region is
@@ -220,12 +251,15 @@ export class UmlDiagramConfiguration implements DiagramConfiguration {
                 containableElementTypeIds: [
                     StateMachineDiagramNodeTypes.CHOICE,
                     StateMachineDiagramNodeTypes.DEEP_HISTORY,
+                    StateMachineDiagramNodeTypes.ENTRY_POINT,
+                    StateMachineDiagramNodeTypes.EXIT_POINT,
                     StateMachineDiagramNodeTypes.FINAL_STATE,
                     StateMachineDiagramNodeTypes.FORK,
                     StateMachineDiagramNodeTypes.INITIAL_STATE,
                     StateMachineDiagramNodeTypes.JOIN,
                     StateMachineDiagramNodeTypes.SHALLOW_HISTORY,
-                    StateMachineDiagramNodeTypes.STATE
+                    StateMachineDiagramNodeTypes.STATE,
+                    StateMachineDiagramNodeTypes.TERMINATE
                 ]
             },
             // The compartment a state's parts are written in. Adjusted through `State.partsHeight` in the

@@ -6,12 +6,12 @@
 }
 
 /* A region is the area a frame's states are drawn on, so it is transparent for the same two reasons -
-   it must not hide the states standing on it, nor swallow their clicks. Its divider is dashed, which
-   is how UML separates the regions of an orthogonal state machine and what tells one apart from the
-   frame around it. */
+   it must not hide the states standing on it, nor swallow their clicks. Its border is solid and its
+   corners are rounded, because a region is drawn as the titled box UML draws a composite state as (see
+   `RegionNodeView`). The dashed rule that separates one region of an orthogonal state from the next is
+   drawn between the bands inside that state instead - see `uml-comp-separator-dashed`. */
 .uml-region-node .uml-node-background {
     fill: none;
-    stroke-dasharray: 6 4;
 }
 
 /* A state holding regions is the frame its substates are drawn on, so it has to stay transparent for the

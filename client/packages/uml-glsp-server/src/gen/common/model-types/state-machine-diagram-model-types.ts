@@ -24,6 +24,9 @@ export namespace StateMachineDiagramNodeTypes {
     export const FORK = representationTypeId('StateMachine', DefaultTypes.NODE, 'Fork');
     export const DEEP_HISTORY = representationTypeId('StateMachine', DefaultTypes.NODE, 'DeepHistory');
     export const SHALLOW_HISTORY = representationTypeId('StateMachine', DefaultTypes.NODE, 'ShallowHistory');
+    export const EXIT_POINT = representationTypeId('StateMachine', DefaultTypes.NODE, 'ExitPoint');
+    export const ENTRY_POINT = representationTypeId('StateMachine', DefaultTypes.NODE, 'EntryPoint');
+    export const TERMINATE = representationTypeId('StateMachine', DefaultTypes.NODE, 'Terminate');
 }
 
 export namespace StateMachineDiagramEdgeTypes {
@@ -43,6 +46,9 @@ export namespace StateMachineDiagramModelTypes {
     export const FORK = StateMachineDiagramNodeTypes.FORK;
     export const DEEP_HISTORY = StateMachineDiagramNodeTypes.DEEP_HISTORY;
     export const SHALLOW_HISTORY = StateMachineDiagramNodeTypes.SHALLOW_HISTORY;
+    export const EXIT_POINT = StateMachineDiagramNodeTypes.EXIT_POINT;
+    export const ENTRY_POINT = StateMachineDiagramNodeTypes.ENTRY_POINT;
+    export const TERMINATE = StateMachineDiagramNodeTypes.TERMINATE;
 
     // re-export edges
     export const TRANSITION = StateMachineDiagramEdgeTypes.TRANSITION;
@@ -61,6 +67,9 @@ export namespace StateMachineAstTypes {
         Fork: StateMachineDiagramModelTypes.FORK,
         DeepHistory: StateMachineDiagramModelTypes.DEEP_HISTORY,
         ShallowHistory: StateMachineDiagramModelTypes.SHALLOW_HISTORY,
+        ExitPoint: StateMachineDiagramModelTypes.EXIT_POINT,
+        EntryPoint: StateMachineDiagramModelTypes.ENTRY_POINT,
+        Terminate: StateMachineDiagramModelTypes.TERMINATE,
         Transition: StateMachineDiagramModelTypes.TRANSITION
     };
 

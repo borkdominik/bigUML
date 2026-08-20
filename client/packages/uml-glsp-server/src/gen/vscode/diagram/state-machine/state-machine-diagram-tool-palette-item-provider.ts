@@ -41,41 +41,18 @@ export class StateMachineDiagramToolPaletteItemProvider extends ToolPaletteItemP
                 actions: []
             },
             {
-                id: 'uml.container',
-                sortString: 'A',
-                label: 'Container',
-                icon: 'symbol-property',
-                children: [
-                    {
-                        id: 'state-machine',
-                        sortString: 'A',
-                        label: 'State Machine',
-                        icon: 'uml-state-machine-icon',
-                        actions: [TriggerNodeCreationAction.create(StateMachineDiagramNodeTypes.STATE_MACHINE)]
-                    },
-                    {
-                        id: 'region',
-                        sortString: 'A',
-                        label: 'Region',
-                        icon: 'uml-region-icon',
-                        actions: [TriggerNodeCreationAction.create(StateMachineDiagramNodeTypes.REGION)]
-                    },
-                    {
-                        id: 'state',
-                        sortString: 'A',
-                        label: 'State',
-                        icon: 'uml-state-icon',
-                        actions: [TriggerNodeCreationAction.create(StateMachineDiagramNodeTypes.STATE)]
-                    }
-                ],
-                actions: []
-            },
-            {
                 id: 'uml.pseudo-states',
                 sortString: 'A',
                 label: 'PseudoStates',
                 icon: 'symbol-property',
                 children: [
+                    {
+                        id: 'terminate',
+                        sortString: 'A',
+                        label: 'Terminate',
+                        icon: 'uml-pseudostate-terminate-icon',
+                        actions: [TriggerNodeCreationAction.create(StateMachineDiagramNodeTypes.TERMINATE)]
+                    },
                     {
                         id: 'shallow-history',
                         sortString: 'A',
@@ -112,6 +89,20 @@ export class StateMachineDiagramToolPaletteItemProvider extends ToolPaletteItemP
                         actions: [TriggerNodeCreationAction.create(StateMachineDiagramNodeTypes.FINAL_STATE)]
                     },
                     {
+                        id: 'exit-point',
+                        sortString: 'A',
+                        label: 'Exit Point',
+                        icon: 'uml-pseudostate-exit-point-icon',
+                        actions: [TriggerNodeCreationAction.create(StateMachineDiagramNodeTypes.EXIT_POINT)]
+                    },
+                    {
+                        id: 'entry-point',
+                        sortString: 'A',
+                        label: 'Entry Point',
+                        icon: 'uml-pseudostate-entry-point-icon',
+                        actions: [TriggerNodeCreationAction.create(StateMachineDiagramNodeTypes.ENTRY_POINT)]
+                    },
+                    {
                         id: 'deep-history',
                         sortString: 'A',
                         label: 'Deep History',
@@ -124,6 +115,36 @@ export class StateMachineDiagramToolPaletteItemProvider extends ToolPaletteItemP
                         label: 'Choice',
                         icon: 'uml-pseudostate-choice-icon',
                         actions: [TriggerNodeCreationAction.create(StateMachineDiagramNodeTypes.CHOICE)]
+                    }
+                ],
+                actions: []
+            },
+            {
+                id: 'uml.container',
+                sortString: 'A',
+                label: 'Container',
+                icon: 'symbol-property',
+                children: [
+                    {
+                        id: 'state-machine',
+                        sortString: 'A',
+                        label: 'State Machine',
+                        icon: 'uml-state-machine-icon',
+                        actions: [TriggerNodeCreationAction.create(StateMachineDiagramNodeTypes.STATE_MACHINE)]
+                    },
+                    {
+                        id: 'region',
+                        sortString: 'A',
+                        label: 'Region',
+                        icon: 'uml-region-icon',
+                        actions: [TriggerNodeCreationAction.create(StateMachineDiagramNodeTypes.REGION)]
+                    },
+                    {
+                        id: 'state',
+                        sortString: 'A',
+                        label: 'State',
+                        icon: 'uml-state-icon',
+                        actions: [TriggerNodeCreationAction.create(StateMachineDiagramNodeTypes.STATE)]
                     }
                 ],
                 actions: []

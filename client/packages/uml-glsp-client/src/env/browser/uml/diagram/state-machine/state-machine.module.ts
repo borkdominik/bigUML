@@ -14,6 +14,10 @@ import {
     GChoiceNodeView,
     GDeepHistoryNode,
     GDeepHistoryNodeView,
+    GEntryPointNode,
+    GEntryPointNodeView,
+    GExitPointNode,
+    GExitPointNodeView,
     GFinalStateNode,
     GFinalStateNodeView,
     GInitialStateNode,
@@ -28,6 +32,8 @@ import {
     GStateJoinNodeView,
     GStateMachineNode,
     GStateMachineNodeView,
+    GTerminateNode,
+    GTerminateNodeView,
     GStateCompartment,
     GStateCompartmentView,
     GStateNode,
@@ -60,6 +66,9 @@ export const umlStateMachineDiagramModule = new FeatureModule((bind, unbind, isB
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Join'), GStateJoinNode, GStateJoinNodeView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Fork'), GStateForkNode, GStateForkNodeView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'DeepHistory'), GDeepHistoryNode, GDeepHistoryNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'ExitPoint'), GExitPointNode, GExitPointNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'EntryPoint'), GEntryPointNode, GEntryPointNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Terminate'), GTerminateNode, GTerminateNodeView);
     configureModelElement(
         context,
         representationTypeId(R, DefaultTypes.NODE, 'ShallowHistory'),

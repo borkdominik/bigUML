@@ -35,6 +35,8 @@ import {
     isActor,
     StateMachineDiagram,
     isStateMachineDiagram,
+    Terminate,
+    isTerminate,
     StatePart,
     isStatePart,
     StateMachine,
@@ -53,6 +55,10 @@ import {
     isFork,
     FinalState,
     isFinalState,
+    ExitPoint,
+    isExitPoint,
+    EntryPoint,
+    isEntryPoint,
     DeepHistory,
     isDeepHistory,
     Choice,
@@ -729,6 +735,21 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         return '{' + str.join(',\n') + '}';
     }
 
+    serializeTerminate(element: Terminate): string {
+        let str: Array<string> = [];
+        str.push('"__type": "Terminate"');
+        if (element.__id !== undefined && element.__id !== null) {
+            str.push('"__id": ' + '"' + element.__id + '"');
+        }
+        if (element.name !== undefined && element.name !== null) {
+            str.push('"name": ' + '"' + element.name + '"');
+        }
+        if (element.visibility !== undefined && element.visibility !== null) {
+            str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        return '{' + str.join(',\n') + '}';
+    }
+
     serializeStatePart(element: StatePart): string {
         let str: Array<string> = [];
         str.push('"__type": "StatePart"');
@@ -810,6 +831,9 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (element.regions !== undefined && element.regions !== null) {
             str.push('"regions": [' + element.regions.map(property => this.serializeRegion(property)).join(',') + ']');
         }
+        if (element.regionHeight !== undefined && element.regionHeight !== null) {
+            str.push('"regionHeight": ' + element.regionHeight + '');
+        }
         return '{' + str.join(',\n') + '}';
     }
 
@@ -876,6 +900,36 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     serializeFinalState(element: FinalState): string {
         let str: Array<string> = [];
         str.push('"__type": "FinalState"');
+        if (element.__id !== undefined && element.__id !== null) {
+            str.push('"__id": ' + '"' + element.__id + '"');
+        }
+        if (element.name !== undefined && element.name !== null) {
+            str.push('"name": ' + '"' + element.name + '"');
+        }
+        if (element.visibility !== undefined && element.visibility !== null) {
+            str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        return '{' + str.join(',\n') + '}';
+    }
+
+    serializeExitPoint(element: ExitPoint): string {
+        let str: Array<string> = [];
+        str.push('"__type": "ExitPoint"');
+        if (element.__id !== undefined && element.__id !== null) {
+            str.push('"__id": ' + '"' + element.__id + '"');
+        }
+        if (element.name !== undefined && element.name !== null) {
+            str.push('"name": ' + '"' + element.name + '"');
+        }
+        if (element.visibility !== undefined && element.visibility !== null) {
+            str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        return '{' + str.join(',\n') + '}';
+    }
+
+    serializeEntryPoint(element: EntryPoint): string {
+        let str: Array<string> = [];
+        str.push('"__type": "EntryPoint"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
         }
@@ -2418,6 +2472,15 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (isShallowHistory(element)) {
             return this.serializeShallowHistory(element);
         }
+        if (isExitPoint(element)) {
+            return this.serializeExitPoint(element);
+        }
+        if (isEntryPoint(element)) {
+            return this.serializeEntryPoint(element);
+        }
+        if (isTerminate(element)) {
+            return this.serializeTerminate(element);
+        }
     }
 
     serializeStateMachineDiagramEdges(element: StateMachineDiagramEdges): any {
@@ -2824,6 +2887,9 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (isActor(element)) {
             return this.serializeActor(element);
         }
+        if (isTerminate(element)) {
+            return this.serializeTerminate(element);
+        }
         if (isStateMachine(element)) {
             return this.serializeStateMachine(element);
         }
@@ -2847,6 +2913,12 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         }
         if (isFinalState(element)) {
             return this.serializeFinalState(element);
+        }
+        if (isExitPoint(element)) {
+            return this.serializeExitPoint(element);
+        }
+        if (isEntryPoint(element)) {
+            return this.serializeEntryPoint(element);
         }
         if (isDeepHistory(element)) {
             return this.serializeDeepHistory(element);

@@ -9,10 +9,10 @@
 import type { ShallowHistory } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { GModelElement } from '@eclipse-glsp/server';
 import type { ElementContext } from './core/element-context.js';
-import { GHistoryNodeElement } from './core/history-node.js';
+import { GPseudostateMarkNodeElement } from './core/pseudostate-mark-node.js';
 
 export function createShallowHistoryElement(ctx: ElementContext<ShallowHistory>): GModelElement {
     const position = ctx.modelIndex.findPosition(ctx.node.__id);
     const size = ctx.modelIndex.findSize(ctx.node.__id);
-    return <GHistoryNodeElement id={ctx.node.__id} name={ctx.node.name} position={position} size={size} type={ctx.elementType} />;
+    return <GPseudostateMarkNodeElement id={ctx.node.__id} name={ctx.node.name} position={position} size={size} type={ctx.elementType} />;
 }

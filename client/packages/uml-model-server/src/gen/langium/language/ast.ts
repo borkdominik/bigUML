@@ -53,9 +53,11 @@ export type UmlDiagramKeywordNames =
     | "\"Device\""
     | "\"ElementImport\""
     | "\"ElementWithSizeAndPosition\""
+    | "\"EntryPoint\""
     | "\"Enumeration\""
     | "\"EnumerationLiteral\""
     | "\"ExecutionEnvironment\""
+    | "\"ExitPoint\""
     | "\"Extend\""
     | "\"FinalState\""
     | "\"FlowFinalNode\""
@@ -105,6 +107,7 @@ export type UmlDiagramKeywordNames =
     | "\"StatePart\""
     | "\"Subject\""
     | "\"Substitution\""
+    | "\"Terminate\""
     | "\"Transition\""
     | "\"UnionType_0\""
     | "\"UnionType_1\""
@@ -164,6 +167,7 @@ export type UmlDiagramKeywordNames =
     | "\"partsHeight\""
     | "\"properties\""
     | "\"propertyType\""
+    | "\"regionHeight\""
     | "\"regions\""
     | "\"relations\""
     | "\"slots\""
@@ -1179,6 +1183,27 @@ export function isElementWithSizeAndPosition(item: unknown): item is ElementWith
     return reflection.isInstance(item, ElementWithSizeAndPosition.$type);
 }
 
+export interface EntryPoint extends langium.AstNode {
+    readonly $container: Activity | ActivityPartition | DeploymentModel | DeploymentPackage | Package | Region | StateMachineDiagram;
+    readonly $type: 'EntryPoint';
+    __id: string;
+    __unknown: Array<UnknownProperty>;
+    name?: string;
+    visibility?: Visibility;
+}
+
+export const EntryPoint = {
+    $type: 'EntryPoint',
+    __id: '__id',
+    __unknown: '__unknown',
+    name: 'name',
+    visibility: 'visibility'
+} as const;
+
+export function isEntryPoint(item: unknown): item is EntryPoint {
+    return reflection.isInstance(item, EntryPoint.$type);
+}
+
 export interface Enumeration extends langium.AstNode {
     readonly $container: Activity | ActivityPartition | ClassDiagram | DeploymentModel | DeploymentPackage | Package | Region;
     readonly $type: 'Enumeration';
@@ -1252,6 +1277,27 @@ export const ExecutionEnvironment = {
 
 export function isExecutionEnvironment(item: unknown): item is ExecutionEnvironment {
     return reflection.isInstance(item, ExecutionEnvironment.$type);
+}
+
+export interface ExitPoint extends langium.AstNode {
+    readonly $container: Activity | ActivityPartition | DeploymentModel | DeploymentPackage | Package | Region | StateMachineDiagram;
+    readonly $type: 'ExitPoint';
+    __id: string;
+    __unknown: Array<UnknownProperty>;
+    name?: string;
+    visibility?: Visibility;
+}
+
+export const ExitPoint = {
+    $type: 'ExitPoint',
+    __id: '__id',
+    __unknown: '__unknown',
+    name: 'name',
+    visibility: 'visibility'
+} as const;
+
+export function isExitPoint(item: unknown): item is ExitPoint {
+    return reflection.isInstance(item, ExitPoint.$type);
 }
 
 export interface Extend extends Relation {
@@ -1898,7 +1944,7 @@ export function isMetaInfo(item: unknown): item is MetaInfo {
     return reflection.isInstance(item, MetaInfo.$type);
 }
 
-export type Node = AcceptEventAction | Activity | ActivityFinalNode | ActivityParameterNode | ActivityPartition | Actor | Artifact | CentralBufferNode | Choice | Class | DataType | DecisionNode | DeepHistory | DeploymentModel | DeploymentNode | DeploymentPackage | DeploymentSpecification | Device | Enumeration | ExecutionEnvironment | FinalState | FlowFinalNode | Fork | ForkNode | InitialNode | InitialState | InstanceSpecification | Interaction | Interface | Join | JoinNode | Lifeline | MergeNode | OpaqueAction | Operation | Package | PrimitiveType | Region | SendSignalAction | ShallowHistory | State | StateMachine | Subject | UseCase;
+export type Node = AcceptEventAction | Activity | ActivityFinalNode | ActivityParameterNode | ActivityPartition | Actor | Artifact | CentralBufferNode | Choice | Class | DataType | DecisionNode | DeepHistory | DeploymentModel | DeploymentNode | DeploymentPackage | DeploymentSpecification | Device | EntryPoint | Enumeration | ExecutionEnvironment | ExitPoint | FinalState | FlowFinalNode | Fork | ForkNode | InitialNode | InitialState | InstanceSpecification | Interaction | Interface | Join | JoinNode | Lifeline | MergeNode | OpaqueAction | Operation | Package | PrimitiveType | Region | SendSignalAction | ShallowHistory | State | StateMachine | Subject | Terminate | UseCase;
 
 export const Node = {
     $type: 'Node'
@@ -2416,6 +2462,7 @@ export interface State extends langium.AstNode {
     name: string;
     parts: Array<StatePart>;
     partsHeight?: number;
+    regionHeight?: number;
     regions: Array<Region>;
     visibility?: Visibility;
 }
@@ -2427,6 +2474,7 @@ export const State = {
     name: 'name',
     parts: 'parts',
     partsHeight: 'partsHeight',
+    regionHeight: 'regionHeight',
     regions: 'regions',
     visibility: 'visibility'
 } as const;
@@ -2501,7 +2549,7 @@ export function isStateMachineDiagramElements(item: unknown): item is StateMachi
     return reflection.isInstance(item, StateMachineDiagramElements.$type);
 }
 
-export type StateMachineDiagramNodes = Choice | DeepHistory | FinalState | Fork | InitialState | Join | Region | ShallowHistory | State | StateMachine | StatePart;
+export type StateMachineDiagramNodes = Choice | DeepHistory | EntryPoint | ExitPoint | FinalState | Fork | InitialState | Join | Region | ShallowHistory | State | StateMachine | StatePart | Terminate;
 
 export const StateMachineDiagramNodes = {
     $type: 'StateMachineDiagramNodes'
@@ -2584,6 +2632,27 @@ export function isSubstitution(item: unknown): item is Substitution {
     return reflection.isInstance(item, Substitution.$type);
 }
 
+export interface Terminate extends langium.AstNode {
+    readonly $container: Activity | ActivityPartition | DeploymentModel | DeploymentPackage | Package | Region | StateMachineDiagram;
+    readonly $type: 'Terminate';
+    __id: string;
+    __unknown: Array<UnknownProperty>;
+    name?: string;
+    visibility?: Visibility;
+}
+
+export const Terminate = {
+    $type: 'Terminate',
+    __id: '__id',
+    __unknown: '__unknown',
+    name: 'name',
+    visibility: 'visibility'
+} as const;
+
+export function isTerminate(item: unknown): item is Terminate {
+    return reflection.isInstance(item, Terminate.$type);
+}
+
 export interface Transition extends langium.AstNode {
     readonly $container: Region | StateMachineDiagram;
     readonly $type: 'Transition';
@@ -2658,7 +2727,7 @@ export function isUnionType_1(item: unknown): item is UnionType_1 {
 }
 
 export interface UnknownProperty extends langium.AstNode {
-    readonly $container: Abstraction | AcceptEventAction | Activity | ActivityDiagram | ActivityFinalNode | ActivityParameterNode | ActivityPartition | Actor | Artifact | Association | CentralBufferNode | Choice | Class | ClassDiagram | CommunicationDiagram | CommunicationPath | ControlFlow | DataType | DecisionNode | DeepHistory | Dependency | Deployment | DeploymentDiagram | DeploymentModel | DeploymentNode | DeploymentPackage | DeploymentSpecification | Device | Diagram | ElementImport | Enumeration | EnumerationLiteral | ExecutionEnvironment | Extend | FinalState | FlowFinalNode | Fork | ForkNode | Generalization | Include | InformationFlow | InformationFlowDiagram | InitialNode | InitialState | InputPin | InstanceSpecification | Interaction | Interface | InterfaceRealization | Join | JoinNode | Lifeline | LiteralSpecification | Manifestation | MergeNode | Message | OpaqueAction | Operation | OutputPin | Package | PackageDiagram | PackageImport | PackageMerge | Parameter | Position | PrimitiveType | Property | Realization | Region | Relation | SendSignalAction | ShallowHistory | Size | Slot | State | StateMachine | StateMachineDiagram | StatePart | Subject | Substitution | Transition | Usage | UseCase | UseCaseDiagram;
+    readonly $container: Abstraction | AcceptEventAction | Activity | ActivityDiagram | ActivityFinalNode | ActivityParameterNode | ActivityPartition | Actor | Artifact | Association | CentralBufferNode | Choice | Class | ClassDiagram | CommunicationDiagram | CommunicationPath | ControlFlow | DataType | DecisionNode | DeepHistory | Dependency | Deployment | DeploymentDiagram | DeploymentModel | DeploymentNode | DeploymentPackage | DeploymentSpecification | Device | Diagram | ElementImport | EntryPoint | Enumeration | EnumerationLiteral | ExecutionEnvironment | ExitPoint | Extend | FinalState | FlowFinalNode | Fork | ForkNode | Generalization | Include | InformationFlow | InformationFlowDiagram | InitialNode | InitialState | InputPin | InstanceSpecification | Interaction | Interface | InterfaceRealization | Join | JoinNode | Lifeline | LiteralSpecification | Manifestation | MergeNode | Message | OpaqueAction | Operation | OutputPin | Package | PackageDiagram | PackageImport | PackageMerge | Parameter | Position | PrimitiveType | Property | Realization | Region | Relation | SendSignalAction | ShallowHistory | Size | Slot | State | StateMachine | StateMachineDiagram | StatePart | Subject | Substitution | Terminate | Transition | Usage | UseCase | UseCaseDiagram;
     readonly $type: 'UnknownProperty';
     key: string;
     value: JsonValue;
@@ -2827,9 +2896,11 @@ export type UmlDiagramAstType = {
     Element: Element
     ElementImport: ElementImport
     ElementWithSizeAndPosition: ElementWithSizeAndPosition
+    EntryPoint: EntryPoint
     Enumeration: Enumeration
     EnumerationLiteral: EnumerationLiteral
     ExecutionEnvironment: ExecutionEnvironment
+    ExitPoint: ExitPoint
     Extend: Extend
     FinalState: FinalState
     FlowFinalNode: FlowFinalNode
@@ -2894,6 +2965,7 @@ export type UmlDiagramAstType = {
     StatePart: StatePart
     Subject: Subject
     Substitution: Substitution
+    Terminate: Terminate
     Transition: Transition
     Unbounded: Unbounded
     UnionType_0: UnionType_0
@@ -3810,6 +3882,25 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
             },
             superTypes: [Element.$type]
         },
+        EntryPoint: {
+            name: EntryPoint.$type,
+            properties: {
+                __id: {
+                    name: EntryPoint.__id
+                },
+                __unknown: {
+                    name: EntryPoint.__unknown,
+                    defaultValue: []
+                },
+                name: {
+                    name: EntryPoint.name
+                },
+                visibility: {
+                    name: EntryPoint.visibility
+                }
+            },
+            superTypes: [Node.$type, StateMachineDiagramNodes.$type]
+        },
         Enumeration: {
             name: Enumeration.$type,
             properties: {
@@ -3889,6 +3980,25 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
                 }
             },
             superTypes: [DeploymentDiagramNodes.$type, Node.$type]
+        },
+        ExitPoint: {
+            name: ExitPoint.$type,
+            properties: {
+                __id: {
+                    name: ExitPoint.__id
+                },
+                __unknown: {
+                    name: ExitPoint.__unknown,
+                    defaultValue: []
+                },
+                name: {
+                    name: ExitPoint.name
+                },
+                visibility: {
+                    name: ExitPoint.visibility
+                }
+            },
+            superTypes: [Node.$type, StateMachineDiagramNodes.$type]
         },
         Extend: {
             name: Extend.$type,
@@ -5013,6 +5123,9 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
                 partsHeight: {
                     name: State.partsHeight
                 },
+                regionHeight: {
+                    name: State.regionHeight
+                },
                 regions: {
                     name: State.regions,
                     defaultValue: []
@@ -5162,6 +5275,25 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
                 }
             },
             superTypes: [Relation.$type, ClassDiagramEdges.$type]
+        },
+        Terminate: {
+            name: Terminate.$type,
+            properties: {
+                __id: {
+                    name: Terminate.__id
+                },
+                __unknown: {
+                    name: Terminate.__unknown,
+                    defaultValue: []
+                },
+                name: {
+                    name: Terminate.name
+                },
+                visibility: {
+                    name: Terminate.visibility
+                }
+            },
+            superTypes: [Node.$type, StateMachineDiagramNodes.$type]
         },
         Transition: {
             name: Transition.$type,

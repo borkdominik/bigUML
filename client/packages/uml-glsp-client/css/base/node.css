@@ -103,20 +103,46 @@ svg .uml-node .uml-node-background {
     stroke: none;
 }
 
-.uml-control-node-cross {
+/*
+ * The crosses drawn inside a circle in the border colour: the one marking a flow final node, and the one
+ * marking the exit point of a state machine. Both are ink of the shape rather than of the text, so they
+ * are grouped here and read the same way in either theme.
+ */
+.uml-control-node-cross,
+.uml-pseudostate-cross {
     stroke: var(--uml-border);
     stroke-width: 2;
 }
 
 /*
  * A shape drawn only to be clicked, for a node whose visible ink is too thin to aim at - the stick
- * figure of an actor, which is drawn without a box. A transparent fill still counts as painted and so
- * still takes pointer events, which `fill: none` or `visibility: hidden` would not. The stroke is taken
- * back from `.uml-node`, which would otherwise outline it and thicken that outline on selection.
+ * figure of an actor, the bar of a fork, the two lines of a terminate. A transparent fill still counts
+ * as painted and so still takes pointer events, which `fill: none` or `visibility: hidden` would not.
+ * The stroke is taken back from `.uml-node`, which would otherwise outline it and thicken that outline
+ * on selection.
  */
 .uml-hit-area {
     fill: transparent;
     stroke: none;
+}
+
+/*
+ * The same thing along an outline rather than over an area, for a shape that is a border around a fill
+ * of nothing: a frame, a region, a state drawn around its substates. Those are selected and resized by
+ * their border and by nothing else, and a border is one pixel wide - this is the band of slack around
+ * it (see `hitStrokeBox`).
+ *
+ * The fill stays `none` on purpose. A transparent one would make the whole inside of a frame answer to
+ * the pointer, and the nodes standing on a frame are drawn over it rather than in it: their clicks have
+ * to keep reaching them, and a drag on the empty canvas inside a frame has to stay a rubber band.
+ *
+ * Both properties are set here rather than inherited, so that `.uml-node.selected` thickening the shape
+ * cannot thicken this along with it - what can be clicked should not depend on what is selected.
+ */
+.uml-hit-stroke {
+    fill: none;
+    stroke: transparent;
+    stroke-width: 16;
 }
 
 .uml-comp-separator {

@@ -81,6 +81,12 @@ export namespace StatePropertyPaletteHandler {
                             }
                         ]}
                     />
+                    <TextProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='regionHeight'
+                        text={context.semanticElement.regionHeight !== undefined ? String(context.semanticElement.regionHeight) : ''}
+                        label='Region Height'
+                    />
                 </PropertyPalette>
             )
         ];

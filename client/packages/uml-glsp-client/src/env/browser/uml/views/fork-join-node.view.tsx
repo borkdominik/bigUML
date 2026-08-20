@@ -10,6 +10,7 @@
 import { type GNode, RectangularNodeView, type RenderingContext, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { type VNode } from 'snabbdom';
+import { hitAreaBox } from './hit-area.js';
 import { outsideLabel } from './outside-label.js';
 
 /**
@@ -42,6 +43,9 @@ export class ForkJoinNodeView extends RectangularNodeView {
 
         return (
             <g class-selected={node.selected} class-mouseover={node.hoverFeedback}>
+                {/* A bar is ten pixels thick and the rest of it is length, so the slack goes around the
+                    whole of it rather than along its outline. */}
+                {hitAreaBox(size.width, size.height, radius)}
                 <rect x={0} y={0} width={size.width} height={size.height} rx={radius} ry={radius} class-uml-fork-join-bar />
                 {outsideLabel(node, size, side)}
                 {context.renderChildren(node)}

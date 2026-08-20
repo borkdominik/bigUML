@@ -41,6 +41,10 @@ const NODE_SIZE_OVERRIDES: Record<string, { width: number; height: number }> = {
     UseCase: { width: 140, height: 85 },
     State: { width: 160, height: 70 },
     StateMachine: { width: 800, height: 600 },
+    // A region is the area a row of states is drawn on rather than a box holding a name, matching
+    // `GRegionNodeElement`. Without an entry of its own it opened at the generic 80 by 30 - below the
+    // floor a region is drawn at, so every one of them came out the same minimum size.
+    Region: { width: 600, height: 240 },
     // A fork/join is a bar rather than a box - see `GForkJoinNodeElement`, which opens at the same size.
     Fork: { width: 120, height: 10 },
     Join: { width: 120, height: 10 },
@@ -61,6 +65,16 @@ const NODE_SIZE_OVERRIDES: Record<string, { width: number; height: number }> = {
     Activity: { width: 600, height: 400 },
     // A partition is a swimlane, opening with two bands - matching `GActivityPartitionNodeElement`.
     ActivityPartition: { width: 600, height: 300 },
+    // The pseudostates drawn as a small mark of their own - the two histories, the two points on a
+    // state's border and the terminate cross - matching `GPseudostateMarkNodeElement`. Square, because
+    // the mark is drawn to the shorter side and the node's bounds are what a transition anchors to: at
+    // the generic 80 by 30 the mark comes out 30 across in the middle of a box nearly three times as
+    // wide, and the transition stops on the side of that box, a clear 25 pixels short of the shape.
+    DeepHistory: { width: 30, height: 30 },
+    ShallowHistory: { width: 30, height: 30 },
+    ExitPoint: { width: 30, height: 30 },
+    EntryPoint: { width: 30, height: 30 },
+    Terminate: { width: 30, height: 30 },
     // The branch diamonds, likewise matching `GDiamondNodeElement`.
     Choice: { width: 40, height: 40 },
     DecisionNode: { width: 40, height: 40 },

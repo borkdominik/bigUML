@@ -40,17 +40,60 @@ function separatedCompartments(element: GParentElement): GCompartment[] {
  * Dashed where the compartment asks for it with a `dashed` arg, which is how UML separates the regions
  * of an orthogonal state from one another - as against the solid rule that closes off a compartment of
  * a different kind, such as the first region from the name above it.
+ *
+ * `cornerRadius` is what the caller rounded the shape's corners by, and it has to be passed or a rule
+ * near an edge runs straight out through the curve: the sides of a rounded box are not at 0 and at the
+ * full width for the height of a corner. A square-cornered shape leaves it at 0 and every rule runs the
+ * whole width, which is what all of them did before.
  */
-export function renderCompartmentSeparators(element: GParentElement & BoundsAware): VNode[] {
+export function renderCompartmentSeparators(element: GParentElement & BoundsAware, cornerRadius = 0): VNode[] {
     const width = Math.max(0, element.bounds.width);
-    return separatedCompartments(element).map(
-        compartment =>
-            (
+    const height = Math.max(0, element.bounds.height);
+
+    return separatedCompartments(element)
+        .map(compartment => {
+            const y = compartment.position.y;
+            const inset = roundedCornerInset(cornerRadius, y, height);
+            // A rule pulled in from both sides by more than half the shape has no shape left to cross.
+            if (2 * inset >= width) {
+                return undefined;
+            }
+
+            return (
                 <path
                     class-uml-comp-separator
                     class-uml-comp-separator-dashed={hasArgs(compartment) && compartment.args['dashed'] === true}
-                    d={`M 0,${compartment.position.y}  L ${width},${compartment.position.y}`}
+                    d={`M ${inset},${y}  L ${width - inset},${y}`}
                 ></path>
-            ) as any
-    );
+            ) as any;
+        })
+        .filter((node): node is VNode => node !== undefined);
+}
+
+/**
+ * How far in from each side a rule at `y` has to stop to land on the outline of a box whose corners are
+ * rounded by `radius`.
+ *
+ * Nothing at all below the corners, which is where most rules fall - a shape's sides run straight for
+ * everything between them. Inside one, the outline is the corner's arc: its centre stands `radius` in
+ * from the side and `radius` from the near edge, so at `d` from that edge the arc is
+ * `sqrt(radius² - (radius - d)²)` from the centre, and what is left over is how far the side has moved in.
+ */
+function roundedCornerInset(radius: number, y: number, height: number): number {
+    if (radius <= 0) {
+        return 0;
+    }
+
+    // Measured against whichever edge is nearer: a rule can sit in the bottom corners as readily as in
+    // the top ones - the last band of an orthogonal state is ruled off close to the foot of the box.
+    const fromEdge = Math.min(y, height - y);
+    if (fromEdge >= radius) {
+        return 0;
+    }
+    if (fromEdge <= 0) {
+        return radius;
+    }
+
+    const offset = radius - fromEdge;
+    return radius - Math.sqrt(Math.max(0, radius * radius - offset * offset));
 }

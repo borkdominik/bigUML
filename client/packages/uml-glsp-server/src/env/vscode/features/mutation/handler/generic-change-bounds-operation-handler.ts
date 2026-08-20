@@ -20,7 +20,7 @@ import { isNoBounds } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
 import { ChangeBoundsOperation, type Command, OperationHandler } from '@eclipse-glsp/server';
 import { injectable } from 'inversify';
 import { URI } from 'vscode-uri';
-import { regionHeightWithin } from '../../../elements/state.element.js';
+import { regionHeightWithin, stateSizeForBands } from '../../../elements/state.element.js';
 import { ModelPatchCommand } from '../../command/model-patch-command.js';
 import { type DiagramModelState } from '../../model/diagram-model-state.js';
 
@@ -104,39 +104,39 @@ export class GenericChangeBoundsOperationHandler extends OperationHandler {
                 return;
             }
 
+            // Whether this operation moved the element or resized it where it stood.
+            //
+            // The two have to be told apart before anything is read out of `newSize`, because a move
+            // reports the size the element is *currently rendered at* rather than one anybody asked for
+            // (see `toElementAndBounds`) - and that is not the stored one: the client grows a box to fit
+            // what is in it, so a state carrying a name and a part or two renders taller than the height
+            // the server gave it. Taking a band's depth from that on a move made the depth bigger, which
+            // made the box bigger, which made the next move bigger again - the bottom band grew a little
+            // every time the state was dragged anywhere.
+            const moved = nonZeroMovedElementIds.has(elementId);
+
             // A band of a composite state is not placed on the canvas and is not sized on its own: its
-            // width is the room inside the state's borders and its depth is one number the state holds
-            // for all of its regions. A drag on one therefore sets that number, and nothing about the
-            // region itself - a `Size` written here would be a dimension nothing ever reads again.
+            // width is the room inside the state's borders and its depth is its share of the state's
+            // height. A drag on one therefore resizes that state, and stores nothing against the region
+            // itself - a `Size` written for a region would be a dimension nothing ever reads again.
             if (this.setsRegionHeight(elementId)) {
-                if (newSize?.height) {
-                    this.patchRegionHeight(elementId, newSize.height, patch);
+                if (!moved && newSize?.height) {
+                    this.patchRegionHeight(elementId, newSize.height, defaultDocPath, patch);
                 }
                 return;
             }
 
-            const sizePath = this.modelState.index.findSizePath(elementId);
-            const size = (this.modelState.index as any).findSize ? (this.modelState.index as any).findSize(elementId) : undefined;
+            const size = this.modelState.index.findSize(elementId);
 
-            patch.push({
-                op: sizePath && size ? 'replace' : 'add',
-                path: sizePath ?? '/metaInfos/-',
-                value: {
-                    $type: 'Size',
-                    __id: `size_${elementId}`,
-                    element: {
-                        $ref: {
-                            __id: elementId,
-                            __documentUri: size?.element?.$nodeDescription?.documentUri.path ?? defaultDocPath
-                        }
-                    },
-                    // An operation that carries no new size (a pure move) must keep the stored one: writing
-                    // `undefined` back would leave a Size metaInfo without usable dimensions behind, which
-                    // silently collapses every node whose layout is driven by its persisted size.
-                    width: newSize?.width ?? size?.width,
-                    height: newSize?.height ?? size?.height
-                }
-            });
+            // An operation that carries no new size (a pure move) must keep the stored one: writing
+            // `undefined` back would leave a Size metaInfo without usable dimensions behind, which
+            // silently collapses every node whose layout is driven by its persisted size.
+            this.pushSize(
+                elementId,
+                { width: newSize?.width ?? size?.width, height: newSize?.height ?? size?.height },
+                defaultDocPath,
+                patch
+            );
 
             const positionPath = this.modelState.index.findPositionPath(elementId);
             const position = (this.modelState.index as any).findPosition
@@ -162,8 +162,9 @@ export class GenericChangeBoundsOperationHandler extends OperationHandler {
 
             // Dragging a state that holds regions stretches the bands it is made of rather than leaving
             // them where they were: the bands are the box. Written back as the state's own
-            // `regionHeight`, which is the one number all of them are drawn at.
-            if (newSize?.height && newSize.height !== size?.height) {
+            // `regionHeight`, which is the one number all of them are drawn at - and only for a resize,
+            // for the reason given above.
+            if (!moved && newSize?.height && newSize.height !== size?.height) {
                 this.stretchRegions(elementId, newSize.height, patch);
             }
 
@@ -190,13 +191,58 @@ export class GenericChangeBoundsOperationHandler extends OperationHandler {
         return isRegion(element) && isState(element.$container);
     }
 
-    /** Writes the depth a band was dragged to onto the state that owns it, for all of its regions. */
-    protected patchRegionHeight(elementId: string, height: number, patch: BoundsPatch[]): void {
+    /**
+     * Writes the depth a band was dragged to onto the state that owns it - for all of its regions, since
+     * they share one - and resizes the state to the box that many bands of that depth make up.
+     *
+     * Both, and not just the depth: a band is not drawn at a height of its own but at its share of the
+     * state it divides (see `MIN_REGION_BAND_HEIGHT`), so a depth written without the box to go with it
+     * is a number the next layout pass draws straight over. Dragging a band shallower did nothing at all
+     * until the state came down with it.
+     */
+    protected patchRegionHeight(elementId: string, height: number, defaultDocPath: string, patch: BoundsPatch[]): void {
         const region = this.modelState.index.findIdElement(elementId);
         if (!isRegion(region) || !isState(region.$container)) {
             return;
         }
-        this.pushRegionHeight(region.$container, Math.round(height), patch);
+        const state = region.$container;
+        const bandHeight = Math.round(height);
+        this.pushRegionHeight(state, bandHeight, patch);
+        this.pushSize(state.__id, stateSizeForBands(this.modelState.index.findSize(state.__id), state, bandHeight), defaultDocPath, patch);
+    }
+
+    /**
+     * The one `Size` this operation writes for an element.
+     *
+     * Once and once only. A second `add` leaves two `Size` metaInfos naming the same element behind and
+     * everything afterwards reads whichever of them was written first - so a band drag that sizes the
+     * state it divides must not size it again when the state is in the same operation on its own account.
+     */
+    protected pushSize(elementId: string, size: { width?: number; height?: number }, defaultDocPath: string, patch: BoundsPatch[]): void {
+        const sizeId = `size_${elementId}`;
+        if (patch.some(entry => (entry.value as { __id?: string } | undefined)?.__id === sizeId)) {
+            return;
+        }
+
+        const sizePath = this.modelState.index.findSizePath(elementId);
+        const stored = this.modelState.index.findSize(elementId);
+
+        patch.push({
+            op: sizePath && stored ? 'replace' : 'add',
+            path: sizePath ?? '/metaInfos/-',
+            value: {
+                $type: 'Size',
+                __id: sizeId,
+                element: {
+                    $ref: {
+                        __id: elementId,
+                        __documentUri: stored?.element?.$nodeDescription?.documentUri.path ?? defaultDocPath
+                    }
+                },
+                width: size.width,
+                height: size.height
+            }
+        });
     }
 
     /** Turns a state's new height into the depth each of its bands is drawn at. */
@@ -209,7 +255,7 @@ export class GenericChangeBoundsOperationHandler extends OperationHandler {
         if (regions.length === 0) {
             return;
         }
-        this.pushRegionHeight(state, regionHeightWithin(stateHeight, regions.length), patch);
+        this.pushRegionHeight(state, regionHeightWithin(stateHeight, state), patch);
     }
 
     /**

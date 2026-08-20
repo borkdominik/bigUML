@@ -27,26 +27,39 @@ import type { GModelElement } from '@eclipse-glsp/server';
  */
 
 /**
- * How deep a band opens. Room for a substate with a compartment or two and the transitions between
- * them, since that is what a region is added to hold - a band cut to its own name would have to be
- * dragged open before anything could be put on it.
- */
-export const DEFAULT_REGION_BAND_HEIGHT = 120;
-
-/**
- * The shallowest a band is drawn at, and the line below which a stored height is not believed.
+ * How deep a band opens: room for a substate, since that is what a region is added to hold - a band cut
+ * to its own name would have to be dragged open before anything could be put on it.
  *
- * A region is created the way every node is, with the size its type is given - and that size is the one
- * a region standing on its own opens at, not the depth of a band. What is stored for a region that has
- * only ever been added to a state is therefore a number nobody chose; anything under this is read as
- * exactly that and the default is used instead. It is also the floor a band can be dragged to, which is
- * what makes the two the same number: nothing below it can have come from a drag.
+ * A little over the height a state is drawn at, and no more. A band is a row of the state that owns it
+ * rather than a canvas a whole nested machine is laid out on, and a state divided into two or three of
+ * them still has to read as a shape on the diagram; deeper than this and a composite state opened as a
+ * tower of empty space with its substates sitting along the top of it.
  */
-export const MIN_REGION_BAND_HEIGHT = 48;
+export const DEFAULT_REGION_BAND_HEIGHT = 80;
 
 /**
- * The one depth every band of a state is drawn at: what the state holds in `regionHeight`, or the
- * default where it holds nothing usable.
+ * The depth every band asks for, and the shallowest one is drawn at.
+ *
+ * The same number for all of them whatever depth the state's regions are set to, because this is not
+ * what a band is drawn at: the room a state has over and above its name is shared out between its bands
+ * by `vGrab`, and a band is drawn at its share of that. What this number fixes is the floor of it. The
+ * client will not let a box be resized below what it holds (`ChangeBoundsManager.getMinimumSize` reads
+ * the size the layouter measured), so whatever the bands ask for is added up into the smallest a
+ * composite state can be dragged to - and bands asking for the full depth of their region put that whole
+ * depth into the floor, which left a state that could be dragged taller but never back down again.
+ *
+ * One row of text, so that a band carrying its region's name measures the same as one carrying nothing:
+ * a container is never drawn smaller than what is written in it, and a name that pushed its own band
+ * past this floor would take a larger share of the state than the band beside it.
+ *
+ * It is also the line below which a stored depth is not believed, which is why it is not 0: a region
+ * carrying nothing usable was never adjusted, and its state opens at the default instead.
+ */
+export const MIN_REGION_BAND_HEIGHT = 36;
+
+/**
+ * The one depth a state is opened to hold each of its regions at: what it stores in `regionHeight`, or
+ * the default where it stores nothing usable.
  *
  * One number for all of them because the regions of a state are equals - they divide the same box and
  * run side by side down it, and UML gives none of them a size of its own. It is kept on the state
@@ -67,18 +80,10 @@ export interface GStateRegionCompartmentProps {
     divided: boolean;
     /** The width the band opens at, which is the room the state has inside its own borders. */
     width: number;
-    /**
-     * How deep every band of this state is drawn - one height for all of them, taken from the state's
-     * own `regionHeight` (see `regionBandHeight`). Not this band's own: the regions of a
-     * state are equals, and one drawn deeper than the one beside it reads as the more important of the
-     * two, which is a thing UML's notation does not say.
-     */
-    height: number;
 }
 
 export function GStateRegionCompartment(props: GStateRegionCompartmentProps): GModelElement {
     const { node, divided, width } = props;
-    const height = Math.max(props.height, MIN_REGION_BAND_HEIGHT);
 
     return (
         <GCompartmentElement
@@ -97,13 +102,15 @@ export function GStateRegionCompartment(props: GStateRegionCompartmentProps): GM
                 // substates are drawn over it, not in it - and a compartment with no content of its own is
                 // never given bounds at all, which collapsed the band and everything below it.
                 hGrab: true,
-                // Every band opens at the same depth, and the room a state has over and above them is
-                // shared out equally between them by `vGrab` - so a state dragged taller grows its bands
-                // rather than leaving a gap under them, and they stay the same size as each other
-                // however it is dragged.
+                // What a band is drawn at. Every band asks for the same floor and `vGrab` shares out
+                // everything the state has over and above its name equally between them, so the bands
+                // are the box: dragging the state deepens all of them by the same amount and dragging it
+                // back shallows them again, with no gap opening under the last one either way. Asking
+                // for a band's full depth here instead is what stopped a composite state from ever being
+                // dragged shorter - see `MIN_REGION_BAND_HEIGHT`.
                 vGrab: true,
                 prefWidth: Math.max(0, width),
-                prefHeight: height
+                prefHeight: MIN_REGION_BAND_HEIGHT
             }}
             // Drawn by the state, which is the only element wide enough to run a rule across it. Dashed
             // between one region and the next, which is how UML separates the regions of an orthogonal

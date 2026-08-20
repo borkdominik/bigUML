@@ -14,7 +14,7 @@ import {
     type SerializeAstNode,
     type SerializedRecordNode
 } from '@borkdominik-biguml/uml-model-server';
-import type { MetaInfo, Node } from '@borkdominik-biguml/uml-model-server/grammar';
+import { isState, type MetaInfo, type Node } from '@borkdominik-biguml/uml-model-server/grammar';
 import {
     type Command,
     CreateNodeOperation,
@@ -28,6 +28,7 @@ import {
 import type * as jsonpatch from 'fast-json-patch';
 import { inject, injectable } from 'inversify';
 import { URI } from 'vscode-uri';
+import { stateSizeWithRegions } from '../../../elements/state.element.js';
 import { ModelPatchCommand } from '../../command/model-patch-command.js';
 import { GridSnapper } from '../../grid/grid-snapper.js';
 import { DiagramLanguageMetadata } from '../../model/diagram-language-metadata.js';
@@ -145,11 +146,64 @@ export class GenericCreateNodeOperationHandler extends OperationHandler implemen
         // The element and its opening lanes are written by this one patch, so the names already handed out
         // have to be carried along - the diagram has none of them yet and would hand out the same twice.
         const claimedNames = new Set<string>();
+        const documentPath = URI.parse(this.modelState.semanticUri).path;
         const semanticPatch = this.createSemantic(operation, claimedNames);
-        const metaPatch = this.createMeta(operation, semanticPatch.value.__id, URI.parse(this.modelState.semanticUri).path);
-        const patch: jsonpatch.Operation[] = [semanticPatch, ...metaPatch];
+        const metaPatch = this.createMeta(operation, semanticPatch.value.__id, documentPath);
+        const patch: jsonpatch.Operation[] = [semanticPatch, ...metaPatch, ...this.openStateForRegion(operation, documentPath)];
 
         return new ModelPatchCommand(this.modelState, JSON.stringify(patch));
+    }
+
+    /**
+     * Opens a state into the frame it becomes when it is given a region, where that is what this operation
+     * is doing - nothing at all for every other creation.
+     *
+     * A state is drawn as a box holding its name and it stores the size of one from the moment it is
+     * created, which is the size it keeps: a stored width is the user's and nothing overrides it. But a
+     * state with a region in it is not that box any more, it is the frame its substates stand inside, and
+     * the one moment it is fair to resize it for them is the moment it stops being the one and starts
+     * being the other. Without this the first region left the state at the width of its own name, a slot
+     * too narrow to put a substate in, and every composite state had to be dragged open by hand.
+     *
+     * Only for a region that is actually going *into* the state: the same drop carrying a location makes
+     * a region of the diagram drawn on top of the state instead (see `FLAT_CONTAINER_TYPES`), and that one
+     * is not a band of it and must not resize it. `resolveContainerPath` is what decides between the two,
+     * so it is asked rather than second-guessed.
+     */
+    protected openStateForRegion(operation: CreateNodeOperation, documentPath: string): jsonpatch.Operation[] {
+        if (!operation.containerId) {
+            return [];
+        }
+
+        const state = this.modelState.index.findIdElement(operation.containerId);
+        const statePath = state && this.modelState.index.findPath(state.__id);
+        if (!isState(state) || !statePath || this.resolveContainerPath(operation) !== `${statePath}/regions/-`) {
+            return [];
+        }
+
+        const stored = this.modelState.index.findSize(state.__id);
+        const sizePath = this.modelState.index.findSizePath(state.__id);
+        // The region this operation adds is not on the state yet, so it is counted in here.
+        const size = stateSizeWithRegions(stored, state, (state.regions?.length ?? 0) + 1);
+
+        return [
+            {
+                op: sizePath && stored ? 'replace' : 'add',
+                path: sizePath ?? '/metaInfos/-',
+                value: {
+                    $type: 'Size',
+                    __id: `size_${state.__id}`,
+                    element: {
+                        $ref: {
+                            __id: state.__id,
+                            __documentUri: stored?.element?.$nodeDescription?.documentUri.path ?? documentPath
+                        }
+                    },
+                    width: size.width,
+                    height: size.height
+                }
+            } as jsonpatch.Operation
+        ];
     }
 
     /** Whether the drop landed on an element that takes this type as one of its own contents. */

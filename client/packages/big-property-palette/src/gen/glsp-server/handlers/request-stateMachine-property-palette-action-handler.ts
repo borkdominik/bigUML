@@ -21,6 +21,7 @@ import {
     isShallowHistory,
     isState,
     isStateMachine,
+    isStatePart,
     isTransition
 } from '@borkdominik-biguml/uml-model-server/grammar';
 import { DiagramModelState, DiagramLanguageMetadata } from '@borkdominik-biguml/uml-glsp-server/vscode';
@@ -35,6 +36,7 @@ import { RegionPropertyPaletteHandler } from './elements/region.property-palette
 import { ShallowHistoryPropertyPaletteHandler } from './elements/shallow-history.property-palette-handler.js';
 import { StatePropertyPaletteHandler } from './elements/state.property-palette-handler.js';
 import { StateMachinePropertyPaletteHandler } from './elements/state-machine.property-palette-handler.js';
+import { StatePartPropertyPaletteHandler } from './elements/state-part.property-palette-handler.js';
 import { TransitionPropertyPaletteHandler } from './elements/transition.property-palette-handler.js';
 @injectable()
 export class RequestStateMachinePropertyPaletteActionHandler implements ActionHandler {
@@ -69,6 +71,8 @@ export class RequestStateMachinePropertyPaletteActionHandler implements ActionHa
 
             if (isTransition(semanticElement)) {
                 return TransitionPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isStatePart(semanticElement)) {
+                return StatePartPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isStateMachine(semanticElement)) {
                 return StateMachinePropertyPaletteHandler.getPropertyPalette(context);
             } else if (isRegion(semanticElement)) {

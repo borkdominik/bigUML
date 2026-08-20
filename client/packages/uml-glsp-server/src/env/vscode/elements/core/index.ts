@@ -15,5 +15,4 @@ export * from './frame-name-tag.js';
 export * from './inline-compartment.js';
 export * from './pinned-endpoint.js';
 export * from './section-compartment.js';
-export * from './transition-label.js';
 export * from './visibility-label.js';

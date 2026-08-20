@@ -40,7 +40,7 @@ export namespace ControlFlowPropertyPaletteHandler {
                     <TextProperty
                         elementId={context.semanticElement.__id}
                         propertyId='weight'
-                        text={String(context.semanticElement.weight)!}
+                        text={context.semanticElement.weight !== undefined ? String(context.semanticElement.weight) : ''}
                         label='Weight'
                     />
                     <ChoiceProperty

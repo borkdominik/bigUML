@@ -11,9 +11,9 @@ import { RequestPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdom
 import { type ActionHandler, type MaybePromise } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 import {
-    isAbstractClass,
     isAbstraction,
     isAssociation,
+    isChoice,
     isClass,
     isDataType,
     isDependency,
@@ -39,9 +39,9 @@ import {
 } from '@borkdominik-biguml/uml-model-server/grammar';
 import { DiagramModelState, DiagramLanguageMetadata } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import type { DiagramLanguageMetadata as DiagramLanguageMetadataType } from '@borkdominik-biguml/uml-glsp-server/vscode';
-import { AbstractClassPropertyPaletteHandler } from './elements/abstract-class.property-palette-handler.js';
 import { AbstractionPropertyPaletteHandler } from './elements/abstraction.property-palette-handler.js';
 import { AssociationPropertyPaletteHandler } from './elements/association.property-palette-handler.js';
+import { ChoicePropertyPaletteHandler } from './elements/choice.property-palette-handler.js';
 import { ClassPropertyPaletteHandler } from './elements/class.property-palette-handler.js';
 import { DataTypePropertyPaletteHandler } from './elements/data-type.property-palette-handler.js';
 import { DependencyPropertyPaletteHandler } from './elements/dependency.property-palette-handler.js';
@@ -108,6 +108,8 @@ export class RequestClassPropertyPaletteActionHandler implements ActionHandler {
                 return AssociationPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isProperty(semanticElement)) {
                 return PropertyPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isChoice(semanticElement)) {
+                return ChoicePropertyPaletteHandler.getPropertyPalette(context);
             } else if (isUsage(semanticElement)) {
                 return UsagePropertyPaletteHandler.getPropertyPalette(context);
             } else if (isParameter(semanticElement)) {
@@ -150,8 +152,6 @@ export class RequestClassPropertyPaletteActionHandler implements ActionHandler {
                 return EnumerationPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isDataType(semanticElement)) {
                 return DataTypePropertyPaletteHandler.getPropertyPalette(context);
-            } else if (isAbstractClass(semanticElement)) {
-                return AbstractClassPropertyPaletteHandler.getPropertyPalette(context);
             }
 
             return [SetPropertyPaletteAction.create()];

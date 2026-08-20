@@ -13,6 +13,8 @@ import {
     GAbstractionEdgeView,
     GAssociationEdge,
     GAssociationEdgeView,
+    GChoiceNode,
+    GChoiceNodeView,
     GClassNode,
     GClassNodeView,
     GDataTypeNode,
@@ -59,8 +61,8 @@ export const umlClassDiagramModule = new FeatureModule((bind, unbind, isBound, r
     const context = { bind, unbind, isBound, rebind };
 
     // Nodes
+    configureModelElement(context, ClassDiagramNodeTypes.CHOICE, GChoiceNode, GChoiceNodeView);
     configureModelElement(context, ClassDiagramNodeTypes.CLASS, GClassNode, GClassNodeView);
-    configureModelElement(context, ClassDiagramNodeTypes.ABSTRACT_CLASS, GClassNode, GClassNodeView);
     configureModelElement(context, ClassDiagramNodeTypes.DATA_TYPE, GDataTypeNode, GDataTypeNodeView);
     configureModelElement(context, ClassDiagramNodeTypes.ENUMERATION, GEnumerationNode, GEnumerationNodeView);
     configureModelElement(context, ClassDiagramNodeTypes.ENUMERATION_LITERAL, GEnumerationLiteralNode, GEnumerationLiteralNodeView);

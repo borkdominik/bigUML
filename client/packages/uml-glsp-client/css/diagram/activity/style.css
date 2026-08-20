@@ -1,0 +1,37 @@
+/* A partition is the lane its actions are drawn along, and those actions are flat siblings drawn on top
+   of it rather than children of it - so like the state machine frame it stays transparent, or an opaque
+   band this wide would hide whatever sits behind it.
+
+   `pointer-events` is what `fill: none` alone gets wrong: an unfilled shape is not painted inside its
+   outline, so nothing there answers a click and the lane can only be caught by its one-pixel border -
+   which leaves it looking impossible to select, to drag against its neighbour, or to delete. `all` makes
+   the whole band answer while still drawing nothing, and the actions on it keep their own clicks because
+   a lane is a canvas container and so is painted behind them. */
+.uml-activity-partition-node .uml-node-background {
+    fill: none;
+    pointer-events: all;
+    /* No outline of its own: a rectangle is closed on all four sides and the block is open at its far
+       end, so the border is drawn as a path instead. This is left as the area that answers a click. */
+    stroke: none;
+}
+
+/* The border, open at the end the lanes run out of - to the right when they are stacked, off the bottom
+   when they stand side by side, which is how the notation draws a swimlane either way round. Left
+   unstyled otherwise so it takes the colour and width `.uml-node` sets for the shape - which is also what
+   still thickens it on hover and on selection. */
+.uml-activity-partition-node .uml-partition-outline {
+    fill: none;
+}
+
+/* The lane's name, written in the band down its leading edge and turned on its side.
+   `text-anchor`/`dominant-baseline` centre the text on the point it is rotated about, which is what puts
+   it in the middle of the band without measuring the name.
+   `stroke: none` takes back the stroke `.uml-node` sets for the shape - drawn inside the node's own
+   group, the glyphs would otherwise be outlined, and thicken further whenever the lane is selected. This
+   is the same reason the history pseudostate's glyph takes it back. */
+.uml-activity-partition-node .uml-partition-name {
+    fill: var(--uml-label);
+    stroke: none;
+    text-anchor: middle;
+    dominant-baseline: central;
+}

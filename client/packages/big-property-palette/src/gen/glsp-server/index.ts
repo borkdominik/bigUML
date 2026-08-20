@@ -8,7 +8,6 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-export * from './handlers/elements/abstract-class.property-palette-handler.js';
 export * from './handlers/elements/abstraction.property-palette-handler.js';
 export * from './handlers/elements/accept-event-action.property-palette-handler.js';
 export * from './handlers/elements/activity-final-node.property-palette-handler.js';
@@ -75,6 +74,7 @@ export * from './handlers/elements/send-signal-action.property-palette-handler.j
 export * from './handlers/elements/shallow-history.property-palette-handler.js';
 export * from './handlers/elements/slot.property-palette-handler.js';
 export * from './handlers/elements/state-machine.property-palette-handler.js';
+export * from './handlers/elements/state-part.property-palette-handler.js';
 export * from './handlers/elements/state.property-palette-handler.js';
 export * from './handlers/elements/subject.property-palette-handler.js';
 export * from './handlers/elements/substitution.property-palette-handler.js';

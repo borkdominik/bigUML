@@ -23,7 +23,6 @@ export type UmlDiagramTerminalNames = keyof typeof UmlDiagramTerminals;
 
 export type UmlDiagramKeywordNames =
     | "\""
-    | "\"AbstractClass\""
     | "\"Abstraction\""
     | "\"AcceptEventAction\""
     | "\"Activity\""
@@ -103,6 +102,7 @@ export type UmlDiagramKeywordNames =
     | "\"State\""
     | "\"StateMachine\""
     | "\"StateMachineDiagram\""
+    | "\"StatePart\""
     | "\"Subject\""
     | "\"Substitution\""
     | "\"Transition\""
@@ -146,7 +146,6 @@ export type UmlDiagramKeywordNames =
     | "\"isSubstitutable\""
     | "\"isUnique\""
     | "\"kind\""
-    | "\"label\""
     | "\"lifelines\""
     | "\"messages\""
     | "\"metaInfos\""
@@ -161,6 +160,8 @@ export type UmlDiagramKeywordNames =
     | "\"outputPins\""
     | "\"parameterType\""
     | "\"parameters\""
+    | "\"parts\""
+    | "\"partsHeight\""
     | "\"properties\""
     | "\"propertyType\""
     | "\"regions\""
@@ -168,6 +169,7 @@ export type UmlDiagramKeywordNames =
     | "\"slots\""
     | "\"source\""
     | "\"sourceAggregation\""
+    | "\"sourceModifiers\""
     | "\"sourceMultiplicity\""
     | "\"sourceName\""
     | "\"sourcePoint\""
@@ -175,6 +177,7 @@ export type UmlDiagramKeywordNames =
     | "\"subvertices\""
     | "\"target\""
     | "\"targetAggregation\""
+    | "\"targetModifiers\""
     | "\"targetMultiplicity\""
     | "\"targetName\""
     | "\"targetPoint\""
@@ -232,37 +235,6 @@ export type UmlDiagramKeywordNames =
     | "}";
 
 export type UmlDiagramTokenNames = UmlDiagramTerminalNames | UmlDiagramKeywordNames;
-
-export interface AbstractClass extends Class {
-    readonly $container: ClassDiagram;
-    readonly $type: 'AbstractClass';
-    __id: string;
-    __unknown: Array<UnknownProperty>;
-    isAbstract: boolean;
-    isActive: boolean;
-    label: string;
-    name: string;
-    operations: Array<Operation>;
-    properties: Array<Property>;
-    visibility?: Visibility;
-}
-
-export const AbstractClass = {
-    $type: 'AbstractClass',
-    __id: '__id',
-    __unknown: '__unknown',
-    isAbstract: 'isAbstract',
-    isActive: 'isActive',
-    label: 'label',
-    name: 'name',
-    operations: 'operations',
-    properties: 'properties',
-    visibility: 'visibility'
-} as const;
-
-export function isAbstractClass(item: unknown): item is AbstractClass {
-    return reflection.isInstance(item, AbstractClass.$type);
-}
 
 export interface Abstraction extends Relation {
     readonly $container: ClassDiagram | PackageDiagram;
@@ -519,12 +491,16 @@ export interface Association extends Relation {
     name?: string;
     source: langium.Reference<Node>;
     sourceAggregation?: AggregationType;
+    sourceModifiers?: LangiumText;
     sourceMultiplicity?: LangiumText;
     sourceName?: string;
+    sourcePoint?: ConnectionPoint;
     target: langium.Reference<Node>;
     targetAggregation?: AggregationType;
+    targetModifiers?: LangiumText;
     targetMultiplicity?: LangiumText;
     targetName?: string;
+    targetPoint?: ConnectionPoint;
     visibility?: Visibility;
 }
 
@@ -535,12 +511,16 @@ export const Association = {
     name: 'name',
     source: 'source',
     sourceAggregation: 'sourceAggregation',
+    sourceModifiers: 'sourceModifiers',
     sourceMultiplicity: 'sourceMultiplicity',
     sourceName: 'sourceName',
+    sourcePoint: 'sourcePoint',
     target: 'target',
     targetAggregation: 'targetAggregation',
+    targetModifiers: 'targetModifiers',
     targetMultiplicity: 'targetMultiplicity',
     targetName: 'targetName',
+    targetPoint: 'targetPoint',
     visibility: 'visibility'
 } as const;
 
@@ -570,7 +550,7 @@ export function isCentralBufferNode(item: unknown): item is CentralBufferNode {
 }
 
 export interface Choice extends langium.AstNode {
-    readonly $container: Activity | ActivityPartition | DeploymentModel | DeploymentPackage | Package | Region | StateMachineDiagram;
+    readonly $container: Activity | ActivityPartition | ClassDiagram | DeploymentModel | DeploymentPackage | Package | Region | StateMachineDiagram;
     readonly $type: 'Choice';
     __id: string;
     __unknown: Array<UnknownProperty>;
@@ -592,7 +572,7 @@ export function isChoice(item: unknown): item is Choice {
 
 export interface Class extends langium.AstNode {
     readonly $container: Activity | ActivityPartition | ClassDiagram | DeploymentModel | DeploymentPackage | InformationFlowDiagram | Package | PackageDiagram | Region;
-    readonly $type: 'AbstractClass' | 'Class';
+    readonly $type: 'Class';
     __id: string;
     __unknown: Array<UnknownProperty>;
     isAbstract: boolean;
@@ -662,7 +642,7 @@ export function isClassDiagramElements(item: unknown): item is ClassDiagramEleme
     return reflection.isInstance(item, ClassDiagramElements.$type);
 }
 
-export type ClassDiagramNodes = AbstractClass | Class | DataType | Enumeration | EnumerationLiteral | InstanceSpecification | Interface | LiteralSpecification | Operation | Package | Parameter | PrimitiveType | Property | Slot;
+export type ClassDiagramNodes = Choice | Class | DataType | Enumeration | EnumerationLiteral | InstanceSpecification | Interface | LiteralSpecification | Operation | Package | Parameter | PrimitiveType | Property | Slot;
 
 export const ClassDiagramNodes = {
     $type: 'ClassDiagramNodes'
@@ -767,7 +747,7 @@ export interface ControlFlow extends langium.AstNode {
     readonly $type: 'ControlFlow';
     __id: string;
     __unknown: Array<UnknownProperty>;
-    guard?: string;
+    guard?: LangiumText;
     name?: string;
     source: langium.Reference<UnionType_0>;
     sourcePoint?: ConnectionPoint;
@@ -1954,7 +1934,7 @@ export function isOpaqueAction(item: unknown): item is OpaqueAction {
 }
 
 export interface Operation extends langium.AstNode {
-    readonly $container: AbstractClass | Activity | ActivityPartition | Artifact | Class | ClassDiagram | DataType | DeploymentDiagram | DeploymentModel | DeploymentPackage | DeploymentSpecification | InformationFlowDiagram | Interface | Package | PackageDiagram | Region;
+    readonly $container: Activity | ActivityPartition | Artifact | Class | ClassDiagram | DataType | DeploymentDiagram | DeploymentModel | DeploymentPackage | DeploymentSpecification | InformationFlowDiagram | Interface | Package | PackageDiagram | Region;
     readonly $type: 'Operation';
     __id: string;
     __unknown: Array<UnknownProperty>;
@@ -2219,7 +2199,7 @@ export function isPrimitiveType(item: unknown): item is PrimitiveType {
 }
 
 export interface Property extends langium.AstNode {
-    readonly $container: AbstractClass | Activity | ActivityDiagram | Artifact | Class | ClassDiagram | DataType | DeploymentDiagram | DeploymentSpecification | InformationFlowDiagram | Interface | PackageDiagram;
+    readonly $container: Activity | ActivityDiagram | Artifact | Class | ClassDiagram | DataType | DeploymentDiagram | DeploymentSpecification | InformationFlowDiagram | Interface | PackageDiagram;
     readonly $type: 'Property';
     __id: string;
     __unknown: Array<UnknownProperty>;
@@ -2434,6 +2414,8 @@ export interface State extends langium.AstNode {
     __id: string;
     __unknown: Array<UnknownProperty>;
     name: string;
+    parts: Array<StatePart>;
+    partsHeight?: number;
     regions: Array<Region>;
     visibility?: Visibility;
 }
@@ -2443,6 +2425,8 @@ export const State = {
     __id: '__id',
     __unknown: '__unknown',
     name: 'name',
+    parts: 'parts',
+    partsHeight: 'partsHeight',
     regions: 'regions',
     visibility: 'visibility'
 } as const;
@@ -2517,7 +2501,7 @@ export function isStateMachineDiagramElements(item: unknown): item is StateMachi
     return reflection.isInstance(item, StateMachineDiagramElements.$type);
 }
 
-export type StateMachineDiagramNodes = Choice | DeepHistory | FinalState | Fork | InitialState | Join | Region | ShallowHistory | State | StateMachine;
+export type StateMachineDiagramNodes = Choice | DeepHistory | FinalState | Fork | InitialState | Join | Region | ShallowHistory | State | StateMachine | StatePart;
 
 export const StateMachineDiagramNodes = {
     $type: 'StateMachineDiagramNodes'
@@ -2525,6 +2509,31 @@ export const StateMachineDiagramNodes = {
 
 export function isStateMachineDiagramNodes(item: unknown): item is StateMachineDiagramNodes {
     return reflection.isInstance(item, StateMachineDiagramNodes.$type);
+}
+
+export interface StatePart extends langium.AstNode {
+    readonly $container: State | StateMachineDiagram;
+    readonly $type: 'StatePart';
+    __id: string;
+    __unknown: Array<UnknownProperty>;
+    effect?: LangiumText;
+    guard?: LangiumText;
+    name?: LangiumText;
+    trigger?: LangiumText;
+}
+
+export const StatePart = {
+    $type: 'StatePart',
+    __id: '__id',
+    __unknown: '__unknown',
+    effect: 'effect',
+    guard: 'guard',
+    name: 'name',
+    trigger: 'trigger'
+} as const;
+
+export function isStatePart(item: unknown): item is StatePart {
+    return reflection.isInstance(item, StatePart.$type);
 }
 
 export interface Subject extends langium.AstNode {
@@ -2618,7 +2627,7 @@ export function isTransitionKind(item: unknown): item is TransitionKind {
     return item === 'INTERNAL' || item === 'EXTERNAL' || item === 'LOCAL';
 }
 
-export type Unbounded = EnumerationLiteral | InputPin | LiteralSpecification | OutputPin | Parameter | Property | Slot;
+export type Unbounded = EnumerationLiteral | InputPin | LiteralSpecification | OutputPin | Parameter | Property | Slot | StatePart;
 
 export const Unbounded = {
     $type: 'Unbounded'
@@ -2649,7 +2658,7 @@ export function isUnionType_1(item: unknown): item is UnionType_1 {
 }
 
 export interface UnknownProperty extends langium.AstNode {
-    readonly $container: AbstractClass | Abstraction | AcceptEventAction | Activity | ActivityDiagram | ActivityFinalNode | ActivityParameterNode | ActivityPartition | Actor | Artifact | Association | CentralBufferNode | Choice | Class | ClassDiagram | CommunicationDiagram | CommunicationPath | ControlFlow | DataType | DecisionNode | DeepHistory | Dependency | Deployment | DeploymentDiagram | DeploymentModel | DeploymentNode | DeploymentPackage | DeploymentSpecification | Device | Diagram | ElementImport | Enumeration | EnumerationLiteral | ExecutionEnvironment | Extend | FinalState | FlowFinalNode | Fork | ForkNode | Generalization | Include | InformationFlow | InformationFlowDiagram | InitialNode | InitialState | InputPin | InstanceSpecification | Interaction | Interface | InterfaceRealization | Join | JoinNode | Lifeline | LiteralSpecification | Manifestation | MergeNode | Message | OpaqueAction | Operation | OutputPin | Package | PackageDiagram | PackageImport | PackageMerge | Parameter | Position | PrimitiveType | Property | Realization | Region | Relation | SendSignalAction | ShallowHistory | Size | Slot | State | StateMachine | StateMachineDiagram | Subject | Substitution | Transition | Usage | UseCase | UseCaseDiagram;
+    readonly $container: Abstraction | AcceptEventAction | Activity | ActivityDiagram | ActivityFinalNode | ActivityParameterNode | ActivityPartition | Actor | Artifact | Association | CentralBufferNode | Choice | Class | ClassDiagram | CommunicationDiagram | CommunicationPath | ControlFlow | DataType | DecisionNode | DeepHistory | Dependency | Deployment | DeploymentDiagram | DeploymentModel | DeploymentNode | DeploymentPackage | DeploymentSpecification | Device | Diagram | ElementImport | Enumeration | EnumerationLiteral | ExecutionEnvironment | Extend | FinalState | FlowFinalNode | Fork | ForkNode | Generalization | Include | InformationFlow | InformationFlowDiagram | InitialNode | InitialState | InputPin | InstanceSpecification | Interaction | Interface | InterfaceRealization | Join | JoinNode | Lifeline | LiteralSpecification | Manifestation | MergeNode | Message | OpaqueAction | Operation | OutputPin | Package | PackageDiagram | PackageImport | PackageMerge | Parameter | Position | PrimitiveType | Property | Realization | Region | Relation | SendSignalAction | ShallowHistory | Size | Slot | State | StateMachine | StateMachineDiagram | StatePart | Subject | Substitution | Transition | Usage | UseCase | UseCaseDiagram;
     readonly $type: 'UnknownProperty';
     key: string;
     value: JsonValue;
@@ -2771,7 +2780,6 @@ export function isVisibility(item: unknown): item is Visibility {
 }
 
 export type UmlDiagramAstType = {
-    AbstractClass: AbstractClass
     Abstraction: Abstraction
     AcceptEventAction: AcceptEventAction
     Activity: Activity
@@ -2883,6 +2891,7 @@ export type UmlDiagramAstType = {
     StateMachineDiagramEdges: StateMachineDiagramEdges
     StateMachineDiagramElements: StateMachineDiagramElements
     StateMachineDiagramNodes: StateMachineDiagramNodes
+    StatePart: StatePart
     Subject: Subject
     Substitution: Substitution
     Transition: Transition
@@ -2900,44 +2909,6 @@ export type UmlDiagramAstType = {
 
 export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
     override readonly types = {
-        AbstractClass: {
-            name: AbstractClass.$type,
-            properties: {
-                __id: {
-                    name: AbstractClass.__id
-                },
-                __unknown: {
-                    name: AbstractClass.__unknown,
-                    defaultValue: []
-                },
-                isAbstract: {
-                    name: AbstractClass.isAbstract,
-                    defaultValue: false
-                },
-                isActive: {
-                    name: AbstractClass.isActive,
-                    defaultValue: false
-                },
-                label: {
-                    name: AbstractClass.label
-                },
-                name: {
-                    name: AbstractClass.name
-                },
-                operations: {
-                    name: AbstractClass.operations,
-                    defaultValue: []
-                },
-                properties: {
-                    name: AbstractClass.properties,
-                    defaultValue: []
-                },
-                visibility: {
-                    name: AbstractClass.visibility
-                }
-            },
-            superTypes: [Class.$type, ClassDiagramNodes.$type]
-        },
         Abstraction: {
             name: Abstraction.$type,
             properties: {
@@ -3191,11 +3162,17 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
                 sourceAggregation: {
                     name: Association.sourceAggregation
                 },
+                sourceModifiers: {
+                    name: Association.sourceModifiers
+                },
                 sourceMultiplicity: {
                     name: Association.sourceMultiplicity
                 },
                 sourceName: {
                     name: Association.sourceName
+                },
+                sourcePoint: {
+                    name: Association.sourcePoint
                 },
                 target: {
                     name: Association.target,
@@ -3204,11 +3181,17 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
                 targetAggregation: {
                     name: Association.targetAggregation
                 },
+                targetModifiers: {
+                    name: Association.targetModifiers
+                },
                 targetMultiplicity: {
                     name: Association.targetMultiplicity
                 },
                 targetName: {
                     name: Association.targetName
+                },
+                targetPoint: {
+                    name: Association.targetPoint
                 },
                 visibility: {
                     name: Association.visibility
@@ -3252,7 +3235,7 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
                     name: Choice.visibility
                 }
             },
-            superTypes: [Node.$type, StateMachineDiagramNodes.$type]
+            superTypes: [ClassDiagramNodes.$type, Node.$type, StateMachineDiagramNodes.$type]
         },
         Class: {
             name: Class.$type,
@@ -5023,6 +5006,13 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
                 name: {
                     name: State.name
                 },
+                parts: {
+                    name: State.parts,
+                    defaultValue: []
+                },
+                partsHeight: {
+                    name: State.partsHeight
+                },
                 regions: {
                     name: State.regions,
                     defaultValue: []
@@ -5097,6 +5087,31 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
             properties: {
             },
             superTypes: [StateMachineDiagramElements.$type]
+        },
+        StatePart: {
+            name: StatePart.$type,
+            properties: {
+                __id: {
+                    name: StatePart.__id
+                },
+                __unknown: {
+                    name: StatePart.__unknown,
+                    defaultValue: []
+                },
+                effect: {
+                    name: StatePart.effect
+                },
+                guard: {
+                    name: StatePart.guard
+                },
+                name: {
+                    name: StatePart.name
+                },
+                trigger: {
+                    name: StatePart.trigger
+                }
+            },
+            superTypes: [StateMachineDiagramNodes.$type, Unbounded.$type]
         },
         Subject: {
             name: Subject.$type,

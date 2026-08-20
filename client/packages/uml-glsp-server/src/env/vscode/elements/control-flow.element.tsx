@@ -9,7 +9,7 @@
 import { GEdgeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { ControlFlow } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { GEdge } from '@eclipse-glsp/server';
-import { EdgeNameLabel, pinnedEndpointId } from './core/index.js';
+import { EdgeGuardLabel, EdgeNameLabel, pinnedEndpointId } from './core/index.js';
 import type { ElementContext } from './core/element-context.js';
 
 export function createControlFlowRelation(ctx: ElementContext<ControlFlow>): GEdge {
@@ -26,6 +26,9 @@ export function createControlFlowRelation(ctx: ElementContext<ControlFlow>): GEd
             cssClasses={['uml-edge', 'marker-tent-end']}
         >
             <EdgeNameLabel id={ctx.node.__id} name={ctx.node.name} />
+            {/* The condition the flow is taken under, which is as much a part of what the edge says as
+                its name - and on the flows out of a decision node it is the whole of it. */}
+            <EdgeGuardLabel id={ctx.node.__id} guard={ctx.node.guard} named={!!ctx.node.name} />
         </GEdgeElement>
     ) as GEdge;
 }

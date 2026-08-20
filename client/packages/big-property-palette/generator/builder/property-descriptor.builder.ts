@@ -86,8 +86,14 @@ export function buildPropertyDescriptor(prop: Property, declarations: Declaratio
     }
 
     if (first?.typeName === 'string' || first?.typeName === 'number') {
-        const val = first.typeName === 'number' ? `String(context.semanticElement.${id})` : `context.semanticElement.${id}`;
-        return { type: 'text', id, label: toHuman(id), valueExpr: `${val}!` };
+        // A number is written out to be typed into a text field. Only where it is set, though: an unset
+        // one went through `String(undefined)` and showed the field holding the word `undefined`, which
+        // reads as a value someone put there.
+        const val =
+            first.typeName === 'number'
+                ? `context.semanticElement.${id} !== undefined ? String(context.semanticElement.${id}) : ''`
+                : `context.semanticElement.${id}!`;
+        return { type: 'text', id, label: toHuman(id), valueExpr: val };
     }
 
     const constant = optionConstant(first?.typeName ?? '', declarations);

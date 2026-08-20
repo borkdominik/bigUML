@@ -6,7 +6,6 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-export * from './abstract-class-element.def.js';
 export * from './abstraction-element.def.js';
 export * from './accept-event-action-element.def.js';
 export * from './activity-element.def.js';

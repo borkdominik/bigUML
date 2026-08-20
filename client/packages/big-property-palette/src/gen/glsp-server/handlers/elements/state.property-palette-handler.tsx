@@ -26,6 +26,33 @@ export namespace StatePropertyPaletteHandler {
                         text={context.semanticElement.name!}
                         label='Name'
                     />
+                    <ReferenceProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='parts'
+                        label='Parts'
+                        references={(context.semanticElement.parts ?? [])
+                            .filter((e: any) => !!e && !!e.__id)
+                            .map((e: any) => ({
+                                elementId: e.__id,
+                                label: e.name ?? '(unnamed state_part)',
+                                name: e.name ?? '',
+                                deleteActions: [DeleteElementOperation.create([e.__id])]
+                            }))}
+                        creates={[
+                            {
+                                label: 'Create State Part',
+                                action: CreateNodeOperation.create(context.languageMetadata.convertToElementType('StatePart'), {
+                                    containerId: context.semanticElement.__id
+                                })
+                            }
+                        ]}
+                    />
+                    <TextProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='partsHeight'
+                        text={context.semanticElement.partsHeight !== undefined ? String(context.semanticElement.partsHeight) : ''}
+                        label='Parts Height'
+                    />
                     <ChoiceProperty
                         elementId={context.semanticElement.__id}
                         propertyId='visibility'

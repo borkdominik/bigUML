@@ -10,7 +10,7 @@
 import { type ConnectionPoint, parseConnectionPointId } from '@borkdominik-biguml/uml-glsp-server';
 import { getDefaultProperties, getRelationTypeFromElementId } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
 import { createRandomUUID, type IdAstNode, type jsonPatch, type SerializeAstNode } from '@borkdominik-biguml/uml-model-server';
-import { type Edge, isPackageMerge } from '@borkdominik-biguml/uml-model-server/grammar';
+import { type Edge, isPackageMerge, reflection } from '@borkdominik-biguml/uml-model-server/grammar';
 import {
     type Command,
     CreateEdgeOperation,
@@ -89,8 +89,8 @@ export class GenericCreateEdgeOperationHandler extends OperationHandler implemen
         // empty array for any property type it has no case for, so an unpinned end would be stored as
         // `sourcePoint: []` - which the grammar, expecting one of four names, cannot read back.
         // An absent property is what marks an end as unpinned.
-        setConnectionPoint(value, 'sourcePoint', source?.point);
-        setConnectionPoint(value, 'targetPoint', target?.point);
+        setConnectionPoint(value, astType, 'sourcePoint', source?.point);
+        setConnectionPoint(value, astType, 'targetPoint', target?.point);
 
         return {
             op: 'add',
@@ -134,9 +134,26 @@ export class GenericCreateEdgeOperationHandler extends OperationHandler implemen
     }
 }
 
-/** Stores a pinned connection point, or removes the property entirely when the end is not pinned. */
-function setConnectionPoint(value: Record<string, unknown>, property: string, point: ConnectionPoint | undefined): void {
-    if (point) {
+/**
+ * Stores a pinned connection point, or removes the property entirely when the end is not pinned or the
+ * edge has nowhere to keep it.
+ *
+ * The tips of a diamond are dropped on with whatever tool the user reached for, and only some edges
+ * declare `sourcePoint`/`targetPoint` - a transition, a control flow, an association. Written onto one
+ * of the others the pin would go into the file under a rule with no field to read it back, and the
+ * diagram would stop opening. That end stays unpinned instead, which is where the client's anchor puts
+ * it anyway: on the nearest tip, recomputed as the shapes move rather than held.
+ *
+ * Asked of the grammar rather than kept as a list here, so an edge given the property later is pinnable
+ * by that alone.
+ */
+function setConnectionPoint(
+    value: Record<string, unknown>,
+    astType: string,
+    property: string,
+    point: ConnectionPoint | undefined
+): void {
+    if (point && property in reflection.getTypeMetaData(astType).properties) {
         value[property] = point;
     } else {
         delete value[property];

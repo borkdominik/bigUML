@@ -149,7 +149,7 @@ function buildAstAliases(declarations: Declaration[], allNames: string[], nodes:
         }
 
         // If a class's parent is also in the list with same name pattern
-        // (e.g., AbstractClass extends Class → both map to 'Class')
+        // (a class that only specialises its parent's defaults maps to the parent's AST type)
         if (decl.extends) {
             for (const parent of decl.extends) {
                 if (allNames.includes(parent) && parent !== name) {

@@ -23,6 +23,7 @@ export * from './langium/uml-diagram-scope-provider.js';
 export * from './langium/uml-diagram-scope.js';
 export * from './langium/uml-diagram-token-builder.js';
 export * from './langium/uml-diagram-validator.js';
+export * from './langium/uml-diagram-value-converter.js';
 export * from './langium/uml-diagram-workspace-manager.js';
 export * from './langium/util/dimension.js';
 export * from './langium/util/name-util.js';

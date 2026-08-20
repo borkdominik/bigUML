@@ -145,6 +145,22 @@ export class ClassDiagramToolPaletteItemProvider extends ToolPaletteItemProvider
                 actions: []
             },
             {
+                id: 'uml.pseudo-states',
+                sortString: 'A',
+                label: 'PseudoStates',
+                icon: 'symbol-property',
+                children: [
+                    {
+                        id: 'choice',
+                        sortString: 'A',
+                        label: 'Choice',
+                        icon: 'uml-pseudostate-choice-icon',
+                        actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.CHOICE)]
+                    }
+                ],
+                actions: []
+            },
+            {
                 id: 'uml.container',
                 sortString: 'A',
                 label: 'Container',
@@ -198,13 +214,6 @@ export class ClassDiagramToolPaletteItemProvider extends ToolPaletteItemProvider
                         label: 'DataType',
                         icon: 'uml-data-type-icon',
                         actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.DATA_TYPE)]
-                    },
-                    {
-                        id: 'abstract-class',
-                        sortString: 'A',
-                        label: 'Abstract Class',
-                        icon: 'uml-class-icon',
-                        actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.ABSTRACT_CLASS)]
                     }
                 ],
                 actions: []

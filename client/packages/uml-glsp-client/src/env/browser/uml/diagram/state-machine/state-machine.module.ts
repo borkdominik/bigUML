@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { representationTypeId } from '@borkdominik-biguml/uml-glsp-server';
+import { CommonModelTypes, representationTypeId } from '@borkdominik-biguml/uml-glsp-server';
 import { configureModelElement, FeatureModule } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import {
@@ -28,8 +28,12 @@ import {
     GStateJoinNodeView,
     GStateMachineNode,
     GStateMachineNodeView,
+    GStateCompartment,
+    GStateCompartmentView,
     GStateNode,
     GStateNodeView,
+    GStatePartNode,
+    GStatePartNodeView,
     GTransitionEdge,
     GTransitionEdgeView
 } from '../../elements/index.js';
@@ -44,6 +48,13 @@ export const umlStateMachineDiagramModule = new FeatureModule((bind, unbind, isB
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Region'), GRegionNode, GRegionNodeView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'State'), GStateNode, GStateNodeView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'StateMachine'), GStateMachineNode, GStateMachineNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'StatePart'), GStatePartNode, GStatePartNodeView);
+
+    // The two compartments of a state the user adjusts: the band a region is drawn as, which is dragged
+    // to a height of its own, and the compartment its parts are written in. Both are registered as
+    // selectable compartments rather than the plain kind - see `GStateCompartment`.
+    configureModelElement(context, CommonModelTypes.COMP_STATE_REGION, GStateCompartment, GStateCompartmentView);
+    configureModelElement(context, CommonModelTypes.COMP_STATE_PARTS, GStateCompartment, GStateCompartmentView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'InitialState'), GInitialStateNode, GInitialStateNodeView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Choice'), GChoiceNode, GChoiceNodeView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Join'), GStateJoinNode, GStateJoinNodeView);

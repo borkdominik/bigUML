@@ -20,9 +20,14 @@
     opacity: 1;
 }
 
+/*
+ * Selection shows as a thicker line and nothing else. It must not touch `stroke-dasharray`: whether a
+ * relation is dashed is UML notation - an abstraction, a realization, a dependency - and
+ * `.uml-edge.selected` outweighs `.uml-edge-dashed`, so resetting it here drew every one of them solid
+ * for as long as it was selected, which is exactly when it has just been drawn and is being looked at.
+ */
 .uml-edge.selected {
     stroke-width: 3;
-    stroke-dasharray: none;
 }
 
 .uml-edge > .sprotty-routing-handle {

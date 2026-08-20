@@ -75,7 +75,18 @@ const NODE_SIZE_OVERRIDES: Record<string, { width: number; height: number }> = {
  * such nested nodes are never traversed by the gmodel factory and would silently disappear from the
  * rendered diagram, while staying in the file where nothing on the canvas can select or delete them.
  */
-const FLAT_CONTAINER_TYPES = new Set<string>(['Subject', 'StateMachine', 'Interaction', 'Activity', 'ActivityPartition']);
+const FLAT_CONTAINER_TYPES = new Set<string>([
+    'Subject',
+    'StateMachine',
+    'Interaction',
+    'Activity',
+    'ActivityPartition',
+    // A composite state contains its substates the same way: they are drawn over its region bands, which
+    // are compartments of the state and hold nothing themselves (see `GStateRegionCompartment`). Listing
+    // it here is also what stops a substate dropped on a state from resolving to no containment property
+    // at all, which is a patch path of `''` - the whole document.
+    'State'
+]);
 
 /**
  * The lanes a node of this type opens with, held in a containment property of its own.
@@ -239,12 +250,29 @@ export class GenericCreateNodeOperationHandler extends OperationHandler implemen
 
     protected getContainer(operation: CreateNodeOperation): GModelElement | undefined {
         const index = this.modelState.index;
-        return operation.containerId ? index.get(operation.containerId) : undefined;
+        // `find` rather than `get`, which throws on an id it does not hold. The callers all read this as
+        // optional, and a drop names its container by an id that came from the client - so a stale one
+        // should leave the node on the canvas, not fail the whole operation.
+        return operation.containerId ? index.find(operation.containerId) : undefined;
+    }
+
+    /**
+     * What the container *is*, rather than how it happens to be drawn.
+     *
+     * A container is not always a node: a region of a composite state is a compartment of that state
+     * (see `GStateRegionCompartment`), so its gmodel type is `comp` and says nothing about what may be
+     * put in it. Its semantic type does, and it is the semantic model the new element is written into.
+     * For everything drawn as a node the two agree, the gmodel type being the semantic one with the
+     * representation prefixed - which is what `stripPrefix` takes back off.
+     */
+    protected containerType(containerId: string): string | undefined {
+        const semantic = this.modelState.index.findIdElement(containerId)?.$type;
+        return semantic ?? this.modelState.index.find(containerId)?.type;
     }
 
     protected resolveContainerPath(operation: CreateNodeOperation): string {
         if (operation.containerId) {
-            const container = this.modelState.index.find(operation.containerId);
+            const container = { type: this.containerType(operation.containerId) };
             const containerPath = this.modelState.index.findPath(operation.containerId);
 
             // Asked before the flat-container rule below, for the two things that belong *in* the named
@@ -279,7 +307,11 @@ export class GenericCreateNodeOperationHandler extends OperationHandler implemen
                 }
             }
         }
-        return '';
+
+        // A drop the container cannot take becomes a flat entity of the diagram, which is where every
+        // node in this editor lives anyway. Never the empty path: that is the whole document in JSON
+        // Patch, so an `add` against it would have replaced the model with the one new node.
+        return '/diagram/entities/-';
     }
 
     protected stripPrefix(name: string): string {

@@ -24,7 +24,14 @@ import { type ConnectionPoint } from './transition-element.def.js';
 export class ControlFlow extends Edge {
     name?: string;
     visibility?: Visibility;
-    guard?: string;
+    /**
+     * The condition the flow is taken under, written on the edge in brackets - `[x > 0]`, `[else]`.
+     *
+     * Text rather than a plain string, which is parsed as an identifier: a guard is an expression and
+     * almost every one of them carries punctuation or a blank, and a value the grammar cannot lex is a
+     * value that leaves the file unparseable once it has been written.
+     */
+    @Language.text guard?: string;
     weight?: number;
     @Language.reference source: Node | Unbounded;
     @Language.reference target: Node | Unbounded;

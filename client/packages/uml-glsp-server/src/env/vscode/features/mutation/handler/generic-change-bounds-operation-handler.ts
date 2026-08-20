@@ -91,6 +91,16 @@ export class GenericChangeBoundsOperationHandler extends OperationHandler {
                 return;
             }
 
+            // And neither is there anywhere to store bounds for something that is not an element at all.
+            // A compartment can be resized - a region's band is (see `GStateRegionCompartment`) - and one
+            // that carries an element's id has that element to record it against, while one that does not
+            // would be named by a `Size` reference pointing at nothing: the reference goes out as the word
+            // `undefined` and the file stops parsing. The compartment holding a state's parts is the case
+            // in point, whose height is kept on the state itself as `partsHeight`.
+            if (!this.modelState.index.findIdElement(elementId)) {
+                return;
+            }
+
             const sizePath = this.modelState.index.findSizePath(elementId);
             const size = (this.modelState.index as any).findSize ? (this.modelState.index as any).findSize(elementId) : undefined;
 

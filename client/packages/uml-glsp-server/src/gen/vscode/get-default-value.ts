@@ -163,6 +163,14 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'string'
         },
         {
+            property: 'sourceModifiers',
+            propertyType: 'string'
+        },
+        {
+            property: 'targetModifiers',
+            propertyType: 'string'
+        },
+        {
             property: 'sourceAggregation',
             propertyType: 'AggregationType',
             defaultValue: 'NONE'
@@ -177,12 +185,63 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'Visibility'
         },
         {
+            property: 'sourcePoint',
+            propertyType: 'ConnectionPoint'
+        },
+        {
+            property: 'targetPoint',
+            propertyType: 'ConnectionPoint'
+        },
+        {
             property: 'source',
             propertyType: 'Node'
         },
         {
             property: 'target',
             propertyType: 'Node'
+        }
+    ],
+    Transition: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'trigger',
+            propertyType: 'string'
+        },
+        {
+            property: 'guard',
+            propertyType: 'string'
+        },
+        {
+            property: 'effect',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'kind',
+            propertyType: 'TransitionKind',
+            defaultValue: 'EXTERNAL'
+        },
+        {
+            property: 'source',
+            propertyType: 'Node'
+        },
+        {
+            property: 'target',
+            propertyType: 'Node'
+        },
+        {
+            property: 'sourcePoint',
+            propertyType: 'ConnectionPoint'
+        },
+        {
+            property: 'targetPoint',
+            propertyType: 'ConnectionPoint'
         }
     ],
     Property: [
@@ -255,49 +314,7 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'StateMachineDiagramEdges'
         }
     ],
-    Transition: [
-        {
-            property: 'name',
-            propertyType: 'string'
-        },
-        {
-            property: 'trigger',
-            propertyType: 'string'
-        },
-        {
-            property: 'guard',
-            propertyType: 'string'
-        },
-        {
-            property: 'effect',
-            propertyType: 'string'
-        },
-        {
-            property: 'visibility',
-            propertyType: 'Visibility'
-        },
-        {
-            property: 'kind',
-            propertyType: 'TransitionKind',
-            defaultValue: 'EXTERNAL'
-        },
-        {
-            property: 'source',
-            propertyType: 'Node'
-        },
-        {
-            property: 'target',
-            propertyType: 'Node'
-        },
-        {
-            property: 'sourcePoint',
-            propertyType: 'ConnectionPoint'
-        },
-        {
-            property: 'targetPoint',
-            propertyType: 'ConnectionPoint'
-        }
-    ],
+    StatePart: [],
     StateMachine: [
         {
             property: 'name',
@@ -334,6 +351,14 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
         {
             property: 'name',
             propertyType: 'string'
+        },
+        {
+            property: 'parts',
+            propertyType: 'StatePart'
+        },
+        {
+            property: 'partsHeight',
+            propertyType: 'number'
         },
         {
             property: 'visibility',
@@ -1129,37 +1154,6 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'Visibility'
         }
     ],
-    AbstractClass: [
-        {
-            property: 'isAbstract',
-            propertyType: 'boolean',
-            defaultValue: true
-        },
-        {
-            property: 'label',
-            propertyType: 'string'
-        },
-        {
-            property: 'name',
-            propertyType: 'string'
-        },
-        {
-            property: 'properties',
-            propertyType: 'Property'
-        },
-        {
-            property: 'operations',
-            propertyType: 'Operation'
-        },
-        {
-            property: 'isActive',
-            propertyType: 'boolean'
-        },
-        {
-            property: 'visibility',
-            propertyType: 'Visibility'
-        }
-    ],
     ActivityDiagram: [
         {
             property: 'diagramType',
@@ -1401,6 +1395,7 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
 
 export const noBoundsClasses = new Set<string>([
     'Property',
+    'StatePart',
     'Parameter',
     'Slot',
     'LiteralSpecification',
@@ -1421,6 +1416,7 @@ export const astTypeMapping: Record<string, string> = {};
 export const optionalNameClasses = new Set<string>([
     'Association',
     'Transition',
+    'StatePart',
     'Region',
     'ShallowHistory',
     'Join',

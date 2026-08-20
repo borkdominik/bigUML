@@ -53,6 +53,7 @@ export * from './realization/index.js';
 export * from './region/index.js';
 export * from './slot/index.js';
 export * from './state-machine/index.js';
+export * from './state-part/index.js';
 export * from './state/index.js';
 export * from './subject/index.js';
 export * from './substitution/index.js';

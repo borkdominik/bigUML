@@ -1,0 +1,5 @@
+/* The subject acts as a boundary around other nodes, so it must stay transparent
+   to keep anything positioned behind it visible. */
+.uml-subject-node .uml-node-background {
+    fill: none;
+}

@@ -15,6 +15,13 @@ import type { GModelElement } from '@eclipse-glsp/server';
 export interface SectionCompartmentProps {
     id: string;
     divider?: boolean;
+    /** A type of its own, for a section the user does something to - see `CommonModelTypes.COMP_STATE_PARTS`. */
+    type?: string;
+    /**
+     * The height the section is drawn at, where the user has given it one. Left out, the section is as
+     * tall as what is written in it, which is what every section but one is.
+     */
+    height?: number;
     children?: GlspNode;
 }
 
@@ -22,9 +29,17 @@ export function SectionCompartment(props: SectionCompartmentProps): GModelElemen
     return (
         <GCompartmentElement
             id={props.id}
-            type={DefaultTypes.COMPARTMENT}
+            type={props.type ?? DefaultTypes.COMPARTMENT}
             layout='vbox'
-            layoutOptions={{ hAlign: 'left', resizeContainer: true, hGrab: true }}
+            layoutOptions={{
+                hAlign: 'left',
+                resizeContainer: true,
+                hGrab: true,
+                // A given height is `prefHeight` rather than a minimum: it is what the section is drawn at,
+                // and unlike a minimum it is not read as a limit, so it can still be dragged back down to
+                // the lines it holds.
+                ...(props.height && props.height > 0 ? { prefHeight: props.height } : {})
+            }}
             args={props.divider ? { divider: true } : undefined}
         >
             {props.children}

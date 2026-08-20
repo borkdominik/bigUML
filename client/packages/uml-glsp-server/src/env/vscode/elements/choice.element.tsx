@@ -21,8 +21,11 @@ export function createChoiceElement(ctx: ElementContext<Choice>): GModelElement 
             position={position}
             size={size}
             type={ctx.elementType}
-            // A choice is the one diamond whose edges can be pinned: a transition has somewhere to
-            // record which tip it was put on, where the activity diagram's control flows do not.
+            // The four tips, offered on either diagram a choice is drawn on. Both of the edges that run
+            // to one there can record which tip it was put on - a transition in `sourcePoint`/
+            // `targetPoint`, and an association in fields of its own added to match. An edge that
+            // cannot hold a pin is not refused the shape, it just meets it unpinned; see
+            // `GenericCreateEdgeOperationHandler`.
             connectionPoints
         />
     );

@@ -27,6 +27,16 @@ export namespace CommonModelTypes {
     export const MISSING_NODE = 'uml-missingNode';
     /** A named connection point of a shape that has them - one of the four tips of a choice diamond. */
     export const CONNECTION_POINT = 'uml-port:connection-point';
+    /**
+     * The band a region of a composite state is drawn as, and the compartment its parts are written in.
+     *
+     * Both carry a type of their own rather than the plain compartment type, because both are given a
+     * height by the user and a compartment only gets resize handles through a `ShapeTypeHint` of its own
+     * (see `UmlDiagramConfiguration.shapeTypeHints`) - a hint is keyed by element type, so a type shared
+     * with every other compartment in every diagram could not carry one.
+     */
+    export const COMP_STATE_REGION = 'uml-comp:state-region';
+    export const COMP_STATE_PARTS = 'uml-comp:state-parts';
 }
 
 /**

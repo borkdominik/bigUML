@@ -12,9 +12,7 @@ import {
     containerFeature,
     type EditableLabel,
     type GChildElement,
-    GCompartment,
     GLabel,
-    hasArgs,
     isEditableLabel,
     layoutableChildFeature,
     nameFeature,
@@ -22,11 +20,12 @@ import {
     type RenderingContext,
     svg
 } from '@eclipse-glsp/client';
-import { type Args, DefaultTypes } from '@eclipse-glsp/protocol';
+import { type Args } from '@eclipse-glsp/protocol';
 import { injectable } from 'inversify';
 import { type VNode } from 'snabbdom';
 // eslint-disable-next-line no-restricted-imports
 import { alignFeature } from 'sprotty';
+import { renderCompartmentSeparators } from '../../views/compartment-separator.js';
 import { GLabeledNode } from '../../views/uml-label.view.js';
 
 export class NamedElement extends GLabeledNode implements ArgsAware {
@@ -96,26 +95,12 @@ export class NamedElementView extends RectangularNodeView {
             return undefined;
         }
 
-        const compartments = element.children.filter(
-            c =>
-                c instanceof GCompartment &&
-                c.type !== DefaultTypes.COMPARTMENT_HEADER &&
-                c.children.length > 0 &&
-                hasArgs(c) &&
-                c.args['divider'] === true
-        ) as GCompartment[];
-
         // TODO: Remove after switching to builder based approach for all gmodels
         return (
             <g class-selected={element.selected} class-mouseover={element.hoverFeedback}>
                 {(element.args['border'] === true || element.args['build_by'] === undefined) && this.renderBackground(element)}
 
-                {compartments.map(compartment => (
-                    <path
-                        class-uml-comp-separator
-                        d={`M 0,${compartment.position.y}  L ${element.bounds.width},${compartment.position.y}`}
-                    ></path>
-                ))}
+                {renderCompartmentSeparators(element)}
 
                 {this.renderContent(element, context)}
             </g>

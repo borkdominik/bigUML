@@ -19,6 +19,7 @@ import type { Region } from '../elements/region-element.def.js';
 import type { ShallowHistory } from '../elements/shallow-history-element.def.js';
 import type { State } from '../elements/state-element.def.js';
 import type { StateMachine } from '../elements/state-machine-element.def.js';
+import type { StatePart } from '../elements/state-part-element.def.js';
 import type { Transition } from '../elements/transition-element.def.js';
 
 // @ts-nocheck
@@ -36,6 +37,7 @@ type StateMachineDiagramNodes =
     | StateMachine
     | Region
     | State
+    | StatePart
     | FinalState
     | InitialState
     | Choice

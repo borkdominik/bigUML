@@ -16,6 +16,7 @@ export namespace StateMachineDiagramNodeTypes {
     export const STATE_MACHINE = representationTypeId('StateMachine', DefaultTypes.NODE, 'StateMachine');
     export const REGION = representationTypeId('StateMachine', DefaultTypes.NODE, 'Region');
     export const STATE = representationTypeId('StateMachine', DefaultTypes.NODE, 'State');
+    export const STATE_PART = representationTypeId('StateMachine', DefaultTypes.NODE, 'StatePart');
     export const FINAL_STATE = representationTypeId('StateMachine', DefaultTypes.NODE, 'FinalState');
     export const INITIAL_STATE = representationTypeId('StateMachine', DefaultTypes.NODE, 'InitialState');
     export const CHOICE = representationTypeId('StateMachine', DefaultTypes.NODE, 'Choice');
@@ -34,6 +35,7 @@ export namespace StateMachineDiagramModelTypes {
     export const STATE_MACHINE = StateMachineDiagramNodeTypes.STATE_MACHINE;
     export const REGION = StateMachineDiagramNodeTypes.REGION;
     export const STATE = StateMachineDiagramNodeTypes.STATE;
+    export const STATE_PART = StateMachineDiagramNodeTypes.STATE_PART;
     export const FINAL_STATE = StateMachineDiagramNodeTypes.FINAL_STATE;
     export const INITIAL_STATE = StateMachineDiagramNodeTypes.INITIAL_STATE;
     export const CHOICE = StateMachineDiagramNodeTypes.CHOICE;
@@ -51,6 +53,7 @@ export namespace StateMachineAstTypes {
         StateMachine: StateMachineDiagramModelTypes.STATE_MACHINE,
         Region: StateMachineDiagramModelTypes.REGION,
         State: StateMachineDiagramModelTypes.STATE,
+        StatePart: StateMachineDiagramModelTypes.STATE_PART,
         FinalState: StateMachineDiagramModelTypes.FINAL_STATE,
         InitialState: StateMachineDiagramModelTypes.INITIAL_STATE,
         Choice: StateMachineDiagramModelTypes.CHOICE,

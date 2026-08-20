@@ -124,6 +124,20 @@ svg .uml-node .uml-node-background {
     stroke: var(--uml-edge);
 }
 
+/*
+ * The rule between one region of an orthogonal state and the next. Dashed is what tells it apart from
+ * the solid rule closing off a compartment of a different kind - the same distinction the region frame
+ * draws with its own dashed border.
+ *
+ * Long dashes with a clear gap, rather than the short ones a frame's border is drawn with: this rule runs
+ * the whole width of the state and is the only thing separating one region from another, so it has to
+ * read as deliberate at a glance and not as a hairline. The dash is left square-ended - the default cap -
+ * which is what keeps the pattern reading as dashes rather than as a row of dots.
+ */
+.uml-comp-separator-dashed {
+    stroke-dasharray: 10 6;
+}
+
 .uml-packageable-node > .struct {
     fill: none;
     stroke: none;

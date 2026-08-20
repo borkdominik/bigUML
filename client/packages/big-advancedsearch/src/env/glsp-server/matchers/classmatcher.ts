@@ -75,7 +75,6 @@ export class ClassDiagramMatcher implements IMatcher {
 
             switch (type) {
                 case 'Class':
-                case 'AbstractClass':
                 case 'Interface':
                 case 'DataType':
                     results.push({ id, type, name, parentName });

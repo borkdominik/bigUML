@@ -8,7 +8,6 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
-    isAbstractClass,
     isAbstraction,
     isAcceptEventAction,
     isActivity,
@@ -76,7 +75,7 @@ import {
     isTransition,
     isUsage,
     isUseCase,
-    type Class
+    type Region
 } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { GEdge, GGraph, GModelElement, GModelFactory } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
@@ -218,15 +217,20 @@ export class UmlDiagramGModelFactory implements GModelFactory {
     protected collectSemanticElements(element: unknown, nodes: unknown[], edges: unknown[]): void {
         nodes.push(element);
 
-        if (isStateMachine(element) || isState(element)) {
+        if (isStateMachine(element)) {
             element.regions?.forEach(region => this.collectSemanticElements(region, nodes, edges));
         }
 
+        // A *state's* regions are the bands drawn inside the state itself (see `GStateRegionCompartment`),
+        // so the region is not a node of its own here - what is drawn on the band still is. Collected as a
+        // node as well, it would appear twice under the one id: once as the band and once as a frame of
+        // its own, standing wherever its stored position happens to put it.
+        if (isState(element)) {
+            element.regions?.forEach(region => this.collectRegionContents(region, nodes, edges));
+        }
+
         if (isRegion(element)) {
-            element.subvertices?.forEach(subvertex => this.collectSemanticElements(subvertex, nodes, edges));
-            // A transition between two states of a region is stored on the region, not in the diagram's
-            // flat relation list, so it has to be picked up here or it is never drawn either.
-            element.transitions?.forEach(transition => edges.push(transition));
+            this.collectRegionContents(element, nodes, edges);
         }
 
         // An interaction owns its lifelines and the messages between them the same way - and that is
@@ -236,6 +240,16 @@ export class UmlDiagramGModelFactory implements GModelFactory {
             element.lifelines?.forEach(lifeline => this.collectSemanticElements(lifeline, nodes, edges));
             element.messages?.forEach(message => edges.push(message));
         }
+    }
+
+    /**
+     * What is drawn on a region: the states and pseudostates put inside it, and the transitions between
+     * them - which are stored on the region rather than in the diagram's flat relation list, so they have
+     * to be picked up here or they are never drawn either.
+     */
+    protected collectRegionContents(region: Region, nodes: unknown[], edges: unknown[]): void {
+        region.subvertices?.forEach(subvertex => this.collectSemanticElements(subvertex, nodes, edges));
+        region.transitions?.forEach(transition => edges.push(transition));
     }
 
     protected buildCtx<T>(node: T): ElementContext<T> {
@@ -248,8 +262,6 @@ export class UmlDiagramGModelFactory implements GModelFactory {
     }
 
     protected createNodeElement(element: unknown): GModelElement | undefined {
-        // AbstractClass must come before Class (AbstractClass extends Class)
-        if (isAbstractClass(element)) return createClassElement(this.buildCtx(element as Class));
         if (isClass(element)) return createClassElement(this.buildCtx(element));
         if (isInterface(element)) return createInterfaceElement(this.buildCtx(element));
         if (isDataType(element)) return createDataTypeElement(this.buildCtx(element));

@@ -46,10 +46,11 @@ export class UmlDiagramConfiguration implements DiagramConfiguration {
         mapping.set(CommonModelTypes.LABEL_HEADING, GLabel);
         mapping.set(CommonModelTypes.LABEL_TEXT, GLabel);
         mapping.set(CommonModelTypes.COMP_HEADER, GCompartment);
+        mapping.set(CommonModelTypes.COMP_STATE_REGION, GCompartment);
+        mapping.set(CommonModelTypes.COMP_STATE_PARTS, GCompartment);
         mapping.set(CommonModelTypes.LABEL_ICON, GLabel);
         mapping.set(CommonModelTypes.ICON, GCompartment);
         mapping.set(ClassDiagramNodeTypes.CLASS, GClassNode);
-        mapping.set(ClassDiagramNodeTypes.ABSTRACT_CLASS, GClassNode);
         mapping.set(ClassDiagramNodeTypes.PROPERTY, GPropertyNode);
         mapping.set(ClassDiagramNodeTypes.OPERATION, GOperationNode);
         mapping.set(ClassDiagramNodeTypes.INTERFACE, GInterfaceNode);
@@ -76,7 +77,6 @@ export class UmlDiagramConfiguration implements DiagramConfiguration {
                 resizable: true,
                 reparentable: false,
                 containableElementTypeIds: [
-                    ClassDiagramNodeTypes.ABSTRACT_CLASS,
                     ClassDiagramNodeTypes.CLASS,
                     ClassDiagramNodeTypes.DATA_TYPE,
                     ClassDiagramNodeTypes.ENUMERATION,
@@ -84,14 +84,6 @@ export class UmlDiagramConfiguration implements DiagramConfiguration {
                     ClassDiagramNodeTypes.PACKAGE,
                     ClassDiagramNodeTypes.PRIMITIVE_TYPE
                 ]
-            },
-            {
-                elementTypeId: ClassDiagramNodeTypes.ABSTRACT_CLASS,
-                repositionable: true,
-                deletable: true,
-                resizable: true,
-                reparentable: false,
-                containableElementTypeIds: [ClassDiagramNodeTypes.PROPERTY, ClassDiagramNodeTypes.OPERATION]
             },
             {
                 elementTypeId: ClassDiagramNodeTypes.INTERFACE,
@@ -193,11 +185,59 @@ export class UmlDiagramConfiguration implements DiagramConfiguration {
                     StateMachineDiagramNodeTypes.STATE
                 ]
             },
+            // A state holding regions is the frame its substates are drawn on, so everything that can
+            // stand inside one has to be named here or the client refuses the drop - they are added as
+            // flat siblings drawn on top, see `FLAT_CONTAINER_TYPES`.
             {
                 elementTypeId: StateMachineDiagramNodeTypes.STATE,
                 repositionable: true,
                 deletable: true,
                 resizable: true,
+                reparentable: false,
+                containableElementTypeIds: [
+                    StateMachineDiagramNodeTypes.CHOICE,
+                    StateMachineDiagramNodeTypes.DEEP_HISTORY,
+                    StateMachineDiagramNodeTypes.FINAL_STATE,
+                    StateMachineDiagramNodeTypes.FORK,
+                    StateMachineDiagramNodeTypes.INITIAL_STATE,
+                    StateMachineDiagramNodeTypes.JOIN,
+                    StateMachineDiagramNodeTypes.SHALLOW_HISTORY,
+                    StateMachineDiagramNodeTypes.STATE
+                ]
+            },
+            // The band a region is drawn as. Resizable and nothing else: it is how tall the region is
+            // that the user drags, and a hint is the only thing that grants the handles to do it with -
+            // `TypeHintProvider` takes `resizeFeature` from `resizable` and from nowhere else. Not
+            // repositionable, because the band is placed by the state that owns it and a move would
+            // spring back on the next redraw; deletable, because deleting the band is deleting the
+            // region. What may be dropped on it is what may be dropped on the state.
+            {
+                elementTypeId: CommonModelTypes.COMP_STATE_REGION,
+                repositionable: false,
+                deletable: true,
+                resizable: true,
+                reparentable: false,
+                containableElementTypeIds: [
+                    StateMachineDiagramNodeTypes.CHOICE,
+                    StateMachineDiagramNodeTypes.DEEP_HISTORY,
+                    StateMachineDiagramNodeTypes.FINAL_STATE,
+                    StateMachineDiagramNodeTypes.FORK,
+                    StateMachineDiagramNodeTypes.INITIAL_STATE,
+                    StateMachineDiagramNodeTypes.JOIN,
+                    StateMachineDiagramNodeTypes.SHALLOW_HISTORY,
+                    StateMachineDiagramNodeTypes.STATE
+                ]
+            },
+            // The compartment a state's parts are written in. Adjusted through `State.partsHeight` in the
+            // property panel rather than by dragging: a resize is recorded against the element it was
+            // performed on, and this compartment is not an element - a `Size` naming it would go out as a
+            // reference to nothing and leave the file unparseable. So it takes no handles, and nothing
+            // may be dropped on it either.
+            {
+                elementTypeId: CommonModelTypes.COMP_STATE_PARTS,
+                repositionable: false,
+                deletable: false,
+                resizable: false,
                 reparentable: false,
                 containableElementTypeIds: []
             },
@@ -209,6 +249,10 @@ export class UmlDiagramConfiguration implements DiagramConfiguration {
                 StateMachineDiagramNodeTypes.FORK,
                 StateMachineDiagramNodeTypes.JOIN,
                 StateMachineDiagramNodeTypes.CHOICE,
+                // The same diamond on the class diagram. A node type is scoped to one diagram, so the
+                // state machine's hint above says nothing about this one - and without a hint of its own
+                // it would be drawn at whatever size it was created with and never resizable.
+                ClassDiagramNodeTypes.CHOICE,
                 ActivityDiagramNodeTypes.FORK_NODE,
                 ActivityDiagramNodeTypes.JOIN_NODE,
                 ActivityDiagramNodeTypes.DECISION_NODE,
@@ -347,7 +391,7 @@ export function createDefaultEdgeTypeHint(elementId: string): EdgeTypeHint {
         repositionable: true,
         deletable: true,
         routable: true,
-        sourceElementTypeIds: [ClassDiagramNodeTypes.CLASS, ClassDiagramNodeTypes.ABSTRACT_CLASS, ClassDiagramNodeTypes.INTERFACE],
-        targetElementTypeIds: [ClassDiagramNodeTypes.CLASS, ClassDiagramNodeTypes.ABSTRACT_CLASS, ClassDiagramNodeTypes.INTERFACE]
+        sourceElementTypeIds: [ClassDiagramNodeTypes.CLASS, ClassDiagramNodeTypes.INTERFACE],
+        targetElementTypeIds: [ClassDiagramNodeTypes.CLASS, ClassDiagramNodeTypes.INTERFACE]
     };
 }

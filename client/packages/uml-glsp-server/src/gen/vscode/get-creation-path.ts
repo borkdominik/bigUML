@@ -106,6 +106,10 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
     ],
     State: [
         {
+            property: 'parts',
+            allowedChildTypes: ['StatePart']
+        },
+        {
             property: 'regions',
             allowedChildTypes: ['Region']
         }
@@ -442,16 +446,6 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
         }
     ],
     DataType: [
-        {
-            property: 'properties',
-            allowedChildTypes: ['Property']
-        },
-        {
-            property: 'operations',
-            allowedChildTypes: ['Operation']
-        }
-    ],
-    AbstractClass: [
         {
             property: 'properties',
             allowedChildTypes: ['Property']

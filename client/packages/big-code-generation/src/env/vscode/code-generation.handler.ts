@@ -167,7 +167,7 @@ export class CodeGenerationActionHandler implements OnActivate, OnDispose {
                 visibility: entity.visibility
             };
 
-            if (entity.__type === 'Class' || entity.__type === 'AbstractClass') {
+            if (entity.__type === 'Class') {
                 base.isAbstract = entity.isAbstract ?? false;
 
                 base.ownedAttribute = (entity.properties ?? []).map((p: any) => ({

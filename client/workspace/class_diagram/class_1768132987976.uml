@@ -6,14 +6,34 @@
 		"entities": [
 			{
 				"__type": "Class",
-				"__id": "Class_ca32daf9-03f3-4bc5-b91e-2a3b5e0d4930",
-				"name": "Book",
+				"__id": "Class_a2392e2a-081f-459f-b59e-3ac599985e90",
+				"name": "NewAbstractClass1",
 				"isAbstract": true,
+				"properties": [],
+				"operations": [],
+				"isActive": false,
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "Class",
+				"__id": "Class_f67ba1cc-ddd7-43ef-8bbf-d26a310a97d3",
+				"name": "NewAbstractClass2",
+				"isAbstract": true,
+				"properties": [],
+				"operations": [],
+				"isActive": false,
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "Class",
+				"__id": "Class_71644d7e-92e3-49ed-9245-cb2e7792b6f1",
+				"name": "NewClass1",
+				"isAbstract": false,
 				"properties": [
 					{
 						"__type": "Property",
-						"__id": "Property_80de492a-1bf6-48c1-a37d-b20cb8401304",
-						"name": "ISBN",
+						"__id": "Property_803d2ca7-6342-472e-a189-4628c6753b34",
+						"name": "Book",
 						"isDerived": false,
 						"isOrdered": false,
 						"isStatic": false,
@@ -22,30 +42,65 @@
 						"isNavigable": false,
 						"isUnique": false,
 						"visibility": "NONE",
-						"propertyType": {
-							"__type": "Reference",
-							"__refType": "DataTypeReference",
-							"__value": "Class_ca32daf9-03f3-4bc5-b91e-2a3b5e0d4930"
-						}
+						"propertyType": "String"
 					}
 				],
-				"operations": [],
-				"isActive": false
-			},
-			{
-				"__type": "Class",
-				"__id": "Class_84d3bb3a-23c4-4199-8e28-4a4778d01520",
-				"name": "string",
-				"isAbstract": false,
-				"properties": [],
 				"operations": [],
 				"isActive": false,
 				"visibility": "PUBLIC"
 			},
 			{
 				"__type": "Class",
-				"__id": "Class_73c7702f-aedf-44a4-93db-df8a66632fb5",
-				"name": "NewClass1",
+				"__id": "Class_ee9462b3-7fbf-4ee4-8496-a515733f46a1",
+				"name": "NewClass2",
+				"isAbstract": false,
+				"properties": [
+					{
+						"__type": "Property",
+						"__id": "Property_c82ad0a4-3cb4-430c-9e8a-6a91d068dda4",
+						"name": "NewProperty1",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isNavigable": false,
+						"isUnique": false,
+						"visibility": "PUBLIC"
+					}
+				],
+				"operations": [],
+				"isActive": false,
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "Class",
+				"__id": "Class_1cc1389a-46f4-4557-a6f2-9e4a37bb15ff",
+				"name": "NewClass3",
+				"isAbstract": false,
+				"properties": [
+					{
+						"__type": "Property",
+						"__id": "Property_eb39c2d6-cc1c-4937-a4a0-c11d4acbb6d9",
+						"name": "NewProperty2",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isNavigable": false,
+						"isUnique": false,
+						"visibility": "PUBLIC"
+					}
+				],
+				"operations": [],
+				"isActive": false,
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "Class",
+				"__id": "Class_e2c5a17e-8bb2-4599-8567-fd488562bb17",
+				"name": "NewClass4",
 				"isAbstract": false,
 				"properties": [],
 				"operations": [],
@@ -56,23 +111,52 @@
 		"relations": [
 			{
 				"__type": "Association",
-				"__id": "Association_37e80749-fea0-42c7-8489-f06ed3250a68",
+				"__id": "Association_251e8a98-0bc1-481a-8fb5-857555fef972",
 				"source": {
 					"__type": "Reference",
 					"__refType": "Node",
-					"__value": "Class_84d3bb3a-23c4-4199-8e28-4a4778d01520"
+					"__value": "Class_ee9462b3-7fbf-4ee4-8496-a515733f46a1"
 				},
 				"target": {
 					"__type": "Reference",
 					"__refType": "Node",
-					"__value": "Class_ca32daf9-03f3-4bc5-b91e-2a3b5e0d4930"
+					"__value": "Class_1cc1389a-46f4-4557-a6f2-9e4a37bb15ff"
 				},
-				"name": "kjgsldfg",
-				"sourceMultiplicity": "1",
-				"targetMultiplicity": "2..*43875897543",
-				"sourceName": "undefineddfsdf",
+				"sourceMultiplicity": "*",
+				"targetMultiplicity": "*",
+				"targetName": "non unique",
 				"sourceAggregation": "NONE",
 				"targetAggregation": "NONE",
+				"visibility": "PROTECTED"
+			},
+			{
+				"__type": "ElementImport",
+				"__id": "ElementImport_06bd8826-edb8-4091-83e1-63fe62de74fd",
+				"source": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "undefined"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "Class_1cc1389a-46f4-4557-a6f2-9e4a37bb15ff"
+				},
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "Abstraction",
+				"__id": "Abstraction_be13e7f1-a4e9-4bf1-beaf-6d79f2290c2c",
+				"source": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "undefined"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "Class_e2c5a17e-8bb2-4599-8567-fd488562bb17"
+				},
 				"visibility": "PUBLIC"
 			}
 		]
@@ -80,68 +164,134 @@
 	"metaInfos": [
 		{
 			"__type": "Size",
-			"__id": "size_Class_84d3bb3a-23c4-4199-8e28-4a4778d01520",
-			"height": 35,
+			"__id": "size_Class_a2392e2a-081f-459f-b59e-3ac599985e90",
+			"height": 34.51487159729004,
+			"width": 141.39781188964844,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Class_a2392e2a-081f-459f-b59e-3ac599985e90"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_Class_a2392e2a-081f-459f-b59e-3ac599985e90",
+			"x": 270.6517792831032,
+			"y": -11.877434480282119,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Class_a2392e2a-081f-459f-b59e-3ac599985e90"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_Class_f67ba1cc-ddd7-43ef-8bbf-d26a310a97d3",
+			"height": 34.51487159729004,
+			"width": 142.30498504638672,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Class_f67ba1cc-ddd7-43ef-8bbf-d26a310a97d3"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_Class_f67ba1cc-ddd7-43ef-8bbf-d26a310a97d3",
+			"x": -116.26615617760046,
+			"y": 55.33795150654163,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Class_f67ba1cc-ddd7-43ef-8bbf-d26a310a97d3"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_Class_71644d7e-92e3-49ed-9245-cb2e7792b6f1",
+			"height": 30,
 			"width": 80,
 			"element": {
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Class_84d3bb3a-23c4-4199-8e28-4a4778d01520"
+				"__value": "Class_71644d7e-92e3-49ed-9245-cb2e7792b6f1"
 			}
 		},
 		{
 			"__type": "Position",
-			"__id": "pos_Class_84d3bb3a-23c4-4199-8e28-4a4778d01520",
-			"x": 159.5086122934227,
-			"y": 34.69528414293883,
+			"__id": "pos_Class_71644d7e-92e3-49ed-9245-cb2e7792b6f1",
+			"x": 480,
+			"y": 180,
 			"element": {
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Class_84d3bb3a-23c4-4199-8e28-4a4778d01520"
+				"__value": "Class_71644d7e-92e3-49ed-9245-cb2e7792b6f1"
 			}
 		},
 		{
 			"__type": "Size",
-			"__id": "size_Class_ca32daf9-03f3-4bc5-b91e-2a3b5e0d4930",
-			"height": 121.81319086065866,
-			"width": 198.08179571810183,
+			"__id": "size_Class_ee9462b3-7fbf-4ee4-8496-a515733f46a1",
+			"height": 72,
+			"width": 131.9375,
 			"element": {
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Class_ca32daf9-03f3-4bc5-b91e-2a3b5e0d4930"
+				"__value": "Class_ee9462b3-7fbf-4ee4-8496-a515733f46a1"
 			}
 		},
 		{
 			"__type": "Position",
-			"__id": "pos_Class_ca32daf9-03f3-4bc5-b91e-2a3b5e0d4930",
-			"x": 626.9461603437209,
-			"y": -13.216335153256978,
+			"__id": "pos_Class_ee9462b3-7fbf-4ee4-8496-a515733f46a1",
+			"x": 1594,
+			"y": -65,
 			"element": {
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Class_ca32daf9-03f3-4bc5-b91e-2a3b5e0d4930"
+				"__value": "Class_ee9462b3-7fbf-4ee4-8496-a515733f46a1"
 			}
 		},
 		{
 			"__type": "Size",
-			"__id": "size_Class_73c7702f-aedf-44a4-93db-df8a66632fb5",
-			"height": 35,
-			"width": 88.65625,
+			"__id": "size_Class_1cc1389a-46f4-4557-a6f2-9e4a37bb15ff",
+			"height": 72,
+			"width": 131.9375,
 			"element": {
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Class_73c7702f-aedf-44a4-93db-df8a66632fb5"
+				"__value": "Class_1cc1389a-46f4-4557-a6f2-9e4a37bb15ff"
 			}
 		},
 		{
 			"__type": "Position",
-			"__id": "pos_Class_73c7702f-aedf-44a4-93db-df8a66632fb5",
-			"x": 800,
-			"y": 140,
+			"__id": "pos_Class_1cc1389a-46f4-4557-a6f2-9e4a37bb15ff",
+			"x": 2059,
+			"y": 22,
 			"element": {
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Class_73c7702f-aedf-44a4-93db-df8a66632fb5"
+				"__value": "Class_1cc1389a-46f4-4557-a6f2-9e4a37bb15ff"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_Class_e2c5a17e-8bb2-4599-8567-fd488562bb17",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Class_e2c5a17e-8bb2-4599-8567-fd488562bb17"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_Class_e2c5a17e-8bb2-4599-8567-fd488562bb17",
+			"x": 2130,
+			"y": -120,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "Class_e2c5a17e-8bb2-4599-8567-fd488562bb17"
 			}
 		}
 	]

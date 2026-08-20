@@ -141,9 +141,97 @@
 				"__id": "CentralBufferNode_2359318e-cc10-4ecd-845d-f8d5651a51f5",
 				"name": "NewCentralBufferNode1",
 				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "AcceptEventAction",
+				"__id": "AcceptEventAction_c66258e5-4f26-4de9-9704-2361a95f6967",
+				"name": "NewAcceptEventAction2",
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "SendSignalAction",
+				"__id": "SendSignalAction_302d5114-53c1-488c-9e62-e53a655ea937",
+				"name": "NewSendSignalAction2",
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "OpaqueAction",
+				"__id": "OpaqueAction_59425920-00d5-4b93-8663-998c752c302e",
+				"name": "NewOpaqueAction2",
+				"visibility": "PUBLIC",
+				"inputPins": [],
+				"outputPins": []
+			},
+			{
+				"__type": "DecisionNode",
+				"__id": "DecisionNode_947c7283-d313-45e4-931c-51eac834f88a",
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "OpaqueAction",
+				"__id": "OpaqueAction_f5ff6547-92e3-4e96-a097-6e554a914c68",
+				"name": "NewOpaqueAction3",
+				"visibility": "PUBLIC",
+				"inputPins": [],
+				"outputPins": []
 			}
 		],
-		"relations": []
+		"relations": [
+			{
+				"__type": "ControlFlow",
+				"__id": "ControlFlow_e5cb39bf-266a-434f-b79b-c7ad3c24f249",
+				"visibility": "PUBLIC",
+				"weight": 0,
+				"source": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "AcceptEventAction_c66258e5-4f26-4de9-9704-2361a95f6967"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "DecisionNode_947c7283-d313-45e4-931c-51eac834f88a"
+				},
+				"targetPoint": "WEST"
+			},
+			{
+				"__type": "ControlFlow",
+				"__id": "ControlFlow_17d49622-683d-46d2-8fd6-3985d51b968e",
+				"visibility": "PUBLIC",
+				"weight": 0,
+				"source": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "DecisionNode_947c7283-d313-45e4-931c-51eac834f88a"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "OpaqueAction_59425920-00d5-4b93-8663-998c752c302e"
+				},
+				"sourcePoint": "EAST",
+				"targetPoint": "WEST"
+			},
+			{
+				"__type": "ControlFlow",
+				"__id": "ControlFlow_027ce3be-97dd-4d96-9f81-1999c8bc05af",
+				"visibility": "PUBLIC",
+				"guard": "ok",
+				"weight": 0,
+				"source": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "DecisionNode_947c7283-d313-45e4-931c-51eac834f88a"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "OpaqueAction_f5ff6547-92e3-4e96-a097-6e554a914c68"
+				},
+				"sourcePoint": "EAST",
+				"targetPoint": "WEST"
+			}
+		]
 	},
 	"metaInfos": [
 		{
@@ -540,6 +628,116 @@
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
 				"__value": "CentralBufferNode_2359318e-cc10-4ecd-845d-f8d5651a51f5"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_AcceptEventAction_c66258e5-4f26-4de9-9704-2361a95f6967",
+			"height": 60,
+			"width": 188.359375,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "AcceptEventAction_c66258e5-4f26-4de9-9704-2361a95f6967"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_AcceptEventAction_c66258e5-4f26-4de9-9704-2361a95f6967",
+			"x": -47.85300093670173,
+			"y": 290.3831177906464,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "AcceptEventAction_c66258e5-4f26-4de9-9704-2361a95f6967"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_SendSignalAction_302d5114-53c1-488c-9e62-e53a655ea937",
+			"height": 60,
+			"width": 181.8671875,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "SendSignalAction_302d5114-53c1-488c-9e62-e53a655ea937"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_SendSignalAction_302d5114-53c1-488c-9e62-e53a655ea937",
+			"x": -240.5830403894454,
+			"y": 290.5653992109451,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "SendSignalAction_302d5114-53c1-488c-9e62-e53a655ea937"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_OpaqueAction_59425920-00d5-4b93-8663-998c752c302e",
+			"height": 60,
+			"width": 131.6328125,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "OpaqueAction_59425920-00d5-4b93-8663-998c752c302e"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_OpaqueAction_59425920-00d5-4b93-8663-998c752c302e",
+			"x": 384.25231936875605,
+			"y": 169.4489738873657,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "OpaqueAction_59425920-00d5-4b93-8663-998c752c302e"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_DecisionNode_947c7283-d313-45e4-931c-51eac834f88a",
+			"height": 58.383117790646395,
+			"width": 43.93923952656701,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "DecisionNode_947c7283-d313-45e4-931c-51eac834f88a"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_DecisionNode_947c7283-d313-45e4-931c-51eac834f88a",
+			"x": 219.7991636296523,
+			"y": 288.1822814202988,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "DecisionNode_947c7283-d313-45e4-931c-51eac834f88a"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_OpaqueAction_f5ff6547-92e3-4e96-a097-6e554a914c68",
+			"height": 60,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "OpaqueAction_f5ff6547-92e3-4e96-a097-6e554a914c68"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_OpaqueAction_f5ff6547-92e3-4e96-a097-6e554a914c68",
+			"x": 410,
+			"y": 350,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "OpaqueAction_f5ff6547-92e3-4e96-a097-6e554a914c68"
 			}
 		}
 	]

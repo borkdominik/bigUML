@@ -13,6 +13,8 @@ import type { Abstraction } from '../elements/abstraction-element.def.js';
 import type { Class } from '../elements/class-element.def.js';
 import type { Dependency } from '../elements/dependency-element.def.js';
 import type { ElementImport } from '../elements/element-import-element.def.js';
+import type { Note } from '../elements/note-element.def.js';
+import type { TextLabel } from '../elements/text-label-element.def.js';
 import type { Operation } from '../elements/operation-element.def.js';
 import type { Package } from '../elements/package-element.def.js';
 import type { PackageImport } from '../elements/package-import-element.def.js';
@@ -32,6 +34,6 @@ export class PackageDiagram {
 
 type PackageDiagramElements = PackageDiagramNodes | PackageDiagramEdges;
 
-type PackageDiagramNodes = Package | Class | Property | Operation | Parameter;
+type PackageDiagramNodes = Package | Class | Property | Operation | Parameter | Note | TextLabel;
 
 type PackageDiagramEdges = PackageImport | PackageMerge | ElementImport | Dependency | Abstraction | Usage;

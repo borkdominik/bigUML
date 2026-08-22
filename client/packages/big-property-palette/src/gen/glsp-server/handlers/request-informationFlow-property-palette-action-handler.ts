@@ -10,15 +10,26 @@
 import { RequestPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
 import { type ActionHandler, type MaybePromise } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
-import { isActor, isClass, isInformationFlow, isOperation, isParameter, isProperty } from '@borkdominik-biguml/uml-model-server/grammar';
+import {
+    isActor,
+    isClass,
+    isInformationFlow,
+    isNote,
+    isOperation,
+    isParameter,
+    isProperty,
+    isTextLabel
+} from '@borkdominik-biguml/uml-model-server/grammar';
 import { DiagramModelState, DiagramLanguageMetadata } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import type { DiagramLanguageMetadata as DiagramLanguageMetadataType } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import { ActorPropertyPaletteHandler } from './elements/actor.property-palette-handler.js';
 import { ClassPropertyPaletteHandler } from './elements/class.property-palette-handler.js';
 import { InformationFlowPropertyPaletteHandler } from './elements/information-flow.property-palette-handler.js';
+import { NotePropertyPaletteHandler } from './elements/note.property-palette-handler.js';
 import { OperationPropertyPaletteHandler } from './elements/operation.property-palette-handler.js';
 import { ParameterPropertyPaletteHandler } from './elements/parameter.property-palette-handler.js';
 import { PropertyPropertyPaletteHandler } from './elements/property.property-palette-handler.js';
+import { TextLabelPropertyPaletteHandler } from './elements/text-label.property-palette-handler.js';
 @injectable()
 export class RequestInformationFlowPropertyPaletteActionHandler implements ActionHandler {
     actionKinds = [RequestPropertyPaletteAction.KIND];
@@ -50,7 +61,11 @@ export class RequestInformationFlowPropertyPaletteActionHandler implements Actio
 
             const context = { semanticElement, languageMetadata: this.languageMetadata };
 
-            if (isProperty(semanticElement)) {
+            if (isTextLabel(semanticElement)) {
+                return TextLabelPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isNote(semanticElement)) {
+                return NotePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isProperty(semanticElement)) {
                 return PropertyPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isActor(semanticElement)) {
                 return ActorPropertyPaletteHandler.getPropertyPalette(context);

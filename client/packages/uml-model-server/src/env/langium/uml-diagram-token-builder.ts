@@ -13,7 +13,7 @@ import { AstUtils, DefaultTokenBuilder, type Grammar, GrammarAST, RegExpUtils, t
  * Where a keyword may legally appear in the JSON-shaped concrete syntax.
  *
  * The generated grammar spells every JSON field out as keywords, e.g.
- * `'"name"' ':' '"' name=LANGIUM_ID '"'`. Chevrotain lexes without parser context and prefers
+ * `'"name"' ':' '"' name=LangiumName '"'`. Chevrotain lexes without parser context and prefers
  * keyword tokens over terminals, so a *value* that happens to equal a field name or a type
  * literal (`{"name": "x"}`, `{"name": "Class"}`) is lexed as that keyword and the parse fails.
  * Keys and values are distinguishable by their surroundings though: a key is always followed by

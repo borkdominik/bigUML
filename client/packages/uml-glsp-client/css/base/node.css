@@ -168,3 +168,37 @@ svg .uml-node .uml-node-background {
     fill: none;
     stroke: none;
 }
+
+/*
+ * The turned-down corner of a note. Filled with what is behind the note rather than with the note's own
+ * fill, which is what makes the corner read as folded over rather than merely cut off - the underside of
+ * the flap is not the front of the page.
+ *
+ * The stroke is left to `.uml-node`, as the outline's is, so the fold thickens with the rest of the shape
+ * on hover and on selection instead of staying a hairline beside a heavier border.
+ */
+.uml-note-fold {
+    fill: var(--uml-editor-background);
+}
+
+/*
+ * A free label is writing and nothing else, so the box it occupies is drawn only while the pointer is
+ * over it or it is selected. Off, there is no telling a label apart from words that happen to be there,
+ * nor seeing how far it reaches when the time comes to drag its edge; on all the time, a label would
+ * just be a note again.
+ *
+ * Dashed, and in the selection colour rather than the border colour, so it reads as the extent of
+ * something rather than as an outline the label is drawn with. The width is set here rather than
+ * inherited, because `.uml-node.selected` thickens a shape's own border and this is not one.
+ */
+.uml-text-label-outline {
+    fill: none;
+    stroke: none;
+}
+
+.uml-text-label-node.mouseover .uml-text-label-outline,
+.uml-text-label-node.selected .uml-text-label-outline {
+    stroke: var(--uml-border);
+    stroke-width: 1;
+    stroke-dasharray: 3 3;
+}

@@ -23,6 +23,8 @@ export namespace DeploymentDiagramNodeTypes {
     export const PROPERTY = representationTypeId('Deployment', DefaultTypes.NODE, 'Property');
     export const OPERATION = representationTypeId('Deployment', DefaultTypes.NODE, 'Operation');
     export const PARAMETER = representationTypeId('Deployment', DefaultTypes.NODE, 'Parameter');
+    export const NOTE = representationTypeId('Deployment', DefaultTypes.NODE, 'Note');
+    export const TEXT_LABEL = representationTypeId('Deployment', DefaultTypes.NODE, 'TextLabel');
 }
 
 export namespace DeploymentDiagramEdgeTypes {
@@ -45,6 +47,8 @@ export namespace DeploymentDiagramModelTypes {
     export const PROPERTY = DeploymentDiagramNodeTypes.PROPERTY;
     export const OPERATION = DeploymentDiagramNodeTypes.OPERATION;
     export const PARAMETER = DeploymentDiagramNodeTypes.PARAMETER;
+    export const NOTE = DeploymentDiagramNodeTypes.NOTE;
+    export const TEXT_LABEL = DeploymentDiagramNodeTypes.TEXT_LABEL;
 
     // re-export edges
     export const COMMUNICATION_PATH = DeploymentDiagramEdgeTypes.COMMUNICATION_PATH;
@@ -66,6 +70,8 @@ export namespace DeploymentAstTypes {
         Property: DeploymentDiagramModelTypes.PROPERTY,
         Operation: DeploymentDiagramModelTypes.OPERATION,
         Parameter: DeploymentDiagramModelTypes.PARAMETER,
+        Note: DeploymentDiagramModelTypes.NOTE,
+        TextLabel: DeploymentDiagramModelTypes.TEXT_LABEL,
         CommunicationPath: DeploymentDiagramModelTypes.COMMUNICATION_PATH,
         Dependency: DeploymentDiagramModelTypes.DEPENDENCY,
         Manifestation: DeploymentDiagramModelTypes.MANIFESTATION,

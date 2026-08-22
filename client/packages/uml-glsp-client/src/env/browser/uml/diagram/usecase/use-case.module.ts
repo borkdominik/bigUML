@@ -20,8 +20,12 @@ import {
     GGeneralizationEdgeView,
     GIncludeEdge,
     GIncludeEdgeView,
+    GNoteNode,
+    GNoteNodeView,
     GSubjectNode,
     GSubjectNodeView,
+    GTextLabelNode,
+    GTextLabelNodeView,
     GUseCaseNode,
     GUseCaseNodeView,
     NamedElement,
@@ -45,6 +49,11 @@ export const umlUseCaseDiagramModule = new FeatureModule((bind, unbind, isBound,
     // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Property'), GPropertyNode, GPropertyNodeView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'PropertyType'), GEditableLabel, GEditableLabelView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'PropertyMultiplicity'), GEditableLabel, GEditableLabelView);
+
+    // The note and the free label, which every diagram has: both say something about the diagram
+    // rather than being part of any one notation.
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Note'), GNoteNode, GNoteNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'TextLabel'), GTextLabelNode, GTextLabelNodeView);
 
     // Edges
     configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Association'), GAssociationEdge, GAssociationEdgeView);

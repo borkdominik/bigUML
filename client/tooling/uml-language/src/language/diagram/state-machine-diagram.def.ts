@@ -17,6 +17,8 @@ import type { FinalState } from '../elements/final-state-element.def.js';
 import type { Fork } from '../elements/fork-element.def.js';
 import type { InitialState } from '../elements/initial-state-element.def.js';
 import type { Join } from '../elements/join-element.def.js';
+import type { Note } from '../elements/note-element.def.js';
+import type { TextLabel } from '../elements/text-label-element.def.js';
 import type { Region } from '../elements/region-element.def.js';
 import type { ShallowHistory } from '../elements/shallow-history-element.def.js';
 import type { State } from '../elements/state-element.def.js';
@@ -50,6 +52,8 @@ type StateMachineDiagramNodes =
     | ShallowHistory
     | ExitPoint
     | EntryPoint
-    | Terminate;
+    | Terminate
+    | Note
+    | TextLabel;
 
 type StateMachineDiagramEdges = Transition;

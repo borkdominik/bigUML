@@ -17,6 +17,10 @@ import {
     isPosition,
     Subject,
     isSubject,
+    TextLabel,
+    isTextLabel,
+    Note,
+    isNote,
     Include,
     isInclude,
     Relation,
@@ -378,6 +382,30 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         }
         if (element.useCases !== undefined && element.useCases !== null) {
             str.push('"useCases": [' + element.useCases.map(property => this.serializeUseCase(property)).join(',') + ']');
+        }
+        return '{' + str.join(',\n') + '}';
+    }
+
+    serializeTextLabel(element: TextLabel): string {
+        let str: Array<string> = [];
+        str.push('"__type": "TextLabel"');
+        if (element.__id !== undefined && element.__id !== null) {
+            str.push('"__id": ' + '"' + element.__id + '"');
+        }
+        if (element.body !== undefined && element.body !== null) {
+            str.push('"body": ' + '"' + element.body + '"');
+        }
+        return '{' + str.join(',\n') + '}';
+    }
+
+    serializeNote(element: Note): string {
+        let str: Array<string> = [];
+        str.push('"__type": "Note"');
+        if (element.__id !== undefined && element.__id !== null) {
+            str.push('"__id": ' + '"' + element.__id + '"');
+        }
+        if (element.body !== undefined && element.body !== null) {
+            str.push('"body": ' + '"' + element.body + '"');
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -2396,6 +2424,12 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (isSubject(element)) {
             return this.serializeSubject(element);
         }
+        if (isNote(element)) {
+            return this.serializeNote(element);
+        }
+        if (isTextLabel(element)) {
+            return this.serializeTextLabel(element);
+        }
     }
 
     serializeUseCaseDiagramEdges(element: UseCaseDiagramEdges): any {
@@ -2481,6 +2515,12 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (isTerminate(element)) {
             return this.serializeTerminate(element);
         }
+        if (isNote(element)) {
+            return this.serializeNote(element);
+        }
+        if (isTextLabel(element)) {
+            return this.serializeTextLabel(element);
+        }
     }
 
     serializeStateMachineDiagramEdges(element: StateMachineDiagramEdges): any {
@@ -2513,6 +2553,12 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         }
         if (isParameter(element)) {
             return this.serializeParameter(element);
+        }
+        if (isNote(element)) {
+            return this.serializeNote(element);
+        }
+        if (isTextLabel(element)) {
+            return this.serializeTextLabel(element);
         }
     }
 
@@ -2574,6 +2620,12 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (isParameter(element)) {
             return this.serializeParameter(element);
         }
+        if (isNote(element)) {
+            return this.serializeNote(element);
+        }
+        if (isTextLabel(element)) {
+            return this.serializeTextLabel(element);
+        }
     }
 
     serializeInformationFlowDiagramEdges(element: InformationFlowDiagramEdges): any {
@@ -2622,6 +2674,12 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (isParameter(element)) {
             return this.serializeParameter(element);
         }
+        if (isNote(element)) {
+            return this.serializeNote(element);
+        }
+        if (isTextLabel(element)) {
+            return this.serializeTextLabel(element);
+        }
     }
 
     serializeDeploymentDiagramEdges(element: DeploymentDiagramEdges): any {
@@ -2657,6 +2715,12 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         }
         if (isLifeline(element)) {
             return this.serializeLifeline(element);
+        }
+        if (isNote(element)) {
+            return this.serializeNote(element);
+        }
+        if (isTextLabel(element)) {
+            return this.serializeTextLabel(element);
         }
     }
 
@@ -2717,6 +2781,12 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         }
         if (isChoice(element)) {
             return this.serializeChoice(element);
+        }
+        if (isNote(element)) {
+            return this.serializeNote(element);
+        }
+        if (isTextLabel(element)) {
+            return this.serializeTextLabel(element);
         }
     }
 
@@ -2847,6 +2917,12 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (isProperty(element)) {
             return this.serializeProperty(element);
         }
+        if (isNote(element)) {
+            return this.serializeNote(element);
+        }
+        if (isTextLabel(element)) {
+            return this.serializeTextLabel(element);
+        }
     }
 
     serializeActivityDiagramEdges(element: ActivityDiagramEdges): any {
@@ -2883,6 +2959,12 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         }
         if (isSubject(element)) {
             return this.serializeSubject(element);
+        }
+        if (isTextLabel(element)) {
+            return this.serializeTextLabel(element);
+        }
+        if (isNote(element)) {
+            return this.serializeNote(element);
         }
         if (isActor(element)) {
             return this.serializeActor(element);

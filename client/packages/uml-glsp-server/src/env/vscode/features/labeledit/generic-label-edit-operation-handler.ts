@@ -6,8 +6,14 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { behaviorLabelPatch, storableGuard, storableName, type BehaviorLabelElement } from '@borkdominik-biguml/uml-glsp-server';
-import { isInitialState, isStatePart, isTransition } from '@borkdominik-biguml/uml-model-server/grammar';
+import {
+    behaviorLabelPatch,
+    storableGuard,
+    storableName,
+    storableProse,
+    type BehaviorLabelElement
+} from '@borkdominik-biguml/uml-glsp-server';
+import { isInitialState, isNote, isStatePart, isTextLabel, isTransition } from '@borkdominik-biguml/uml-model-server/grammar';
 import { ApplyLabelEditOperation, type Command, OperationHandler } from '@eclipse-glsp/server';
 import { injectable } from 'inversify';
 import { type AstNode, isAstNode } from 'langium';
@@ -75,6 +81,17 @@ export class GenericLabelEditOperationHandler extends OperationHandler {
             // Which end it belongs to is in the id as well: `<id>_source_modifiers_label`.
             const end = operation.labelId.endsWith(`_target${EDGE_MODIFIERS_LABEL_SUFFIX}`) ? 'target' : 'source';
             return JSON.stringify(this.buildPropertyPatch(node, semanticId, `${end}Modifiers`, storableModifiers(operation.text)));
+        }
+
+        // A note and a free label are the text they hold and have no name at all, so the one label each
+        // carries stands for its `body`. Emptying it is refused rather than written through: either with
+        // nothing in it is nothing on the canvas to see it by, and - since both are written by typing on
+        // that label - nothing left to click to start writing in again.
+        if (isNote(node) || isTextLabel(node)) {
+            // `storableProse` rather than `storableText`: neither has notation to take back off, so a
+            // bracket typed into one is a bracket and is kept - see the filter for what still cannot be.
+            const body = storableProse(operation.text);
+            return JSON.stringify(body === undefined ? [] : this.buildPropertyPatch(node, semanticId, 'body', body));
         }
 
         // The two elements labelled `trigger [guard] / effect` - a transition, and one line of a

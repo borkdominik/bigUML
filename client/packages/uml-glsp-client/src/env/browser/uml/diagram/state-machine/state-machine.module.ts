@@ -22,24 +22,28 @@ import {
     GFinalStateNodeView,
     GInitialStateNode,
     GInitialStateNodeView,
+    GNoteNode,
+    GNoteNodeView,
     GRegionNode,
     GRegionNodeView,
     GShallowHistoryNode,
     GShallowHistoryNodeView,
+    GStateCompartment,
+    GStateCompartmentView,
     GStateForkNode,
     GStateForkNodeView,
     GStateJoinNode,
     GStateJoinNodeView,
     GStateMachineNode,
     GStateMachineNodeView,
-    GTerminateNode,
-    GTerminateNodeView,
-    GStateCompartment,
-    GStateCompartmentView,
     GStateNode,
     GStateNodeView,
     GStatePartNode,
     GStatePartNodeView,
+    GTerminateNode,
+    GTerminateNodeView,
+    GTextLabelNode,
+    GTextLabelNodeView,
     GTransitionEdge,
     GTransitionEdgeView
 } from '../../elements/index.js';
@@ -75,6 +79,11 @@ export const umlStateMachineDiagramModule = new FeatureModule((bind, unbind, isB
         GShallowHistoryNode,
         GShallowHistoryNodeView
     );
+
+    // The note and the free label, which every diagram has: both say something about the diagram
+    // rather than being part of any one notation.
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Note'), GNoteNode, GNoteNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'TextLabel'), GTextLabelNode, GTextLabelNodeView);
 
     // Edges
     configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Transition'), GTransitionEdge, GTransitionEdgeView);

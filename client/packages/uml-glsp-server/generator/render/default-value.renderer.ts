@@ -53,11 +53,13 @@ function buildDefaultValueMapping(declarations: Declaration[]): {
     defaultMapping: DefaultMapping;
     noBoundsClasses: string[];
     optionalNameClasses: string[];
+    unnamedClasses: string[];
     astTypeMap: Record<string, string>;
 } {
     const mapping: DefaultMapping = {};
     const noBoundsClasses: string[] = [];
     const optionalNameClasses: string[] = [];
+    const unnamedClasses: string[] = [];
     const astTypeMap: Record<string, string> = {};
 
     for (const decl of declarations) {
@@ -82,6 +84,14 @@ function buildDefaultValueMapping(declarations: Declaration[]): {
         // there is no way to write an empty name, since `LangiumText` needs at least one token.
         if (decl.properties.some(prop => prop.name === 'name' && prop.isOptional)) {
             optionalNameClasses.push(decl.name);
+        }
+
+        // Whether the element has no name to write at all - a note, which is the text it holds and has
+        // nothing else to be called. Taken from the declared properties rather than from the mapping
+        // below, which drops an optional property that carries no default and so cannot tell a class
+        // with no name from one whose name is simply not defaulted.
+        if (!decl.properties.some(prop => prop.name === 'name')) {
+            unnamedClasses.push(decl.name);
         }
 
         const withDefaultAll = Decorator.has(decl.decorators, 'defaults');
@@ -121,6 +131,7 @@ function buildDefaultValueMapping(declarations: Declaration[]): {
         defaultMapping: mapping,
         noBoundsClasses,
         optionalNameClasses,
+        unnamedClasses,
         astTypeMap
     };
 }

@@ -91,7 +91,7 @@ function getProperty(property: Definition, rules: LangiumGrammar): string {
             text.push(`'"'`);
             text.push(property.name);
             text.push('=');
-            text.push(getLangiumType(property.type!.typeName, property.freeText));
+            text.push(getLangiumType(property.type!.typeName, property.freeText, property.identifier));
             text.push(`'"'`);
         } else {
             if (property.type!.type === 'constant') {
@@ -125,7 +125,7 @@ function getProperty(property: Definition, rules: LangiumGrammar): string {
             text.push(isString(rules, property.type!) ? `'"'` : '');
             text.push(property.name);
             text.push('+=');
-            text.push(getLangiumType(property.type!.typeName, property.freeText));
+            text.push(getLangiumType(property.type!.typeName, property.freeText, property.identifier));
             text.push(isString(rules, property.type!) ? `'"'` : '');
             text.push(')');
 
@@ -134,7 +134,7 @@ function getProperty(property: Definition, rules: LangiumGrammar): string {
             text.push(isString(rules, property.type!) ? `'"'` : '');
             text.push(property.name);
             text.push('+=');
-            text.push(getLangiumType(property.type!.typeName, property.freeText));
+            text.push(getLangiumType(property.type!.typeName, property.freeText, property.identifier));
             text.push(isString(rules, property.type!) ? `'"'` : '');
             text.push(')*');
         }
@@ -164,11 +164,21 @@ function getReference(property: Definition): string[] {
     return text;
 }
 
-function getLangiumType(type: string, freeText: boolean = false) {
+/**
+ * The rule a property's value is read with.
+ *
+ * The three string cases are three different things a string holds. Free text is prose and takes
+ * everything the grammar can lex (`LangiumText`); an identifier is the id an element is referred to by,
+ * which is written by the tool and never typed, and stays one token (`LANGIUM_ID`); everything else is a
+ * name, which is an identifier plus the brackets and braces users write into names (`LangiumName`).
+ */
+function getLangiumType(type: string, freeText: boolean = false, identifier: boolean = false) {
     return type === 'string'
         ? freeText
             ? 'LangiumText'
-            : 'LANGIUM_ID'
+            : identifier
+              ? 'LANGIUM_ID'
+              : 'LangiumName'
         : type === 'number'
           ? 'LANGIUM_INT'
           : type === 'boolean'

@@ -25,6 +25,7 @@ import {
     isInterface,
     isInterfaceRealization,
     isLiteralSpecification,
+    isNote,
     isOperation,
     isPackage,
     isPackageImport,
@@ -35,6 +36,7 @@ import {
     isRealization,
     isSlot,
     isSubstitution,
+    isTextLabel,
     isUsage
 } from '@borkdominik-biguml/uml-model-server/grammar';
 import { DiagramModelState, DiagramLanguageMetadata } from '@borkdominik-biguml/uml-glsp-server/vscode';
@@ -53,6 +55,7 @@ import { InstanceSpecificationPropertyPaletteHandler } from './elements/instance
 import { InterfacePropertyPaletteHandler } from './elements/interface.property-palette-handler.js';
 import { InterfaceRealizationPropertyPaletteHandler } from './elements/interface-realization.property-palette-handler.js';
 import { LiteralSpecificationPropertyPaletteHandler } from './elements/literal-specification.property-palette-handler.js';
+import { NotePropertyPaletteHandler } from './elements/note.property-palette-handler.js';
 import { OperationPropertyPaletteHandler } from './elements/operation.property-palette-handler.js';
 import { PackagePropertyPaletteHandler } from './elements/package.property-palette-handler.js';
 import { PackageImportPropertyPaletteHandler } from './elements/package-import.property-palette-handler.js';
@@ -63,6 +66,7 @@ import { PropertyPropertyPaletteHandler } from './elements/property.property-pal
 import { RealizationPropertyPaletteHandler } from './elements/realization.property-palette-handler.js';
 import { SlotPropertyPaletteHandler } from './elements/slot.property-palette-handler.js';
 import { SubstitutionPropertyPaletteHandler } from './elements/substitution.property-palette-handler.js';
+import { TextLabelPropertyPaletteHandler } from './elements/text-label.property-palette-handler.js';
 import { UsagePropertyPaletteHandler } from './elements/usage.property-palette-handler.js';
 @injectable()
 export class RequestClassPropertyPaletteActionHandler implements ActionHandler {
@@ -102,7 +106,11 @@ export class RequestClassPropertyPaletteActionHandler implements ActionHandler {
                     value: item.__id + '_refValue',
                     secondaryText: item.$type
                 }));
-            if (isGeneralization(semanticElement)) {
+            if (isTextLabel(semanticElement)) {
+                return TextLabelPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isNote(semanticElement)) {
+                return NotePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isGeneralization(semanticElement)) {
                 return GeneralizationPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isAssociation(semanticElement)) {
                 return AssociationPropertyPaletteHandler.getPropertyPalette(context);

@@ -60,6 +60,7 @@ export * from './handlers/elements/literal-specification.property-palette-handle
 export * from './handlers/elements/manifestation.property-palette-handler.js';
 export * from './handlers/elements/merge-node.property-palette-handler.js';
 export * from './handlers/elements/message.property-palette-handler.js';
+export * from './handlers/elements/note.property-palette-handler.js';
 export * from './handlers/elements/opaque-action.property-palette-handler.js';
 export * from './handlers/elements/operation.property-palette-handler.js';
 export * from './handlers/elements/output-pin.property-palette-handler.js';
@@ -81,6 +82,7 @@ export * from './handlers/elements/state.property-palette-handler.js';
 export * from './handlers/elements/subject.property-palette-handler.js';
 export * from './handlers/elements/substitution.property-palette-handler.js';
 export * from './handlers/elements/terminate.property-palette-handler.js';
+export * from './handlers/elements/text-label.property-palette-handler.js';
 export * from './handlers/elements/transition.property-palette-handler.js';
 export * from './handlers/elements/usage.property-palette-handler.js';
 export * from './handlers/elements/use-case.property-palette-handler.js';

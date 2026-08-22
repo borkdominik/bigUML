@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { getCreationPath, getDefaultProperties, isNoBounds } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
+import { getCreationPath, getDefaultProperties, hasNoName, isNoBounds } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
 import {
     createRandomUUID,
     findAvailableNodeName,
@@ -64,6 +64,13 @@ const NODE_SIZE_OVERRIDES: Record<string, { width: number; height: number }> = {
     ActivityParameterNode: { width: 120, height: 50 },
     // The activity is the frame its flow is drawn inside, matching `GActivityNodeElement`.
     Activity: { width: 600, height: 400 },
+    // A note holds prose, so it opens as a block rather than as a line: wide enough for a few words to
+    // a line and deep enough for a few lines of them, which is what a note is written in. Matching
+    // `GNoteNodeElement`, which wraps the text to whatever width the note is dragged to.
+    Note: { width: 180, height: 90 },
+    // A label is writing with nothing drawn around it, so it opens as one line and grows onto a second
+    // by itself where it needs to. Matching `GTextLabelNodeElement`.
+    TextLabel: { width: 160, height: 34 },
     // A partition is a swimlane, opening with two bands - matching `GActivityPartitionNodeElement`.
     ActivityPartition: { width: 600, height: 300 },
     // The pseudostates drawn as a small mark of their own - the two histories, the two points on a
@@ -102,6 +109,22 @@ const FLAT_CONTAINER_TYPES = new Set<string>([
     // at all, which is a patch path of `''` - the whole document.
     'State'
 ]);
+
+/**
+ * Element types that are never written inside another element, wherever they happen to be dropped.
+ *
+ * The containment rules are read off the diagram's own type unions, so an element named in one is
+ * offered as a child of every container that holds that union - a note landed in `Package.entities`,
+ * `Activity.nodes` and `Region.subvertices` alike. That is wrong for a note twice over. UML attaches one
+ * to what it comments on with a line rather than by containment, so there is nothing it is *in*; and
+ * only a few containers are walked for their contents (see `collectSemanticElements`), so a note nested
+ * in one of the rest would be stored correctly and then never drawn again.
+ *
+ * The counterpart of {@link FLAT_CONTAINER_TYPES}, which says the same thing about the container end: a
+ * node dropped on a state machine frame stays a sibling of it. This says it about the element end, for
+ * one that is a sibling of everything.
+ */
+const FLAT_ELEMENT_TYPES = new Set<string>(['Note', 'TextLabel']);
 
 /**
  * The lanes a node of this type opens with, held in a containment property of its own.
@@ -229,9 +252,16 @@ export class GenericCreateNodeOperationHandler extends OperationHandler implemen
 
         const nodeValue: SerializedRecordNode = {
             $type: astType,
-            __id: id,
-            name: newName
+            __id: id
         };
+
+        // Only where the element has somewhere to put one. A note is the text it holds and carries no
+        // name at all, and a `name` written onto one goes into the file as a property the grammar has no
+        // rule for - swallowed by the unknown-property rule on the next read and gone, after a round trip
+        // through the user's file. What such an element opens holding comes from its own defaults below.
+        if (!hasNoName(astType)) {
+            nodeValue.name = newName;
+        }
 
         const allProps = getDefaultProperties(operation.elementTypeId);
         for (const { property, defaultValue } of allProps) {
@@ -339,6 +369,12 @@ export class GenericCreateNodeOperationHandler extends OperationHandler implemen
     }
 
     protected resolveContainerPath(operation: CreateNodeOperation): string {
+        // Asked before anything about the container, because for these the container does not come into
+        // it - see `FLAT_ELEMENT_TYPES`.
+        if (FLAT_ELEMENT_TYPES.has(this.stripPrefix(operation.elementTypeId))) {
+            return '/diagram/entities/-';
+        }
+
         if (operation.containerId) {
             const container = { type: this.containerType(operation.containerId) };
             const containerPath = this.modelState.index.findPath(operation.containerId);

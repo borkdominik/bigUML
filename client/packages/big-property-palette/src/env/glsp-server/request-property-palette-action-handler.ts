@@ -43,6 +43,7 @@ import {
 } from '@borkdominik-biguml/uml-model-server/grammar';
 import { type ActionHandler, CreateEdgeOperation, DeleteElementOperation, type MaybePromise } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
+import type { AstNode } from 'langium';
 import { ChoiceProperty, ReferenceProperty, TextProperty } from './components.js';
 import { PropertyPaletteChoices } from './property-palette-util.js';
 
@@ -434,9 +435,15 @@ function lifelineLabel(lifeline: Lifeline | undefined): string {
     return lifeline?.name?.trim() || '(unnamed lifeline)';
 }
 
-/** An element as it reads in a list of them; an unnamed one still has to be told apart. */
-function nodeLabel(node: { name?: string } | undefined): string {
-    return node?.name?.trim() || '(unnamed)';
+/**
+ * An element as it reads in a list of them; an unnamed one still has to be told apart.
+ *
+ * Widened to any AST node rather than `{ name?: string }` alone, because not every element in this model
+ * carries a name - a note is the text it holds and declares none - and a type whose properties are all
+ * optional refuses an argument that shares none of them.
+ */
+function nodeLabel(node: AstNode | { name?: string } | undefined): string {
+    return (node as { name?: string } | undefined)?.name?.trim() || '(unnamed)';
 }
 
 /**

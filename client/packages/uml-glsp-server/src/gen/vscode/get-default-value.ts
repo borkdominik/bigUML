@@ -95,6 +95,20 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'UseCase'
         }
     ],
+    TextLabel: [
+        {
+            property: 'body',
+            propertyType: 'string',
+            defaultValue: 'Label'
+        }
+    ],
+    Note: [
+        {
+            property: 'body',
+            propertyType: 'string',
+            defaultValue: 'Note'
+        }
+    ],
     Include: [
         {
             property: 'source',
@@ -1486,6 +1500,51 @@ export const optionalNameClasses = new Set<string>([
 /** Whether clearing this AST type's name can be stored, by removing the property altogether. */
 export function hasOptionalName(astType: string): boolean {
     return optionalNameClasses.has(astType);
+}
+
+/**
+ * The AST types that carry no name at all - a note, which is the text it holds and has nothing else to
+ * be called.
+ *
+ * Named separately from the mapping above because that one drops an optional property with no default,
+ * and so cannot tell a type with no name from one whose name is simply not defaulted.
+ */
+export const unnamedClasses = new Set<string>([
+    'Diagram',
+    'UseCaseDiagram',
+    'Element',
+    'ElementWithSizeAndPosition',
+    'Node',
+    'Edge',
+    'Unbounded',
+    'MetaInfo',
+    'Size',
+    'Position',
+    'TextLabel',
+    'Note',
+    'Include',
+    'Relation',
+    'Generalization',
+    'Extend',
+    'StateMachineDiagram',
+    'PackageDiagram',
+    'PackageMerge',
+    'PackageImport',
+    'ElementImport',
+    'InformationFlowDiagram',
+    'DeploymentDiagram',
+    'CommunicationDiagram',
+    'ClassDiagram',
+    'ActivityDiagram'
+]);
+
+/**
+ * Whether this AST type has nowhere to put a name. A name written onto one anyway goes into the file as
+ * a property the grammar has no rule for, is swallowed by the unknown-property rule on the next read,
+ * and is gone - so whatever writes names asks this first.
+ */
+export function hasNoName(astType: string): boolean {
+    return unnamedClasses.has(stripPrefix(astType));
 }
 
 export function isNoBounds(typeId: string): boolean {

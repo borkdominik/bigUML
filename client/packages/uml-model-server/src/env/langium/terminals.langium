@@ -26,7 +26,33 @@ hidden terminal SL_COMMENT: /\/\/[^\n\r]*/;
 // terminals are matched without parser context, so a value like `"1"` would always be lexed
 // as LANGIUM_INT and never as LANGIUM_ID. A data type rule is resolved by the parser instead
 // and returns the concatenation of the matched tokens.
-LangiumText returns string: (LANGIUM_ID | LANGIUM_INT | LANGIUM_BOOL | LANGIUM_PUNCT | LANGIUM_SLASH)+;
+//
+// The last six alternatives are the characters JSON is structured with. They have no terminal of their
+// own and never can have - this grammar spells JSON out in keywords, so a terminal matching `[` would
+// shadow the `[` that opens every array in the file, and the lexer has no parser context to tell the
+// two apart. As *keywords* they are already tokens, and taking them here is a parser-level decision
+// rather than a lexer-level one: it applies only where a value is being read, and only between the
+// quotes that delimit it. There is no ambiguity about where that value ends, because the one character
+// not in this list is the `"` that closes it.
+//
+// `"` itself therefore cannot appear in a value, and neither can `\`, which would read as the start of
+// an escape to anything else that opens the file. Everything else can - see `storableProse`.
+LangiumText returns string: (LANGIUM_ID | LANGIUM_INT | LANGIUM_BOOL | LANGIUM_PUNCT | LANGIUM_SLASH | '[' | ']' | '{' | '}' | ',' | ':')+;
+
+// What a name can hold, which is an identifier plus the brackets and the braces.
+//
+// A name is not prose - a `.` or a `(` in one is notation, and notation has a property of its own to go
+// in - but a bracket is not notation of any one thing. `[ok]`, `{abstract}` and `List[T]` are all
+// written into names, and the name is the only field there is to write them in. They are taken as
+// keywords here for the same reason `LangiumText` takes them, and with the same bound: only between the
+// quotes of a value, where the `"` that closes it is the one character not in the list.
+//
+// The number and the boolean are in here because they are what a lexer without parser context makes of
+// a name that reads as one: `1` lexes as `LANGIUM_INT` however it was written, so a name of `1` could
+// not be read back at all while a name was one `LANGIUM_ID` - it was stored, since a digit is a word
+// character, and the file then failed to open. As alternatives of a rule the parser resolves, both are
+// simply part of the name.
+LangiumName returns string: (LANGIUM_ID | LANGIUM_INT | LANGIUM_BOOL | '[' | ']' | '{' | '}')+;
 
 // Rules for skipping unknown/unsupported JSON fields during parsing.
 // Unknown fields are silently consumed so that files with extra properties

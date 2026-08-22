@@ -9,7 +9,16 @@
 import { representationTypeId } from '@borkdominik-biguml/uml-glsp-server';
 import { configureModelElement, FeatureModule, GEdge, PolylineEdgeView } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
-import { GPackageMergeEdge, GPackageMergeEdgeView, NamedElement, NamedElementView } from '../../elements/index.js';
+import {
+    GNoteNode,
+    GNoteNodeView,
+    GPackageMergeEdge,
+    GPackageMergeEdgeView,
+    GTextLabelNode,
+    GTextLabelNodeView,
+    NamedElement,
+    NamedElementView
+} from '../../elements/index.js';
 
 const R = 'Package';
 
@@ -21,6 +30,11 @@ export const umlPackageDiagramModule = new FeatureModule((bind, unbind, isBound,
     // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Class'), GClassNode, GClassNodeView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Package'), NamedElement, NamedElementView);
     // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Package'), GPackageNode, GPackageNodeView);
+
+    // The note and the free label, which every diagram has: both say something about the diagram
+    // rather than being part of any one notation.
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Note'), GNoteNode, GNoteNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'TextLabel'), GTextLabelNode, GTextLabelNodeView);
 
     // Edges
     configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Abstraction'), GEdge, PolylineEdgeView);

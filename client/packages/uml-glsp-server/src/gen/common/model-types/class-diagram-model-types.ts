@@ -27,6 +27,8 @@ export namespace ClassDiagramNodeTypes {
     export const SLOT = representationTypeId('Class', DefaultTypes.NODE, 'Slot');
     export const LITERAL_SPECIFICATION = representationTypeId('Class', DefaultTypes.NODE, 'LiteralSpecification');
     export const CHOICE = representationTypeId('Class', DefaultTypes.NODE, 'Choice');
+    export const NOTE = representationTypeId('Class', DefaultTypes.NODE, 'Note');
+    export const TEXT_LABEL = representationTypeId('Class', DefaultTypes.NODE, 'TextLabel');
 }
 
 export namespace ClassDiagramEdgeTypes {
@@ -59,6 +61,8 @@ export namespace ClassDiagramModelTypes {
     export const SLOT = ClassDiagramNodeTypes.SLOT;
     export const LITERAL_SPECIFICATION = ClassDiagramNodeTypes.LITERAL_SPECIFICATION;
     export const CHOICE = ClassDiagramNodeTypes.CHOICE;
+    export const NOTE = ClassDiagramNodeTypes.NOTE;
+    export const TEXT_LABEL = ClassDiagramNodeTypes.TEXT_LABEL;
 
     // re-export edges
     export const ABSTRACTION = ClassDiagramEdgeTypes.ABSTRACTION;
@@ -90,6 +94,8 @@ export namespace ClassAstTypes {
         Slot: ClassDiagramModelTypes.SLOT,
         LiteralSpecification: ClassDiagramModelTypes.LITERAL_SPECIFICATION,
         Choice: ClassDiagramModelTypes.CHOICE,
+        Note: ClassDiagramModelTypes.NOTE,
+        TextLabel: ClassDiagramModelTypes.TEXT_LABEL,
         Abstraction: ClassDiagramModelTypes.ABSTRACTION,
         Dependency: ClassDiagramModelTypes.DEPENDENCY,
         Association: ClassDiagramModelTypes.ASSOCIATION,

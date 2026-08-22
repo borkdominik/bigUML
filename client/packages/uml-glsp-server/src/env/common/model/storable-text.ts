@@ -37,15 +37,39 @@ export function storableText(text: string): string | undefined {
 }
 
 /**
- * What a plain string property can hold, which is narrower still: a name is parsed as an identifier
- * (`LANGIUM_ID`), so it takes no punctuation at all - only word characters, `_`, `*`, `-`, and blanks
- * between words.
+ * What a note can hold, which is everything the grammar can lex: the characters above, plus the six
+ * that JSON is structured with.
  *
- * This is what broke a diagram in the wild: `[ok]` typed onto a control flow's label was stored as its
- * name, the file was written, and it never opened again. A guard is where a bracketed condition belongs,
- * and there is now a label for it - but a name has to be safe whatever is typed into it.
+ * Those six have no terminal and never can have - a terminal matching `[` would shadow the `[` that
+ * opens every array in the file - but `LangiumText` takes them as keywords, which is a parser-level
+ * decision and so applies only between the quotes of a value (see `terminals.langium`). That leaves
+ * only `"`, which is what closes the value, and `\`, which would read as the start of an escape to
+ * anything else that opens the file.
+ *
+ * Wider than {@link storableText} deliberately, and not instead of it. A guard is stored without the
+ * brackets the notation writes it in and a multiplicity is a value in a fixed shape - for those, a
+ * bracket arriving in the text is notation the user retyped, and dropping it is how it is taken back
+ * off. A note has no notation to strip: it is prose, and a bracket in prose is a bracket.
  */
-const STORABLE_NAME_CHARACTER = /[\w *-]/;
+const STORABLE_PROSE_CHARACTER = /[\w *.+#()<>=?!|~^&%$@;'`/[\]{},:-]/;
+
+/** A note's text as it can be stored, or `undefined` where nothing storable is left of it. */
+export function storableProse(text: string): string | undefined {
+    return keepOnly(text, STORABLE_PROSE_CHARACTER);
+}
+
+/**
+ * What a plain string property can hold, which is narrower still: a name is parsed as `LangiumName`, so
+ * it takes word characters, `_`, `*`, `-`, blanks between words, and the brackets and braces - and no
+ * other punctuation. A `.` or a `(` in a name is notation, and notation has a property of its own to go
+ * in; a bracket is not notation of any one thing, so `[ok]`, `{abstract}` and `List[T]` stay as typed.
+ *
+ * A name that could not be read back is what broke a diagram in the wild: `[ok]` typed onto a control
+ * flow's label was stored as its name, the file was written, and it never opened again. The brackets are
+ * in the grammar now (see `terminals.langium`), which is what makes them storable here - the whitelist
+ * says what the grammar can read back, and nothing more.
+ */
+const STORABLE_NAME_CHARACTER = /[\w *[\]{}-]/;
 
 /** A name as it can be stored, or `undefined` where nothing storable is left of it. */
 export function storableName(text: string): string | undefined {

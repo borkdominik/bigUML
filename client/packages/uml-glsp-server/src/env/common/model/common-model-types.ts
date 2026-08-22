@@ -58,3 +58,14 @@ export const OUTSIDE_LABEL_ARG = 'outsideLabel';
  * on both sides.
  */
 export const PACKAGE_TAB_HEIGHT = 16;
+
+/**
+ * How far the turned-down corner of a note reaches in from its top right, in both directions.
+ *
+ * The fold is drawn inside the note's own bounds rather than hanging off them, so that a note is the
+ * size it says it is and is picked up and resized by the whole of what is drawn. Its text is inset
+ * clear of the fold by exactly this much (see `GNoteNodeElement`), and the view draws the corner to the
+ * same reach (see `GNoteNodeView`) - which is why the measure is shared rather than written on both
+ * sides, the way a package's tab is.
+ */
+export const NOTE_FOLD_SIZE = 14;

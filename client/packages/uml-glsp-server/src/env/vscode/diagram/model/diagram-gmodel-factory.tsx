@@ -59,6 +59,7 @@ import {
     isManifestation,
     isMergeNode,
     isMessage,
+    isNote,
     isOpaqueAction,
     isOutputPin,
     isPackage,
@@ -75,6 +76,7 @@ import {
     isSubject,
     isSubstitution,
     isTerminate,
+    isTextLabel,
     isTransition,
     isUsage,
     isUseCase,
@@ -135,6 +137,7 @@ import { createLiteralSpecificationElement } from '../../elements/literal-specif
 import { createManifestationRelation } from '../../elements/manifestation.element.js';
 import { createMergeNodeElement } from '../../elements/merge-node.element.js';
 import { createMessageRelation } from '../../elements/message.element.js';
+import { createNoteElement } from '../../elements/note.element.js';
 import { createOpaqueActionElement } from '../../elements/opaque-action.element.js';
 import { createOutputPinElement } from '../../elements/output-pin.element.js';
 import { createPackageImportRelation } from '../../elements/package-import-relation.element.js';
@@ -151,6 +154,7 @@ import { createStateElement } from '../../elements/state.element.js';
 import { createSubjectElement } from '../../elements/subject.element.js';
 import { createSubstitutionRelation } from '../../elements/substitution-relation.element.js';
 import { createTerminateElement } from '../../elements/terminate.element.js';
+import { createTextLabelElement } from '../../elements/text-label.element.js';
 import { createTransitionRelation } from '../../elements/transition.element.js';
 import { createUsageRelation } from '../../elements/usage-relation.element.js';
 import { createUseCaseElement } from '../../elements/use-case.element.js';
@@ -323,6 +327,10 @@ export class UmlDiagramGModelFactory implements GModelFactory {
         if (isExitPoint(element)) return createExitPointElement(this.buildCtx(element));
         if (isEntryPoint(element)) return createEntryPointElement(this.buildCtx(element));
         if (isTerminate(element)) return createTerminateElement(this.buildCtx(element));
+        // Every diagram. A note belongs to none of the groups above because it belongs to all of them -
+        // it says something about the diagram rather than being part of any one notation.
+        if (isNote(element)) return createNoteElement(this.buildCtx(element));
+        if (isTextLabel(element)) return createTextLabelElement(this.buildCtx(element));
         return undefined;
     }
 

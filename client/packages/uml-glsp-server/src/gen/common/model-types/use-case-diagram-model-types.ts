@@ -16,6 +16,8 @@ export namespace UseCaseDiagramNodeTypes {
     export const USE_CASE = representationTypeId('UseCase', DefaultTypes.NODE, 'UseCase');
     export const ACTOR = representationTypeId('UseCase', DefaultTypes.NODE, 'Actor');
     export const SUBJECT = representationTypeId('UseCase', DefaultTypes.NODE, 'Subject');
+    export const NOTE = representationTypeId('UseCase', DefaultTypes.NODE, 'Note');
+    export const TEXT_LABEL = representationTypeId('UseCase', DefaultTypes.NODE, 'TextLabel');
 }
 
 export namespace UseCaseDiagramEdgeTypes {
@@ -30,6 +32,8 @@ export namespace UseCaseDiagramModelTypes {
     export const USE_CASE = UseCaseDiagramNodeTypes.USE_CASE;
     export const ACTOR = UseCaseDiagramNodeTypes.ACTOR;
     export const SUBJECT = UseCaseDiagramNodeTypes.SUBJECT;
+    export const NOTE = UseCaseDiagramNodeTypes.NOTE;
+    export const TEXT_LABEL = UseCaseDiagramNodeTypes.TEXT_LABEL;
 
     // re-export edges
     export const INCLUDE = UseCaseDiagramEdgeTypes.INCLUDE;
@@ -43,6 +47,8 @@ export namespace UseCaseAstTypes {
         UseCase: UseCaseDiagramModelTypes.USE_CASE,
         Actor: UseCaseDiagramModelTypes.ACTOR,
         Subject: UseCaseDiagramModelTypes.SUBJECT,
+        Note: UseCaseDiagramModelTypes.NOTE,
+        TextLabel: UseCaseDiagramModelTypes.TEXT_LABEL,
         Include: UseCaseDiagramModelTypes.INCLUDE,
         Extend: UseCaseDiagramModelTypes.EXTEND,
         Association: UseCaseDiagramModelTypes.ASSOCIATION,

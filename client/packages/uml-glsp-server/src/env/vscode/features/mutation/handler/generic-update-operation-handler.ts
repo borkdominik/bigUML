@@ -9,6 +9,7 @@
 import {
     BEHAVIOR_LABEL_PROPERTY_ID,
     storableName,
+    storableProse,
     storableText,
     behaviorLabelPatch,
     type BehaviorLabelElement,
@@ -18,7 +19,7 @@ import {
     UpdateOperation
 } from '@borkdominik-biguml/uml-glsp-server';
 import { hasOptionalName } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
-import { isStatePart } from '@borkdominik-biguml/uml-model-server/grammar';
+import { isNote, isStatePart, isTextLabel } from '@borkdominik-biguml/uml-model-server/grammar';
 import { type Command, OperationHandler } from '@eclipse-glsp/server';
 import { injectable } from 'inversify';
 import { URI } from 'vscode-uri';
@@ -142,7 +143,7 @@ export class GenericUpdateOperationHandler extends OperationHandler {
         // name is what found that. A name is narrower than the rest, being parsed as an identifier rather
         // than as free text. A value that filters away to nothing is the same as an empty one, which is
         // what the branch below is for.
-        const typed = typeof operation.value === 'string' ? this.storableValue(operation.property, operation.value) : undefined;
+        const typed = typeof operation.value === 'string' ? this.storableValue(operation.property, operation.value, element) : undefined;
 
         if (typeof operation.value === 'string' && typed === undefined) {
             // Emptying a text field clears the property: it is removed rather than written as an empty
@@ -198,11 +199,20 @@ export class GenericUpdateOperationHandler extends OperationHandler {
      * A typed value as the property can hold it, or nothing where none of it can be stored. A reference is
      * not text and is left alone - it arrives as an id to resolve, not as something to read.
      */
-    protected storableValue(property: string, value: string): string | undefined {
+    protected storableValue(property: string, value: string, element?: unknown): string | undefined {
         if (value.endsWith('_refValue')) {
             return value;
         }
-        return property === 'name' ? storableName(value) : storableText(value);
+        if (property === 'name') {
+            return storableName(value);
+        }
+        // The body of a note or a free label is prose and keeps its punctuation, brackets included -
+        // every other text property is notation of some fixed shape, where a bracket that arrives is one
+        // the user retyped around a value stored without it. See `storableProse`.
+        if ((isNote(element) || isTextLabel(element)) && property === 'body') {
+            return storableProse(value);
+        }
+        return storableText(value);
     }
 
     /** choose between 'add' and 'replace' (default: always 'replace'). */

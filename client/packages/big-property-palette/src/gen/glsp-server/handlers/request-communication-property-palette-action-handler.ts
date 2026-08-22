@@ -10,12 +10,14 @@
 import { RequestPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
 import { type ActionHandler, type MaybePromise } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
-import { isInteraction, isLifeline, isMessage } from '@borkdominik-biguml/uml-model-server/grammar';
+import { isInteraction, isLifeline, isMessage, isNote, isTextLabel } from '@borkdominik-biguml/uml-model-server/grammar';
 import { DiagramModelState, DiagramLanguageMetadata } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import type { DiagramLanguageMetadata as DiagramLanguageMetadataType } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import { InteractionPropertyPaletteHandler } from './elements/interaction.property-palette-handler.js';
 import { LifelinePropertyPaletteHandler } from './elements/lifeline.property-palette-handler.js';
 import { MessagePropertyPaletteHandler } from './elements/message.property-palette-handler.js';
+import { NotePropertyPaletteHandler } from './elements/note.property-palette-handler.js';
+import { TextLabelPropertyPaletteHandler } from './elements/text-label.property-palette-handler.js';
 @injectable()
 export class RequestCommunicationPropertyPaletteActionHandler implements ActionHandler {
     actionKinds = [RequestPropertyPaletteAction.KIND];
@@ -47,7 +49,11 @@ export class RequestCommunicationPropertyPaletteActionHandler implements ActionH
 
             const context = { semanticElement, languageMetadata: this.languageMetadata };
 
-            if (isMessage(semanticElement)) {
+            if (isTextLabel(semanticElement)) {
+                return TextLabelPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isNote(semanticElement)) {
+                return NotePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isMessage(semanticElement)) {
                 return MessagePropertyPaletteHandler.getPropertyPalette(context);
             } else if (isLifeline(semanticElement)) {
                 return LifelinePropertyPaletteHandler.getPropertyPalette(context);

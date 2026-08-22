@@ -19,12 +19,14 @@ import {
     isFork,
     isInitialState,
     isJoin,
+    isNote,
     isRegion,
     isShallowHistory,
     isState,
     isStateMachine,
     isStatePart,
     isTerminate,
+    isTextLabel,
     isTransition
 } from '@borkdominik-biguml/uml-model-server/grammar';
 import { DiagramModelState, DiagramLanguageMetadata } from '@borkdominik-biguml/uml-glsp-server/vscode';
@@ -37,12 +39,14 @@ import { FinalStatePropertyPaletteHandler } from './elements/final-state.propert
 import { ForkPropertyPaletteHandler } from './elements/fork.property-palette-handler.js';
 import { InitialStatePropertyPaletteHandler } from './elements/initial-state.property-palette-handler.js';
 import { JoinPropertyPaletteHandler } from './elements/join.property-palette-handler.js';
+import { NotePropertyPaletteHandler } from './elements/note.property-palette-handler.js';
 import { RegionPropertyPaletteHandler } from './elements/region.property-palette-handler.js';
 import { ShallowHistoryPropertyPaletteHandler } from './elements/shallow-history.property-palette-handler.js';
 import { StatePropertyPaletteHandler } from './elements/state.property-palette-handler.js';
 import { StateMachinePropertyPaletteHandler } from './elements/state-machine.property-palette-handler.js';
 import { StatePartPropertyPaletteHandler } from './elements/state-part.property-palette-handler.js';
 import { TerminatePropertyPaletteHandler } from './elements/terminate.property-palette-handler.js';
+import { TextLabelPropertyPaletteHandler } from './elements/text-label.property-palette-handler.js';
 import { TransitionPropertyPaletteHandler } from './elements/transition.property-palette-handler.js';
 @injectable()
 export class RequestStateMachinePropertyPaletteActionHandler implements ActionHandler {
@@ -75,7 +79,11 @@ export class RequestStateMachinePropertyPaletteActionHandler implements ActionHa
 
             const context = { semanticElement, languageMetadata: this.languageMetadata };
 
-            if (isTransition(semanticElement)) {
+            if (isTextLabel(semanticElement)) {
+                return TextLabelPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isNote(semanticElement)) {
+                return NotePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isTransition(semanticElement)) {
                 return TransitionPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isTerminate(semanticElement)) {
                 return TerminatePropertyPaletteHandler.getPropertyPalette(context);

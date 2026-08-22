@@ -27,6 +27,8 @@ export namespace StateMachineDiagramNodeTypes {
     export const EXIT_POINT = representationTypeId('StateMachine', DefaultTypes.NODE, 'ExitPoint');
     export const ENTRY_POINT = representationTypeId('StateMachine', DefaultTypes.NODE, 'EntryPoint');
     export const TERMINATE = representationTypeId('StateMachine', DefaultTypes.NODE, 'Terminate');
+    export const NOTE = representationTypeId('StateMachine', DefaultTypes.NODE, 'Note');
+    export const TEXT_LABEL = representationTypeId('StateMachine', DefaultTypes.NODE, 'TextLabel');
 }
 
 export namespace StateMachineDiagramEdgeTypes {
@@ -49,6 +51,8 @@ export namespace StateMachineDiagramModelTypes {
     export const EXIT_POINT = StateMachineDiagramNodeTypes.EXIT_POINT;
     export const ENTRY_POINT = StateMachineDiagramNodeTypes.ENTRY_POINT;
     export const TERMINATE = StateMachineDiagramNodeTypes.TERMINATE;
+    export const NOTE = StateMachineDiagramNodeTypes.NOTE;
+    export const TEXT_LABEL = StateMachineDiagramNodeTypes.TEXT_LABEL;
 
     // re-export edges
     export const TRANSITION = StateMachineDiagramEdgeTypes.TRANSITION;
@@ -70,6 +74,8 @@ export namespace StateMachineAstTypes {
         ExitPoint: StateMachineDiagramModelTypes.EXIT_POINT,
         EntryPoint: StateMachineDiagramModelTypes.ENTRY_POINT,
         Terminate: StateMachineDiagramModelTypes.TERMINATE,
+        Note: StateMachineDiagramModelTypes.NOTE,
+        TextLabel: StateMachineDiagramModelTypes.TEXT_LABEL,
         Transition: StateMachineDiagramModelTypes.TRANSITION
     };
 

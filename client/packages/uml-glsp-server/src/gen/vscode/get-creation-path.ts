@@ -55,6 +55,8 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
             allowedChildTypes: [
                 'UseCase',
                 'Subject',
+                'TextLabel',
+                'Note',
                 'Actor',
                 'Terminate',
                 'StateMachine',
@@ -133,6 +135,8 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
             allowedChildTypes: [
                 'UseCase',
                 'Subject',
+                'TextLabel',
+                'Note',
                 'Actor',
                 'Terminate',
                 'StateMachine',
@@ -297,6 +301,8 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
             allowedChildTypes: [
                 'UseCase',
                 'Subject',
+                'TextLabel',
+                'Note',
                 'Actor',
                 'Terminate',
                 'StateMachine',
@@ -351,6 +357,8 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
             allowedChildTypes: [
                 'UseCase',
                 'Subject',
+                'TextLabel',
+                'Note',
                 'Actor',
                 'Terminate',
                 'StateMachine',
@@ -497,6 +505,8 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
             allowedChildTypes: [
                 'UseCase',
                 'Subject',
+                'TextLabel',
+                'Note',
                 'Actor',
                 'Terminate',
                 'StateMachine',
@@ -555,6 +565,8 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
             allowedChildTypes: [
                 'UseCase',
                 'Subject',
+                'TextLabel',
+                'Note',
                 'Actor',
                 'Terminate',
                 'StateMachine',

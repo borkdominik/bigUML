@@ -15,12 +15,14 @@ import {
     isClass,
     isDependency,
     isElementImport,
+    isNote,
     isOperation,
     isPackage,
     isPackageImport,
     isPackageMerge,
     isParameter,
     isProperty,
+    isTextLabel,
     isUsage
 } from '@borkdominik-biguml/uml-model-server/grammar';
 import { DiagramModelState, DiagramLanguageMetadata } from '@borkdominik-biguml/uml-glsp-server/vscode';
@@ -29,12 +31,14 @@ import { AbstractionPropertyPaletteHandler } from './elements/abstraction.proper
 import { ClassPropertyPaletteHandler } from './elements/class.property-palette-handler.js';
 import { DependencyPropertyPaletteHandler } from './elements/dependency.property-palette-handler.js';
 import { ElementImportPropertyPaletteHandler } from './elements/element-import.property-palette-handler.js';
+import { NotePropertyPaletteHandler } from './elements/note.property-palette-handler.js';
 import { OperationPropertyPaletteHandler } from './elements/operation.property-palette-handler.js';
 import { PackagePropertyPaletteHandler } from './elements/package.property-palette-handler.js';
 import { PackageImportPropertyPaletteHandler } from './elements/package-import.property-palette-handler.js';
 import { PackageMergePropertyPaletteHandler } from './elements/package-merge.property-palette-handler.js';
 import { ParameterPropertyPaletteHandler } from './elements/parameter.property-palette-handler.js';
 import { PropertyPropertyPaletteHandler } from './elements/property.property-palette-handler.js';
+import { TextLabelPropertyPaletteHandler } from './elements/text-label.property-palette-handler.js';
 import { UsagePropertyPaletteHandler } from './elements/usage.property-palette-handler.js';
 @injectable()
 export class RequestPackagePropertyPaletteActionHandler implements ActionHandler {
@@ -67,7 +71,11 @@ export class RequestPackagePropertyPaletteActionHandler implements ActionHandler
 
             const context = { semanticElement, languageMetadata: this.languageMetadata };
 
-            if (isProperty(semanticElement)) {
+            if (isTextLabel(semanticElement)) {
+                return TextLabelPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isNote(semanticElement)) {
+                return NotePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isProperty(semanticElement)) {
                 return PropertyPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isUsage(semanticElement)) {
                 return UsagePropertyPaletteHandler.getPropertyPalette(context);

@@ -14,6 +14,8 @@ import type { Association } from '../elements/association-element.def.js';
 import type { Extend } from '../elements/extend-element.def.js';
 import type { Generalization } from '../elements/generalization-element.def.js';
 import type { Include } from '../elements/include-element.def.js';
+import type { Note } from '../elements/note-element.def.js';
+import type { TextLabel } from '../elements/text-label-element.def.js';
 import type { Subject } from '../elements/subject-element.def.js';
 import type { UseCase } from '../elements/use-case-element.def.js';
 
@@ -28,6 +30,6 @@ export class UseCaseDiagram {
 
 type UseCaseDiagramElements = UseCaseDiagramNodes | UseCaseDiagramEdges;
 
-type UseCaseDiagramNodes = UseCase | Actor | Subject;
+type UseCaseDiagramNodes = UseCase | Actor | Subject | Note | TextLabel;
 
 type UseCaseDiagramEdges = Include | Extend | Association | Generalization;

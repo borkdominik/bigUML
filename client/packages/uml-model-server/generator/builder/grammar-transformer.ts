@@ -45,6 +45,12 @@ export interface Definition {
     optional: boolean;
     /** `true` for string properties marked with `@Language.text` (free-form value). */
     freeText: boolean;
+    /**
+     * `true` for the property an element is identified by - `generatorConfig.referenceProperty`, the one
+     * a cross-reference holds. It is the one string property that is machine-written rather than typed,
+     * and so the one that stays an identifier while the rest are read as names.
+     */
+    identifier: boolean;
 }
 
 // ============================================================================
@@ -92,7 +98,9 @@ function declarationToEntryRule(declaration: Declaration): EntryRule {
             multiplicity: property.multiplicity,
             crossReference: Decorator.has(property.decorators, 'reference'),
             optional: property.isOptional,
-            freeText: Decorator.has(property.decorators, 'text')
+            freeText: Decorator.has(property.decorators, 'text'),
+            // The root carries no id: nothing refers to the diagram itself, so it is never given one.
+            identifier: false
         }))
     };
 }
@@ -219,7 +227,8 @@ export function transformDeclarationsToLangiumGrammar(
                 multiplicity: property.multiplicity,
                 crossReference: Decorator.has(property.decorators, 'reference'),
                 optional: property.isOptional,
-                freeText: Decorator.has(property.decorators, 'text')
+                freeText: Decorator.has(property.decorators, 'text'),
+                identifier: property.name === generatorConfig.referenceProperty
             }));
 
             if (!properties.find(property => property.name === generatorConfig.referenceProperty)) {
@@ -229,7 +238,8 @@ export function transformDeclarationsToLangiumGrammar(
                     multiplicity: Multiplicity.ONE_TO_ONE,
                     crossReference: false,
                     optional: false,
-                    freeText: false
+                    freeText: false,
+                    identifier: true
                 });
             }
 

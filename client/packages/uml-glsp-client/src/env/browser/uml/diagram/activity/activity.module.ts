@@ -38,6 +38,8 @@ import {
     GJoinNodeView,
     GMergeNode,
     GMergeNodeView,
+    GNoteNode,
+    GNoteNodeView,
     GOpaqueActionNode,
     GOpaqueActionNodeView,
     GOutputPinNode,
@@ -45,7 +47,9 @@ import {
     GPropertyNode,
     GPropertyNodeView,
     GSendSignalActionNode,
-    GSendSignalActionNodeView
+    GSendSignalActionNodeView,
+    GTextLabelNode,
+    GTextLabelNodeView
 } from '../../elements/index.js';
 
 const R = 'Activity';
@@ -80,7 +84,12 @@ export const umlActivityDiagramModule = new FeatureModule((bind, unbind, isBound
         GActivityFinalNode,
         GActivityFinalNodeView
     );
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'InitialNode'), GInitialActivityNode, GInitialActivityNodeView);
+    configureModelElement(
+        context,
+        representationTypeId(R, DefaultTypes.NODE, 'InitialNode'),
+        GInitialActivityNode,
+        GInitialActivityNodeView
+    );
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'DecisionNode'), GDecisionNode, GDecisionNodeView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'MergeNode'), GMergeNode, GMergeNodeView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'ForkNode'), GForkNode, GForkNodeView);
@@ -107,6 +116,11 @@ export const umlActivityDiagramModule = new FeatureModule((bind, unbind, isBound
     // so its element and view are the ones registered here - a row is a row wherever it is written -
     // against the activity's own `Property` node type.
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Property'), GPropertyNode, GPropertyNodeView);
+
+    // The note and the free label, which every diagram has: both say something about the diagram
+    // rather than being part of any one notation.
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Note'), GNoteNode, GNoteNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'TextLabel'), GTextLabelNode, GTextLabelNodeView);
 
     // Edges
     configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'ControlFlow'), GControlFlowEdge, GControlFlowEdgeView);

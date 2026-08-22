@@ -28,10 +28,11 @@ export namespace Language {
     /**
      * Marks a string property as free-form text.
      *
-     * Plain string properties are parsed as identifiers (`LANGIUM_ID`), which cannot
-     * represent values that are purely numeric or contain punctuation (e.g. a UML
-     * multiplicity such as `1` or `0..*`). Properties marked with this decorator are
-     * parsed with the more permissive `LangiumText` rule instead.
+     * Plain string properties are parsed as names (`LangiumName`): words, blanks between
+     * them, and the brackets and braces, but no other punctuation - so a value such as a
+     * UML multiplicity (`0..*`) or a transition's `trigger / effect` cannot be held in
+     * one. Properties marked with this decorator are parsed with the more permissive
+     * `LangiumText` rule instead, which takes everything the grammar can lex.
      */
     export function text(_target: any, _propertyKey?: any) {}
 

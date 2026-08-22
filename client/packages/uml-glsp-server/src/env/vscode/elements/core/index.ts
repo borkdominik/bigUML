@@ -14,5 +14,6 @@ export * from './element-context.js';
 export * from './frame-name-tag.js';
 export * from './inline-compartment.js';
 export * from './pinned-endpoint.js';
+export * from './prose-text.js';
 export * from './section-compartment.js';
 export * from './visibility-label.js';

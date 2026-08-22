@@ -18,7 +18,9 @@ import {
     ClassDiagramNodeTypes,
     CommonModelTypes,
     CommunicationDiagramNodeTypes,
+    DeploymentDiagramNodeTypes,
     InformationFlowDiagramNodeTypes,
+    PackageDiagramNodeTypes,
     StateMachineDiagramNodeTypes,
     UseCaseDiagramNodeTypes
 } from '@borkdominik-biguml/uml-glsp-server';
@@ -383,6 +385,38 @@ export class UmlDiagramConfiguration implements DiagramConfiguration {
                 repositionable: false,
                 deletable: true,
                 resizable: false,
+                reparentable: false,
+                containableElementTypeIds: []
+            })),
+            // The note and the free label, in every diagram there is - both say something about the
+            // diagram rather than being part of any one notation, so they are drawn in all of them and
+            // need a hint in all of them. A node type is scoped to one diagram, so there is no single
+            // hint that could cover either. Resizable above all: how wide one is drawn is where its text
+            // wraps, so dragging it out is how the writing in it is laid out, and a hint is the only
+            // thing that grants the handles to do it with (`TypeHintProvider` takes `resizeFeature` from
+            // `resizable` and from nowhere else). Nothing is containable - both hold writing, not shapes.
+            ...[
+                ActivityDiagramNodeTypes.NOTE,
+                ClassDiagramNodeTypes.NOTE,
+                CommunicationDiagramNodeTypes.NOTE,
+                DeploymentDiagramNodeTypes.NOTE,
+                InformationFlowDiagramNodeTypes.NOTE,
+                PackageDiagramNodeTypes.NOTE,
+                StateMachineDiagramNodeTypes.NOTE,
+                UseCaseDiagramNodeTypes.NOTE,
+                ActivityDiagramNodeTypes.TEXT_LABEL,
+                ClassDiagramNodeTypes.TEXT_LABEL,
+                CommunicationDiagramNodeTypes.TEXT_LABEL,
+                DeploymentDiagramNodeTypes.TEXT_LABEL,
+                InformationFlowDiagramNodeTypes.TEXT_LABEL,
+                PackageDiagramNodeTypes.TEXT_LABEL,
+                StateMachineDiagramNodeTypes.TEXT_LABEL,
+                UseCaseDiagramNodeTypes.TEXT_LABEL
+            ].map(elementTypeId => ({
+                elementTypeId,
+                repositionable: true,
+                deletable: true,
+                resizable: true,
                 reparentable: false,
                 containableElementTypeIds: []
             })),

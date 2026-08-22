@@ -13,6 +13,10 @@ import {
     GInteractionNode,
     GInteractionNodeView,
     GMessageArrowLabel,
+    GNoteNode,
+    GNoteNodeView,
+    GTextLabelNode,
+    GTextLabelNodeView,
     MessageArrowLabelView,
     MessageArrowLayoutPostprocessor,
     NamedElement,
@@ -28,6 +32,11 @@ export const umlCommunicationDiagramModule = new FeatureModule((bind, unbind, is
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Interaction'), GInteractionNode, GInteractionNodeView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Lifeline'), NamedElement, NamedElementView);
     // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Lifeline'), GLifelineNode, GLifelineNodeView);
+
+    // The note and the free label, which every diagram has: both say something about the diagram
+    // rather than being part of any one notation.
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Note'), GNoteNode, GNoteNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'TextLabel'), GTextLabelNode, GTextLabelNodeView);
 
     // Edges
     // The message label draws its own arrow beside the link - see `MessageArrowLabelView` - and is

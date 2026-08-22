@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { DiamondNode } from '@eclipse-glsp/client';
+import { DiamondNode, type GRoutableElement } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 // eslint-disable-next-line no-restricted-imports
 import { ELLIPTIC_ANCHOR_KIND } from 'sprotty';
@@ -26,7 +26,20 @@ class GCircularControlNode extends NamedElement {
     }
 }
 
-export class GOpaqueActionNode extends NamedElement {}
+/**
+ * The action's box takes a flow anywhere on it, not only on its dots.
+ *
+ * Sprotty refuses an edge to any node that carries ports, on the reading that a shape with ports offers
+ * them as its only ends. An action's dots are not that: they mark the two points a flow can be pinned
+ * to, one among the ways of drawing the same flow, so the box has to keep answering a flow dropped
+ * anywhere on it. The dots go on working either way - they are ports of their own, and a flow dropped on
+ * one lands on the port rather than on the box beneath it, which is what records the pin.
+ */
+export class GOpaqueActionNode extends NamedElement {
+    override canConnect(_routable: GRoutableElement, _role: 'source' | 'target'): boolean {
+        return true;
+    }
+}
 
 /**
  * The rounded box UML draws for an action - the same shape as a state, drawn by the same view. Its name

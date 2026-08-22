@@ -33,6 +33,8 @@ import {
     GInterfaceNodeView,
     GInterfaceRealizationEdge,
     GInterfaceRealizationEdgeView,
+    GNoteNode,
+    GNoteNodeView,
     GOperationNode,
     GOperationNodeView,
     GPackageImportEdge,
@@ -53,6 +55,8 @@ import {
     GSlotNodeView,
     GSubstitutionEdge,
     GSubstitutionEdgeView,
+    GTextLabelNode,
+    GTextLabelNodeView,
     GUsageEdge,
     GUsageEdgeView
 } from '../../elements/index.js';
@@ -79,6 +83,11 @@ export const umlClassDiagramModule = new FeatureModule((bind, unbind, isBound, r
         GInstanceSpecificationNode,
         GInstanceSpecificationNodeView
     );
+
+    // The note and the free label, which every diagram has: both say something about the diagram
+    // rather than being part of any one notation.
+    configureModelElement(context, ClassDiagramNodeTypes.NOTE, GNoteNode, GNoteNodeView);
+    configureModelElement(context, ClassDiagramNodeTypes.TEXT_LABEL, GTextLabelNode, GTextLabelNodeView);
 
     // Edges
     configureModelElement(context, ClassDiagramEdgeTypes.ABSTRACTION, GAbstractionEdge, GAbstractionEdgeView);

@@ -8,8 +8,22 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { MinLength, ArrayMaxSize, Matches, ValidateIf } from 'class-validator';
+import { ArrayMaxSize, MinLength, ValidateIf } from 'class-validator';
 import { Class, DataType, Property } from '../langium/language/ast.js';
+
+export class ClassValidationElement {
+    constructor(src: Class) {
+        Object.assign(this, src);
+    }
+
+    @MinLength(1, { message: 'Class name must be at least 1 characters long' }) name: string;
+    @ValidateIf(o => o.isActive === true)
+    @ArrayMaxSize(3, {
+        message: 'Active classes must declare at most 3 properties.'
+    })
+    properties?: Array<Property>;
+    isActive?: boolean;
+}
 
 export class DataTypeValidationElement {
     constructor(src: DataType) {
@@ -17,22 +31,4 @@ export class DataTypeValidationElement {
     }
 
     @MinLength(5) name: string;
-}
-
-export class ClassValidationElement {
-    constructor(src: Class) {
-        Object.assign(this, src);
-    }
-
-    @Matches(/^[A-Z]/, {
-        message: 'First letter of class name must be uppercase.'
-    })
-    @MinLength(5, { message: 'Class name must be at least 5 characters long' })
-    name: string;
-    @ValidateIf(o => o.isActive === true)
-    @ArrayMaxSize(3, {
-        message: 'Active classes must declare at most 3 properties.'
-    })
-    properties?: Array<Property>;
-    isActive?: boolean;
 }

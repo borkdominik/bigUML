@@ -27,12 +27,178 @@ svg .uml-node .uml-node-background {
     border-radius: 20;
 }
 
+/*
+ * A fork/join bar is a solid rule rather than an outlined shape, so it takes the border colour as its
+ * fill and reads the same way in either theme. The stroke is left to `.uml-node`, which is what still
+ * thickens the bar on hover and selection.
+ */
+.uml-fork-join-bar {
+    fill: var(--uml-border);
+}
+
+/*
+ * The `H` and `H*` marking a history pseudostate. Drawn inside the node's own group, so like the
+ * outside label it has to take back the stroke `.uml-node` sets for the shape - inheriting it would
+ * outline every glyph and thicken it further whenever the node is selected.
+ */
+.uml-history-glyph {
+    fill: var(--uml-label);
+    stroke: none;
+}
+
+/*
+ * The points an edge can be pinned to: the tips of a diamond, the middle of a bar's long faces.
+ *
+ * Red rather than the border colour, so a dot is never drawn in the colour of the shape under it - a
+ * bar is filled with the border colour, and a dot in it would otherwise disappear into the fill.
+ *
+ * Hidden until the shape is pointed at. Four dots on a diamond 40 across is a lot of ink for something
+ * that only matters while an edge is being drawn or moved, and the moment it does matter is the moment
+ * the cursor is over the shape - so hovering the node is what brings them out. They stay clickable
+ * either way: `opacity` hides them without taking them out of the hit testing, which `display: none`
+ * or `visibility: hidden` would.
+ *
+ * Like the outside label, this sits inside the node's group and has to take back the stroke `.uml-node`
+ * sets, or every dot would be ringed and would thicken along with the shape on selection.
+ */
+.uml-connection-point {
+    fill: var(--uml-red);
+    stroke: none;
+    opacity: 0;
+    transition: opacity 100ms ease-in;
+}
+
+.uml-node:hover > .uml-connection-point,
+.uml-connection-point.mouseover,
+.uml-connection-point.selected {
+    opacity: 1;
+}
+
+/*
+ * The one being aimed at grows, so it is clear which of the four a click would take. Emphasis by size
+ * rather than by colour, which is how `.uml-node` and `.uml-edge` mark hover and selection too.
+ */
+.uml-connection-point.mouseover > circle,
+.uml-connection-point.selected > circle {
+    r: 5;
+}
+
+/*
+ * The name written beside a shape too small to hold it. It is drawn inside the node's own group, so it
+ * has to take back the fill and the stroke that `.uml-node` sets for the shape - inheriting the stroke
+ * would outline every glyph, and thicken them further whenever the node is selected.
+ */
+.uml-outside-label {
+    fill: var(--uml-label);
+    stroke: none;
+}
+
+/*
+ * The solid parts of the circles that mark the ends of a flow: the whole of an initial node, the disc
+ * inside an activity final node, the cross inside a flow final node. They take the border colour the
+ * way a fork/join bar does, so they read the same in either theme.
+ */
+.uml-control-node-fill {
+    fill: var(--uml-border);
+    stroke: none;
+}
+
+/*
+ * The crosses drawn inside a circle in the border colour: the one marking a flow final node, and the one
+ * marking the exit point of a state machine. Both are ink of the shape rather than of the text, so they
+ * are grouped here and read the same way in either theme.
+ */
+.uml-control-node-cross,
+.uml-pseudostate-cross {
+    stroke: var(--uml-border);
+    stroke-width: 2;
+}
+
+/*
+ * A shape drawn only to be clicked, for a node whose visible ink is too thin to aim at - the stick
+ * figure of an actor, the bar of a fork, the two lines of a terminate. A transparent fill still counts
+ * as painted and so still takes pointer events, which `fill: none` or `visibility: hidden` would not.
+ * The stroke is taken back from `.uml-node`, which would otherwise outline it and thicken that outline
+ * on selection.
+ */
+.uml-hit-area {
+    fill: transparent;
+    stroke: none;
+}
+
+/*
+ * The same thing along an outline rather than over an area, for a shape that is a border around a fill
+ * of nothing: a frame, a region, a state drawn around its substates. Those are selected and resized by
+ * their border and by nothing else, and a border is one pixel wide - this is the band of slack around
+ * it (see `hitStrokeBox`).
+ *
+ * The fill stays `none` on purpose. A transparent one would make the whole inside of a frame answer to
+ * the pointer, and the nodes standing on a frame are drawn over it rather than in it: their clicks have
+ * to keep reaching them, and a drag on the empty canvas inside a frame has to stay a rubber band.
+ *
+ * Both properties are set here rather than inherited, so that `.uml-node.selected` thickening the shape
+ * cannot thicken this along with it - what can be clicked should not depend on what is selected.
+ */
+.uml-hit-stroke {
+    fill: none;
+    stroke: transparent;
+    stroke-width: 16;
+}
+
 .uml-comp-separator {
     stroke-width: 1;
     stroke: var(--uml-edge);
 }
 
+/*
+ * The rule between one region of an orthogonal state and the next. Dashed is what tells it apart from
+ * the solid rule closing off a compartment of a different kind - the same distinction the region frame
+ * draws with its own dashed border.
+ *
+ * Long dashes with a clear gap, rather than the short ones a frame's border is drawn with: this rule runs
+ * the whole width of the state and is the only thing separating one region from another, so it has to
+ * read as deliberate at a glance and not as a hairline. The dash is left square-ended - the default cap -
+ * which is what keeps the pattern reading as dashes rather than as a row of dots.
+ */
+.uml-comp-separator-dashed {
+    stroke-dasharray: 10 6;
+}
+
 .uml-packageable-node > .struct {
     fill: none;
     stroke: none;
+}
+
+/*
+ * The turned-down corner of a note. Filled with what is behind the note rather than with the note's own
+ * fill, which is what makes the corner read as folded over rather than merely cut off - the underside of
+ * the flap is not the front of the page.
+ *
+ * The stroke is left to `.uml-node`, as the outline's is, so the fold thickens with the rest of the shape
+ * on hover and on selection instead of staying a hairline beside a heavier border.
+ */
+.uml-note-fold {
+    fill: var(--uml-editor-background);
+}
+
+/*
+ * A free label is writing and nothing else, so the box it occupies is drawn only while the pointer is
+ * over it or it is selected. Off, there is no telling a label apart from words that happen to be there,
+ * nor seeing how far it reaches when the time comes to drag its edge; on all the time, a label would
+ * just be a note again.
+ *
+ * Dashed, and in the selection colour rather than the border colour, so it reads as the extent of
+ * something rather than as an outline the label is drawn with. The width is set here rather than
+ * inherited, because `.uml-node.selected` thickens a shape's own border and this is not one.
+ */
+.uml-text-label-outline {
+    fill: none;
+    stroke: none;
+}
+
+.uml-text-label-node.mouseover .uml-text-label-outline,
+.uml-text-label-node.selected .uml-text-label-outline {
+    stroke: var(--uml-border);
+    stroke-width: 1;
+    stroke-dasharray: 3 3;
 }

@@ -8,7 +8,6 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-export * from './handlers/elements/abstract-class.property-palette-handler.js';
 export * from './handlers/elements/abstraction.property-palette-handler.js';
 export * from './handlers/elements/accept-event-action.property-palette-handler.js';
 export * from './handlers/elements/activity-final-node.property-palette-handler.js';
@@ -34,9 +33,11 @@ export * from './handlers/elements/deployment-specification.property-palette-han
 export * from './handlers/elements/deployment.property-palette-handler.js';
 export * from './handlers/elements/device.property-palette-handler.js';
 export * from './handlers/elements/element-import.property-palette-handler.js';
+export * from './handlers/elements/entry-point.property-palette-handler.js';
 export * from './handlers/elements/enumeration-literal.property-palette-handler.js';
 export * from './handlers/elements/enumeration.property-palette-handler.js';
 export * from './handlers/elements/execution-environment.property-palette-handler.js';
+export * from './handlers/elements/exit-point.property-palette-handler.js';
 export * from './handlers/elements/extend.property-palette-handler.js';
 export * from './handlers/elements/final-state.property-palette-handler.js';
 export * from './handlers/elements/flow-final-node.property-palette-handler.js';
@@ -59,6 +60,7 @@ export * from './handlers/elements/literal-specification.property-palette-handle
 export * from './handlers/elements/manifestation.property-palette-handler.js';
 export * from './handlers/elements/merge-node.property-palette-handler.js';
 export * from './handlers/elements/message.property-palette-handler.js';
+export * from './handlers/elements/note.property-palette-handler.js';
 export * from './handlers/elements/opaque-action.property-palette-handler.js';
 export * from './handlers/elements/operation.property-palette-handler.js';
 export * from './handlers/elements/output-pin.property-palette-handler.js';
@@ -75,9 +77,12 @@ export * from './handlers/elements/send-signal-action.property-palette-handler.j
 export * from './handlers/elements/shallow-history.property-palette-handler.js';
 export * from './handlers/elements/slot.property-palette-handler.js';
 export * from './handlers/elements/state-machine.property-palette-handler.js';
+export * from './handlers/elements/state-part.property-palette-handler.js';
 export * from './handlers/elements/state.property-palette-handler.js';
 export * from './handlers/elements/subject.property-palette-handler.js';
 export * from './handlers/elements/substitution.property-palette-handler.js';
+export * from './handlers/elements/terminate.property-palette-handler.js';
+export * from './handlers/elements/text-label.property-palette-handler.js';
 export * from './handlers/elements/transition.property-palette-handler.js';
 export * from './handlers/elements/usage.property-palette-handler.js';
 export * from './handlers/elements/use-case.property-palette-handler.js';

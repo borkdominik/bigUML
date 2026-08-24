@@ -11,14 +11,20 @@ import { Glsp } from '@borkdominik-biguml/uml-glsp-server/generator';
 import 'reflect-metadata';
 import type { Choice } from '../elements/choice-element.def.js';
 import type { DeepHistory } from '../elements/deep-history-element.def.js';
+import type { EntryPoint } from '../elements/entry-point-element.def.js';
+import type { ExitPoint } from '../elements/exit-point-element.def.js';
 import type { FinalState } from '../elements/final-state-element.def.js';
 import type { Fork } from '../elements/fork-element.def.js';
 import type { InitialState } from '../elements/initial-state-element.def.js';
 import type { Join } from '../elements/join-element.def.js';
+import type { Note } from '../elements/note-element.def.js';
+import type { TextLabel } from '../elements/text-label-element.def.js';
 import type { Region } from '../elements/region-element.def.js';
 import type { ShallowHistory } from '../elements/shallow-history-element.def.js';
 import type { State } from '../elements/state-element.def.js';
 import type { StateMachine } from '../elements/state-machine-element.def.js';
+import type { StatePart } from '../elements/state-part-element.def.js';
+import type { Terminate } from '../elements/terminate-element.def.js';
 import type { Transition } from '../elements/transition-element.def.js';
 
 // @ts-nocheck
@@ -36,12 +42,18 @@ type StateMachineDiagramNodes =
     | StateMachine
     | Region
     | State
+    | StatePart
     | FinalState
     | InitialState
     | Choice
     | Join
     | Fork
     | DeepHistory
-    | ShallowHistory;
+    | ShallowHistory
+    | ExitPoint
+    | EntryPoint
+    | Terminate
+    | Note
+    | TextLabel;
 
 type StateMachineDiagramEdges = Transition;

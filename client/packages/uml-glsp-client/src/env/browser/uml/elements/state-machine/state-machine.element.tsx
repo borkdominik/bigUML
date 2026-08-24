@@ -7,9 +7,10 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { injectable } from 'inversify';
-import { NamedElement, NamedElementView } from '../named-element/index.js';
+import { NamedElement } from '../named-element/index.js';
+import { StateMachineNodeView } from './state_machine_node_view.js';
 
 export class GStateMachineNode extends NamedElement {}
 
 @injectable()
-export class GStateMachineNodeView extends NamedElementView {}
+export class GStateMachineNodeView extends StateMachineNodeView {}

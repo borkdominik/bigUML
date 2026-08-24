@@ -8,7 +8,7 @@
  **********************************************************************************/
 
 import { type Args, DefaultTypes, type Dimension, type Point } from '@eclipse-glsp/protocol';
-import { GCompartment, GEdge, GGraph, GLabel, GNode } from '@eclipse-glsp/server';
+import { GCompartment, GEdge, GGraph, GLabel, GNode, GPort } from '@eclipse-glsp/server';
 import * as uuid from 'uuid';
 import type { GlspNode } from './jsx-namespace.js';
 import { normalizeChildren, wireParent } from './utils.js';
@@ -50,6 +50,7 @@ export interface GLabelElementProps {
     cssClasses?: string[];
     args?: Args;
     alignment?: Point;
+    edgePlacement?: GLabel['edgePlacement'];
 }
 
 export function GLabelElement(props: GLabelElementProps): GLabel {
@@ -61,6 +62,9 @@ export function GLabelElement(props: GLabelElementProps): GLabel {
     label.args = props.args;
     if (props.alignment) {
         label.alignment = props.alignment;
+    }
+    if (props.edgePlacement) {
+        label.edgePlacement = props.edgePlacement;
     }
     label.children = [];
     return label;
@@ -102,6 +106,41 @@ export function GNodeElement(props: GNodeElementProps): GNode {
 }
 
 // ============================================================================
+// GPortElement
+// ============================================================================
+
+export interface GPortElementProps {
+    id?: string;
+    type?: string;
+    position?: Point;
+    size?: Dimension;
+    cssClasses?: string[];
+    args?: Args;
+    children?: GlspNode;
+}
+
+/**
+ * A connection point on a node. Unlike a node's other children a port is not laid out - `GPort` carries
+ * no layoutable-child feature - so the position given here is where it stays, relative to its owner.
+ */
+export function GPortElement(props: GPortElementProps): GPort {
+    const port = new GPort();
+    port.id = props.id ?? uuid.v4();
+    port.type = props.type ?? DefaultTypes.PORT;
+    port.cssClasses = props.cssClasses ?? [];
+    if (props.position) {
+        port.position = props.position;
+    }
+    if (props.size) {
+        port.size = props.size;
+    }
+    port.args = props.args;
+    port.children = normalizeChildren(props.children);
+    wireParent(port);
+    return port;
+}
+
+// ============================================================================
 // GEdgeElement
 // ============================================================================
 
@@ -116,6 +155,17 @@ export interface GEdgeElementProps {
     children?: GlspNode;
 }
 
+/**
+ * How much slack a click on an edge is given, in pixels either side of the line.
+ *
+ * A line is one pixel wide and an arrowhead is a few across, which is a target nothing can be expected
+ * to hit; GLSP draws a transparent band of this width along the route to be clicked instead - but only
+ * for an edge that asks for one, and eleven of the twenty relations here never did. Set for every edge
+ * rather than per relation so that none of them can be left out again, and overridden by any that says
+ * otherwise in its own `args`.
+ */
+export const DEFAULT_EDGE_PADDING = 10;
+
 export function GEdgeElement(props: GEdgeElementProps): GEdge {
     const edge = new GEdge();
     edge.id = props.id ?? uuid.v4();
@@ -124,7 +174,7 @@ export function GEdgeElement(props: GEdgeElementProps): GEdge {
     edge.targetId = props.targetId;
     edge.routerKind = props.routerKind;
     edge.cssClasses = props.cssClasses ?? [];
-    edge.args = props.args;
+    edge.args = { edgePadding: DEFAULT_EDGE_PADDING, ...props.args };
     edge.routingPoints = [];
     edge.children = normalizeChildren(props.children);
     wireParent(edge);

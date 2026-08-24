@@ -12,10 +12,7 @@ import {
 } from '@borkdominik-biguml/big-property-palette/glsp-server';
 
 export namespace ParameterPropertyPaletteHandler {
-    export function getPropertyPalette(
-        context: GetPropertyPaletteHandlerContext<Parameter>,
-        dataTypeChoices: any
-    ): SetPropertyPaletteAction[] {
+    export function getPropertyPalette(context: GetPropertyPaletteHandlerContext<Parameter>): SetPropertyPaletteAction[] {
         return [
             SetPropertyPaletteAction.create(
                 <PropertyPalette
@@ -73,15 +70,10 @@ export namespace ParameterPropertyPaletteHandler {
                         choice={context.semanticElement.visibility!}
                         label='Visibility'
                     />
-                    <ChoiceProperty
+                    <TextProperty
                         elementId={context.semanticElement.__id}
                         propertyId='parameterType'
-                        choices={dataTypeChoices}
-                        choice={
-                            (context.semanticElement.parameterType as any)?.ref?.__id
-                                ? (context.semanticElement.parameterType as any).ref.__id + '_refValue'
-                                : ''
-                        }
+                        text={context.semanticElement.parameterType!}
                         label='Parameter Type'
                     />
                     <TextProperty

@@ -33,48 +33,6 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
             allowedChildTypes: ['UseCase']
         }
     ],
-    DataType: [
-        {
-            property: 'properties',
-            allowedChildTypes: ['Property']
-        },
-        {
-            property: 'operations',
-            allowedChildTypes: ['Operation']
-        }
-    ],
-    Operation: [
-        {
-            property: 'parameters',
-            allowedChildTypes: ['Parameter']
-        }
-    ],
-    Interface: [
-        {
-            property: 'properties',
-            allowedChildTypes: ['Property']
-        },
-        {
-            property: 'operations',
-            allowedChildTypes: ['Operation']
-        }
-    ],
-    Enumeration: [
-        {
-            property: 'values',
-            allowedChildTypes: ['EnumerationLiteral']
-        }
-    ],
-    Class: [
-        {
-            property: 'properties',
-            allowedChildTypes: ['Property']
-        },
-        {
-            property: 'operations',
-            allowedChildTypes: ['Operation']
-        }
-    ],
     StateMachineDiagram: [
         {
             property: 'entities',
@@ -97,13 +55,10 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
             allowedChildTypes: [
                 'UseCase',
                 'Subject',
-                'DataType',
-                'PrimitiveType',
-                'Operation',
-                'Interface',
-                'Enumeration',
-                'Class',
+                'TextLabel',
+                'Note',
                 'Actor',
+                'Terminate',
                 'StateMachine',
                 'Region',
                 'State',
@@ -112,9 +67,13 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
                 'InitialState',
                 'Fork',
                 'FinalState',
+                'ExitPoint',
+                'EntryPoint',
                 'DeepHistory',
                 'Choice',
                 'Package',
+                'Operation',
+                'Class',
                 'ExecutionEnvironment',
                 'DeploymentSpecification',
                 'Artifact',
@@ -124,11 +83,13 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
                 'DeploymentModel',
                 'Lifeline',
                 'Interaction',
+                'Interface',
+                'PrimitiveType',
                 'InstanceSpecification',
+                'Enumeration',
+                'DataType',
                 'SendSignalAction',
-                'OutputPin',
                 'OpaqueAction',
-                'InputPin',
                 'MergeNode',
                 'JoinNode',
                 'InitialNode',
@@ -150,6 +111,10 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
     ],
     State: [
         {
+            property: 'parts',
+            allowedChildTypes: ['StatePart']
+        },
+        {
             property: 'regions',
             allowedChildTypes: ['Region']
         }
@@ -170,13 +135,10 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
             allowedChildTypes: [
                 'UseCase',
                 'Subject',
-                'DataType',
-                'PrimitiveType',
-                'Operation',
-                'Interface',
-                'Enumeration',
-                'Class',
+                'TextLabel',
+                'Note',
                 'Actor',
+                'Terminate',
                 'StateMachine',
                 'Region',
                 'State',
@@ -185,9 +147,13 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
                 'InitialState',
                 'Fork',
                 'FinalState',
+                'ExitPoint',
+                'EntryPoint',
                 'DeepHistory',
                 'Choice',
                 'Package',
+                'Operation',
+                'Class',
                 'ExecutionEnvironment',
                 'DeploymentSpecification',
                 'Artifact',
@@ -197,11 +163,13 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
                 'DeploymentModel',
                 'Lifeline',
                 'Interaction',
+                'Interface',
+                'PrimitiveType',
                 'InstanceSpecification',
+                'Enumeration',
+                'DataType',
                 'SendSignalAction',
-                'OutputPin',
                 'OpaqueAction',
-                'InputPin',
                 'MergeNode',
                 'JoinNode',
                 'InitialNode',
@@ -215,6 +183,22 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
                 'Activity',
                 'AcceptEventAction'
             ]
+        }
+    ],
+    Operation: [
+        {
+            property: 'parameters',
+            allowedChildTypes: ['Parameter']
+        }
+    ],
+    Class: [
+        {
+            property: 'properties',
+            allowedChildTypes: ['Property']
+        },
+        {
+            property: 'operations',
+            allowedChildTypes: ['Operation']
         }
     ],
     InformationFlowDiagram: [
@@ -317,13 +301,10 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
             allowedChildTypes: [
                 'UseCase',
                 'Subject',
-                'DataType',
-                'PrimitiveType',
-                'Operation',
-                'Interface',
-                'Enumeration',
-                'Class',
+                'TextLabel',
+                'Note',
                 'Actor',
+                'Terminate',
                 'StateMachine',
                 'Region',
                 'State',
@@ -332,9 +313,13 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
                 'InitialState',
                 'Fork',
                 'FinalState',
+                'ExitPoint',
+                'EntryPoint',
                 'DeepHistory',
                 'Choice',
                 'Package',
+                'Operation',
+                'Class',
                 'ExecutionEnvironment',
                 'DeploymentSpecification',
                 'Artifact',
@@ -344,11 +329,13 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
                 'DeploymentModel',
                 'Lifeline',
                 'Interaction',
+                'Interface',
+                'PrimitiveType',
                 'InstanceSpecification',
+                'Enumeration',
+                'DataType',
                 'SendSignalAction',
-                'OutputPin',
                 'OpaqueAction',
-                'InputPin',
                 'MergeNode',
                 'JoinNode',
                 'InitialNode',
@@ -370,13 +357,10 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
             allowedChildTypes: [
                 'UseCase',
                 'Subject',
-                'DataType',
-                'PrimitiveType',
-                'Operation',
-                'Interface',
-                'Enumeration',
-                'Class',
+                'TextLabel',
+                'Note',
                 'Actor',
+                'Terminate',
                 'StateMachine',
                 'Region',
                 'State',
@@ -385,9 +369,13 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
                 'InitialState',
                 'Fork',
                 'FinalState',
+                'ExitPoint',
+                'EntryPoint',
                 'DeepHistory',
                 'Choice',
                 'Package',
+                'Operation',
+                'Class',
                 'ExecutionEnvironment',
                 'DeploymentSpecification',
                 'Artifact',
@@ -397,11 +385,13 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
                 'DeploymentModel',
                 'Lifeline',
                 'Interaction',
+                'Interface',
+                'PrimitiveType',
                 'InstanceSpecification',
+                'Enumeration',
+                'DataType',
                 'SendSignalAction',
-                'OutputPin',
                 'OpaqueAction',
-                'InputPin',
                 'MergeNode',
                 'JoinNode',
                 'InitialNode',
@@ -453,13 +443,29 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
             allowedChildTypes: ['LiteralSpecification']
         }
     ],
+    Interface: [
+        {
+            property: 'properties',
+            allowedChildTypes: ['Property']
+        },
+        {
+            property: 'operations',
+            allowedChildTypes: ['Operation']
+        }
+    ],
     InstanceSpecification: [
         {
             property: 'slots',
             allowedChildTypes: ['Slot']
         }
     ],
-    AbstractClass: [
+    Enumeration: [
+        {
+            property: 'values',
+            allowedChildTypes: ['EnumerationLiteral']
+        }
+    ],
+    DataType: [
         {
             property: 'properties',
             allowedChildTypes: ['Property']
@@ -499,13 +505,10 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
             allowedChildTypes: [
                 'UseCase',
                 'Subject',
-                'DataType',
-                'PrimitiveType',
-                'Operation',
-                'Interface',
-                'Enumeration',
-                'Class',
+                'TextLabel',
+                'Note',
                 'Actor',
+                'Terminate',
                 'StateMachine',
                 'Region',
                 'State',
@@ -514,9 +517,13 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
                 'InitialState',
                 'Fork',
                 'FinalState',
+                'ExitPoint',
+                'EntryPoint',
                 'DeepHistory',
                 'Choice',
                 'Package',
+                'Operation',
+                'Class',
                 'ExecutionEnvironment',
                 'DeploymentSpecification',
                 'Artifact',
@@ -526,11 +533,13 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
                 'DeploymentModel',
                 'Lifeline',
                 'Interaction',
+                'Interface',
+                'PrimitiveType',
                 'InstanceSpecification',
+                'Enumeration',
+                'DataType',
                 'SendSignalAction',
-                'OutputPin',
                 'OpaqueAction',
-                'InputPin',
                 'MergeNode',
                 'JoinNode',
                 'InitialNode',
@@ -548,21 +557,18 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
     ],
     Activity: [
         {
-            property: 'partitions',
-            allowedChildTypes: ['ActivityPartition']
+            property: 'parameters',
+            allowedChildTypes: ['Property']
         },
         {
             property: 'nodes',
             allowedChildTypes: [
                 'UseCase',
                 'Subject',
-                'DataType',
-                'PrimitiveType',
-                'Operation',
-                'Interface',
-                'Enumeration',
-                'Class',
+                'TextLabel',
+                'Note',
                 'Actor',
+                'Terminate',
                 'StateMachine',
                 'Region',
                 'State',
@@ -571,9 +577,13 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
                 'InitialState',
                 'Fork',
                 'FinalState',
+                'ExitPoint',
+                'EntryPoint',
                 'DeepHistory',
                 'Choice',
                 'Package',
+                'Operation',
+                'Class',
                 'ExecutionEnvironment',
                 'DeploymentSpecification',
                 'Artifact',
@@ -583,11 +593,13 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
                 'DeploymentModel',
                 'Lifeline',
                 'Interaction',
+                'Interface',
+                'PrimitiveType',
                 'InstanceSpecification',
+                'Enumeration',
+                'DataType',
                 'SendSignalAction',
-                'OutputPin',
                 'OpaqueAction',
-                'InputPin',
                 'MergeNode',
                 'JoinNode',
                 'InitialNode',
@@ -601,10 +613,6 @@ const mapping: Record<string, Array<{ property: string; allowedChildTypes?: stri
                 'Activity',
                 'AcceptEventAction'
             ]
-        },
-        {
-            property: 'edges',
-            allowedChildTypes: ['ControlFlow']
         }
     ]
 };

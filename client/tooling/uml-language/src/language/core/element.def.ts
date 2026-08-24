@@ -30,4 +30,5 @@ export class Position extends MetaInfo {
     y: number;
 }
 
-export type Visibility = 'PUBLIC' | 'PRIVATE' | 'PROTECTED' | 'PACKAGE';
+/** `NONE` leaves the visibility unspecified — no symbol is rendered for the element. */
+export type Visibility = 'PUBLIC' | 'PRIVATE' | 'PROTECTED' | 'PACKAGE' | 'NONE';

@@ -6,8 +6,15 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+export * from './behavior-label.js';
 export * from './common-model-types.js';
+export * from './connection-point.js';
 export * from './language.js';
+export * from './message-link.js';
 export * from './model-type-utils.js';
 export * from './new-file.action.js';
+export * from './package-merge-group.js';
+export * from './orientation-turn.js';
+export * from './pin-placement.js';
 export * from './semantic-model.action.js';
+export * from './storable-text.js';

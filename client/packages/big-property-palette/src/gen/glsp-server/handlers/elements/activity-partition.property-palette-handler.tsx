@@ -33,6 +33,13 @@ export namespace ActivityPartitionPropertyPaletteHandler {
                         choice={context.semanticElement.visibility!}
                         label='Visibility'
                     />
+                    <ChoiceProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='orientation'
+                        choices={PropertyPaletteChoices.ORIENTATION}
+                        choice={context.semanticElement.orientation!}
+                        label='Orientation'
+                    />
                     <ReferenceProperty
                         elementId={context.semanticElement.__id}
                         propertyId='subpartitions'

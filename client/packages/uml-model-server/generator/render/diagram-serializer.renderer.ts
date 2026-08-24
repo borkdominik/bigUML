@@ -111,10 +111,20 @@ function buildPropertyCall(property: Definition, referenceProperty: string): str
 
 function serializePropertyValue(property: Definition, elementString: string, referenceProperty: string): string {
     if (property.crossReference) {
+        // The id of what the reference points at, and where it points at nothing the text it was written
+        // with - which is that same id, and the only copy of it left once the link has failed.
+        //
+        // A reference is unresolved for reasons that have nothing to do with what it says: the element it
+        // names may not have been linked yet when the document is written out. Writing `undefined` there
+        // turned a link that was merely unresolved at that moment into one that names nothing at all -
+        // the edge drew correctly for the rest of the session and was gone the next time the file was
+        // opened, the gmodel factory dropping every relation whose ends do not resolve. Kept as the last
+        // resort for the reference that carries no text either: the value has to be *something*, an empty
+        // one being a `__value` the grammar cannot lex.
         return (
             `'{' + ' "__type": "Reference", "__refType": "${property.type!.typeName}", "__value": "' + (` +
             elementString +
-            `.ref?.${referenceProperty} ?? "undefined")` +
+            `.ref?.${referenceProperty} ?? (${elementString}.$refText || "undefined"))` +
             ` + '"}'`
         );
     } else if (SIMPLE_TYPES.includes(property.type!.typeName)) {

@@ -16,7 +16,6 @@ export namespace ClassDiagramNodeTypes {
     export const ENUMERATION = representationTypeId('Class', DefaultTypes.NODE, 'Enumeration');
     export const ENUMERATION_LITERAL = representationTypeId('Class', DefaultTypes.NODE, 'EnumerationLiteral');
     export const CLASS = representationTypeId('Class', DefaultTypes.NODE, 'Class');
-    export const ABSTRACT_CLASS = representationTypeId('Class', DefaultTypes.NODE, 'AbstractClass');
     export const INTERFACE = representationTypeId('Class', DefaultTypes.NODE, 'Interface');
     export const PACKAGE = representationTypeId('Class', DefaultTypes.NODE, 'Package');
     export const PROPERTY = representationTypeId('Class', DefaultTypes.NODE, 'Property');
@@ -27,6 +26,9 @@ export namespace ClassDiagramNodeTypes {
     export const INSTANCE_SPECIFICATION = representationTypeId('Class', DefaultTypes.NODE, 'InstanceSpecification');
     export const SLOT = representationTypeId('Class', DefaultTypes.NODE, 'Slot');
     export const LITERAL_SPECIFICATION = representationTypeId('Class', DefaultTypes.NODE, 'LiteralSpecification');
+    export const CHOICE = representationTypeId('Class', DefaultTypes.NODE, 'Choice');
+    export const NOTE = representationTypeId('Class', DefaultTypes.NODE, 'Note');
+    export const TEXT_LABEL = representationTypeId('Class', DefaultTypes.NODE, 'TextLabel');
 }
 
 export namespace ClassDiagramEdgeTypes {
@@ -48,7 +50,6 @@ export namespace ClassDiagramModelTypes {
     export const ENUMERATION = ClassDiagramNodeTypes.ENUMERATION;
     export const ENUMERATION_LITERAL = ClassDiagramNodeTypes.ENUMERATION_LITERAL;
     export const CLASS = ClassDiagramNodeTypes.CLASS;
-    export const ABSTRACT_CLASS = ClassDiagramNodeTypes.ABSTRACT_CLASS;
     export const INTERFACE = ClassDiagramNodeTypes.INTERFACE;
     export const PACKAGE = ClassDiagramNodeTypes.PACKAGE;
     export const PROPERTY = ClassDiagramNodeTypes.PROPERTY;
@@ -59,6 +60,9 @@ export namespace ClassDiagramModelTypes {
     export const INSTANCE_SPECIFICATION = ClassDiagramNodeTypes.INSTANCE_SPECIFICATION;
     export const SLOT = ClassDiagramNodeTypes.SLOT;
     export const LITERAL_SPECIFICATION = ClassDiagramNodeTypes.LITERAL_SPECIFICATION;
+    export const CHOICE = ClassDiagramNodeTypes.CHOICE;
+    export const NOTE = ClassDiagramNodeTypes.NOTE;
+    export const TEXT_LABEL = ClassDiagramNodeTypes.TEXT_LABEL;
 
     // re-export edges
     export const ABSTRACTION = ClassDiagramEdgeTypes.ABSTRACTION;
@@ -75,15 +79,10 @@ export namespace ClassDiagramModelTypes {
 }
 
 export namespace ClassAstTypes {
-    const aliases: Record<string, string> = {
-        [ClassDiagramModelTypes.ABSTRACT_CLASS]: 'Class'
-    };
-
     const typeMap: Record<string, string> = {
         Enumeration: ClassDiagramModelTypes.ENUMERATION,
         EnumerationLiteral: ClassDiagramModelTypes.ENUMERATION_LITERAL,
         Class: ClassDiagramModelTypes.CLASS,
-        AbstractClass: ClassDiagramModelTypes.ABSTRACT_CLASS,
         Interface: ClassDiagramModelTypes.INTERFACE,
         Package: ClassDiagramModelTypes.PACKAGE,
         Property: ClassDiagramModelTypes.PROPERTY,
@@ -94,6 +93,9 @@ export namespace ClassAstTypes {
         InstanceSpecification: ClassDiagramModelTypes.INSTANCE_SPECIFICATION,
         Slot: ClassDiagramModelTypes.SLOT,
         LiteralSpecification: ClassDiagramModelTypes.LITERAL_SPECIFICATION,
+        Choice: ClassDiagramModelTypes.CHOICE,
+        Note: ClassDiagramModelTypes.NOTE,
+        TextLabel: ClassDiagramModelTypes.TEXT_LABEL,
         Abstraction: ClassDiagramModelTypes.ABSTRACTION,
         Dependency: ClassDiagramModelTypes.DEPENDENCY,
         Association: ClassDiagramModelTypes.ASSOCIATION,
@@ -108,9 +110,6 @@ export namespace ClassAstTypes {
     };
 
     export function convertToAst(elementId: string): string {
-        if (aliases[elementId]) {
-            return aliases[elementId];
-        }
         return AstTypeUtils.stripPrefix(elementId);
     }
 

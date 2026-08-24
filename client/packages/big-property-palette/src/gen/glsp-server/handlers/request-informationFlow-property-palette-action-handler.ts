@@ -10,15 +10,26 @@
 import { RequestPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
 import { type ActionHandler, type MaybePromise } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
-import { isActor, isClass, isInformationFlow, isOperation, isParameter, isProperty } from '@borkdominik-biguml/uml-model-server/grammar';
+import {
+    isActor,
+    isClass,
+    isInformationFlow,
+    isNote,
+    isOperation,
+    isParameter,
+    isProperty,
+    isTextLabel
+} from '@borkdominik-biguml/uml-model-server/grammar';
 import { DiagramModelState, DiagramLanguageMetadata } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import type { DiagramLanguageMetadata as DiagramLanguageMetadataType } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import { ActorPropertyPaletteHandler } from './elements/actor.property-palette-handler.js';
 import { ClassPropertyPaletteHandler } from './elements/class.property-palette-handler.js';
 import { InformationFlowPropertyPaletteHandler } from './elements/information-flow.property-palette-handler.js';
+import { NotePropertyPaletteHandler } from './elements/note.property-palette-handler.js';
 import { OperationPropertyPaletteHandler } from './elements/operation.property-palette-handler.js';
 import { ParameterPropertyPaletteHandler } from './elements/parameter.property-palette-handler.js';
 import { PropertyPropertyPaletteHandler } from './elements/property.property-palette-handler.js';
+import { TextLabelPropertyPaletteHandler } from './elements/text-label.property-palette-handler.js';
 @injectable()
 export class RequestInformationFlowPropertyPaletteActionHandler implements ActionHandler {
     actionKinds = [RequestPropertyPaletteAction.KIND];
@@ -50,23 +61,20 @@ export class RequestInformationFlowPropertyPaletteActionHandler implements Actio
 
             const context = { semanticElement, languageMetadata: this.languageMetadata };
 
-            const dataTypeChoices = (this.modelState.index.getAllDataTypes?.() ?? [])
-                .filter((item: any) => !!item && !!item.__id && !!item.name)
-                .map((item: any) => ({
-                    label: item.name,
-                    value: item.__id + '_refValue',
-                    secondaryText: item.$type
-                }));
-            if (isProperty(semanticElement)) {
-                return PropertyPropertyPaletteHandler.getPropertyPalette(context, dataTypeChoices);
-            } else if (isOperation(semanticElement)) {
-                return OperationPropertyPaletteHandler.getPropertyPalette(context);
-            } else if (isParameter(semanticElement)) {
-                return ParameterPropertyPaletteHandler.getPropertyPalette(context, dataTypeChoices);
-            } else if (isClass(semanticElement)) {
-                return ClassPropertyPaletteHandler.getPropertyPalette(context);
+            if (isTextLabel(semanticElement)) {
+                return TextLabelPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isNote(semanticElement)) {
+                return NotePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isProperty(semanticElement)) {
+                return PropertyPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isActor(semanticElement)) {
                 return ActorPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isParameter(semanticElement)) {
+                return ParameterPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isOperation(semanticElement)) {
+                return OperationPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isClass(semanticElement)) {
+                return ClassPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isInformationFlow(semanticElement)) {
                 return InformationFlowPropertyPaletteHandler.getPropertyPalette(context);
             }

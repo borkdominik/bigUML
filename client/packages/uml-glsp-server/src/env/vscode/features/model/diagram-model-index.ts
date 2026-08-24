@@ -156,8 +156,13 @@ export class DiagramModelIndex extends GModelIndex {
         return this.idToPath.get(id);
     }
     findIdElement(id: string): IdAstNode | undefined {
+        // An id that names no semantic element is an ordinary answer, not a mistake: the graph root, a
+        // compartment, a label all have ids of their own and none of them is an element of the model. The
+        // `!` this once carried made `isIdAstNode` read a property off `undefined` and throw, which took
+        // down whatever had asked - dropping any node on the canvas among them, since that names the graph
+        // as its container.
         const semanticNode = this.idToSemanticNode.get(id);
-        return isIdAstNode(semanticNode!) ? semanticNode : undefined;
+        return isIdAstNode(semanticNode) ? semanticNode : undefined;
     }
     findSemanticElement<T extends AstNode>(id: string, guard: (item: unknown) => item is T): T | undefined {
         const semanticNode = this.idToSemanticNode.get(id);

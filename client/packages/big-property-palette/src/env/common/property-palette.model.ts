@@ -76,6 +76,12 @@ export interface ElementReferenceProperty extends ElementProperty {
     creates: ElementReferenceProperty.CreateReference[];
     isOrderable: boolean;
     isAutocomplete: boolean;
+    /**
+     * Whether each reference offers a way through to its own property palette. Off for a list whose
+     * entries are the same kind of thing as the element already open - the messages on a link, say,
+     * where following one only arrives at the same list again.
+     */
+    isNavigable: boolean;
 }
 
 export namespace ElementReferenceProperty {

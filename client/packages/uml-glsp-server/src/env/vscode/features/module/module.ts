@@ -31,6 +31,7 @@ import { CreateNewFileActionHandler } from '../model/handler/create-new-file-act
 import { RequestSemanticModelActionHandler } from '../model/index.js';
 import {
     GenericChangeBoundsOperationHandler,
+    GenericChangeRoutingPointsOperationHandler,
     GenericCreateEdgeOperationHandler,
     GenericCreateNodeOperationHandler,
     GenericDeleteOperationHandler,
@@ -80,6 +81,7 @@ export abstract class BigDiagramModule extends DiagramModule {
     protected override configureOperationHandlers(binding: InstanceMultiBinding<OperationHandlerConstructor>): void {
         super.configureOperationHandlers(binding);
         binding.add(GenericChangeBoundsOperationHandler);
+        binding.add(GenericChangeRoutingPointsOperationHandler);
         binding.add(GenericCreateNodeOperationHandler);
         binding.add(GenericCreateEdgeOperationHandler);
         binding.add(GenericLabelEditOperationHandler);

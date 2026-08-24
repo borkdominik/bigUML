@@ -16,8 +16,13 @@ export interface IdAstNode extends AstNode {
     __id: string;
 }
 
-export function isIdAstNode(node: AstNode): node is IdAstNode {
-    return typeof (node as IdAstNode)[properties.referenceProperty as keyof IdAstNode] === 'string';
+/**
+ * Takes anything, including nothing: the callers ask this of whatever a lookup gave them, and a lookup
+ * that found nothing is the ordinary answer rather than a mistake. Reading the property off `undefined`
+ * threw a `TypeError` out of the middle of whatever was asking - see `DiagramModelIndex.findIdElement`.
+ */
+export function isIdAstNode(node: unknown): node is IdAstNode {
+    return typeof (node as IdAstNode | undefined)?.[properties.referenceProperty as keyof IdAstNode] === 'string';
 }
 
 /**

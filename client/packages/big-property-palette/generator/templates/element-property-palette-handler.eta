@@ -1,12 +1,8 @@
 // AUTO-GENERATED – DO NOT EDIT
 
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
-<% if (it.needsGlspImport) { %>
-<% if (it.hasCreateOperations) { %>
-import { CreateNodeOperation, DeleteElementOperation } from '@eclipse-glsp/server';
-<% } else { %>
-import { DeleteElementOperation } from '@eclipse-glsp/server';
-<% } %>
+<% if (it.glspImports.length) { %>
+import { <%~ it.glspImports.join(', ') %> } from '@eclipse-glsp/server';
 <% } %>
 import { type <%~ it.name %> } from '@borkdominik-biguml/uml-model-server/grammar';
 import { type GetPropertyPaletteHandlerContext, <%~ it.componentImports.join(', ') %> } from '@borkdominik-biguml/big-property-palette/glsp-server';

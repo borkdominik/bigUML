@@ -18,7 +18,10 @@ import { GPropertyNodeElement } from './property.element.js';
 
 export class GClassNode extends GNode {
     override type = ClassDiagramNodeTypes.CLASS;
-    override layout = 'vbox';
+    // A class is resized freely, so the name and the compartments under it have to stay in the middle
+    // of the box at whatever height it is dragged to. Plain `vbox` stacks them from the top border down
+    // and leaves the whole of the added height empty below them (see `UmlCenteredVBoxLayouter`).
+    override layout = 'uml-centered-vbox';
     name: string = 'UNDEFINED CLASS NAME';
     isAbstract: boolean = false;
 }
@@ -50,7 +53,7 @@ export function GClassNodeElement(props: GClassNodeElementProps): GModelElement 
     }
 
     // Header
-    const header = <CompartmentHeader id={id} name={node.name} isAbstract={node.isAbstract} />;
+    const header = <CompartmentHeader id={id} name={node.name} isAbstract={node.isAbstract} wrapName />;
     header.parent = classNode;
     classNode.children.push(header);
 
@@ -69,7 +72,7 @@ export function createClassElement(ctx: ElementContext<Class>): GModelElement {
 
     const propertiesSection =
         ctx.node.properties?.length > 0 ? (
-            <SectionCompartment id={ctx.node.__id + '_count_context_1'} dividerText='Attributes'>
+            <SectionCompartment id={ctx.node.__id + '_count_context_1'} divider>
                 {ctx.node.properties.map(p => (
                     <GPropertyNodeElement node={p} />
                 ))}
@@ -78,7 +81,7 @@ export function createClassElement(ctx: ElementContext<Class>): GModelElement {
 
     const operationsSection =
         ctx.node.operations?.length > 0 ? (
-            <SectionCompartment id={ctx.node.__id + '_count_context_3'} dividerText='Methods'>
+            <SectionCompartment id={ctx.node.__id + '_count_context_3'} divider>
                 {ctx.node.operations.map(o => (
                     <GOperationNodeElement node={o} />
                 ))}

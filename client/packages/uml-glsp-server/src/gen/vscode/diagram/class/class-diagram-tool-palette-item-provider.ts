@@ -22,6 +22,29 @@ export class ClassDiagramToolPaletteItemProvider extends ToolPaletteItemProvider
     override getItems(_args?: Args): MaybePromise<PaletteItem[]> {
         return [
             {
+                id: 'uml.annotation',
+                sortString: 'A',
+                label: 'Annotation',
+                icon: 'symbol-property',
+                children: [
+                    {
+                        id: 'text-label',
+                        sortString: 'A',
+                        label: 'Label',
+                        icon: 'uml-string-expression-icon',
+                        actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.TEXT_LABEL)]
+                    },
+                    {
+                        id: 'note',
+                        sortString: 'A',
+                        label: 'Note',
+                        icon: 'uml-comment-icon',
+                        actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.NOTE)]
+                    }
+                ],
+                actions: []
+            },
+            {
                 id: 'uml.relations',
                 sortString: 'A',
                 label: 'Relations',
@@ -128,18 +151,34 @@ export class ClassDiagramToolPaletteItemProvider extends ToolPaletteItemProvider
                         actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.OPERATION)]
                     },
                     {
-                        id: 'enumeration-literal',
-                        sortString: 'A',
-                        label: 'Enumeration Literal',
-                        icon: 'uml-enumeration-literal-icon',
-                        actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.ENUMERATION_LITERAL)]
-                    },
-                    {
                         id: 'slot',
                         sortString: 'A',
                         label: 'Slot',
                         icon: 'uml-slot-icon',
                         actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.SLOT)]
+                    },
+                    {
+                        id: 'enumeration-literal',
+                        sortString: 'A',
+                        label: 'Enumeration Literal',
+                        icon: 'uml-enumeration-literal-icon',
+                        actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.ENUMERATION_LITERAL)]
+                    }
+                ],
+                actions: []
+            },
+            {
+                id: 'uml.pseudo-states',
+                sortString: 'A',
+                label: 'PseudoStates',
+                icon: 'symbol-property',
+                children: [
+                    {
+                        id: 'choice',
+                        sortString: 'A',
+                        label: 'Choice',
+                        icon: 'uml-pseudostate-choice-icon',
+                        actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.CHOICE)]
                     }
                 ],
                 actions: []
@@ -151,32 +190,11 @@ export class ClassDiagramToolPaletteItemProvider extends ToolPaletteItemProvider
                 icon: 'symbol-property',
                 children: [
                     {
-                        id: 'data-type',
+                        id: 'package',
                         sortString: 'A',
-                        label: 'DataType',
-                        icon: 'uml-data-type-icon',
-                        actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.DATA_TYPE)]
-                    },
-                    {
-                        id: 'primitive-type',
-                        sortString: 'A',
-                        label: 'Primitive Type',
-                        icon: 'uml-primitive-type-icon',
-                        actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.PRIMITIVE_TYPE)]
-                    },
-                    {
-                        id: 'interface',
-                        sortString: 'A',
-                        label: 'Interface',
-                        icon: 'uml-interface-icon',
-                        actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.INTERFACE)]
-                    },
-                    {
-                        id: 'enumeration',
-                        sortString: 'A',
-                        label: 'Enumeration',
-                        icon: 'uml-enumeration-icon',
-                        actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.ENUMERATION)]
+                        label: 'Package',
+                        icon: 'uml-package-icon',
+                        actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.PACKAGE)]
                     },
                     {
                         id: 'class',
@@ -186,11 +204,18 @@ export class ClassDiagramToolPaletteItemProvider extends ToolPaletteItemProvider
                         actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.CLASS)]
                     },
                     {
-                        id: 'package',
+                        id: 'interface',
                         sortString: 'A',
-                        label: 'Package',
-                        icon: 'uml-package-icon',
-                        actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.PACKAGE)]
+                        label: 'Interface',
+                        icon: 'uml-interface-icon',
+                        actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.INTERFACE)]
+                    },
+                    {
+                        id: 'primitive-type',
+                        sortString: 'A',
+                        label: 'Primitive Type',
+                        icon: 'uml-primitive-type-icon',
+                        actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.PRIMITIVE_TYPE)]
                     },
                     {
                         id: 'instance-specification',
@@ -200,11 +225,18 @@ export class ClassDiagramToolPaletteItemProvider extends ToolPaletteItemProvider
                         actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.INSTANCE_SPECIFICATION)]
                     },
                     {
-                        id: 'abstract-class',
+                        id: 'enumeration',
                         sortString: 'A',
-                        label: 'Abstract Class',
-                        icon: 'uml-class-icon',
-                        actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.ABSTRACT_CLASS)]
+                        label: 'Enumeration',
+                        icon: 'uml-enumeration-icon',
+                        actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.ENUMERATION)]
+                    },
+                    {
+                        id: 'data-type',
+                        sortString: 'A',
+                        label: 'DataType',
+                        icon: 'uml-data-type-icon',
+                        actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.DATA_TYPE)]
                     }
                 ],
                 actions: []

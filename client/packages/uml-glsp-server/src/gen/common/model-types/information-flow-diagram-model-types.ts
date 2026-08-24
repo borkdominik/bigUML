@@ -18,6 +18,8 @@ export namespace InformationFlowDiagramNodeTypes {
     export const PROPERTY = representationTypeId('InformationFlow', DefaultTypes.NODE, 'Property');
     export const OPERATION = representationTypeId('InformationFlow', DefaultTypes.NODE, 'Operation');
     export const PARAMETER = representationTypeId('InformationFlow', DefaultTypes.NODE, 'Parameter');
+    export const NOTE = representationTypeId('InformationFlow', DefaultTypes.NODE, 'Note');
+    export const TEXT_LABEL = representationTypeId('InformationFlow', DefaultTypes.NODE, 'TextLabel');
 }
 
 export namespace InformationFlowDiagramEdgeTypes {
@@ -31,6 +33,8 @@ export namespace InformationFlowDiagramModelTypes {
     export const PROPERTY = InformationFlowDiagramNodeTypes.PROPERTY;
     export const OPERATION = InformationFlowDiagramNodeTypes.OPERATION;
     export const PARAMETER = InformationFlowDiagramNodeTypes.PARAMETER;
+    export const NOTE = InformationFlowDiagramNodeTypes.NOTE;
+    export const TEXT_LABEL = InformationFlowDiagramNodeTypes.TEXT_LABEL;
 
     // re-export edges
     export const INFORMATION_FLOW = InformationFlowDiagramEdgeTypes.INFORMATION_FLOW;
@@ -43,6 +47,8 @@ export namespace InformationFlowAstTypes {
         Property: InformationFlowDiagramModelTypes.PROPERTY,
         Operation: InformationFlowDiagramModelTypes.OPERATION,
         Parameter: InformationFlowDiagramModelTypes.PARAMETER,
+        Note: InformationFlowDiagramModelTypes.NOTE,
+        TextLabel: InformationFlowDiagramModelTypes.TEXT_LABEL,
         InformationFlow: InformationFlowDiagramModelTypes.INFORMATION_FLOW
     };
 

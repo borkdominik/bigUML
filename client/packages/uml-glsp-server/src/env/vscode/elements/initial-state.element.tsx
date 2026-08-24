@@ -6,33 +6,22 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
-import { GLabelElement, GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { InitialState } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { GModelElement } from '@eclipse-glsp/server';
-import type { BaseElementProps, ElementContext } from './core/element-context.js';
+import { GCircleNodeElement } from './core/circle-node.js';
+import type { ElementContext } from './core/element-context.js';
 
-export interface GInitialStateNodeElementProps extends BaseElementProps {
-    node: InitialState;
-}
-
-export function GInitialStateNodeElement(props: GInitialStateNodeElementProps): GModelElement {
-    return (
-        <GNodeElement
-            id={props.node.__id}
-            type={props.type}
-            position={props.position}
-            size={props.size}
-            cssClasses={['uml-node']}
-            layout='vbox'
-        >
-            <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={props.node.name ?? 'InitialState'} />
-        </GNodeElement>
-    );
-}
-
+/**
+ * The disc a state machine starts at. It carries no name: an initial state is anonymous in UML - which
+ * is why clearing its name deletes the property outright, see `GenericLabelEditOperationHandler` - and
+ * a disc this size has nowhere to put one.
+ *
+ * Built as a circle node so that it is a disc of its own size rather than a node the size of a name
+ * that is not drawn: the label child it carried before was measured into the node's bounds by the
+ * layouter, leaving a small circle adrift in a box as wide as `InitialState` reads.
+ */
 export function createInitialStateElement(ctx: ElementContext<InitialState>): GModelElement {
     const position = ctx.modelIndex.findPosition(ctx.node.__id);
     const size = ctx.modelIndex.findSize(ctx.node.__id);
-    return <GInitialStateNodeElement node={ctx.node} position={position} size={size} type={ctx.elementType} />;
+    return <GCircleNodeElement id={ctx.node.__id} position={position} size={size} type={ctx.elementType} />;
 }

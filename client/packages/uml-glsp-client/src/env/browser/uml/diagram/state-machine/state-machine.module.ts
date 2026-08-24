@@ -6,10 +6,47 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { representationTypeId } from '@borkdominik-biguml/uml-glsp-server';
-import { configureModelElement, FeatureModule, GEdge, PolylineEdgeView } from '@eclipse-glsp/client';
+import { CommonModelTypes, representationTypeId } from '@borkdominik-biguml/uml-glsp-server';
+import { configureModelElement, FeatureModule } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
-import { NamedElement, NamedElementView } from '../../elements/index.js';
+import {
+    GChoiceNode,
+    GChoiceNodeView,
+    GDeepHistoryNode,
+    GDeepHistoryNodeView,
+    GEntryPointNode,
+    GEntryPointNodeView,
+    GExitPointNode,
+    GExitPointNodeView,
+    GFinalStateNode,
+    GFinalStateNodeView,
+    GInitialStateNode,
+    GInitialStateNodeView,
+    GNoteNode,
+    GNoteNodeView,
+    GRegionNode,
+    GRegionNodeView,
+    GShallowHistoryNode,
+    GShallowHistoryNodeView,
+    GStateCompartment,
+    GStateCompartmentView,
+    GStateForkNode,
+    GStateForkNodeView,
+    GStateJoinNode,
+    GStateJoinNodeView,
+    GStateMachineNode,
+    GStateMachineNodeView,
+    GStateNode,
+    GStateNodeView,
+    GStatePartNode,
+    GStatePartNodeView,
+    GTerminateNode,
+    GTerminateNodeView,
+    GTextLabelNode,
+    GTextLabelNodeView,
+    GTransitionEdge,
+    GTransitionEdgeView
+} from '../../elements/index.js';
 
 const R = 'statemachine';
 
@@ -17,28 +54,37 @@ export const umlStateMachineDiagramModule = new FeatureModule((bind, unbind, isB
     const context = { bind, unbind, isBound, rebind };
 
     // Nodes
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'FinalState'), NamedElement, NamedElementView);
-    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'FinalState'), GFinalStateNode, GFinalStateNodeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Region'), NamedElement, NamedElementView);
-    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Region'), GRegionNode, GRegionNodeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'State'), NamedElement, NamedElementView);
-    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'State'), GStateNode, GStateNodeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'StateMachine'), NamedElement, NamedElementView);
-    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'StateMachine'), GStateMachineNode, GStateMachineNodeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'InitialState'), NamedElement, NamedElementView);
-    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'InitialState'), GInitialStateNode, GInitialStateNodeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Choice'), NamedElement, NamedElementView);
-    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Choice'), GChoiceNode, GChoiceNodeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Join'), NamedElement, NamedElementView);
-    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Join'), GStateJoinNode, GStateJoinNodeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Fork'), NamedElement, NamedElementView);
-    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Fork'), GStateForkNode, GStateForkNodeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'DeepHistory'), NamedElement, NamedElementView);
-    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'DeepHistory'), GDeepHistoryNode, GDeepHistoryNodeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'ShallowHistory'), NamedElement, NamedElementView);
-    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'ShallowHistory'), GShallowHistoryNode, GShallowHistoryNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'FinalState'), GFinalStateNode, GFinalStateNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Region'), GRegionNode, GRegionNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'State'), GStateNode, GStateNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'StateMachine'), GStateMachineNode, GStateMachineNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'StatePart'), GStatePartNode, GStatePartNodeView);
+
+    // The two compartments of a state the user adjusts: the band a region is drawn as, which is dragged
+    // to a height of its own, and the compartment its parts are written in. Both are registered as
+    // selectable compartments rather than the plain kind - see `GStateCompartment`.
+    configureModelElement(context, CommonModelTypes.COMP_STATE_REGION, GStateCompartment, GStateCompartmentView);
+    configureModelElement(context, CommonModelTypes.COMP_STATE_PARTS, GStateCompartment, GStateCompartmentView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'InitialState'), GInitialStateNode, GInitialStateNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Choice'), GChoiceNode, GChoiceNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Join'), GStateJoinNode, GStateJoinNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Fork'), GStateForkNode, GStateForkNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'DeepHistory'), GDeepHistoryNode, GDeepHistoryNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'ExitPoint'), GExitPointNode, GExitPointNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'EntryPoint'), GEntryPointNode, GEntryPointNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Terminate'), GTerminateNode, GTerminateNodeView);
+    configureModelElement(
+        context,
+        representationTypeId(R, DefaultTypes.NODE, 'ShallowHistory'),
+        GShallowHistoryNode,
+        GShallowHistoryNodeView
+    );
+
+    // The note and the free label, which every diagram has: both say something about the diagram
+    // rather than being part of any one notation.
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Note'), GNoteNode, GNoteNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'TextLabel'), GTextLabelNode, GTextLabelNodeView);
 
     // Edges
-    configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Transition'), GEdge, PolylineEdgeView);
-    // configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Transition'), GTransitionEdge, GTransitionEdgeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Transition'), GTransitionEdge, GTransitionEdgeView);
 });

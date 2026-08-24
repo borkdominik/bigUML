@@ -25,6 +25,29 @@ export class CommunicationDiagramToolPaletteItemProvider extends ToolPaletteItem
     override getItems(_args?: Args): MaybePromise<PaletteItem[]> {
         return [
             {
+                id: 'uml.annotation',
+                sortString: 'A',
+                label: 'Annotation',
+                icon: 'symbol-property',
+                children: [
+                    {
+                        id: 'text-label',
+                        sortString: 'A',
+                        label: 'Label',
+                        icon: 'uml-string-expression-icon',
+                        actions: [TriggerNodeCreationAction.create(CommunicationDiagramNodeTypes.TEXT_LABEL)]
+                    },
+                    {
+                        id: 'note',
+                        sortString: 'A',
+                        label: 'Note',
+                        icon: 'uml-comment-icon',
+                        actions: [TriggerNodeCreationAction.create(CommunicationDiagramNodeTypes.NOTE)]
+                    }
+                ],
+                actions: []
+            },
+            {
                 id: 'uml.edges',
                 sortString: 'A',
                 label: 'Edges',

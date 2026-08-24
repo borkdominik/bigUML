@@ -18,6 +18,8 @@ export namespace PackageDiagramNodeTypes {
     export const PROPERTY = representationTypeId('Package', DefaultTypes.NODE, 'Property');
     export const OPERATION = representationTypeId('Package', DefaultTypes.NODE, 'Operation');
     export const PARAMETER = representationTypeId('Package', DefaultTypes.NODE, 'Parameter');
+    export const NOTE = representationTypeId('Package', DefaultTypes.NODE, 'Note');
+    export const TEXT_LABEL = representationTypeId('Package', DefaultTypes.NODE, 'TextLabel');
 }
 
 export namespace PackageDiagramEdgeTypes {
@@ -36,6 +38,8 @@ export namespace PackageDiagramModelTypes {
     export const PROPERTY = PackageDiagramNodeTypes.PROPERTY;
     export const OPERATION = PackageDiagramNodeTypes.OPERATION;
     export const PARAMETER = PackageDiagramNodeTypes.PARAMETER;
+    export const NOTE = PackageDiagramNodeTypes.NOTE;
+    export const TEXT_LABEL = PackageDiagramNodeTypes.TEXT_LABEL;
 
     // re-export edges
     export const PACKAGE_IMPORT = PackageDiagramEdgeTypes.PACKAGE_IMPORT;
@@ -53,6 +57,8 @@ export namespace PackageAstTypes {
         Property: PackageDiagramModelTypes.PROPERTY,
         Operation: PackageDiagramModelTypes.OPERATION,
         Parameter: PackageDiagramModelTypes.PARAMETER,
+        Note: PackageDiagramModelTypes.NOTE,
+        TextLabel: PackageDiagramModelTypes.TEXT_LABEL,
         PackageImport: PackageDiagramModelTypes.PACKAGE_IMPORT,
         PackageMerge: PackageDiagramModelTypes.PACKAGE_MERGE,
         ElementImport: PackageDiagramModelTypes.ELEMENT_IMPORT,

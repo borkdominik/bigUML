@@ -21,6 +21,7 @@ import {
     GEdge,
     GLSPScrollMouseListener,
     GPort,
+    PolylineEdgeRouter,
     PolylineEdgeView,
     SelectionService
 } from '@eclipse-glsp/client';
@@ -70,7 +71,12 @@ export const umlSequenceDiagramModule = new FeatureModule((bind, unbind, isBound
     bindOrRebind(context, SelectionService).to(SDSelectionService).inSingletonScope();
 
     bind(UML_TYPES.IMovementRestrictor).to(SDMovementRestrictor).inSingletonScope();
-    rebind(UML_TYPES.IEdgeRouter).to(SDPolylineEdgeRouter);
+    // Taken in place of the polyline router rather than in place of `IEdgeRouter`, which is what this
+    // asked for before: rebinding that identifier unbinds every router bound to it, leaving the diagram
+    // with this one alone. The routers that answer to the other kinds were being thrown away with it -
+    // and an edge asking for a kind that is no longer registered is not routed some other way, it
+    // throws (see the note on `UmlPolylineEdgeRouter`).
+    bindOrRebind(context, PolylineEdgeRouter).to(SDPolylineEdgeRouter).inSingletonScope();
     bind(UML_TYPES.IAnchorComputer).to(SDLifelineAnchor);
     bind(SDScrollMouseListener).toSelf().inSingletonScope();
     rebind(GLSPScrollMouseListener).toService(SDScrollMouseListener);

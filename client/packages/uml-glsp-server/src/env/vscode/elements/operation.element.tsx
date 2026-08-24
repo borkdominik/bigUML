@@ -19,6 +19,7 @@ export class GOperationNode extends GNode {
     name: string = 'UNDEFINED PROPERTY NAME';
     returnType: string = 'UNDEFINED';
     visibility: string = 'PUBLIC';
+    isAbstract: boolean = false;
     parameterList: Array<{ key: string; type: string }> = [];
 }
 
@@ -35,9 +36,10 @@ export function GOperationNodeElement(props: GOperationNodeElementProps): GModel
     const id = node.__id;
 
     const visibility = node.visibility ?? 'PUBLIC';
+    const isAbstract = node.isAbstract ?? false;
     const parameterList = node.parameters.map(param => ({
         key: param.name!,
-        type: param.parameterType?.ref?.name ?? 'Unknown'
+        type: param.parameterType ?? 'Unknown'
     }));
 
     const opNode = new GOperationNode();
@@ -46,20 +48,26 @@ export function GOperationNodeElement(props: GOperationNodeElementProps): GModel
     opNode.layoutOptions = { resizeContainer: true };
     opNode.name = node.name;
     opNode.visibility = visibility;
+    opNode.isAbstract = isAbstract;
     opNode.parameterList = parameterList;
     opNode.args = { build_by: 'dave' };
-    opNode.cssClasses = [];
+    opNode.cssClasses = ['uml-font-member'];
     opNode.children = [];
 
-    // Left side: visibility + name(params)
+    // Left side: visibility + name(params). A visibility of `NONE` renders no symbol at all — the
+    // label is left out entirely so the name does not keep the compartment gap as an indent.
+    const visibilitySymbol = getVisibilitySymbol(visibility);
     const leftSide = (
         <InlineCompartment id={id + '_count_context_4'}>
-            <GLabelElement id={id + '_count_context_5'} type={CommonModelTypes.LABEL_TEXT} text={getVisibilitySymbol(visibility)} />
+            {visibilitySymbol ? (
+                <GLabelElement id={id + '_count_context_5'} type={CommonModelTypes.LABEL_TEXT} text={visibilitySymbol} />
+            ) : null}
             <GLabelElement
                 id={id + '_name_label'}
                 type={CommonModelTypes.LABEL_NAME}
                 text={node.name + '(' + formatParamList(parameterList) + ')'}
                 args={{ highlight: true }}
+                cssClasses={isAbstract ? ['uml-font-italic'] : undefined}
             />
         </InlineCompartment>
     );

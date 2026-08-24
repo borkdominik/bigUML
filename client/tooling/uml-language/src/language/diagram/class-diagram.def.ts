@@ -9,9 +9,9 @@
 
 import { Glsp } from '@borkdominik-biguml/uml-glsp-server/generator';
 import 'reflect-metadata';
-import type { AbstractClass } from '../elements/abstract-class-element.def.js';
 import type { Abstraction } from '../elements/abstraction-element.def.js';
 import type { Association } from '../elements/association-element.def.js';
+import type { Choice } from '../elements/choice-element.def.js';
 import type { Class } from '../elements/class-element.def.js';
 import type { DataType } from '../elements/data-type-element.def.js';
 import type { Dependency } from '../elements/dependency-element.def.js';
@@ -23,6 +23,8 @@ import type { InstanceSpecification } from '../elements/instance-specification-e
 import type { Interface } from '../elements/interface-element.def.js';
 import type { InterfaceRealization } from '../elements/interface-realization-element.def.js';
 import type { LiteralSpecification } from '../elements/literal-specification-element.def.js';
+import type { Note } from '../elements/note-element.def.js';
+import type { TextLabel } from '../elements/text-label-element.def.js';
 import type { Operation } from '../elements/operation-element.def.js';
 import type { Package } from '../elements/package-element.def.js';
 import type { PackageImport } from '../elements/package-import-element.def.js';
@@ -50,7 +52,6 @@ type ClassDiagramNodes =
     | Enumeration
     | EnumerationLiteral
     | Class
-    | AbstractClass
     | Interface
     | Package
     | Property
@@ -60,7 +61,10 @@ type ClassDiagramNodes =
     | PrimitiveType
     | InstanceSpecification
     | Slot
-    | LiteralSpecification;
+    | LiteralSpecification
+    | Choice
+    | Note
+    | TextLabel;
 
 type ClassDiagramEdges =
     | Abstraction

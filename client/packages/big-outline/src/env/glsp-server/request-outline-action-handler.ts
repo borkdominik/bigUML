@@ -24,7 +24,7 @@ export class RequestOutlineActionHandler implements ActionHandler {
             return [SetOutlineAction.create({ outlineTreeNodes: [] })];
         }
         const root = this.modelState.sourceSemanticRoot();
-        const outlineTreeNodes = this.collectChildren(root);
+        const outlineTreeNodes = this.collectChildren(root.diagram);
         return [SetOutlineAction.create({ outlineTreeNodes })];
     }
 

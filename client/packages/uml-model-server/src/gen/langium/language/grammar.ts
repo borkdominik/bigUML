@@ -42,7 +42,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@84"
+                    "$ref": "#/rules@89"
                   },
                   "arguments": []
                 }
@@ -63,7 +63,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -100,7 +100,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@122"
+                        "$ref": "#/rules@129"
                       },
                       "arguments": []
                     }
@@ -119,7 +119,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@122"
+                            "$ref": "#/rules@129"
                           },
                           "arguments": []
                         }
@@ -151,7 +151,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -216,7 +216,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -241,7 +241,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -297,7 +297,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -334,7 +334,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@86"
+                        "$ref": "#/rules@91"
                       },
                       "arguments": []
                     }
@@ -353,7 +353,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@86"
+                            "$ref": "#/rules@91"
                           },
                           "arguments": []
                         }
@@ -385,7 +385,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -422,7 +422,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@87"
+                        "$ref": "#/rules@92"
                       },
                       "arguments": []
                     }
@@ -441,7 +441,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@87"
+                            "$ref": "#/rules@92"
                           },
                           "arguments": []
                         }
@@ -473,7 +473,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -539,7 +539,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -564,7 +564,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -598,7 +598,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -623,7 +623,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -657,7 +657,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -683,7 +683,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -749,7 +749,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -774,7 +774,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -804,7 +804,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@129"
+                    "$ref": "#/rules@136"
                   },
                   "arguments": []
                 }
@@ -825,7 +825,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -855,7 +855,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@129"
+                    "$ref": "#/rules@136"
                   },
                   "arguments": []
                 }
@@ -876,7 +876,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -954,12 +954,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@118"
+                    "$ref": "#/rules@125"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -991,7 +991,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -1057,7 +1057,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -1082,7 +1082,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -1112,7 +1112,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@129"
+                    "$ref": "#/rules@136"
                   },
                   "arguments": []
                 }
@@ -1133,7 +1133,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -1163,7 +1163,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@129"
+                    "$ref": "#/rules@136"
                   },
                   "arguments": []
                 }
@@ -1184,7 +1184,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -1262,12 +1262,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@118"
+                    "$ref": "#/rules@125"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -1299,7 +1299,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -1365,7 +1365,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -1390,7 +1390,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -1424,7 +1424,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -1449,7 +1449,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -1483,7 +1483,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -1509,7 +1509,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -1597,7 +1597,309 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Keyword",
+            "value": "}"
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "TextLabel",
+      "definition": {
+        "$type": "Group",
+        "elements": [
+          {
+            "$type": "Keyword",
+            "value": "{"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"__type\\""
+          },
+          {
+            "$type": "Keyword",
+            "value": ":"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"TextLabel\\""
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"__id\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__id",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@137"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"body\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "body",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@142"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Keyword",
+            "value": "}"
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "Note",
+      "definition": {
+        "$type": "Group",
+        "elements": [
+          {
+            "$type": "Keyword",
+            "value": "{"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"__type\\""
+          },
+          {
+            "$type": "Keyword",
+            "value": ":"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"Note\\""
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"__id\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__id",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@137"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"body\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "body",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@142"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -1663,7 +1965,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -1688,7 +1990,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -1766,12 +2068,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -1803,7 +2105,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -1881,12 +2183,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -1918,7 +2220,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -1945,13 +2247,6 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@6"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
               "$ref": "#/rules@8"
             },
             "arguments": []
@@ -1959,14 +2254,28 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@9"
+              "$ref": "#/rules@10"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@10"
+              "$ref": "#/rules@11"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@12"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@32"
             },
             "arguments": []
           },
@@ -1987,13 +2296,6 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@36"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
               "$ref": "#/rules@38"
             },
             "arguments": []
@@ -2008,21 +2310,14 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@40"
+              "$ref": "#/rules@41"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@44"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@52"
+              "$ref": "#/rules@45"
             },
             "arguments": []
           },
@@ -2036,21 +2331,28 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@59"
+              "$ref": "#/rules@54"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@62"
+              "$ref": "#/rules@60"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@63"
+              "$ref": "#/rules@64"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@66"
             },
             "arguments": []
           },
@@ -2099,7 +2401,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@130"
+                        "$ref": "#/rules@137"
                       },
                       "arguments": []
                     }
@@ -2124,7 +2426,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@133"
+                        "$ref": "#/rules@144"
                       },
                       "arguments": []
                     }
@@ -2202,12 +2504,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "CrossReference",
                       "type": {
-                        "$ref": "#/rules@119"
+                        "$ref": "#/rules@126"
                       },
                       "terminal": {
                         "$type": "RuleCall",
                         "rule": {
-                          "$ref": "#/rules@130"
+                          "$ref": "#/rules@137"
                         },
                         "arguments": []
                       },
@@ -2239,7 +2541,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@133"
+                        "$ref": "#/rules@144"
                       },
                       "arguments": []
                     }
@@ -2317,12 +2619,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "CrossReference",
                       "type": {
-                        "$ref": "#/rules@119"
+                        "$ref": "#/rules@126"
                       },
                       "terminal": {
                         "$type": "RuleCall",
                         "rule": {
-                          "$ref": "#/rules@130"
+                          "$ref": "#/rules@137"
                         },
                         "arguments": []
                       },
@@ -2354,7 +2656,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@133"
+                        "$ref": "#/rules@144"
                       },
                       "arguments": []
                     }
@@ -2422,7 +2724,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -2447,7 +2749,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -2525,12 +2827,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -2562,7 +2864,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -2640,12 +2942,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -2677,7 +2979,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -2707,7 +3009,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@128"
+                    "$ref": "#/rules@135"
                   },
                   "arguments": []
                 }
@@ -2729,7 +3031,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -2795,7 +3097,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -2820,7 +3122,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -2898,12 +3200,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -2935,7 +3237,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -3013,12 +3315,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -3050,7 +3352,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -3116,7 +3418,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -3141,7 +3443,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -3219,12 +3521,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -3256,7 +3558,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -3334,12 +3636,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -3371,7 +3673,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -3405,7 +3707,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -3431,7 +3733,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -3465,7 +3767,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@142"
                   },
                   "arguments": []
                 }
@@ -3491,7 +3793,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -3525,7 +3827,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@142"
                   },
                   "arguments": []
                 }
@@ -3551,7 +3853,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -3585,7 +3887,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -3611,7 +3913,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -3645,7 +3947,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -3671,7 +3973,127 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"sourceModifiers\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "sourceModifiers",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@142"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"targetModifiers\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "targetModifiers",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@142"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -3705,7 +4127,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@89"
+                    "$ref": "#/rules@96"
                   },
                   "arguments": []
                 }
@@ -3731,7 +4153,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -3765,7 +4187,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@89"
+                    "$ref": "#/rules@96"
                   },
                   "arguments": []
                 }
@@ -3791,7 +4213,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -3821,2396 +4243,6 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
               {
                 "$type": "Assignment",
                 "feature": "visibility",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@88"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Keyword",
-            "value": "}"
-          }
-        ]
-      },
-      "entry": false,
-      "fragment": false,
-      "parameters": []
-    },
-    {
-      "$type": "ParserRule",
-      "name": "Property",
-      "definition": {
-        "$type": "Group",
-        "elements": [
-          {
-            "$type": "Keyword",
-            "value": "{"
-          },
-          {
-            "$type": "Keyword",
-            "value": "\\"__type\\""
-          },
-          {
-            "$type": "Keyword",
-            "value": ":"
-          },
-          {
-            "$type": "Keyword",
-            "value": "\\"Property\\""
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"__id\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__id",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@130"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ]
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"name\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "name",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@130"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ]
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"isDerived\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Assignment",
-                "feature": "isDerived",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@128"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"isOrdered\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Assignment",
-                "feature": "isOrdered",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@128"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"isStatic\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Assignment",
-                "feature": "isStatic",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@128"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"isDerivedUnion\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Assignment",
-                "feature": "isDerivedUnion",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@128"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"isReadOnly\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Assignment",
-                "feature": "isReadOnly",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@128"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"isNavigable\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Assignment",
-                "feature": "isNavigable",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@128"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"isUnique\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Assignment",
-                "feature": "isUnique",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@128"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"visibility\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "visibility",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@88"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"multiplicity\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "multiplicity",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@130"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"propertyType\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "{"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"__type\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"Reference\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"__refType\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"DataTypeReference\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"__value\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "propertyType",
-                "operator": "=",
-                "terminal": {
-                  "$type": "CrossReference",
-                  "type": {
-                    "$ref": "#/rules@90"
-                  },
-                  "terminal": {
-                    "$type": "RuleCall",
-                    "rule": {
-                      "$ref": "#/rules@130"
-                    },
-                    "arguments": []
-                  },
-                  "deprecatedSyntax": false,
-                  "isMulti": false
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": "}"
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"aggregation\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "aggregation",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@89"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Keyword",
-            "value": "}"
-          }
-        ]
-      },
-      "entry": false,
-      "fragment": false,
-      "parameters": []
-    },
-    {
-      "$type": "ParserRule",
-      "name": "DataType",
-      "definition": {
-        "$type": "Group",
-        "elements": [
-          {
-            "$type": "Keyword",
-            "value": "{"
-          },
-          {
-            "$type": "Keyword",
-            "value": "\\"__type\\""
-          },
-          {
-            "$type": "Keyword",
-            "value": ":"
-          },
-          {
-            "$type": "Keyword",
-            "value": "\\"DataType\\""
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"__id\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__id",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@130"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ]
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"name\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "name",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@130"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ]
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"properties\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "["
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Assignment",
-                    "feature": "properties",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
-                        "$ref": "#/rules@11"
-                      },
-                      "arguments": []
-                    }
-                  },
-                  {
-                    "$type": "Group",
-                    "elements": [
-                      {
-                        "$type": "Keyword",
-                        "value": ","
-                      },
-                      {
-                        "$type": "Assignment",
-                        "feature": "properties",
-                        "operator": "+=",
-                        "terminal": {
-                          "$type": "RuleCall",
-                          "rule": {
-                            "$ref": "#/rules@11"
-                          },
-                          "arguments": []
-                        }
-                      }
-                    ],
-                    "cardinality": "*"
-                  }
-                ],
-                "cardinality": "?"
-              },
-              {
-                "$type": "Keyword",
-                "value": "]"
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"operations\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "["
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Assignment",
-                    "feature": "operations",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
-                        "$ref": "#/rules@14"
-                      },
-                      "arguments": []
-                    }
-                  },
-                  {
-                    "$type": "Group",
-                    "elements": [
-                      {
-                        "$type": "Keyword",
-                        "value": ","
-                      },
-                      {
-                        "$type": "Assignment",
-                        "feature": "operations",
-                        "operator": "+=",
-                        "terminal": {
-                          "$type": "RuleCall",
-                          "rule": {
-                            "$ref": "#/rules@14"
-                          },
-                          "arguments": []
-                        }
-                      }
-                    ],
-                    "cardinality": "*"
-                  }
-                ],
-                "cardinality": "?"
-              },
-              {
-                "$type": "Keyword",
-                "value": "]"
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"isAbstract\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Assignment",
-                "feature": "isAbstract",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@128"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"visibility\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "visibility",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@88"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Keyword",
-            "value": "}"
-          }
-        ]
-      },
-      "entry": false,
-      "fragment": false,
-      "parameters": []
-    },
-    {
-      "$type": "ParserRule",
-      "name": "PrimitiveType",
-      "definition": {
-        "$type": "Group",
-        "elements": [
-          {
-            "$type": "Keyword",
-            "value": "{"
-          },
-          {
-            "$type": "Keyword",
-            "value": "\\"__type\\""
-          },
-          {
-            "$type": "Keyword",
-            "value": ":"
-          },
-          {
-            "$type": "Keyword",
-            "value": "\\"PrimitiveType\\""
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"__id\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__id",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@130"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ]
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"name\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "name",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@130"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ]
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Keyword",
-            "value": "}"
-          }
-        ]
-      },
-      "entry": false,
-      "fragment": false,
-      "parameters": []
-    },
-    {
-      "$type": "ParserRule",
-      "name": "Operation",
-      "definition": {
-        "$type": "Group",
-        "elements": [
-          {
-            "$type": "Keyword",
-            "value": "{"
-          },
-          {
-            "$type": "Keyword",
-            "value": "\\"__type\\""
-          },
-          {
-            "$type": "Keyword",
-            "value": ":"
-          },
-          {
-            "$type": "Keyword",
-            "value": "\\"Operation\\""
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"__id\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__id",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@130"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ]
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"name\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "name",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@130"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ]
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"isAbstract\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Assignment",
-                "feature": "isAbstract",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@128"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"isStatic\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Assignment",
-                "feature": "isStatic",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@128"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"isQuery\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Assignment",
-                "feature": "isQuery",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@128"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"visibility\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "visibility",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@88"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"concurrency\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "concurrency",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@91"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"parameters\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "["
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Assignment",
-                    "feature": "parameters",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
-                        "$ref": "#/rules@15"
-                      },
-                      "arguments": []
-                    }
-                  },
-                  {
-                    "$type": "Group",
-                    "elements": [
-                      {
-                        "$type": "Keyword",
-                        "value": ","
-                      },
-                      {
-                        "$type": "Assignment",
-                        "feature": "parameters",
-                        "operator": "+=",
-                        "terminal": {
-                          "$type": "RuleCall",
-                          "rule": {
-                            "$ref": "#/rules@15"
-                          },
-                          "arguments": []
-                        }
-                      }
-                    ],
-                    "cardinality": "*"
-                  }
-                ],
-                "cardinality": "?"
-              },
-              {
-                "$type": "Keyword",
-                "value": "]"
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Keyword",
-            "value": "}"
-          }
-        ]
-      },
-      "entry": false,
-      "fragment": false,
-      "parameters": []
-    },
-    {
-      "$type": "ParserRule",
-      "name": "Parameter",
-      "definition": {
-        "$type": "Group",
-        "elements": [
-          {
-            "$type": "Keyword",
-            "value": "{"
-          },
-          {
-            "$type": "Keyword",
-            "value": "\\"__type\\""
-          },
-          {
-            "$type": "Keyword",
-            "value": ":"
-          },
-          {
-            "$type": "Keyword",
-            "value": "\\"Parameter\\""
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"__id\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__id",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@130"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ]
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"name\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "name",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@130"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ]
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"isException\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Assignment",
-                "feature": "isException",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@128"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"isStream\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Assignment",
-                "feature": "isStream",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@128"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"isOrdered\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Assignment",
-                "feature": "isOrdered",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@128"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"isUnique\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Assignment",
-                "feature": "isUnique",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@128"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"direction\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "direction",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@92"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"effect\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "effect",
                 "operator": "=",
                 "terminal": {
                   "$type": "RuleCall",
@@ -6241,7 +4273,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -6258,7 +4290,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
               },
               {
                 "$type": "Keyword",
-                "value": "\\"visibility\\""
+                "value": "\\"sourcePoint\\""
               },
               {
                 "$type": "Keyword",
@@ -6270,12 +4302,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
               },
               {
                 "$type": "Assignment",
-                "feature": "visibility",
+                "feature": "sourcePoint",
                 "operator": "=",
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@95"
                   },
                   "arguments": []
                 }
@@ -6301,7 +4333,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -6318,51 +4350,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
               },
               {
                 "$type": "Keyword",
-                "value": "\\"parameterType\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "{"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"__type\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"Reference\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"__refType\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"DataTypeReference\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"__value\\""
+                "value": "\\"targetPoint\\""
               },
               {
                 "$type": "Keyword",
@@ -6374,84 +4362,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
               },
               {
                 "$type": "Assignment",
-                "feature": "parameterType",
-                "operator": "=",
-                "terminal": {
-                  "$type": "CrossReference",
-                  "type": {
-                    "$ref": "#/rules@90"
-                  },
-                  "terminal": {
-                    "$type": "RuleCall",
-                    "rule": {
-                      "$ref": "#/rules@130"
-                    },
-                    "arguments": []
-                  },
-                  "deprecatedSyntax": false,
-                  "isMulti": false
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": "}"
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"multiplicity\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "multiplicity",
+                "feature": "targetPoint",
                 "operator": "=",
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@95"
                   },
                   "arguments": []
                 }
@@ -6477,1987 +4393,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Keyword",
-            "value": "}"
-          }
-        ]
-      },
-      "entry": false,
-      "fragment": false,
-      "parameters": []
-    },
-    {
-      "$type": "ParserRule",
-      "name": "Interface",
-      "definition": {
-        "$type": "Group",
-        "elements": [
-          {
-            "$type": "Keyword",
-            "value": "{"
-          },
-          {
-            "$type": "Keyword",
-            "value": "\\"__type\\""
-          },
-          {
-            "$type": "Keyword",
-            "value": ":"
-          },
-          {
-            "$type": "Keyword",
-            "value": "\\"Interface\\""
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"__id\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__id",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@130"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ]
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"name\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "name",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@130"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ]
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"properties\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "["
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Assignment",
-                    "feature": "properties",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
-                        "$ref": "#/rules@11"
-                      },
-                      "arguments": []
-                    }
-                  },
-                  {
-                    "$type": "Group",
-                    "elements": [
-                      {
-                        "$type": "Keyword",
-                        "value": ","
-                      },
-                      {
-                        "$type": "Assignment",
-                        "feature": "properties",
-                        "operator": "+=",
-                        "terminal": {
-                          "$type": "RuleCall",
-                          "rule": {
-                            "$ref": "#/rules@11"
-                          },
-                          "arguments": []
-                        }
-                      }
-                    ],
-                    "cardinality": "*"
-                  }
-                ],
-                "cardinality": "?"
-              },
-              {
-                "$type": "Keyword",
-                "value": "]"
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"operations\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "["
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Assignment",
-                    "feature": "operations",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
-                        "$ref": "#/rules@14"
-                      },
-                      "arguments": []
-                    }
-                  },
-                  {
-                    "$type": "Group",
-                    "elements": [
-                      {
-                        "$type": "Keyword",
-                        "value": ","
-                      },
-                      {
-                        "$type": "Assignment",
-                        "feature": "operations",
-                        "operator": "+=",
-                        "terminal": {
-                          "$type": "RuleCall",
-                          "rule": {
-                            "$ref": "#/rules@14"
-                          },
-                          "arguments": []
-                        }
-                      }
-                    ],
-                    "cardinality": "*"
-                  }
-                ],
-                "cardinality": "?"
-              },
-              {
-                "$type": "Keyword",
-                "value": "]"
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Keyword",
-            "value": "}"
-          }
-        ]
-      },
-      "entry": false,
-      "fragment": false,
-      "parameters": []
-    },
-    {
-      "$type": "ParserRule",
-      "name": "Enumeration",
-      "definition": {
-        "$type": "Group",
-        "elements": [
-          {
-            "$type": "Keyword",
-            "value": "{"
-          },
-          {
-            "$type": "Keyword",
-            "value": "\\"__type\\""
-          },
-          {
-            "$type": "Keyword",
-            "value": ":"
-          },
-          {
-            "$type": "Keyword",
-            "value": "\\"Enumeration\\""
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"__id\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__id",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@130"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ]
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"name\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "name",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@130"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ]
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"isAbstract\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Assignment",
-                "feature": "isAbstract",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@128"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"visibility\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "visibility",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@88"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"values\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "["
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Assignment",
-                    "feature": "values",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
-                        "$ref": "#/rules@18"
-                      },
-                      "arguments": []
-                    }
-                  },
-                  {
-                    "$type": "Group",
-                    "elements": [
-                      {
-                        "$type": "Keyword",
-                        "value": ","
-                      },
-                      {
-                        "$type": "Assignment",
-                        "feature": "values",
-                        "operator": "+=",
-                        "terminal": {
-                          "$type": "RuleCall",
-                          "rule": {
-                            "$ref": "#/rules@18"
-                          },
-                          "arguments": []
-                        }
-                      }
-                    ],
-                    "cardinality": "*"
-                  }
-                ],
-                "cardinality": "?"
-              },
-              {
-                "$type": "Keyword",
-                "value": "]"
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Keyword",
-            "value": "}"
-          }
-        ]
-      },
-      "entry": false,
-      "fragment": false,
-      "parameters": []
-    },
-    {
-      "$type": "ParserRule",
-      "name": "EnumerationLiteral",
-      "definition": {
-        "$type": "Group",
-        "elements": [
-          {
-            "$type": "Keyword",
-            "value": "{"
-          },
-          {
-            "$type": "Keyword",
-            "value": "\\"__type\\""
-          },
-          {
-            "$type": "Keyword",
-            "value": ":"
-          },
-          {
-            "$type": "Keyword",
-            "value": "\\"EnumerationLiteral\\""
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"__id\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__id",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@130"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ]
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"name\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "name",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@130"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ]
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"value\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "value",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@130"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"visibility\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "visibility",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@88"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Keyword",
-            "value": "}"
-          }
-        ]
-      },
-      "entry": false,
-      "fragment": false,
-      "parameters": []
-    },
-    {
-      "$type": "ParserRule",
-      "name": "Class",
-      "definition": {
-        "$type": "Alternatives",
-        "elements": [
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@65"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": "{"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"__type\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"Class\\""
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Keyword",
-                    "value": ","
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": "\\"__id\\""
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": ":"
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": "\\""
-                  },
-                  {
-                    "$type": "Assignment",
-                    "feature": "__id",
-                    "operator": "=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
-                        "$ref": "#/rules@130"
-                      },
-                      "arguments": []
-                    }
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": "\\""
-                  }
-                ]
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Keyword",
-                    "value": ","
-                  },
-                  {
-                    "$type": "Assignment",
-                    "feature": "__unknown",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
-                        "$ref": "#/rules@133"
-                      },
-                      "arguments": []
-                    }
-                  }
-                ],
-                "cardinality": "*"
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Keyword",
-                    "value": ","
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": "\\"name\\""
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": ":"
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": "\\""
-                  },
-                  {
-                    "$type": "Assignment",
-                    "feature": "name",
-                    "operator": "=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
-                        "$ref": "#/rules@130"
-                      },
-                      "arguments": []
-                    }
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": "\\""
-                  }
-                ]
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Keyword",
-                    "value": ","
-                  },
-                  {
-                    "$type": "Assignment",
-                    "feature": "__unknown",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
-                        "$ref": "#/rules@133"
-                      },
-                      "arguments": []
-                    }
-                  }
-                ],
-                "cardinality": "*"
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Keyword",
-                    "value": ","
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": "\\"isAbstract\\""
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": ":"
-                  },
-                  {
-                    "$type": "Assignment",
-                    "feature": "isAbstract",
-                    "operator": "=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
-                        "$ref": "#/rules@128"
-                      },
-                      "arguments": []
-                    }
-                  }
-                ]
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Keyword",
-                    "value": ","
-                  },
-                  {
-                    "$type": "Assignment",
-                    "feature": "__unknown",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
-                        "$ref": "#/rules@133"
-                      },
-                      "arguments": []
-                    }
-                  }
-                ],
-                "cardinality": "*"
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Keyword",
-                    "value": ","
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": "\\"properties\\""
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": ":"
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": "["
-                  },
-                  {
-                    "$type": "Group",
-                    "elements": [
-                      {
-                        "$type": "Assignment",
-                        "feature": "properties",
-                        "operator": "+=",
-                        "terminal": {
-                          "$type": "RuleCall",
-                          "rule": {
-                            "$ref": "#/rules@11"
-                          },
-                          "arguments": []
-                        }
-                      },
-                      {
-                        "$type": "Group",
-                        "elements": [
-                          {
-                            "$type": "Keyword",
-                            "value": ","
-                          },
-                          {
-                            "$type": "Assignment",
-                            "feature": "properties",
-                            "operator": "+=",
-                            "terminal": {
-                              "$type": "RuleCall",
-                              "rule": {
-                                "$ref": "#/rules@11"
-                              },
-                              "arguments": []
-                            }
-                          }
-                        ],
-                        "cardinality": "*"
-                      }
-                    ],
-                    "cardinality": "?"
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": "]"
-                  }
-                ],
-                "cardinality": "?"
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Keyword",
-                    "value": ","
-                  },
-                  {
-                    "$type": "Assignment",
-                    "feature": "__unknown",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
-                        "$ref": "#/rules@133"
-                      },
-                      "arguments": []
-                    }
-                  }
-                ],
-                "cardinality": "*"
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Keyword",
-                    "value": ","
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": "\\"operations\\""
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": ":"
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": "["
-                  },
-                  {
-                    "$type": "Group",
-                    "elements": [
-                      {
-                        "$type": "Assignment",
-                        "feature": "operations",
-                        "operator": "+=",
-                        "terminal": {
-                          "$type": "RuleCall",
-                          "rule": {
-                            "$ref": "#/rules@14"
-                          },
-                          "arguments": []
-                        }
-                      },
-                      {
-                        "$type": "Group",
-                        "elements": [
-                          {
-                            "$type": "Keyword",
-                            "value": ","
-                          },
-                          {
-                            "$type": "Assignment",
-                            "feature": "operations",
-                            "operator": "+=",
-                            "terminal": {
-                              "$type": "RuleCall",
-                              "rule": {
-                                "$ref": "#/rules@14"
-                              },
-                              "arguments": []
-                            }
-                          }
-                        ],
-                        "cardinality": "*"
-                      }
-                    ],
-                    "cardinality": "?"
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": "]"
-                  }
-                ],
-                "cardinality": "?"
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Keyword",
-                    "value": ","
-                  },
-                  {
-                    "$type": "Assignment",
-                    "feature": "__unknown",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
-                        "$ref": "#/rules@133"
-                      },
-                      "arguments": []
-                    }
-                  }
-                ],
-                "cardinality": "*"
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Keyword",
-                    "value": ","
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": "\\"isActive\\""
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": ":"
-                  },
-                  {
-                    "$type": "Assignment",
-                    "feature": "isActive",
-                    "operator": "=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
-                        "$ref": "#/rules@128"
-                      },
-                      "arguments": []
-                    }
-                  }
-                ],
-                "cardinality": "?"
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Keyword",
-                    "value": ","
-                  },
-                  {
-                    "$type": "Assignment",
-                    "feature": "__unknown",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
-                        "$ref": "#/rules@133"
-                      },
-                      "arguments": []
-                    }
-                  }
-                ],
-                "cardinality": "*"
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Keyword",
-                    "value": ","
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": "\\"visibility\\""
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": ":"
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": "\\""
-                  },
-                  {
-                    "$type": "Assignment",
-                    "feature": "visibility",
-                    "operator": "=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
-                        "$ref": "#/rules@88"
-                      },
-                      "arguments": []
-                    }
-                  },
-                  {
-                    "$type": "Keyword",
-                    "value": "\\""
-                  }
-                ],
-                "cardinality": "?"
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Keyword",
-                    "value": ","
-                  },
-                  {
-                    "$type": "Assignment",
-                    "feature": "__unknown",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
-                        "$ref": "#/rules@133"
-                      },
-                      "arguments": []
-                    }
-                  }
-                ],
-                "cardinality": "*"
-              },
-              {
-                "$type": "Keyword",
-                "value": "}"
-              }
-            ]
-          }
-        ]
-      },
-      "entry": false,
-      "fragment": false,
-      "parameters": []
-    },
-    {
-      "$type": "ParserRule",
-      "name": "Actor",
-      "definition": {
-        "$type": "Group",
-        "elements": [
-          {
-            "$type": "Keyword",
-            "value": "{"
-          },
-          {
-            "$type": "Keyword",
-            "value": "\\"__type\\""
-          },
-          {
-            "$type": "Keyword",
-            "value": ":"
-          },
-          {
-            "$type": "Keyword",
-            "value": "\\"Actor\\""
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"__id\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__id",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@130"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ]
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"name\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "name",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@130"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ]
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"visibility\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "visibility",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@88"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Keyword",
-            "value": "}"
-          }
-        ]
-      },
-      "entry": false,
-      "fragment": false,
-      "parameters": []
-    },
-    {
-      "$type": "ParserRule",
-      "name": "StateMachineDiagram",
-      "definition": {
-        "$type": "Group",
-        "elements": [
-          {
-            "$type": "Keyword",
-            "value": "{"
-          },
-          {
-            "$type": "Keyword",
-            "value": "\\"__type\\""
-          },
-          {
-            "$type": "Keyword",
-            "value": ":"
-          },
-          {
-            "$type": "Keyword",
-            "value": "\\"StateMachineDiagram\\""
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"__id\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__id",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@130"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ]
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"diagramType\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "diagramType",
-                "operator": "=",
-                "terminal": {
-                  "$type": "Keyword",
-                  "value": "STATE_MACHINE"
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ]
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"entities\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "["
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Assignment",
-                    "feature": "entities",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
-                        "$ref": "#/rules@95"
-                      },
-                      "arguments": []
-                    }
-                  },
-                  {
-                    "$type": "Group",
-                    "elements": [
-                      {
-                        "$type": "Keyword",
-                        "value": ","
-                      },
-                      {
-                        "$type": "Assignment",
-                        "feature": "entities",
-                        "operator": "+=",
-                        "terminal": {
-                          "$type": "RuleCall",
-                          "rule": {
-                            "$ref": "#/rules@95"
-                          },
-                          "arguments": []
-                        }
-                      }
-                    ],
-                    "cardinality": "*"
-                  }
-                ],
-                "cardinality": "?"
-              },
-              {
-                "$type": "Keyword",
-                "value": "]"
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"relations\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "["
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Assignment",
-                    "feature": "relations",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
-                        "$ref": "#/rules@96"
-                      },
-                      "arguments": []
-                    }
-                  },
-                  {
-                    "$type": "Group",
-                    "elements": [
-                      {
-                        "$type": "Keyword",
-                        "value": ","
-                      },
-                      {
-                        "$type": "Assignment",
-                        "feature": "relations",
-                        "operator": "+=",
-                        "terminal": {
-                          "$type": "RuleCall",
-                          "rule": {
-                            "$ref": "#/rules@96"
-                          },
-                          "arguments": []
-                        }
-                      }
-                    ],
-                    "cardinality": "*"
-                  }
-                ],
-                "cardinality": "?"
-              },
-              {
-                "$type": "Keyword",
-                "value": "]"
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -8523,7 +4459,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -8548,7 +4484,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -8582,7 +4518,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@142"
                   },
                   "arguments": []
                 }
@@ -8608,7 +4544,187 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"trigger\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "trigger",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@142"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"guard\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "guard",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@142"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"effect\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "effect",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@142"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -8642,7 +4758,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -8668,7 +4784,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -8702,7 +4818,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@97"
+                    "$ref": "#/rules@94"
                   },
                   "arguments": []
                 }
@@ -8728,7 +4844,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -8806,12 +4922,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@123"
+                    "$ref": "#/rules@130"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -8843,7 +4959,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -8896,7 +5012,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
               },
               {
                 "$type": "Keyword",
-                "value": "\\"Node\\""
+                "value": "\\"UnionType_0\\""
               },
               {
                 "$type": "Keyword",
@@ -8921,12 +5037,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@130"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -8958,7 +5074,1956 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"sourcePoint\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "sourcePoint",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@95"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"targetPoint\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "targetPoint",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@95"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Keyword",
+            "value": "}"
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "Property",
+      "definition": {
+        "$type": "Group",
+        "elements": [
+          {
+            "$type": "Keyword",
+            "value": "{"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"__type\\""
+          },
+          {
+            "$type": "Keyword",
+            "value": ":"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"Property\\""
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"__id\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__id",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@137"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"name\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "name",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@143"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"isDerived\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Assignment",
+                "feature": "isDerived",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@135"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"isOrdered\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Assignment",
+                "feature": "isOrdered",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@135"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"isStatic\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Assignment",
+                "feature": "isStatic",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@135"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"isDerivedUnion\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Assignment",
+                "feature": "isDerivedUnion",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@135"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"isReadOnly\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Assignment",
+                "feature": "isReadOnly",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@135"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"isNavigable\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Assignment",
+                "feature": "isNavigable",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@135"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"isUnique\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Assignment",
+                "feature": "isUnique",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@135"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"visibility\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "visibility",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@93"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"multiplicity\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "multiplicity",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@142"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"propertyType\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "propertyType",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@142"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"aggregation\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "aggregation",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@96"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Keyword",
+            "value": "}"
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "Actor",
+      "definition": {
+        "$type": "Group",
+        "elements": [
+          {
+            "$type": "Keyword",
+            "value": "{"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"__type\\""
+          },
+          {
+            "$type": "Keyword",
+            "value": ":"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"Actor\\""
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"__id\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__id",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@137"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"name\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "name",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@143"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"visibility\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "visibility",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@93"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Keyword",
+            "value": "}"
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "StateMachineDiagram",
+      "definition": {
+        "$type": "Group",
+        "elements": [
+          {
+            "$type": "Keyword",
+            "value": "{"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"__type\\""
+          },
+          {
+            "$type": "Keyword",
+            "value": ":"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"StateMachineDiagram\\""
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"__id\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__id",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@137"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"diagramType\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "diagramType",
+                "operator": "=",
+                "terminal": {
+                  "$type": "Keyword",
+                  "value": "STATE_MACHINE"
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"entities\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "["
+              },
+              {
+                "$type": "Group",
+                "elements": [
+                  {
+                    "$type": "Assignment",
+                    "feature": "entities",
+                    "operator": "+=",
+                    "terminal": {
+                      "$type": "RuleCall",
+                      "rule": {
+                        "$ref": "#/rules@98"
+                      },
+                      "arguments": []
+                    }
+                  },
+                  {
+                    "$type": "Group",
+                    "elements": [
+                      {
+                        "$type": "Keyword",
+                        "value": ","
+                      },
+                      {
+                        "$type": "Assignment",
+                        "feature": "entities",
+                        "operator": "+=",
+                        "terminal": {
+                          "$type": "RuleCall",
+                          "rule": {
+                            "$ref": "#/rules@98"
+                          },
+                          "arguments": []
+                        }
+                      }
+                    ],
+                    "cardinality": "*"
+                  }
+                ],
+                "cardinality": "?"
+              },
+              {
+                "$type": "Keyword",
+                "value": "]"
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"relations\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "["
+              },
+              {
+                "$type": "Group",
+                "elements": [
+                  {
+                    "$type": "Assignment",
+                    "feature": "relations",
+                    "operator": "+=",
+                    "terminal": {
+                      "$type": "RuleCall",
+                      "rule": {
+                        "$ref": "#/rules@99"
+                      },
+                      "arguments": []
+                    }
+                  },
+                  {
+                    "$type": "Group",
+                    "elements": [
+                      {
+                        "$type": "Keyword",
+                        "value": ","
+                      },
+                      {
+                        "$type": "Assignment",
+                        "feature": "relations",
+                        "operator": "+=",
+                        "terminal": {
+                          "$type": "RuleCall",
+                          "rule": {
+                            "$ref": "#/rules@99"
+                          },
+                          "arguments": []
+                        }
+                      }
+                    ],
+                    "cardinality": "*"
+                  }
+                ],
+                "cardinality": "?"
+              },
+              {
+                "$type": "Keyword",
+                "value": "]"
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Keyword",
+            "value": "}"
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "Terminate",
+      "definition": {
+        "$type": "Group",
+        "elements": [
+          {
+            "$type": "Keyword",
+            "value": "{"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"__type\\""
+          },
+          {
+            "$type": "Keyword",
+            "value": ":"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"Terminate\\""
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"__id\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__id",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@137"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"name\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "name",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@143"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"visibility\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "visibility",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@93"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Keyword",
+            "value": "}"
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "StatePart",
+      "definition": {
+        "$type": "Group",
+        "elements": [
+          {
+            "$type": "Keyword",
+            "value": "{"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"__type\\""
+          },
+          {
+            "$type": "Keyword",
+            "value": ":"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"StatePart\\""
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"__id\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__id",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@137"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"name\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "name",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@142"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"trigger\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "trigger",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@142"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"guard\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "guard",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@142"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"effect\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "effect",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@142"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -9024,7 +7089,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -9049,7 +7114,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -9083,7 +7148,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -9108,7 +7173,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -9142,7 +7207,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -9168,7 +7233,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -9205,7 +7270,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@24"
+                        "$ref": "#/rules@20"
                       },
                       "arguments": []
                     }
@@ -9224,7 +7289,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@24"
+                            "$ref": "#/rules@20"
                           },
                           "arguments": []
                         }
@@ -9256,7 +7321,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -9322,7 +7387,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -9347,7 +7412,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -9381,7 +7446,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -9407,7 +7472,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -9441,7 +7506,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -9467,7 +7532,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -9504,7 +7569,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@119"
+                        "$ref": "#/rules@126"
                       },
                       "arguments": []
                     }
@@ -9523,7 +7588,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@119"
+                            "$ref": "#/rules@126"
                           },
                           "arguments": []
                         }
@@ -9555,7 +7620,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -9592,7 +7657,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@22"
+                        "$ref": "#/rules@13"
                       },
                       "arguments": []
                     }
@@ -9611,7 +7676,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@22"
+                            "$ref": "#/rules@13"
                           },
                           "arguments": []
                         }
@@ -9643,7 +7708,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -9709,7 +7774,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -9734,7 +7799,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -9768,7 +7833,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -9793,7 +7858,147 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"parts\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "["
+              },
+              {
+                "$type": "Group",
+                "elements": [
+                  {
+                    "$type": "Assignment",
+                    "feature": "parts",
+                    "operator": "+=",
+                    "terminal": {
+                      "$type": "RuleCall",
+                      "rule": {
+                        "$ref": "#/rules@18"
+                      },
+                      "arguments": []
+                    }
+                  },
+                  {
+                    "$type": "Group",
+                    "elements": [
+                      {
+                        "$type": "Keyword",
+                        "value": ","
+                      },
+                      {
+                        "$type": "Assignment",
+                        "feature": "parts",
+                        "operator": "+=",
+                        "terminal": {
+                          "$type": "RuleCall",
+                          "rule": {
+                            "$ref": "#/rules@18"
+                          },
+                          "arguments": []
+                        }
+                      }
+                    ],
+                    "cardinality": "*"
+                  }
+                ],
+                "cardinality": "?"
+              },
+              {
+                "$type": "Keyword",
+                "value": "]"
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"partsHeight\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Assignment",
+                "feature": "partsHeight",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@136"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -9827,7 +8032,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -9853,7 +8058,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -9890,7 +8095,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@24"
+                        "$ref": "#/rules@20"
                       },
                       "arguments": []
                     }
@@ -9909,7 +8114,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@24"
+                            "$ref": "#/rules@20"
                           },
                           "arguments": []
                         }
@@ -9941,7 +8146,59 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"regionHeight\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Assignment",
+                "feature": "regionHeight",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@136"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -10007,7 +8264,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -10032,7 +8289,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -10066,7 +8323,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -10092,7 +8349,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -10126,7 +8383,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -10152,7 +8409,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -10218,7 +8475,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -10243,7 +8500,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -10277,7 +8534,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -10303,7 +8560,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -10337,7 +8594,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -10363,7 +8620,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -10429,7 +8686,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -10454,7 +8711,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -10488,7 +8745,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -10514,7 +8771,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -10548,7 +8805,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -10574,7 +8831,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -10640,7 +8897,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -10665,7 +8922,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -10699,7 +8956,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -10725,7 +8982,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -10759,7 +9016,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -10785,7 +9042,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -10851,7 +9108,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -10876,7 +9133,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -10910,7 +9167,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -10936,7 +9193,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -10970,7 +9227,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -10996,7 +9253,429 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Keyword",
+            "value": "}"
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "ExitPoint",
+      "definition": {
+        "$type": "Group",
+        "elements": [
+          {
+            "$type": "Keyword",
+            "value": "{"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"__type\\""
+          },
+          {
+            "$type": "Keyword",
+            "value": ":"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"ExitPoint\\""
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"__id\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__id",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@137"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"name\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "name",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@143"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"visibility\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "visibility",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@93"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Keyword",
+            "value": "}"
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "EntryPoint",
+      "definition": {
+        "$type": "Group",
+        "elements": [
+          {
+            "$type": "Keyword",
+            "value": "{"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"__type\\""
+          },
+          {
+            "$type": "Keyword",
+            "value": ":"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"EntryPoint\\""
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"__id\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__id",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@137"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"name\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "name",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@143"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"visibility\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "visibility",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@93"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -11062,7 +9741,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -11087,7 +9766,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -11121,7 +9800,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -11147,7 +9826,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -11181,7 +9860,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -11207,7 +9886,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -11273,7 +9952,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -11298,7 +9977,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -11332,7 +10011,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -11358,7 +10037,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -11392,7 +10071,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -11418,7 +10097,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -11484,7 +10163,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -11509,7 +10188,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -11565,7 +10244,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -11602,7 +10281,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@99"
+                        "$ref": "#/rules@101"
                       },
                       "arguments": []
                     }
@@ -11621,7 +10300,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@99"
+                            "$ref": "#/rules@101"
                           },
                           "arguments": []
                         }
@@ -11653,7 +10332,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -11690,7 +10369,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@100"
+                        "$ref": "#/rules@102"
                       },
                       "arguments": []
                     }
@@ -11709,7 +10388,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@100"
+                            "$ref": "#/rules@102"
                           },
                           "arguments": []
                         }
@@ -11741,7 +10420,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -11807,7 +10486,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -11832,7 +10511,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -11910,12 +10589,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -11947,7 +10626,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -12025,12 +10704,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -12062,7 +10741,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -12096,7 +10775,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -12122,7 +10801,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -12156,7 +10835,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -12182,7 +10861,665 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Keyword",
+            "value": "}"
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "Parameter",
+      "definition": {
+        "$type": "Group",
+        "elements": [
+          {
+            "$type": "Keyword",
+            "value": "{"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"__type\\""
+          },
+          {
+            "$type": "Keyword",
+            "value": ":"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"Parameter\\""
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"__id\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__id",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@137"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"name\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "name",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@143"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"isException\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Assignment",
+                "feature": "isException",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@135"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"isStream\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Assignment",
+                "feature": "isStream",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@135"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"isOrdered\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Assignment",
+                "feature": "isOrdered",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@135"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"isUnique\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Assignment",
+                "feature": "isUnique",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@135"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"direction\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "direction",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@103"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"effect\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "effect",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@104"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"visibility\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "visibility",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@93"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"parameterType\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "parameterType",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@142"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"multiplicity\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "multiplicity",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@142"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -12248,7 +11585,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -12273,7 +11610,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -12351,12 +11688,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -12388,7 +11725,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -12466,12 +11803,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -12503,7 +11840,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -12569,7 +11906,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -12594,7 +11931,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -12672,12 +12009,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -12709,7 +12046,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -12787,12 +12124,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -12824,7 +12161,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -12858,7 +12195,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -12884,7 +12221,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -12950,7 +12287,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -12975,7 +12312,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -13009,7 +12346,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -13034,7 +12371,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -13068,7 +12405,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -13094,7 +12431,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -13128,7 +12465,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -13154,7 +12491,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -13191,7 +12528,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@119"
+                        "$ref": "#/rules@126"
                       },
                       "arguments": []
                     }
@@ -13210,7 +12547,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@119"
+                            "$ref": "#/rules@126"
                           },
                           "arguments": []
                         }
@@ -13242,7 +12579,521 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Keyword",
+            "value": "}"
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "Operation",
+      "definition": {
+        "$type": "Group",
+        "elements": [
+          {
+            "$type": "Keyword",
+            "value": "{"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"__type\\""
+          },
+          {
+            "$type": "Keyword",
+            "value": ":"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"Operation\\""
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"__id\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__id",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@137"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"name\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "name",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@143"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"isAbstract\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Assignment",
+                "feature": "isAbstract",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@135"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"isStatic\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Assignment",
+                "feature": "isStatic",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@135"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"isQuery\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Assignment",
+                "feature": "isQuery",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@135"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"visibility\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "visibility",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@93"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"concurrency\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "concurrency",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@105"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"parameters\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "["
+              },
+              {
+                "$type": "Group",
+                "elements": [
+                  {
+                    "$type": "Assignment",
+                    "feature": "parameters",
+                    "operator": "+=",
+                    "terminal": {
+                      "$type": "RuleCall",
+                      "rule": {
+                        "$ref": "#/rules@33"
+                      },
+                      "arguments": []
+                    }
+                  },
+                  {
+                    "$type": "Group",
+                    "elements": [
+                      {
+                        "$type": "Keyword",
+                        "value": ","
+                      },
+                      {
+                        "$type": "Assignment",
+                        "feature": "parameters",
+                        "operator": "+=",
+                        "terminal": {
+                          "$type": "RuleCall",
+                          "rule": {
+                            "$ref": "#/rules@33"
+                          },
+                          "arguments": []
+                        }
+                      }
+                    ],
+                    "cardinality": "*"
+                  }
+                ],
+                "cardinality": "?"
+              },
+              {
+                "$type": "Keyword",
+                "value": "]"
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -13308,7 +13159,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -13333,7 +13184,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -13411,12 +13262,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -13448,7 +13299,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -13526,12 +13377,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -13563,7 +13414,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -13597,7 +13448,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -13623,7 +13474,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -13657,7 +13508,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -13683,7 +13534,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -13749,7 +13600,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -13774,7 +13625,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -13852,12 +13703,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -13889,7 +13740,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -13967,12 +13818,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -14004,7 +13855,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -14038,7 +13889,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -14064,7 +13915,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -14098,7 +13949,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -14124,7 +13975,496 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Keyword",
+            "value": "}"
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "Class",
+      "definition": {
+        "$type": "Group",
+        "elements": [
+          {
+            "$type": "Keyword",
+            "value": "{"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"__type\\""
+          },
+          {
+            "$type": "Keyword",
+            "value": ":"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"Class\\""
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"__id\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__id",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@137"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"name\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "name",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@143"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"isAbstract\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Assignment",
+                "feature": "isAbstract",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@135"
+                  },
+                  "arguments": []
+                }
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"properties\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "["
+              },
+              {
+                "$type": "Group",
+                "elements": [
+                  {
+                    "$type": "Assignment",
+                    "feature": "properties",
+                    "operator": "+=",
+                    "terminal": {
+                      "$type": "RuleCall",
+                      "rule": {
+                        "$ref": "#/rules@14"
+                      },
+                      "arguments": []
+                    }
+                  },
+                  {
+                    "$type": "Group",
+                    "elements": [
+                      {
+                        "$type": "Keyword",
+                        "value": ","
+                      },
+                      {
+                        "$type": "Assignment",
+                        "feature": "properties",
+                        "operator": "+=",
+                        "terminal": {
+                          "$type": "RuleCall",
+                          "rule": {
+                            "$ref": "#/rules@14"
+                          },
+                          "arguments": []
+                        }
+                      }
+                    ],
+                    "cardinality": "*"
+                  }
+                ],
+                "cardinality": "?"
+              },
+              {
+                "$type": "Keyword",
+                "value": "]"
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"operations\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "["
+              },
+              {
+                "$type": "Group",
+                "elements": [
+                  {
+                    "$type": "Assignment",
+                    "feature": "operations",
+                    "operator": "+=",
+                    "terminal": {
+                      "$type": "RuleCall",
+                      "rule": {
+                        "$ref": "#/rules@37"
+                      },
+                      "arguments": []
+                    }
+                  },
+                  {
+                    "$type": "Group",
+                    "elements": [
+                      {
+                        "$type": "Keyword",
+                        "value": ","
+                      },
+                      {
+                        "$type": "Assignment",
+                        "feature": "operations",
+                        "operator": "+=",
+                        "terminal": {
+                          "$type": "RuleCall",
+                          "rule": {
+                            "$ref": "#/rules@37"
+                          },
+                          "arguments": []
+                        }
+                      }
+                    ],
+                    "cardinality": "*"
+                  }
+                ],
+                "cardinality": "?"
+              },
+              {
+                "$type": "Keyword",
+                "value": "]"
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"isActive\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Assignment",
+                "feature": "isActive",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@135"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"visibility\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "visibility",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@93"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -14190,7 +14530,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -14215,7 +14555,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -14293,12 +14633,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -14330,7 +14670,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -14408,12 +14748,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -14445,7 +14785,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -14479,7 +14819,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -14505,7 +14845,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -14539,7 +14879,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -14565,7 +14905,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -14631,7 +14971,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -14656,7 +14996,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -14712,7 +15052,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -14749,7 +15089,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@102"
+                        "$ref": "#/rules@107"
                       },
                       "arguments": []
                     }
@@ -14768,7 +15108,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@102"
+                            "$ref": "#/rules@107"
                           },
                           "arguments": []
                         }
@@ -14800,7 +15140,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -14837,7 +15177,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@103"
+                        "$ref": "#/rules@108"
                       },
                       "arguments": []
                     }
@@ -14856,7 +15196,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@103"
+                            "$ref": "#/rules@108"
                           },
                           "arguments": []
                         }
@@ -14888,7 +15228,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -14954,7 +15294,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -14979,7 +15319,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -15013,7 +15353,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -15039,7 +15379,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -15073,7 +15413,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -15099,7 +15439,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -15177,12 +15517,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@124"
+                    "$ref": "#/rules@131"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -15214,7 +15554,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -15267,7 +15607,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
               },
               {
                 "$type": "Keyword",
-                "value": "\\"Actor\\""
+                "value": "\\"UnionType_1\\""
               },
               {
                 "$type": "Keyword",
@@ -15292,12 +15632,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@20"
+                    "$ref": "#/rules@131"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -15329,7 +15669,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -15395,7 +15735,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -15420,7 +15760,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -15476,7 +15816,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -15513,7 +15853,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@105"
+                        "$ref": "#/rules@110"
                       },
                       "arguments": []
                     }
@@ -15532,7 +15872,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@105"
+                            "$ref": "#/rules@110"
                           },
                           "arguments": []
                         }
@@ -15564,7 +15904,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -15601,7 +15941,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@106"
+                        "$ref": "#/rules@111"
                       },
                       "arguments": []
                     }
@@ -15620,7 +15960,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@106"
+                            "$ref": "#/rules@111"
                           },
                           "arguments": []
                         }
@@ -15652,7 +15992,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -15718,7 +16058,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -15743,7 +16083,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -15821,12 +16161,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -15858,7 +16198,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -15936,12 +16276,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -15973,7 +16313,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -16007,7 +16347,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -16033,7 +16373,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -16067,7 +16407,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -16093,7 +16433,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -16159,7 +16499,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -16184,7 +16524,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -16218,7 +16558,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -16243,7 +16583,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -16277,7 +16617,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -16303,7 +16643,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -16340,182 +16680,6 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@45"
-                      },
-                      "arguments": []
-                    }
-                  },
-                  {
-                    "$type": "Group",
-                    "elements": [
-                      {
-                        "$type": "Keyword",
-                        "value": ","
-                      },
-                      {
-                        "$type": "Assignment",
-                        "feature": "nestedEnvironments",
-                        "operator": "+=",
-                        "terminal": {
-                          "$type": "RuleCall",
-                          "rule": {
-                            "$ref": "#/rules@45"
-                          },
-                          "arguments": []
-                        }
-                      }
-                    ],
-                    "cardinality": "*"
-                  }
-                ],
-                "cardinality": "?"
-              },
-              {
-                "$type": "Keyword",
-                "value": "]"
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"artifacts\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "["
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Assignment",
-                    "feature": "artifacts",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
-                        "$ref": "#/rules@47"
-                      },
-                      "arguments": []
-                    }
-                  },
-                  {
-                    "$type": "Group",
-                    "elements": [
-                      {
-                        "$type": "Keyword",
-                        "value": ","
-                      },
-                      {
-                        "$type": "Assignment",
-                        "feature": "artifacts",
-                        "operator": "+=",
-                        "terminal": {
-                          "$type": "RuleCall",
-                          "rule": {
-                            "$ref": "#/rules@47"
-                          },
-                          "arguments": []
-                        }
-                      }
-                    ],
-                    "cardinality": "*"
-                  }
-                ],
-                "cardinality": "?"
-              },
-              {
-                "$type": "Keyword",
-                "value": "]"
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"deploymentSpecifications\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "["
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Assignment",
-                    "feature": "deploymentSpecifications",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
                         "$ref": "#/rules@46"
                       },
                       "arguments": []
@@ -16530,7 +16694,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                       },
                       {
                         "$type": "Assignment",
-                        "feature": "deploymentSpecifications",
+                        "feature": "nestedEnvironments",
                         "operator": "+=",
                         "terminal": {
                           "$type": "RuleCall",
@@ -16567,7 +16731,183 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"artifacts\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "["
+              },
+              {
+                "$type": "Group",
+                "elements": [
+                  {
+                    "$type": "Assignment",
+                    "feature": "artifacts",
+                    "operator": "+=",
+                    "terminal": {
+                      "$type": "RuleCall",
+                      "rule": {
+                        "$ref": "#/rules@48"
+                      },
+                      "arguments": []
+                    }
+                  },
+                  {
+                    "$type": "Group",
+                    "elements": [
+                      {
+                        "$type": "Keyword",
+                        "value": ","
+                      },
+                      {
+                        "$type": "Assignment",
+                        "feature": "artifacts",
+                        "operator": "+=",
+                        "terminal": {
+                          "$type": "RuleCall",
+                          "rule": {
+                            "$ref": "#/rules@48"
+                          },
+                          "arguments": []
+                        }
+                      }
+                    ],
+                    "cardinality": "*"
+                  }
+                ],
+                "cardinality": "?"
+              },
+              {
+                "$type": "Keyword",
+                "value": "]"
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"deploymentSpecifications\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "["
+              },
+              {
+                "$type": "Group",
+                "elements": [
+                  {
+                    "$type": "Assignment",
+                    "feature": "deploymentSpecifications",
+                    "operator": "+=",
+                    "terminal": {
+                      "$type": "RuleCall",
+                      "rule": {
+                        "$ref": "#/rules@47"
+                      },
+                      "arguments": []
+                    }
+                  },
+                  {
+                    "$type": "Group",
+                    "elements": [
+                      {
+                        "$type": "Keyword",
+                        "value": ","
+                      },
+                      {
+                        "$type": "Assignment",
+                        "feature": "deploymentSpecifications",
+                        "operator": "+=",
+                        "terminal": {
+                          "$type": "RuleCall",
+                          "rule": {
+                            "$ref": "#/rules@47"
+                          },
+                          "arguments": []
+                        }
+                      }
+                    ],
+                    "cardinality": "*"
+                  }
+                ],
+                "cardinality": "?"
+              },
+              {
+                "$type": "Keyword",
+                "value": "]"
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -16633,7 +16973,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -16658,7 +16998,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -16692,7 +17032,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -16717,7 +17057,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -16751,7 +17091,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -16777,7 +17117,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -16814,94 +17154,6 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@11"
-                      },
-                      "arguments": []
-                    }
-                  },
-                  {
-                    "$type": "Group",
-                    "elements": [
-                      {
-                        "$type": "Keyword",
-                        "value": ","
-                      },
-                      {
-                        "$type": "Assignment",
-                        "feature": "properties",
-                        "operator": "+=",
-                        "terminal": {
-                          "$type": "RuleCall",
-                          "rule": {
-                            "$ref": "#/rules@11"
-                          },
-                          "arguments": []
-                        }
-                      }
-                    ],
-                    "cardinality": "*"
-                  }
-                ],
-                "cardinality": "?"
-              },
-              {
-                "$type": "Keyword",
-                "value": "]"
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"operations\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "["
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Assignment",
-                    "feature": "operations",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
                         "$ref": "#/rules@14"
                       },
                       "arguments": []
@@ -16916,7 +17168,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                       },
                       {
                         "$type": "Assignment",
-                        "feature": "operations",
+                        "feature": "properties",
                         "operator": "+=",
                         "terminal": {
                           "$type": "RuleCall",
@@ -16953,7 +17205,95 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"operations\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "["
+              },
+              {
+                "$type": "Group",
+                "elements": [
+                  {
+                    "$type": "Assignment",
+                    "feature": "operations",
+                    "operator": "+=",
+                    "terminal": {
+                      "$type": "RuleCall",
+                      "rule": {
+                        "$ref": "#/rules@37"
+                      },
+                      "arguments": []
+                    }
+                  },
+                  {
+                    "$type": "Group",
+                    "elements": [
+                      {
+                        "$type": "Keyword",
+                        "value": ","
+                      },
+                      {
+                        "$type": "Assignment",
+                        "feature": "operations",
+                        "operator": "+=",
+                        "terminal": {
+                          "$type": "RuleCall",
+                          "rule": {
+                            "$ref": "#/rules@37"
+                          },
+                          "arguments": []
+                        }
+                      }
+                    ],
+                    "cardinality": "*"
+                  }
+                ],
+                "cardinality": "?"
+              },
+              {
+                "$type": "Keyword",
+                "value": "]"
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -17019,7 +17359,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -17044,7 +17384,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -17078,7 +17418,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -17103,7 +17443,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -17137,7 +17477,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -17163,7 +17503,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -17200,94 +17540,6 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@11"
-                      },
-                      "arguments": []
-                    }
-                  },
-                  {
-                    "$type": "Group",
-                    "elements": [
-                      {
-                        "$type": "Keyword",
-                        "value": ","
-                      },
-                      {
-                        "$type": "Assignment",
-                        "feature": "properties",
-                        "operator": "+=",
-                        "terminal": {
-                          "$type": "RuleCall",
-                          "rule": {
-                            "$ref": "#/rules@11"
-                          },
-                          "arguments": []
-                        }
-                      }
-                    ],
-                    "cardinality": "*"
-                  }
-                ],
-                "cardinality": "?"
-              },
-              {
-                "$type": "Keyword",
-                "value": "]"
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"operations\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "["
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Assignment",
-                    "feature": "operations",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
                         "$ref": "#/rules@14"
                       },
                       "arguments": []
@@ -17302,7 +17554,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                       },
                       {
                         "$type": "Assignment",
-                        "feature": "operations",
+                        "feature": "properties",
                         "operator": "+=",
                         "terminal": {
                           "$type": "RuleCall",
@@ -17339,7 +17591,95 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"operations\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "["
+              },
+              {
+                "$type": "Group",
+                "elements": [
+                  {
+                    "$type": "Assignment",
+                    "feature": "operations",
+                    "operator": "+=",
+                    "terminal": {
+                      "$type": "RuleCall",
+                      "rule": {
+                        "$ref": "#/rules@37"
+                      },
+                      "arguments": []
+                    }
+                  },
+                  {
+                    "$type": "Group",
+                    "elements": [
+                      {
+                        "$type": "Keyword",
+                        "value": ","
+                      },
+                      {
+                        "$type": "Assignment",
+                        "feature": "operations",
+                        "operator": "+=",
+                        "terminal": {
+                          "$type": "RuleCall",
+                          "rule": {
+                            "$ref": "#/rules@37"
+                          },
+                          "arguments": []
+                        }
+                      }
+                    ],
+                    "cardinality": "*"
+                  }
+                ],
+                "cardinality": "?"
+              },
+              {
+                "$type": "Keyword",
+                "value": "]"
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -17376,7 +17716,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@47"
+                        "$ref": "#/rules@48"
                       },
                       "arguments": []
                     }
@@ -17395,7 +17735,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@47"
+                            "$ref": "#/rules@48"
                           },
                           "arguments": []
                         }
@@ -17427,7 +17767,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -17493,7 +17833,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -17518,7 +17858,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -17552,7 +17892,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -17577,7 +17917,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -17611,7 +17951,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -17637,7 +17977,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -17674,7 +18014,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@49"
+                        "$ref": "#/rules@50"
                       },
                       "arguments": []
                     }
@@ -17693,7 +18033,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@49"
+                            "$ref": "#/rules@50"
                           },
                           "arguments": []
                         }
@@ -17725,7 +18065,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -17762,94 +18102,6 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@45"
-                      },
-                      "arguments": []
-                    }
-                  },
-                  {
-                    "$type": "Group",
-                    "elements": [
-                      {
-                        "$type": "Keyword",
-                        "value": ","
-                      },
-                      {
-                        "$type": "Assignment",
-                        "feature": "executionEnvironments",
-                        "operator": "+=",
-                        "terminal": {
-                          "$type": "RuleCall",
-                          "rule": {
-                            "$ref": "#/rules@45"
-                          },
-                          "arguments": []
-                        }
-                      }
-                    ],
-                    "cardinality": "*"
-                  }
-                ],
-                "cardinality": "?"
-              },
-              {
-                "$type": "Keyword",
-                "value": "]"
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"deploymentSpecifications\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "["
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Assignment",
-                    "feature": "deploymentSpecifications",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
                         "$ref": "#/rules@46"
                       },
                       "arguments": []
@@ -17864,7 +18116,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                       },
                       {
                         "$type": "Assignment",
-                        "feature": "deploymentSpecifications",
+                        "feature": "executionEnvironments",
                         "operator": "+=",
                         "terminal": {
                           "$type": "RuleCall",
@@ -17901,7 +18153,95 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"deploymentSpecifications\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "["
+              },
+              {
+                "$type": "Group",
+                "elements": [
+                  {
+                    "$type": "Assignment",
+                    "feature": "deploymentSpecifications",
+                    "operator": "+=",
+                    "terminal": {
+                      "$type": "RuleCall",
+                      "rule": {
+                        "$ref": "#/rules@47"
+                      },
+                      "arguments": []
+                    }
+                  },
+                  {
+                    "$type": "Group",
+                    "elements": [
+                      {
+                        "$type": "Keyword",
+                        "value": ","
+                      },
+                      {
+                        "$type": "Assignment",
+                        "feature": "deploymentSpecifications",
+                        "operator": "+=",
+                        "terminal": {
+                          "$type": "RuleCall",
+                          "rule": {
+                            "$ref": "#/rules@47"
+                          },
+                          "arguments": []
+                        }
+                      }
+                    ],
+                    "cardinality": "*"
+                  }
+                ],
+                "cardinality": "?"
+              },
+              {
+                "$type": "Keyword",
+                "value": "]"
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -17967,7 +18307,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -17992,7 +18332,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -18026,7 +18366,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -18051,7 +18391,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -18085,7 +18425,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -18111,7 +18451,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -18148,7 +18488,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@49"
+                        "$ref": "#/rules@50"
                       },
                       "arguments": []
                     }
@@ -18167,7 +18507,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@49"
+                            "$ref": "#/rules@50"
                           },
                           "arguments": []
                         }
@@ -18199,7 +18539,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -18236,94 +18576,6 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@47"
-                      },
-                      "arguments": []
-                    }
-                  },
-                  {
-                    "$type": "Group",
-                    "elements": [
-                      {
-                        "$type": "Keyword",
-                        "value": ","
-                      },
-                      {
-                        "$type": "Assignment",
-                        "feature": "artifacts",
-                        "operator": "+=",
-                        "terminal": {
-                          "$type": "RuleCall",
-                          "rule": {
-                            "$ref": "#/rules@47"
-                          },
-                          "arguments": []
-                        }
-                      }
-                    ],
-                    "cardinality": "*"
-                  }
-                ],
-                "cardinality": "?"
-              },
-              {
-                "$type": "Keyword",
-                "value": "]"
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"devices\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "["
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Assignment",
-                    "feature": "devices",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
                         "$ref": "#/rules@48"
                       },
                       "arguments": []
@@ -18338,7 +18590,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                       },
                       {
                         "$type": "Assignment",
-                        "feature": "devices",
+                        "feature": "artifacts",
                         "operator": "+=",
                         "terminal": {
                           "$type": "RuleCall",
@@ -18375,7 +18627,95 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"devices\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "["
+              },
+              {
+                "$type": "Group",
+                "elements": [
+                  {
+                    "$type": "Assignment",
+                    "feature": "devices",
+                    "operator": "+=",
+                    "terminal": {
+                      "$type": "RuleCall",
+                      "rule": {
+                        "$ref": "#/rules@49"
+                      },
+                      "arguments": []
+                    }
+                  },
+                  {
+                    "$type": "Group",
+                    "elements": [
+                      {
+                        "$type": "Keyword",
+                        "value": ","
+                      },
+                      {
+                        "$type": "Assignment",
+                        "feature": "devices",
+                        "operator": "+=",
+                        "terminal": {
+                          "$type": "RuleCall",
+                          "rule": {
+                            "$ref": "#/rules@49"
+                          },
+                          "arguments": []
+                        }
+                      }
+                    ],
+                    "cardinality": "*"
+                  }
+                ],
+                "cardinality": "?"
+              },
+              {
+                "$type": "Keyword",
+                "value": "]"
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -18412,7 +18752,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@46"
+                        "$ref": "#/rules@47"
                       },
                       "arguments": []
                     }
@@ -18431,7 +18771,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@46"
+                            "$ref": "#/rules@47"
                           },
                           "arguments": []
                         }
@@ -18463,7 +18803,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -18500,7 +18840,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@45"
+                        "$ref": "#/rules@46"
                       },
                       "arguments": []
                     }
@@ -18519,7 +18859,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@45"
+                            "$ref": "#/rules@46"
                           },
                           "arguments": []
                         }
@@ -18551,7 +18891,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -18617,7 +18957,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -18642,7 +18982,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -18676,7 +19016,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -18701,7 +19041,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -18735,7 +19075,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -18761,7 +19101,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -18795,7 +19135,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -18821,7 +19161,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -18858,7 +19198,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@119"
+                        "$ref": "#/rules@126"
                       },
                       "arguments": []
                     }
@@ -18877,7 +19217,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@119"
+                            "$ref": "#/rules@126"
                           },
                           "arguments": []
                         }
@@ -18909,7 +19249,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -18975,7 +19315,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -19000,7 +19340,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -19034,7 +19374,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -19059,7 +19399,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -19093,7 +19433,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -19119,7 +19459,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -19153,7 +19493,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -19179,7 +19519,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -19216,7 +19556,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@119"
+                        "$ref": "#/rules@126"
                       },
                       "arguments": []
                     }
@@ -19235,7 +19575,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@119"
+                            "$ref": "#/rules@126"
                           },
                           "arguments": []
                         }
@@ -19267,7 +19607,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -19333,7 +19673,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -19358,7 +19698,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -19436,12 +19776,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -19473,7 +19813,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -19551,12 +19891,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -19588,7 +19928,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -19622,7 +19962,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -19648,7 +19988,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -19682,7 +20022,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -19708,7 +20048,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -19774,7 +20114,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -19799,7 +20139,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -19877,12 +20217,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -19914,7 +20254,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -19992,12 +20332,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -20029,7 +20369,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -20063,7 +20403,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -20089,7 +20429,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -20123,7 +20463,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -20149,7 +20489,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -20215,7 +20555,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -20240,7 +20580,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -20296,7 +20636,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -20333,7 +20673,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@108"
+                        "$ref": "#/rules@113"
                       },
                       "arguments": []
                     }
@@ -20352,7 +20692,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@108"
+                            "$ref": "#/rules@113"
                           },
                           "arguments": []
                         }
@@ -20384,7 +20724,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -20421,7 +20761,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@109"
+                        "$ref": "#/rules@114"
                       },
                       "arguments": []
                     }
@@ -20440,7 +20780,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@109"
+                            "$ref": "#/rules@114"
                           },
                           "arguments": []
                         }
@@ -20472,7 +20812,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -20538,7 +20878,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -20563,7 +20903,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -20597,7 +20937,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -20623,7 +20963,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -20657,7 +20997,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -20683,7 +21023,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -20761,12 +21101,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@56"
+                    "$ref": "#/rules@57"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -20798,7 +21138,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -20876,12 +21216,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@56"
+                    "$ref": "#/rules@57"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -20913,7 +21253,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -20979,7 +21319,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -21004,7 +21344,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -21038,7 +21378,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -21063,7 +21403,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -21097,7 +21437,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -21123,7 +21463,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -21189,7 +21529,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -21214,7 +21554,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -21248,7 +21588,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -21273,7 +21613,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -21307,7 +21647,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -21333,7 +21673,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -21370,7 +21710,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@56"
+                        "$ref": "#/rules@57"
                       },
                       "arguments": []
                     }
@@ -21389,7 +21729,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@56"
+                            "$ref": "#/rules@57"
                           },
                           "arguments": []
                         }
@@ -21421,7 +21761,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -21458,7 +21798,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@55"
+                        "$ref": "#/rules@56"
                       },
                       "arguments": []
                     }
@@ -21477,7 +21817,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@55"
+                            "$ref": "#/rules@56"
                           },
                           "arguments": []
                         }
@@ -21509,7 +21849,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -21575,7 +21915,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -21600,7 +21940,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -21656,7 +21996,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -21693,7 +22033,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@111"
+                        "$ref": "#/rules@116"
                       },
                       "arguments": []
                     }
@@ -21712,7 +22052,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@111"
+                            "$ref": "#/rules@116"
                           },
                           "arguments": []
                         }
@@ -21744,7 +22084,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -21781,7 +22121,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@112"
+                        "$ref": "#/rules@117"
                       },
                       "arguments": []
                     }
@@ -21800,7 +22140,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@112"
+                            "$ref": "#/rules@117"
                           },
                           "arguments": []
                         }
@@ -21832,7 +22172,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -21898,7 +22238,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -21923,7 +22263,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -22001,12 +22341,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -22038,7 +22378,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -22116,12 +22456,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -22153,7 +22493,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -22187,7 +22527,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -22213,7 +22553,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -22247,7 +22587,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -22273,7 +22613,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -22339,7 +22679,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -22364,7 +22704,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -22398,7 +22738,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -22423,7 +22763,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -22501,12 +22841,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@113"
+                    "$ref": "#/rules@118"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -22539,7 +22879,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -22576,7 +22916,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@61"
+                        "$ref": "#/rules@62"
                       },
                       "arguments": []
                     }
@@ -22595,7 +22935,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@61"
+                            "$ref": "#/rules@62"
                           },
                           "arguments": []
                         }
@@ -22627,7 +22967,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -22693,7 +23033,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -22718,7 +23058,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -22752,7 +23092,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -22777,7 +23117,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -22811,7 +23151,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -22836,7 +23176,333 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Keyword",
+            "value": "}"
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "Interface",
+      "definition": {
+        "$type": "Group",
+        "elements": [
+          {
+            "$type": "Keyword",
+            "value": "{"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"__type\\""
+          },
+          {
+            "$type": "Keyword",
+            "value": ":"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"Interface\\""
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"__id\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__id",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@137"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"name\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "name",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@143"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"properties\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "["
+              },
+              {
+                "$type": "Group",
+                "elements": [
+                  {
+                    "$type": "Assignment",
+                    "feature": "properties",
+                    "operator": "+=",
+                    "terminal": {
+                      "$type": "RuleCall",
+                      "rule": {
+                        "$ref": "#/rules@14"
+                      },
+                      "arguments": []
+                    }
+                  },
+                  {
+                    "$type": "Group",
+                    "elements": [
+                      {
+                        "$type": "Keyword",
+                        "value": ","
+                      },
+                      {
+                        "$type": "Assignment",
+                        "feature": "properties",
+                        "operator": "+=",
+                        "terminal": {
+                          "$type": "RuleCall",
+                          "rule": {
+                            "$ref": "#/rules@14"
+                          },
+                          "arguments": []
+                        }
+                      }
+                    ],
+                    "cardinality": "*"
+                  }
+                ],
+                "cardinality": "?"
+              },
+              {
+                "$type": "Keyword",
+                "value": "]"
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"operations\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "["
+              },
+              {
+                "$type": "Group",
+                "elements": [
+                  {
+                    "$type": "Assignment",
+                    "feature": "operations",
+                    "operator": "+=",
+                    "terminal": {
+                      "$type": "RuleCall",
+                      "rule": {
+                        "$ref": "#/rules@37"
+                      },
+                      "arguments": []
+                    }
+                  },
+                  {
+                    "$type": "Group",
+                    "elements": [
+                      {
+                        "$type": "Keyword",
+                        "value": ","
+                      },
+                      {
+                        "$type": "Assignment",
+                        "feature": "operations",
+                        "operator": "+=",
+                        "terminal": {
+                          "$type": "RuleCall",
+                          "rule": {
+                            "$ref": "#/rules@37"
+                          },
+                          "arguments": []
+                        }
+                      }
+                    ],
+                    "cardinality": "*"
+                  }
+                ],
+                "cardinality": "?"
+              },
+              {
+                "$type": "Keyword",
+                "value": "]"
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -22902,7 +23568,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -22927,7 +23593,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -23005,12 +23671,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -23042,7 +23708,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -23120,12 +23786,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -23157,7 +23823,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -23191,7 +23857,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -23217,7 +23883,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -23251,7 +23917,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -23277,7 +23943,157 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Keyword",
+            "value": "}"
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "PrimitiveType",
+      "definition": {
+        "$type": "Group",
+        "elements": [
+          {
+            "$type": "Keyword",
+            "value": "{"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"__type\\""
+          },
+          {
+            "$type": "Keyword",
+            "value": ":"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"PrimitiveType\\""
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"__id\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__id",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@137"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"name\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "name",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@143"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -23343,7 +24159,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -23368,7 +24184,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -23446,12 +24262,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -23483,7 +24299,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -23561,12 +24377,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@126"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -23598,7 +24414,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -23632,7 +24448,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -23658,7 +24474,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -23692,7 +24508,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -23718,7 +24534,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -23784,7 +24600,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -23809,7 +24625,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -23843,7 +24659,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -23868,7 +24684,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -23902,7 +24718,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -23928,7 +24744,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -23965,7 +24781,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@60"
+                        "$ref": "#/rules@61"
                       },
                       "arguments": []
                     }
@@ -23984,7 +24800,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@60"
+                            "$ref": "#/rules@61"
                           },
                           "arguments": []
                         }
@@ -24016,7 +24832,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -24036,7 +24852,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
     },
     {
       "$type": "ParserRule",
-      "name": "AbstractClass",
+      "name": "EnumerationLiteral",
       "definition": {
         "$type": "Group",
         "elements": [
@@ -24054,7 +24870,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"AbstractClass\\""
+            "value": "\\"EnumerationLiteral\\""
           },
           {
             "$type": "Group",
@@ -24082,7 +24898,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -24107,7 +24923,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -24141,7 +24957,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -24166,7 +24982,277 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"value\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "value",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@143"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"visibility\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "visibility",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@93"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Keyword",
+            "value": "}"
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "Enumeration",
+      "definition": {
+        "$type": "Group",
+        "elements": [
+          {
+            "$type": "Keyword",
+            "value": "{"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"__type\\""
+          },
+          {
+            "$type": "Keyword",
+            "value": ":"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"Enumeration\\""
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"__id\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__id",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@137"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"name\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "name",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@143"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -24196,10 +25282,250 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@128"
+                    "$ref": "#/rules@135"
                   },
                   "arguments": []
                 }
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"visibility\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "visibility",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@93"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"values\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "["
+              },
+              {
+                "$type": "Group",
+                "elements": [
+                  {
+                    "$type": "Assignment",
+                    "feature": "values",
+                    "operator": "+=",
+                    "terminal": {
+                      "$type": "RuleCall",
+                      "rule": {
+                        "$ref": "#/rules@68"
+                      },
+                      "arguments": []
+                    }
+                  },
+                  {
+                    "$type": "Group",
+                    "elements": [
+                      {
+                        "$type": "Keyword",
+                        "value": ","
+                      },
+                      {
+                        "$type": "Assignment",
+                        "feature": "values",
+                        "operator": "+=",
+                        "terminal": {
+                          "$type": "RuleCall",
+                          "rule": {
+                            "$ref": "#/rules@68"
+                          },
+                          "arguments": []
+                        }
+                      }
+                    ],
+                    "cardinality": "*"
+                  }
+                ],
+                "cardinality": "?"
+              },
+              {
+                "$type": "Keyword",
+                "value": "]"
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Keyword",
+            "value": "}"
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "DataType",
+      "definition": {
+        "$type": "Group",
+        "elements": [
+          {
+            "$type": "Keyword",
+            "value": "{"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"__type\\""
+          },
+          {
+            "$type": "Keyword",
+            "value": ":"
+          },
+          {
+            "$type": "Keyword",
+            "value": "\\"DataType\\""
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"__id\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__id",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@137"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
               }
             ]
           },
@@ -24217,7 +25543,66 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"name\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "name",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@143"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ]
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -24254,94 +25639,6 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@11"
-                      },
-                      "arguments": []
-                    }
-                  },
-                  {
-                    "$type": "Group",
-                    "elements": [
-                      {
-                        "$type": "Keyword",
-                        "value": ","
-                      },
-                      {
-                        "$type": "Assignment",
-                        "feature": "properties",
-                        "operator": "+=",
-                        "terminal": {
-                          "$type": "RuleCall",
-                          "rule": {
-                            "$ref": "#/rules@11"
-                          },
-                          "arguments": []
-                        }
-                      }
-                    ],
-                    "cardinality": "*"
-                  }
-                ],
-                "cardinality": "?"
-              },
-              {
-                "$type": "Keyword",
-                "value": "]"
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"operations\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "["
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Assignment",
-                    "feature": "operations",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
                         "$ref": "#/rules@14"
                       },
                       "arguments": []
@@ -24356,7 +25653,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                       },
                       {
                         "$type": "Assignment",
-                        "feature": "operations",
+                        "feature": "properties",
                         "operator": "+=",
                         "terminal": {
                           "$type": "RuleCall",
@@ -24393,7 +25690,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -24410,7 +25707,95 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
               },
               {
                 "$type": "Keyword",
-                "value": "\\"isActive\\""
+                "value": "\\"operations\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "["
+              },
+              {
+                "$type": "Group",
+                "elements": [
+                  {
+                    "$type": "Assignment",
+                    "feature": "operations",
+                    "operator": "+=",
+                    "terminal": {
+                      "$type": "RuleCall",
+                      "rule": {
+                        "$ref": "#/rules@37"
+                      },
+                      "arguments": []
+                    }
+                  },
+                  {
+                    "$type": "Group",
+                    "elements": [
+                      {
+                        "$type": "Keyword",
+                        "value": ","
+                      },
+                      {
+                        "$type": "Assignment",
+                        "feature": "operations",
+                        "operator": "+=",
+                        "terminal": {
+                          "$type": "RuleCall",
+                          "rule": {
+                            "$ref": "#/rules@37"
+                          },
+                          "arguments": []
+                        }
+                      }
+                    ],
+                    "cardinality": "*"
+                  }
+                ],
+                "cardinality": "?"
+              },
+              {
+                "$type": "Keyword",
+                "value": "]"
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"isAbstract\\""
               },
               {
                 "$type": "Keyword",
@@ -24418,12 +25803,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
               },
               {
                 "$type": "Assignment",
-                "feature": "isActive",
+                "feature": "isAbstract",
                 "operator": "=",
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@128"
+                    "$ref": "#/rules@135"
                   },
                   "arguments": []
                 }
@@ -24445,7 +25830,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -24479,7 +25864,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -24505,66 +25890,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"label\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              },
-              {
-                "$type": "Assignment",
-                "feature": "label",
-                "operator": "=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@130"
-                  },
-                  "arguments": []
-                }
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\""
-              }
-            ]
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -24630,7 +25956,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -24655,7 +25981,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -24711,7 +26037,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -24748,7 +26074,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@115"
+                        "$ref": "#/rules@121"
                       },
                       "arguments": []
                     }
@@ -24767,7 +26093,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@115"
+                            "$ref": "#/rules@121"
                           },
                           "arguments": []
                         }
@@ -24799,7 +26125,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -24836,7 +26162,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@116"
+                        "$ref": "#/rules@122"
                       },
                       "arguments": []
                     }
@@ -24855,7 +26181,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@116"
+                            "$ref": "#/rules@122"
                           },
                           "arguments": []
                         }
@@ -24887,7 +26213,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -24953,7 +26279,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -24978,7 +26304,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -25012,7 +26338,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -25037,7 +26363,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -25071,7 +26397,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -25097,7 +26423,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -25163,7 +26489,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -25188,7 +26514,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -25222,7 +26548,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -25247,7 +26573,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -25281,7 +26607,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -25307,7 +26633,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -25373,7 +26699,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -25398,7 +26724,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -25432,7 +26758,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -25457,7 +26783,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -25491,7 +26817,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -25517,7 +26843,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -25554,7 +26880,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@70"
+                        "$ref": "#/rules@75"
                       },
                       "arguments": []
                     }
@@ -25573,7 +26899,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@70"
+                            "$ref": "#/rules@75"
                           },
                           "arguments": []
                         }
@@ -25605,7 +26931,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -25642,7 +26968,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@68"
+                        "$ref": "#/rules@73"
                       },
                       "arguments": []
                     }
@@ -25661,7 +26987,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@68"
+                            "$ref": "#/rules@73"
                           },
                           "arguments": []
                         }
@@ -25693,7 +27019,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -25759,7 +27085,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -25784,7 +27110,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -25818,7 +27144,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -25843,7 +27169,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -25877,7 +27203,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -25903,7 +27229,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -25969,7 +27295,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -25994,7 +27320,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -26028,7 +27354,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -26054,7 +27380,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -26088,7 +27414,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -26114,7 +27440,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -26180,7 +27506,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -26205,7 +27531,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -26239,7 +27565,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -26265,7 +27591,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -26299,7 +27625,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -26325,7 +27651,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -26391,7 +27717,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -26416,7 +27742,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -26450,7 +27776,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -26476,7 +27802,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -26510,7 +27836,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -26536,7 +27862,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -26602,7 +27928,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -26627,7 +27953,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -26661,7 +27987,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -26687,7 +28013,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -26721,7 +28047,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -26747,7 +28073,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -26813,7 +28139,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -26838,7 +28164,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -26872,7 +28198,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -26898,7 +28224,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -26932,7 +28258,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -26958,7 +28284,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -27024,7 +28350,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -27049,7 +28375,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -27083,7 +28409,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -27109,7 +28435,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -27143,7 +28469,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -27169,7 +28495,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -27235,7 +28561,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -27260,7 +28586,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -27294,7 +28620,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -27320,7 +28646,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -27354,7 +28680,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -27380,7 +28706,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -27414,7 +28740,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@142"
                   },
                   "arguments": []
                 }
@@ -27440,7 +28766,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -27470,7 +28796,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@129"
+                    "$ref": "#/rules@136"
                   },
                   "arguments": []
                 }
@@ -27492,7 +28818,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -27545,7 +28871,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
               },
               {
                 "$type": "Keyword",
-                "value": "\\"Node\\""
+                "value": "\\"UnionType_0\\""
               },
               {
                 "$type": "Keyword",
@@ -27570,12 +28896,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@130"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -27607,7 +28933,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -27660,7 +28986,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
               },
               {
                 "$type": "Keyword",
-                "value": "\\"Node\\""
+                "value": "\\"UnionType_0\\""
               },
               {
                 "$type": "Keyword",
@@ -27685,12 +29011,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "CrossReference",
                   "type": {
-                    "$ref": "#/rules@119"
+                    "$ref": "#/rules@130"
                   },
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@130"
+                      "$ref": "#/rules@137"
                     },
                     "arguments": []
                   },
@@ -27722,7 +29048,127 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"sourcePoint\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "sourcePoint",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@95"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"targetPoint\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "targetPoint",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@95"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -27788,7 +29234,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -27813,7 +29259,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -27847,7 +29293,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -27872,7 +29318,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -27906,7 +29352,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -27932,7 +29378,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -27998,7 +29444,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -28023,7 +29469,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -28057,7 +29503,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -28082,7 +29528,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -28116,7 +29562,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -28142,7 +29588,67 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
+                  },
+                  "arguments": []
+                }
+              }
+            ],
+            "cardinality": "*"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\"orientation\\""
+              },
+              {
+                "$type": "Keyword",
+                "value": ":"
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              },
+              {
+                "$type": "Assignment",
+                "feature": "orientation",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@123"
+                  },
+                  "arguments": []
+                }
+              },
+              {
+                "$type": "Keyword",
+                "value": "\\""
+              }
+            ],
+            "cardinality": "?"
+          },
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": ","
+              },
+              {
+                "$type": "Assignment",
+                "feature": "__unknown",
+                "operator": "+=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "rule": {
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -28179,7 +29685,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@79"
+                        "$ref": "#/rules@84"
                       },
                       "arguments": []
                     }
@@ -28198,7 +29704,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@79"
+                            "$ref": "#/rules@84"
                           },
                           "arguments": []
                         }
@@ -28230,7 +29736,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -28267,7 +29773,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@119"
+                        "$ref": "#/rules@126"
                       },
                       "arguments": []
                     }
@@ -28286,7 +29792,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@119"
+                            "$ref": "#/rules@126"
                           },
                           "arguments": []
                         }
@@ -28318,7 +29824,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -28384,7 +29890,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -28409,7 +29915,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -28443,7 +29949,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -28468,7 +29974,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -28502,7 +30008,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -28528,7 +30034,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -28594,7 +30100,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -28619,7 +30125,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -28653,7 +30159,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -28679,7 +30185,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -28713,7 +30219,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -28739,7 +30245,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -28805,7 +30311,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -28830,7 +30336,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -28864,7 +30370,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -28889,7 +30395,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -28923,7 +30429,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -28949,7 +30455,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -28966,7 +30472,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
               },
               {
                 "$type": "Keyword",
-                "value": "\\"partitions\\""
+                "value": "\\"parameters\\""
               },
               {
                 "$type": "Keyword",
@@ -28981,12 +30487,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "elements": [
                   {
                     "$type": "Assignment",
-                    "feature": "partitions",
+                    "feature": "parameters",
                     "operator": "+=",
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@79"
+                        "$ref": "#/rules@14"
                       },
                       "arguments": []
                     }
@@ -29000,12 +30506,12 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                       },
                       {
                         "$type": "Assignment",
-                        "feature": "partitions",
+                        "feature": "parameters",
                         "operator": "+=",
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@79"
+                            "$ref": "#/rules@14"
                           },
                           "arguments": []
                         }
@@ -29037,7 +30543,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -29074,7 +30580,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@119"
+                        "$ref": "#/rules@126"
                       },
                       "arguments": []
                     }
@@ -29093,7 +30599,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                         "terminal": {
                           "$type": "RuleCall",
                           "rule": {
-                            "$ref": "#/rules@119"
+                            "$ref": "#/rules@126"
                           },
                           "arguments": []
                         }
@@ -29125,95 +30631,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
-                  },
-                  "arguments": []
-                }
-              }
-            ],
-            "cardinality": "*"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Keyword",
-                "value": "\\"edges\\""
-              },
-              {
-                "$type": "Keyword",
-                "value": ":"
-              },
-              {
-                "$type": "Keyword",
-                "value": "["
-              },
-              {
-                "$type": "Group",
-                "elements": [
-                  {
-                    "$type": "Assignment",
-                    "feature": "edges",
-                    "operator": "+=",
-                    "terminal": {
-                      "$type": "RuleCall",
-                      "rule": {
-                        "$ref": "#/rules@77"
-                      },
-                      "arguments": []
-                    }
-                  },
-                  {
-                    "$type": "Group",
-                    "elements": [
-                      {
-                        "$type": "Keyword",
-                        "value": ","
-                      },
-                      {
-                        "$type": "Assignment",
-                        "feature": "edges",
-                        "operator": "+=",
-                        "terminal": {
-                          "$type": "RuleCall",
-                          "rule": {
-                            "$ref": "#/rules@77"
-                          },
-                          "arguments": []
-                        }
-                      }
-                    ],
-                    "cardinality": "*"
-                  }
-                ],
-                "cardinality": "?"
-              },
-              {
-                "$type": "Keyword",
-                "value": "]"
-              }
-            ],
-            "cardinality": "?"
-          },
-          {
-            "$type": "Group",
-            "elements": [
-              {
-                "$type": "Keyword",
-                "value": ","
-              },
-              {
-                "$type": "Assignment",
-                "feature": "__unknown",
-                "operator": "+=",
-                "terminal": {
-                  "$type": "RuleCall",
-                  "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -29279,7 +30697,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@137"
                   },
                   "arguments": []
                 }
@@ -29304,7 +30722,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -29338,7 +30756,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@130"
+                    "$ref": "#/rules@143"
                   },
                   "arguments": []
                 }
@@ -29363,7 +30781,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -29397,7 +30815,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@88"
+                    "$ref": "#/rules@93"
                   },
                   "arguments": []
                 }
@@ -29423,7 +30841,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@133"
+                    "$ref": "#/rules@144"
                   },
                   "arguments": []
                 }
@@ -29450,49 +30868,49 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@66"
+              "$ref": "#/rules@71"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@58"
+              "$ref": "#/rules@59"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@54"
+              "$ref": "#/rules@55"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@43"
+              "$ref": "#/rules@44"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@41"
+              "$ref": "#/rules@42"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@33"
+              "$ref": "#/rules@31"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@21"
+              "$ref": "#/rules@16"
             },
             "arguments": []
           },
@@ -29518,14 +30936,14 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@86"
+              "$ref": "#/rules@91"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@87"
+              "$ref": "#/rules@92"
             },
             "arguments": []
           }
@@ -29551,7 +30969,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@20"
+              "$ref": "#/rules@15"
             },
             "arguments": []
           },
@@ -29559,6 +30977,20 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
             "$type": "RuleCall",
             "rule": {
               "$ref": "#/rules@5"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@7"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@6"
             },
             "arguments": []
           }
@@ -29577,14 +31009,21 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@6"
+              "$ref": "#/rules@8"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@9"
+              "$ref": "#/rules@11"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@12"
             },
             "arguments": []
           },
@@ -29592,13 +31031,6 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
             "$type": "RuleCall",
             "rule": {
               "$ref": "#/rules@10"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@8"
             },
             "arguments": []
           }
@@ -29630,6 +31062,64 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "Keyword",
             "value": "PACKAGE"
+          },
+          {
+            "$type": "Keyword",
+            "value": "NONE"
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "TransitionKind",
+      "dataType": "string",
+      "definition": {
+        "$type": "Alternatives",
+        "elements": [
+          {
+            "$type": "Keyword",
+            "value": "INTERNAL"
+          },
+          {
+            "$type": "Keyword",
+            "value": "EXTERNAL"
+          },
+          {
+            "$type": "Keyword",
+            "value": "LOCAL"
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "ConnectionPoint",
+      "dataType": "string",
+      "definition": {
+        "$type": "Alternatives",
+        "elements": [
+          {
+            "$type": "Keyword",
+            "value": "NORTH"
+          },
+          {
+            "$type": "Keyword",
+            "value": "EAST"
+          },
+          {
+            "$type": "Keyword",
+            "value": "SOUTH"
+          },
+          {
+            "$type": "Keyword",
+            "value": "WEST"
           }
         ]
       },
@@ -29664,14 +31154,124 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
     },
     {
       "$type": "ParserRule",
-      "name": "DataTypeReference",
+      "name": "StateMachineDiagramElements",
       "definition": {
         "$type": "Alternatives",
         "elements": [
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@12"
+              "$ref": "#/rules@98"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@99"
+            },
+            "arguments": []
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "StateMachineDiagramNodes",
+      "definition": {
+        "$type": "Alternatives",
+        "elements": [
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@19"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@20"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@21"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@18"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@26"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@24"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@30"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@23"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@25"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@29"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@22"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@27"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@28"
             },
             "arguments": []
           },
@@ -29685,21 +31285,14 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@19"
+              "$ref": "#/rules@7"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@16"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@13"
+              "$ref": "#/rules@6"
             },
             "arguments": []
           }
@@ -29711,22 +31304,152 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
     },
     {
       "$type": "ParserRule",
-      "name": "Concurrency",
-      "dataType": "string",
+      "name": "StateMachineDiagramEdges",
+      "definition": {
+        "$type": "RuleCall",
+        "rule": {
+          "$ref": "#/rules@13"
+        },
+        "arguments": []
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "PackageDiagramElements",
       "definition": {
         "$type": "Alternatives",
         "elements": [
           {
-            "$type": "Keyword",
-            "value": "SEQUENTIAL"
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@101"
+            },
+            "arguments": []
           },
           {
-            "$type": "Keyword",
-            "value": "GUARDED"
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@102"
+            },
+            "arguments": []
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "PackageDiagramNodes",
+      "definition": {
+        "$type": "Alternatives",
+        "elements": [
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@36"
+            },
+            "arguments": []
           },
           {
-            "$type": "Keyword",
-            "value": "CONCURRENT"
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@40"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@14"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@37"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@33"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@7"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@6"
+            },
+            "arguments": []
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "PackageDiagramEdges",
+      "definition": {
+        "$type": "Alternatives",
+        "elements": [
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@35"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@34"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@38"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@39"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@41"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@32"
+            },
+            "arguments": []
           }
         ]
       },
@@ -29794,271 +31517,22 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
     },
     {
       "$type": "ParserRule",
-      "name": "StateMachineDiagramElements",
-      "definition": {
-        "$type": "Alternatives",
-        "elements": [
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@95"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@96"
-            },
-            "arguments": []
-          }
-        ]
-      },
-      "entry": false,
-      "fragment": false,
-      "parameters": []
-    },
-    {
-      "$type": "ParserRule",
-      "name": "StateMachineDiagramNodes",
-      "definition": {
-        "$type": "Alternatives",
-        "elements": [
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@23"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@24"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@25"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@30"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@28"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@32"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@27"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@29"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@31"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@26"
-            },
-            "arguments": []
-          }
-        ]
-      },
-      "entry": false,
-      "fragment": false,
-      "parameters": []
-    },
-    {
-      "$type": "ParserRule",
-      "name": "StateMachineDiagramEdges",
-      "definition": {
-        "$type": "RuleCall",
-        "rule": {
-          "$ref": "#/rules@22"
-        },
-        "arguments": []
-      },
-      "entry": false,
-      "fragment": false,
-      "parameters": []
-    },
-    {
-      "$type": "ParserRule",
-      "name": "TransitionKind",
+      "name": "Concurrency",
       "dataType": "string",
       "definition": {
         "$type": "Alternatives",
         "elements": [
           {
             "$type": "Keyword",
-            "value": "INTERNAL"
+            "value": "SEQUENTIAL"
           },
           {
             "$type": "Keyword",
-            "value": "EXTERNAL"
+            "value": "GUARDED"
           },
           {
             "$type": "Keyword",
-            "value": "LOCAL"
-          }
-        ]
-      },
-      "entry": false,
-      "fragment": false,
-      "parameters": []
-    },
-    {
-      "$type": "ParserRule",
-      "name": "PackageDiagramElements",
-      "definition": {
-        "$type": "Alternatives",
-        "elements": [
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@99"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@100"
-            },
-            "arguments": []
-          }
-        ]
-      },
-      "entry": false,
-      "fragment": false,
-      "parameters": []
-    },
-    {
-      "$type": "ParserRule",
-      "name": "PackageDiagramNodes",
-      "definition": {
-        "$type": "Alternatives",
-        "elements": [
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@37"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@19"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@11"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@14"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@15"
-            },
-            "arguments": []
-          }
-        ]
-      },
-      "entry": false,
-      "fragment": false,
-      "parameters": []
-    },
-    {
-      "$type": "ParserRule",
-      "name": "PackageDiagramEdges",
-      "definition": {
-        "$type": "Alternatives",
-        "elements": [
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@36"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@35"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@38"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@39"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@40"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@34"
-            },
-            "arguments": []
+            "value": "CONCURRENT"
           }
         ]
       },
@@ -30075,14 +31549,14 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@102"
+              "$ref": "#/rules@107"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@103"
+              "$ref": "#/rules@108"
             },
             "arguments": []
           }
@@ -30101,21 +31575,14 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@20"
+              "$ref": "#/rules@15"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@19"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@11"
+              "$ref": "#/rules@40"
             },
             "arguments": []
           },
@@ -30129,7 +31596,28 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@15"
+              "$ref": "#/rules@37"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@33"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@7"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@6"
             },
             "arguments": []
           }
@@ -30145,7 +31633,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
       "definition": {
         "$type": "RuleCall",
         "rule": {
-          "$ref": "#/rules@42"
+          "$ref": "#/rules@43"
         },
         "arguments": []
       },
@@ -30162,14 +31650,14 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@105"
+              "$ref": "#/rules@110"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@106"
+              "$ref": "#/rules@111"
             },
             "arguments": []
           }
@@ -30188,20 +31676,6 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@47"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@46"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
               "$ref": "#/rules@48"
             },
             "arguments": []
@@ -30209,14 +31683,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@45"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@51"
+              "$ref": "#/rules@47"
             },
             "arguments": []
           },
@@ -30230,6 +31697,20 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
+              "$ref": "#/rules@46"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@52"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
               "$ref": "#/rules@50"
             },
             "arguments": []
@@ -30237,7 +31718,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@11"
+              "$ref": "#/rules@51"
             },
             "arguments": []
           },
@@ -30251,7 +31732,28 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@15"
+              "$ref": "#/rules@37"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@33"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@7"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@6"
             },
             "arguments": []
           }
@@ -30270,7 +31772,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@53"
+              "$ref": "#/rules@54"
             },
             "arguments": []
           },
@@ -30284,21 +31786,21 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@44"
+              "$ref": "#/rules@45"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@52"
+              "$ref": "#/rules@53"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@8"
+              "$ref": "#/rules@10"
             },
             "arguments": []
           }
@@ -30317,14 +31819,14 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@108"
+              "$ref": "#/rules@113"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@109"
+              "$ref": "#/rules@114"
             },
             "arguments": []
           }
@@ -30343,6 +31845,13 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
+              "$ref": "#/rules@58"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
               "$ref": "#/rules@57"
             },
             "arguments": []
@@ -30350,7 +31859,14 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@56"
+              "$ref": "#/rules@7"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@6"
             },
             "arguments": []
           }
@@ -30366,7 +31882,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
       "definition": {
         "$type": "RuleCall",
         "rule": {
-          "$ref": "#/rules@55"
+          "$ref": "#/rules@56"
         },
         "arguments": []
       },
@@ -30383,14 +31899,14 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@111"
+              "$ref": "#/rules@116"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@112"
+              "$ref": "#/rules@117"
             },
             "arguments": []
           }
@@ -30409,49 +31925,35 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@17"
+              "$ref": "#/rules@69"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@18"
+              "$ref": "#/rules@68"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@19"
+              "$ref": "#/rules@40"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@65"
+              "$ref": "#/rules@63"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@16"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@37"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@11"
+              "$ref": "#/rules@36"
             },
             "arguments": []
           },
@@ -30465,7 +31967,96 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@15"
+              "$ref": "#/rules@37"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@33"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@70"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@65"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@67"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@61"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@62"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@30"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@7"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@6"
+            },
+            "arguments": []
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "ClassDiagramEdges",
+      "definition": {
+        "$type": "Alternatives",
+        "elements": [
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@41"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@39"
             },
             "arguments": []
           },
@@ -30479,7 +32070,35 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@13"
+              "$ref": "#/rules@38"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@66"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@10"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@35"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@34"
             },
             "arguments": []
           },
@@ -30500,96 +32119,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@61"
-            },
-            "arguments": []
-          }
-        ]
-      },
-      "entry": false,
-      "fragment": false,
-      "parameters": []
-    },
-    {
-      "$type": "ParserRule",
-      "name": "ClassDiagramEdges",
-      "definition": {
-        "$type": "Alternatives",
-        "elements": [
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@40"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@39"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@10"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@38"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@63"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@8"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@36"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@35"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@62"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@59"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@34"
+              "$ref": "#/rules@32"
             },
             "arguments": []
           }
@@ -30608,21 +32138,68 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@11"
+              "$ref": "#/rules@14"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@19"
+              "$ref": "#/rules@40"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@16"
+              "$ref": "#/rules@63"
+            },
+            "arguments": []
+          }
+        ]
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "DataTypeReference",
+      "definition": {
+        "$type": "Alternatives",
+        "elements": [
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@70"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@69"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@40"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@63"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@65"
             },
             "arguments": []
           }
@@ -30641,14 +32218,14 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@115"
+              "$ref": "#/rules@121"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@116"
+              "$ref": "#/rules@122"
             },
             "arguments": []
           }
@@ -30667,63 +32244,14 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@82"
+              "$ref": "#/rules@87"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@79"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@69"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@83"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@67"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@73"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@76"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@71"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@72"
+              "$ref": "#/rules@84"
             },
             "arguments": []
           },
@@ -30737,14 +32265,14 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@81"
+              "$ref": "#/rules@88"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@75"
+              "$ref": "#/rules@72"
             },
             "arguments": []
           },
@@ -30758,6 +32286,41 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
+              "$ref": "#/rules@81"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@76"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@77"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@79"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@86"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
               "$ref": "#/rules@80"
             },
             "arguments": []
@@ -30765,14 +32328,49 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@70"
+              "$ref": "#/rules@83"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@68"
+              "$ref": "#/rules@85"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@75"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@73"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@14"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@7"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@6"
             },
             "arguments": []
           }
@@ -30788,9 +32386,30 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
       "definition": {
         "$type": "RuleCall",
         "rule": {
-          "$ref": "#/rules@77"
+          "$ref": "#/rules@82"
         },
         "arguments": []
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "Orientation",
+      "dataType": "string",
+      "definition": {
+        "$type": "Alternatives",
+        "elements": [
+          {
+            "$type": "Keyword",
+            "value": "HORIZONTAL"
+          },
+          {
+            "$type": "Keyword",
+            "value": "VERTICAL"
+          }
+        ]
       },
       "entry": false,
       "fragment": false,
@@ -30805,21 +32424,21 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@118"
+              "$ref": "#/rules@125"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@120"
+              "$ref": "#/rules@127"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@121"
+              "$ref": "#/rules@128"
             },
             "arguments": []
           }
@@ -30835,7 +32454,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
       "definition": {
         "$type": "RuleCall",
         "rule": {
-          "$ref": "#/rules@119"
+          "$ref": "#/rules@126"
         },
         "arguments": []
       },
@@ -30866,28 +32485,21 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@12"
+              "$ref": "#/rules@6"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@13"
+              "$ref": "#/rules@7"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@14"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@16"
+              "$ref": "#/rules@15"
             },
             "arguments": []
           },
@@ -30909,6 +32521,20 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
             "$type": "RuleCall",
             "rule": {
               "$ref": "#/rules@20"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@21"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@22"
             },
             "arguments": []
           },
@@ -30971,14 +32597,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@31"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@32"
+              "$ref": "#/rules@36"
             },
             "arguments": []
           },
@@ -30992,7 +32611,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@45"
+              "$ref": "#/rules@40"
             },
             "arguments": []
           },
@@ -31041,7 +32660,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@56"
+              "$ref": "#/rules@52"
             },
             "arguments": []
           },
@@ -31055,7 +32674,21 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@64"
+              "$ref": "#/rules@58"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@63"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@65"
             },
             "arguments": []
           },
@@ -31063,13 +32696,6 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
             "$type": "RuleCall",
             "rule": {
               "$ref": "#/rules@67"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@68"
             },
             "arguments": []
           },
@@ -31090,21 +32716,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@71"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
               "$ref": "#/rules@72"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@73"
             },
             "arguments": []
           },
@@ -31118,14 +32730,14 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@75"
+              "$ref": "#/rules@76"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@76"
+              "$ref": "#/rules@77"
             },
             "arguments": []
           },
@@ -31160,14 +32772,42 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@82"
+              "$ref": "#/rules@83"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@83"
+              "$ref": "#/rules@84"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@85"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@86"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@87"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@88"
             },
             "arguments": []
           }
@@ -31186,35 +32826,35 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@7"
+              "$ref": "#/rules@9"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@22"
+              "$ref": "#/rules@13"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@42"
+              "$ref": "#/rules@43"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@55"
+              "$ref": "#/rules@56"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@77"
+              "$ref": "#/rules@82"
             },
             "arguments": []
           }
@@ -31233,14 +32873,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@11"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
-              "$ref": "#/rules@15"
+              "$ref": "#/rules@14"
             },
             "arguments": []
           },
@@ -31254,7 +32887,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@60"
+              "$ref": "#/rules@33"
             },
             "arguments": []
           },
@@ -31262,6 +32895,34 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
             "$type": "RuleCall",
             "rule": {
               "$ref": "#/rules@61"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@62"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@68"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@73"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@75"
             },
             "arguments": []
           }
@@ -31306,14 +32967,14 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@119"
+              "$ref": "#/rules@126"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@121"
+              "$ref": "#/rules@128"
             },
             "arguments": []
           }
@@ -31332,14 +32993,14 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@20"
+              "$ref": "#/rules@15"
             },
             "arguments": []
           },
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@19"
+              "$ref": "#/rules@40"
             },
             "arguments": []
           }
@@ -31406,7 +33067,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
       },
       "definition": {
         "$type": "RegexToken",
-        "regex": "/(-)?[0-9]+(\\\\.[0-9]*)?/",
+        "regex": "/(-)?[0-9]+(\\\\.[0-9]+)?/",
         "parenthesized": false
       },
       "fragment": false,
@@ -31417,7 +33078,29 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
       "name": "LANGIUM_ID",
       "definition": {
         "$type": "RegexToken",
-        "regex": "/[\\\\w_\\\\*-]+/",
+        "regex": "/[\\\\w_\\\\*-]+( +[\\\\w_\\\\*-]+)*/",
+        "parenthesized": false
+      },
+      "fragment": false,
+      "hidden": false
+    },
+    {
+      "$type": "TerminalRule",
+      "name": "LANGIUM_PUNCT",
+      "definition": {
+        "$type": "RegexToken",
+        "regex": "/[.+#()<>=?!|~^&%$@;'\`]+/",
+        "parenthesized": false
+      },
+      "fragment": false,
+      "hidden": false
+    },
+    {
+      "$type": "TerminalRule",
+      "name": "LANGIUM_SLASH",
+      "definition": {
+        "$type": "RegexToken",
+        "regex": "/\\\\/(?![/*])/",
         "parenthesized": false
       },
       "fragment": false,
@@ -31447,6 +33130,130 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
     },
     {
       "$type": "ParserRule",
+      "name": "LangiumText",
+      "dataType": "string",
+      "definition": {
+        "$type": "Alternatives",
+        "elements": [
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@137"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@136"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@135"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@138"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@139"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "Keyword",
+            "value": "["
+          },
+          {
+            "$type": "Keyword",
+            "value": "]"
+          },
+          {
+            "$type": "Keyword",
+            "value": "{"
+          },
+          {
+            "$type": "Keyword",
+            "value": "}"
+          },
+          {
+            "$type": "Keyword",
+            "value": ","
+          },
+          {
+            "$type": "Keyword",
+            "value": ":"
+          }
+        ],
+        "cardinality": "+"
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
+      "name": "LangiumName",
+      "dataType": "string",
+      "definition": {
+        "$type": "Alternatives",
+        "elements": [
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@137"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@136"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "RuleCall",
+            "rule": {
+              "$ref": "#/rules@135"
+            },
+            "arguments": []
+          },
+          {
+            "$type": "Keyword",
+            "value": "["
+          },
+          {
+            "$type": "Keyword",
+            "value": "]"
+          },
+          {
+            "$type": "Keyword",
+            "value": "{"
+          },
+          {
+            "$type": "Keyword",
+            "value": "}"
+          }
+        ],
+        "cardinality": "+"
+      },
+      "entry": false,
+      "fragment": false,
+      "parameters": []
+    },
+    {
+      "$type": "ParserRule",
       "name": "UnknownProperty",
       "definition": {
         "$type": "Group",
@@ -31462,7 +33269,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
             "terminal": {
               "$type": "RuleCall",
               "rule": {
-                "$ref": "#/rules@130"
+                "$ref": "#/rules@137"
               },
               "arguments": []
             }
@@ -31482,7 +33289,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
             "terminal": {
               "$type": "RuleCall",
               "rule": {
-                "$ref": "#/rules@134"
+                "$ref": "#/rules@145"
               },
               "arguments": []
             }
@@ -31506,7 +33313,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
             "terminal": {
               "$type": "RuleCall",
               "rule": {
-                "$ref": "#/rules@135"
+                "$ref": "#/rules@146"
               },
               "arguments": []
             }
@@ -31518,7 +33325,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
             "terminal": {
               "$type": "RuleCall",
               "rule": {
-                "$ref": "#/rules@129"
+                "$ref": "#/rules@136"
               },
               "arguments": []
             }
@@ -31530,7 +33337,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
             "terminal": {
               "$type": "RuleCall",
               "rule": {
-                "$ref": "#/rules@128"
+                "$ref": "#/rules@135"
               },
               "arguments": []
             }
@@ -31551,7 +33358,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
             "terminal": {
               "$type": "RuleCall",
               "rule": {
-                "$ref": "#/rules@136"
+                "$ref": "#/rules@147"
               },
               "arguments": []
             }
@@ -31563,7 +33370,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
             "terminal": {
               "$type": "RuleCall",
               "rule": {
-                "$ref": "#/rules@138"
+                "$ref": "#/rules@149"
               },
               "arguments": []
             }
@@ -31591,7 +33398,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
             "terminal": {
               "$type": "RuleCall",
               "rule": {
-                "$ref": "#/rules@130"
+                "$ref": "#/rules@142"
               },
               "arguments": []
             }
@@ -31626,7 +33433,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@137"
+                    "$ref": "#/rules@148"
                   },
                   "arguments": []
                 }
@@ -31645,7 +33452,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@137"
+                        "$ref": "#/rules@148"
                       },
                       "arguments": []
                     }
@@ -31683,7 +33490,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
             "terminal": {
               "$type": "RuleCall",
               "rule": {
-                "$ref": "#/rules@130"
+                "$ref": "#/rules@137"
               },
               "arguments": []
             }
@@ -31703,7 +33510,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
             "terminal": {
               "$type": "RuleCall",
               "rule": {
-                "$ref": "#/rules@134"
+                "$ref": "#/rules@145"
               },
               "arguments": []
             }
@@ -31734,7 +33541,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@134"
+                    "$ref": "#/rules@145"
                   },
                   "arguments": []
                 }
@@ -31753,7 +33560,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@134"
+                        "$ref": "#/rules@145"
                       },
                       "arguments": []
                     }

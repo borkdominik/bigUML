@@ -7,9 +7,11 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { injectable } from 'inversify';
-import { NamedElement, NamedElementView } from '../named-element/index.js';
+import { NamedElement } from '../named-element/index.js';
+import { FrameNodeView } from '../../views/uml-frame.view.js';
 
 export class GInteractionNode extends NamedElement {}
 
+/** An interaction: the frame the whole communication diagram is drawn inside. */
 @injectable()
-export class GInteractionNodeView extends NamedElementView {}
+export class GInteractionNodeView extends FrameNodeView {}

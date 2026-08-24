@@ -7,10 +7,14 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { bindOrRebind, EditLabelUI, FeatureModule } from '@eclipse-glsp/client';
+import { bindOrRebind, DelKeyDeleteTool, EditLabelUI, FeatureModule } from '@eclipse-glsp/client';
 import { EditLabelUIAutocomplete } from './edit-label.autocomplete.js';
+import { UmlDelKeyDeleteTool } from './uml-delete-tool.js';
 
 export const umlEditModule = new FeatureModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
     bindOrRebind(context, EditLabelUI).to(EditLabelUIAutocomplete);
+    // The stock tool is bound as a service to itself, so rebinding the class is what puts the backspace
+    // listener in front of the `Delete`-only one - see `UmlDelKeyDeleteTool`.
+    bindOrRebind(context, DelKeyDeleteTool).to(UmlDelKeyDeleteTool);
 });

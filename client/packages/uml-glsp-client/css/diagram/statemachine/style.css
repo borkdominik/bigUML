@@ -1,0 +1,24 @@
+/* The state machine frame acts as a boundary around the states it owns, so it must stay transparent:
+   an opaque fill on a box this large would hide anything positioned behind it and would swallow every
+   click inside its bounds. It is selected and resized through its border. */
+.uml-state-machine-node .uml-node-background {
+    fill: none;
+}
+
+/* A region is the area a frame's states are drawn on, so it is transparent for the same two reasons -
+   it must not hide the states standing on it, nor swallow their clicks. Its border is solid and its
+   corners are rounded, because a region is drawn as the titled box UML draws a composite state as (see
+   `RegionNodeView`). The dashed rule that separates one region of an orthogonal state from the next is
+   drawn between the bands inside that state instead - see `uml-comp-separator-dashed`. */
+.uml-region-node .uml-node-background {
+    fill: none;
+}
+
+/* A state holding regions is the frame its substates are drawn on, so it has to stay transparent for the
+   two reasons the frames above do: filled, it would hide anything standing on it - including substates
+   that were there before it was drawn around them - and it would swallow every click inside its bounds.
+   Like them, it is selected and resized through its border. Its own compartments are unaffected: the
+   name, the parts and the rules between the region bands are drawn over it, not by its fill. */
+.uml-composite-state-node .uml-node-background {
+    fill: none;
+}

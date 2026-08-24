@@ -22,6 +22,45 @@ export class ActivityDiagramToolPaletteItemProvider extends ToolPaletteItemProvi
     override getItems(_args?: Args): MaybePromise<PaletteItem[]> {
         return [
             {
+                id: 'uml.annotation',
+                sortString: 'A',
+                label: 'Annotation',
+                icon: 'symbol-property',
+                children: [
+                    {
+                        id: 'text-label',
+                        sortString: 'A',
+                        label: 'Label',
+                        icon: 'uml-string-expression-icon',
+                        actions: [TriggerNodeCreationAction.create(ActivityDiagramNodeTypes.TEXT_LABEL)]
+                    },
+                    {
+                        id: 'note',
+                        sortString: 'A',
+                        label: 'Note',
+                        icon: 'uml-comment-icon',
+                        actions: [TriggerNodeCreationAction.create(ActivityDiagramNodeTypes.NOTE)]
+                    }
+                ],
+                actions: []
+            },
+            {
+                id: 'uml.feature',
+                sortString: 'A',
+                label: 'Feature',
+                icon: 'symbol-property',
+                children: [
+                    {
+                        id: 'property',
+                        sortString: 'A',
+                        label: 'Property',
+                        icon: 'uml-property-icon',
+                        actions: [TriggerNodeCreationAction.create(ActivityDiagramNodeTypes.PROPERTY)]
+                    }
+                ],
+                actions: []
+            },
+            {
                 id: 'uml.actions',
                 sortString: 'A',
                 label: 'Actions',

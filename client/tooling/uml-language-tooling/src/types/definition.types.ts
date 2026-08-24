@@ -49,6 +49,7 @@ export type DecoratorArg = string | number | boolean | Record<string, unknown>;
 export interface DecoratorNameRegistry {
     root: true;
     reference: true;
+    text: true;
 }
 
 /** Union of all registered decorator names. */

@@ -6,10 +6,26 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+import { type GNode } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
-import { NamedElement, NamedElementView } from '../named-element/index.js';
+import { RoundedNodeView } from '../../views/rounded-node.view.js';
+import { NamedElement } from '../named-element/index.js';
 
 export class GActivityNode extends NamedElement {}
 
+/** How far the corners of the activity frame are taken off. */
+const FRAME_CORNER_RADIUS = 20;
+
+/**
+ * An activity is the rounded boundary its flow is drawn inside, with its name written along the top.
+ *
+ * The corners are rounded by a flat number rather than by a proportion of the shape. A proportion is
+ * right for a box drawn to the size of its own name, but a frame is hundreds of pixels across, and a
+ * fifth of that is a corner so round the shape stops reading as a rectangle at all.
+ */
 @injectable()
-export class GActivityNodeView extends NamedElementView {}
+export class GActivityNodeView extends RoundedNodeView {
+    protected override cornerRadius(_element: Readonly<GNode>, width: number, height: number): number {
+        return Math.min(FRAME_CORNER_RADIUS, Math.min(width, height) / 2);
+    }
+}

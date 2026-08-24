@@ -7,10 +7,21 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { representationTypeId } from '@borkdominik-biguml/uml-glsp-server';
-import { configureModelElement, FeatureModule, GEdge, PolylineEdgeView } from '@eclipse-glsp/client';
+import { bindOrRebind, configureModelElement, EdgeLayoutPostprocessor, FeatureModule, GEdge, PolylineEdgeView } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
-import { NamedElement, NamedElementView } from '../../elements/index.js';
-import { GEditableLabel, GEditableLabelView } from '../../views/uml-label.view.js';
+import {
+    GInteractionNode,
+    GInteractionNodeView,
+    GMessageArrowLabel,
+    GNoteNode,
+    GNoteNodeView,
+    GTextLabelNode,
+    GTextLabelNodeView,
+    MessageArrowLabelView,
+    MessageArrowLayoutPostprocessor,
+    NamedElement,
+    NamedElementView
+} from '../../elements/index.js';
 
 const R = 'Communication';
 
@@ -18,19 +29,27 @@ export const umlCommunicationDiagramModule = new FeatureModule((bind, unbind, is
     const context = { bind, unbind, isBound, rebind };
 
     // Nodes
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Interaction'), NamedElement, NamedElementView);
-    // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Interaction'), GInteractionNode, GInteractionNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Interaction'), GInteractionNode, GInteractionNodeView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Lifeline'), NamedElement, NamedElementView);
     // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Lifeline'), GLifelineNode, GLifelineNodeView);
 
+    // The note and the free label, which every diagram has: both say something about the diagram
+    // rather than being part of any one notation.
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Note'), GNoteNode, GNoteNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'TextLabel'), GTextLabelNode, GTextLabelNodeView);
+
     // Edges
+    // The message label draws its own arrow beside the link - see `MessageArrowLabelView` - and is
+    // placed by the arrow rather than by the label's own corner, so that the messages on either side
+    // of a link are held the same distance off it however long their names are. The link itself stays
+    // a plain line: in a communication diagram it is the association between two lifelines and has no
+    // direction of its own, so it must not carry an arrow head.
+    bindOrRebind(context, EdgeLayoutPostprocessor).to(MessageArrowLayoutPostprocessor).inSingletonScope();
     configureModelElement(
         context,
         representationTypeId(R, DefaultTypes.LABEL, 'message-arrow-edge-name'),
-        GEditableLabel,
-        GEditableLabelView
+        GMessageArrowLabel,
+        MessageArrowLabelView
     );
-    // configureModelElement(context, representationTypeId(R, DefaultTypes.LABEL, 'message-arrow-edge-name'), GEditableLabel, MessageArrowLabelView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Message'), GEdge, PolylineEdgeView);
-    // configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'Message'), GMessageEdge, GMessageEdgeView);
 });

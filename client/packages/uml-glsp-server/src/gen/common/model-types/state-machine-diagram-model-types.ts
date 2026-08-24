@@ -16,6 +16,7 @@ export namespace StateMachineDiagramNodeTypes {
     export const STATE_MACHINE = representationTypeId('StateMachine', DefaultTypes.NODE, 'StateMachine');
     export const REGION = representationTypeId('StateMachine', DefaultTypes.NODE, 'Region');
     export const STATE = representationTypeId('StateMachine', DefaultTypes.NODE, 'State');
+    export const STATE_PART = representationTypeId('StateMachine', DefaultTypes.NODE, 'StatePart');
     export const FINAL_STATE = representationTypeId('StateMachine', DefaultTypes.NODE, 'FinalState');
     export const INITIAL_STATE = representationTypeId('StateMachine', DefaultTypes.NODE, 'InitialState');
     export const CHOICE = representationTypeId('StateMachine', DefaultTypes.NODE, 'Choice');
@@ -23,6 +24,11 @@ export namespace StateMachineDiagramNodeTypes {
     export const FORK = representationTypeId('StateMachine', DefaultTypes.NODE, 'Fork');
     export const DEEP_HISTORY = representationTypeId('StateMachine', DefaultTypes.NODE, 'DeepHistory');
     export const SHALLOW_HISTORY = representationTypeId('StateMachine', DefaultTypes.NODE, 'ShallowHistory');
+    export const EXIT_POINT = representationTypeId('StateMachine', DefaultTypes.NODE, 'ExitPoint');
+    export const ENTRY_POINT = representationTypeId('StateMachine', DefaultTypes.NODE, 'EntryPoint');
+    export const TERMINATE = representationTypeId('StateMachine', DefaultTypes.NODE, 'Terminate');
+    export const NOTE = representationTypeId('StateMachine', DefaultTypes.NODE, 'Note');
+    export const TEXT_LABEL = representationTypeId('StateMachine', DefaultTypes.NODE, 'TextLabel');
 }
 
 export namespace StateMachineDiagramEdgeTypes {
@@ -34,6 +40,7 @@ export namespace StateMachineDiagramModelTypes {
     export const STATE_MACHINE = StateMachineDiagramNodeTypes.STATE_MACHINE;
     export const REGION = StateMachineDiagramNodeTypes.REGION;
     export const STATE = StateMachineDiagramNodeTypes.STATE;
+    export const STATE_PART = StateMachineDiagramNodeTypes.STATE_PART;
     export const FINAL_STATE = StateMachineDiagramNodeTypes.FINAL_STATE;
     export const INITIAL_STATE = StateMachineDiagramNodeTypes.INITIAL_STATE;
     export const CHOICE = StateMachineDiagramNodeTypes.CHOICE;
@@ -41,6 +48,11 @@ export namespace StateMachineDiagramModelTypes {
     export const FORK = StateMachineDiagramNodeTypes.FORK;
     export const DEEP_HISTORY = StateMachineDiagramNodeTypes.DEEP_HISTORY;
     export const SHALLOW_HISTORY = StateMachineDiagramNodeTypes.SHALLOW_HISTORY;
+    export const EXIT_POINT = StateMachineDiagramNodeTypes.EXIT_POINT;
+    export const ENTRY_POINT = StateMachineDiagramNodeTypes.ENTRY_POINT;
+    export const TERMINATE = StateMachineDiagramNodeTypes.TERMINATE;
+    export const NOTE = StateMachineDiagramNodeTypes.NOTE;
+    export const TEXT_LABEL = StateMachineDiagramNodeTypes.TEXT_LABEL;
 
     // re-export edges
     export const TRANSITION = StateMachineDiagramEdgeTypes.TRANSITION;
@@ -51,6 +63,7 @@ export namespace StateMachineAstTypes {
         StateMachine: StateMachineDiagramModelTypes.STATE_MACHINE,
         Region: StateMachineDiagramModelTypes.REGION,
         State: StateMachineDiagramModelTypes.STATE,
+        StatePart: StateMachineDiagramModelTypes.STATE_PART,
         FinalState: StateMachineDiagramModelTypes.FINAL_STATE,
         InitialState: StateMachineDiagramModelTypes.INITIAL_STATE,
         Choice: StateMachineDiagramModelTypes.CHOICE,
@@ -58,6 +71,11 @@ export namespace StateMachineAstTypes {
         Fork: StateMachineDiagramModelTypes.FORK,
         DeepHistory: StateMachineDiagramModelTypes.DEEP_HISTORY,
         ShallowHistory: StateMachineDiagramModelTypes.SHALLOW_HISTORY,
+        ExitPoint: StateMachineDiagramModelTypes.EXIT_POINT,
+        EntryPoint: StateMachineDiagramModelTypes.ENTRY_POINT,
+        Terminate: StateMachineDiagramModelTypes.TERMINATE,
+        Note: StateMachineDiagramModelTypes.NOTE,
+        TextLabel: StateMachineDiagramModelTypes.TEXT_LABEL,
         Transition: StateMachineDiagramModelTypes.TRANSITION
     };
 

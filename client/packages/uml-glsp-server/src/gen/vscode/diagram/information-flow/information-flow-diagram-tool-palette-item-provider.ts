@@ -25,6 +25,29 @@ export class InformationFlowDiagramToolPaletteItemProvider extends ToolPaletteIt
     override getItems(_args?: Args): MaybePromise<PaletteItem[]> {
         return [
             {
+                id: 'uml.annotation',
+                sortString: 'A',
+                label: 'Annotation',
+                icon: 'symbol-property',
+                children: [
+                    {
+                        id: 'text-label',
+                        sortString: 'A',
+                        label: 'Label',
+                        icon: 'uml-string-expression-icon',
+                        actions: [TriggerNodeCreationAction.create(InformationFlowDiagramNodeTypes.TEXT_LABEL)]
+                    },
+                    {
+                        id: 'note',
+                        sortString: 'A',
+                        label: 'Note',
+                        icon: 'uml-comment-icon',
+                        actions: [TriggerNodeCreationAction.create(InformationFlowDiagramNodeTypes.NOTE)]
+                    }
+                ],
+                actions: []
+            },
+            {
                 id: 'uml.feature',
                 sortString: 'A',
                 label: 'Feature',
@@ -54,18 +77,18 @@ export class InformationFlowDiagramToolPaletteItemProvider extends ToolPaletteIt
                 icon: 'symbol-property',
                 children: [
                     {
-                        id: 'class',
-                        sortString: 'A',
-                        label: 'Class',
-                        icon: 'uml-class-icon',
-                        actions: [TriggerNodeCreationAction.create(InformationFlowDiagramNodeTypes.CLASS)]
-                    },
-                    {
                         id: 'actor',
                         sortString: 'A',
                         label: 'Actor',
                         icon: 'uml-actor-icon',
                         actions: [TriggerNodeCreationAction.create(InformationFlowDiagramNodeTypes.ACTOR)]
+                    },
+                    {
+                        id: 'class',
+                        sortString: 'A',
+                        label: 'Class',
+                        icon: 'uml-class-icon',
+                        actions: [TriggerNodeCreationAction.create(InformationFlowDiagramNodeTypes.CLASS)]
                     }
                 ],
                 actions: []

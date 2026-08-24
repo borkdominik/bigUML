@@ -95,6 +95,20 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'UseCase'
         }
     ],
+    TextLabel: [
+        {
+            property: 'body',
+            propertyType: 'string',
+            defaultValue: 'Label'
+        }
+    ],
+    Note: [
+        {
+            property: 'body',
+            propertyType: 'string',
+            defaultValue: 'Note'
+        }
+    ],
     Include: [
         {
             property: 'source',
@@ -163,6 +177,14 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'string'
         },
         {
+            property: 'sourceModifiers',
+            propertyType: 'string'
+        },
+        {
+            property: 'targetModifiers',
+            propertyType: 'string'
+        },
+        {
             property: 'sourceAggregation',
             propertyType: 'AggregationType',
             defaultValue: 'NONE'
@@ -177,12 +199,63 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'Visibility'
         },
         {
+            property: 'sourcePoint',
+            propertyType: 'ConnectionPoint'
+        },
+        {
+            property: 'targetPoint',
+            propertyType: 'ConnectionPoint'
+        },
+        {
             property: 'source',
             propertyType: 'Node'
         },
         {
             property: 'target',
             propertyType: 'Node'
+        }
+    ],
+    Transition: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'trigger',
+            propertyType: 'string'
+        },
+        {
+            property: 'guard',
+            propertyType: 'string'
+        },
+        {
+            property: 'effect',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'kind',
+            propertyType: 'TransitionKind',
+            defaultValue: 'EXTERNAL'
+        },
+        {
+            property: 'source',
+            propertyType: 'Node'
+        },
+        {
+            property: 'target',
+            propertyType: 'Node'
+        },
+        {
+            property: 'sourcePoint',
+            propertyType: 'ConnectionPoint'
+        },
+        {
+            property: 'targetPoint',
+            propertyType: 'ConnectionPoint'
         }
     ],
     Property: [
@@ -231,180 +304,6 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             defaultValue: 'PUBLIC'
         }
     ],
-    DataType: [
-        {
-            property: 'name',
-            propertyType: 'string'
-        },
-        {
-            property: 'properties',
-            propertyType: 'Property'
-        },
-        {
-            property: 'operations',
-            propertyType: 'Operation'
-        },
-        {
-            property: 'isAbstract',
-            propertyType: 'boolean'
-        },
-        {
-            property: 'visibility',
-            propertyType: 'Visibility'
-        }
-    ],
-    PrimitiveType: [
-        {
-            property: 'name',
-            propertyType: 'string'
-        }
-    ],
-    Operation: [
-        {
-            property: 'name',
-            propertyType: 'string'
-        },
-        {
-            property: 'isAbstract',
-            propertyType: 'boolean'
-        },
-        {
-            property: 'isStatic',
-            propertyType: 'boolean'
-        },
-        {
-            property: 'isQuery',
-            propertyType: 'boolean'
-        },
-        {
-            property: 'visibility',
-            propertyType: 'Visibility'
-        },
-        {
-            property: 'concurrency',
-            propertyType: 'Concurrency'
-        },
-        {
-            property: 'parameters',
-            propertyType: 'Parameter'
-        }
-    ],
-    Parameter: [
-        {
-            property: 'name',
-            propertyType: 'string'
-        },
-        {
-            property: 'isException',
-            propertyType: 'boolean'
-        },
-        {
-            property: 'isStream',
-            propertyType: 'boolean'
-        },
-        {
-            property: 'isOrdered',
-            propertyType: 'boolean'
-        },
-        {
-            property: 'isUnique',
-            propertyType: 'boolean'
-        },
-        {
-            property: 'direction',
-            propertyType: 'ParameterDirection'
-        },
-        {
-            property: 'effect',
-            propertyType: 'EffectType'
-        },
-        {
-            property: 'visibility',
-            propertyType: 'Visibility'
-        },
-        {
-            property: 'parameterType',
-            propertyType: 'DataTypeReference'
-        },
-        {
-            property: 'multiplicity',
-            propertyType: 'string'
-        }
-    ],
-    Interface: [
-        {
-            property: 'name',
-            propertyType: 'string'
-        },
-        {
-            property: 'properties',
-            propertyType: 'Property'
-        },
-        {
-            property: 'operations',
-            propertyType: 'Operation'
-        }
-    ],
-    Enumeration: [
-        {
-            property: 'name',
-            propertyType: 'string'
-        },
-        {
-            property: 'isAbstract',
-            propertyType: 'boolean',
-            defaultValue: false
-        },
-        {
-            property: 'visibility',
-            propertyType: 'Visibility'
-        },
-        {
-            property: 'values',
-            propertyType: 'EnumerationLiteral'
-        }
-    ],
-    EnumerationLiteral: [
-        {
-            property: 'name',
-            propertyType: 'string'
-        },
-        {
-            property: 'value',
-            propertyType: 'string'
-        },
-        {
-            property: 'visibility',
-            propertyType: 'Visibility'
-        }
-    ],
-    Class: [
-        {
-            property: 'name',
-            propertyType: 'string'
-        },
-        {
-            property: 'isAbstract',
-            propertyType: 'boolean',
-            defaultValue: false
-        },
-        {
-            property: 'properties',
-            propertyType: 'Property'
-        },
-        {
-            property: 'operations',
-            propertyType: 'Operation'
-        },
-        {
-            property: 'isActive',
-            propertyType: 'boolean'
-        },
-        {
-            property: 'visibility',
-            propertyType: 'Visibility'
-        }
-    ],
     Actor: [
         {
             property: 'name',
@@ -429,7 +328,7 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'StateMachineDiagramEdges'
         }
     ],
-    Transition: [
+    Terminate: [
         {
             property: 'name',
             propertyType: 'string'
@@ -437,21 +336,9 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
         {
             property: 'visibility',
             propertyType: 'Visibility'
-        },
-        {
-            property: 'kind',
-            propertyType: 'TransitionKind',
-            defaultValue: 'EXTERNAL'
-        },
-        {
-            property: 'source',
-            propertyType: 'Node'
-        },
-        {
-            property: 'target',
-            propertyType: 'Node'
         }
     ],
+    StatePart: [],
     StateMachine: [
         {
             property: 'name',
@@ -490,12 +377,24 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'string'
         },
         {
+            property: 'parts',
+            propertyType: 'StatePart'
+        },
+        {
+            property: 'partsHeight',
+            propertyType: 'number'
+        },
+        {
             property: 'visibility',
             propertyType: 'Visibility'
         },
         {
             property: 'regions',
             propertyType: 'Region'
+        },
+        {
+            property: 'regionHeight',
+            propertyType: 'number'
         }
     ],
     ShallowHistory: [
@@ -539,6 +438,26 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
         }
     ],
     FinalState: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    ExitPoint: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    EntryPoint: [
         {
             property: 'name',
             propertyType: 'string'
@@ -600,6 +519,48 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'Node'
         }
     ],
+    Parameter: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'isException',
+            propertyType: 'boolean'
+        },
+        {
+            property: 'isStream',
+            propertyType: 'boolean'
+        },
+        {
+            property: 'isOrdered',
+            propertyType: 'boolean'
+        },
+        {
+            property: 'isUnique',
+            propertyType: 'boolean'
+        },
+        {
+            property: 'direction',
+            propertyType: 'ParameterDirection'
+        },
+        {
+            property: 'effect',
+            propertyType: 'EffectType'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'parameterType',
+            propertyType: 'string'
+        },
+        {
+            property: 'multiplicity',
+            propertyType: 'string'
+        }
+    ],
     PackageMerge: [
         {
             property: 'source',
@@ -642,6 +603,36 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'Node'
         }
     ],
+    Operation: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'isAbstract',
+            propertyType: 'boolean'
+        },
+        {
+            property: 'isStatic',
+            propertyType: 'boolean'
+        },
+        {
+            property: 'isQuery',
+            propertyType: 'boolean'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        },
+        {
+            property: 'concurrency',
+            propertyType: 'Concurrency'
+        },
+        {
+            property: 'parameters',
+            propertyType: 'Parameter'
+        }
+    ],
     ElementImport: [
         {
             property: 'alias',
@@ -676,6 +667,33 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
         {
             property: 'target',
             propertyType: 'Node'
+        }
+    ],
+    Class: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'isAbstract',
+            propertyType: 'boolean',
+            defaultValue: false
+        },
+        {
+            property: 'properties',
+            propertyType: 'Property'
+        },
+        {
+            property: 'operations',
+            propertyType: 'Operation'
+        },
+        {
+            property: 'isActive',
+            propertyType: 'boolean'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
         }
     ],
     Abstraction: [
@@ -1059,6 +1077,20 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'string'
         }
     ],
+    Interface: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'properties',
+            propertyType: 'Property'
+        },
+        {
+            property: 'operations',
+            propertyType: 'Operation'
+        }
+    ],
     Realization: [
         {
             property: 'name',
@@ -1075,6 +1107,12 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
         {
             property: 'target',
             propertyType: 'Node'
+        }
+    ],
+    PrimitiveType: [
+        {
+            property: 'name',
+            propertyType: 'string'
         }
     ],
     InterfaceRealization: [
@@ -1109,16 +1147,40 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'Slot'
         }
     ],
-    AbstractClass: [
+    EnumerationLiteral: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
+        {
+            property: 'value',
+            propertyType: 'string'
+        },
+        {
+            property: 'visibility',
+            propertyType: 'Visibility'
+        }
+    ],
+    Enumeration: [
+        {
+            property: 'name',
+            propertyType: 'string'
+        },
         {
             property: 'isAbstract',
             propertyType: 'boolean',
-            defaultValue: true
+            defaultValue: false
         },
         {
-            property: 'label',
-            propertyType: 'string'
+            property: 'visibility',
+            propertyType: 'Visibility'
         },
+        {
+            property: 'values',
+            propertyType: 'EnumerationLiteral'
+        }
+    ],
+    DataType: [
         {
             property: 'name',
             propertyType: 'string'
@@ -1132,7 +1194,7 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'Operation'
         },
         {
-            property: 'isActive',
+            property: 'isAbstract',
             propertyType: 'boolean'
         },
         {
@@ -1286,6 +1348,14 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
         {
             property: 'target',
             propertyType: 'Node'
+        },
+        {
+            property: 'sourcePoint',
+            propertyType: 'ConnectionPoint'
+        },
+        {
+            property: 'targetPoint',
+            propertyType: 'ConnectionPoint'
         }
     ],
     CentralBufferNode: [
@@ -1306,6 +1376,11 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
         {
             property: 'visibility',
             propertyType: 'Visibility'
+        },
+        {
+            property: 'orientation',
+            propertyType: 'Orientation',
+            defaultValue: 'HORIZONTAL'
         },
         {
             property: 'subpartitions',
@@ -1346,16 +1421,12 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
             propertyType: 'Visibility'
         },
         {
-            property: 'partitions',
-            propertyType: 'ActivityPartition'
+            property: 'parameters',
+            propertyType: 'Property'
         },
         {
             property: 'nodes',
             propertyType: 'Node'
-        },
-        {
-            property: 'edges',
-            propertyType: 'ControlFlow'
         }
     ],
     AcceptEventAction: [
@@ -1370,9 +1441,111 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
     ]
 };
 
-export const noBoundsClasses = new Set<string>(['Property', 'Parameter', 'EnumerationLiteral', 'Slot', 'LiteralSpecification']);
+export const noBoundsClasses = new Set<string>([
+    'Property',
+    'StatePart',
+    'Parameter',
+    'Slot',
+    'LiteralSpecification',
+    'EnumerationLiteral',
+    'OutputPin',
+    'InputPin'
+]);
 
 export const astTypeMapping: Record<string, string> = {};
+
+/**
+ * The AST types UML lets go unnamed - the pseudostates, the activity control nodes, the relations -
+ * whose `name` the grammar therefore writes as an optional property.
+ *
+ * Everything else is required to carry one, and there is no way to store an empty name in its place:
+ * `LangiumText` matches one token or more, so a `"name": ""` written out could never be read back.
+ */
+export const optionalNameClasses = new Set<string>([
+    'Association',
+    'Transition',
+    'Terminate',
+    'StatePart',
+    'Region',
+    'ShallowHistory',
+    'Join',
+    'InitialState',
+    'Fork',
+    'FinalState',
+    'ExitPoint',
+    'EntryPoint',
+    'DeepHistory',
+    'Choice',
+    'Usage',
+    'Dependency',
+    'Abstraction',
+    'InformationFlow',
+    'Manifestation',
+    'Deployment',
+    'CommunicationPath',
+    'Message',
+    'Substitution',
+    'Realization',
+    'InterfaceRealization',
+    'MergeNode',
+    'JoinNode',
+    'InitialNode',
+    'ForkNode',
+    'FlowFinalNode',
+    'DecisionNode',
+    'ControlFlow',
+    'ActivityFinalNode'
+]);
+
+/** Whether clearing this AST type's name can be stored, by removing the property altogether. */
+export function hasOptionalName(astType: string): boolean {
+    return optionalNameClasses.has(astType);
+}
+
+/**
+ * The AST types that carry no name at all - a note, which is the text it holds and has nothing else to
+ * be called.
+ *
+ * Named separately from the mapping above because that one drops an optional property with no default,
+ * and so cannot tell a type with no name from one whose name is simply not defaulted.
+ */
+export const unnamedClasses = new Set<string>([
+    'Diagram',
+    'UseCaseDiagram',
+    'Element',
+    'ElementWithSizeAndPosition',
+    'Node',
+    'Edge',
+    'Unbounded',
+    'MetaInfo',
+    'Size',
+    'Position',
+    'TextLabel',
+    'Note',
+    'Include',
+    'Relation',
+    'Generalization',
+    'Extend',
+    'StateMachineDiagram',
+    'PackageDiagram',
+    'PackageMerge',
+    'PackageImport',
+    'ElementImport',
+    'InformationFlowDiagram',
+    'DeploymentDiagram',
+    'CommunicationDiagram',
+    'ClassDiagram',
+    'ActivityDiagram'
+]);
+
+/**
+ * Whether this AST type has nowhere to put a name. A name written onto one anyway goes into the file as
+ * a property the grammar has no rule for, is swallowed by the unknown-property rule on the next read,
+ * and is gone - so whatever writes names asks this first.
+ */
+export function hasNoName(astType: string): boolean {
+    return unnamedClasses.has(stripPrefix(astType));
+}
 
 export function isNoBounds(typeId: string): boolean {
     return noBoundsClasses.has(stripPrefix(typeId));

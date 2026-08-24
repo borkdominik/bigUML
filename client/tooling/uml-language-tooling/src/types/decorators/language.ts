@@ -26,6 +26,17 @@ export namespace Language {
     export function reference(_target: any, _propertyKey?: any) {}
 
     /**
+     * Marks a string property as free-form text.
+     *
+     * Plain string properties are parsed as names (`LangiumName`): words, blanks between
+     * them, and the brackets and braces, but no other punctuation - so a value such as a
+     * UML multiplicity (`0..*`) or a transition's `trigger / effect` cannot be held in
+     * one. Properties marked with this decorator are parsed with the more permissive
+     * `LangiumText` rule instead, which takes everything the grammar can lex.
+     */
+    export function text(_target: any, _propertyKey?: any) {}
+
+    /**
      * Runtime type for references between model elements.
      * Used in the Langium AST at runtime (not during code generation).
      * Properties marked with `@Language.reference` in def files use this type

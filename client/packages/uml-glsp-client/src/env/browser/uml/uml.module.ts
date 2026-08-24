@@ -9,6 +9,7 @@
 import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { configureModelElement, FeatureModule, GCompartmentView, GLabel, GLabelView } from '@eclipse-glsp/client';
 import { GUmlCompartment } from '../views/uml-compartment.js';
+import { GConnectionPointPort, GConnectionPointPortView } from './views/connection-point.view.js';
 import { GCompartmentContainer } from './views/uml-compartment.js';
 import { GDivider, GDividerView } from './views/uml-divider.view.js';
 import { GIconCSS, GIconCSSView } from './views/uml-icon.view.js';
@@ -25,4 +26,5 @@ export const umlModule = new FeatureModule((bind, unbind, isBound, rebind) => {
     configureModelElement(context, CommonModelTypes.COMP_HEADER, GUmlCompartment, GCompartmentView);
     configureModelElement(context, CommonModelTypes.COMP_ROOT_COMPONENT, GUmlCompartment, GCompartmentView);
     configureModelElement(context, CommonModelTypes.COMP_CONTAINER, GCompartmentContainer, GCompartmentView);
+    configureModelElement(context, CommonModelTypes.CONNECTION_POINT, GConnectionPointPort, GConnectionPointPortView);
 });

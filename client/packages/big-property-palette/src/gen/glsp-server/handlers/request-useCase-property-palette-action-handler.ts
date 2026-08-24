@@ -16,7 +16,9 @@ import {
     isExtend,
     isGeneralization,
     isInclude,
+    isNote,
     isSubject,
+    isTextLabel,
     isUseCase
 } from '@borkdominik-biguml/uml-model-server/grammar';
 import { DiagramModelState, DiagramLanguageMetadata } from '@borkdominik-biguml/uml-glsp-server/vscode';
@@ -26,7 +28,9 @@ import { AssociationPropertyPaletteHandler } from './elements/association.proper
 import { ExtendPropertyPaletteHandler } from './elements/extend.property-palette-handler.js';
 import { GeneralizationPropertyPaletteHandler } from './elements/generalization.property-palette-handler.js';
 import { IncludePropertyPaletteHandler } from './elements/include.property-palette-handler.js';
+import { NotePropertyPaletteHandler } from './elements/note.property-palette-handler.js';
 import { SubjectPropertyPaletteHandler } from './elements/subject.property-palette-handler.js';
+import { TextLabelPropertyPaletteHandler } from './elements/text-label.property-palette-handler.js';
 import { UseCasePropertyPaletteHandler } from './elements/use-case.property-palette-handler.js';
 @injectable()
 export class RequestUseCasePropertyPaletteActionHandler implements ActionHandler {
@@ -63,6 +67,10 @@ export class RequestUseCasePropertyPaletteActionHandler implements ActionHandler
                 return UseCasePropertyPaletteHandler.getPropertyPalette(context);
             } else if (isSubject(semanticElement)) {
                 return SubjectPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isTextLabel(semanticElement)) {
+                return TextLabelPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isNote(semanticElement)) {
+                return NotePropertyPaletteHandler.getPropertyPalette(context);
             } else if (isInclude(semanticElement)) {
                 return IncludePropertyPaletteHandler.getPropertyPalette(context);
             } else if (isGeneralization(semanticElement)) {

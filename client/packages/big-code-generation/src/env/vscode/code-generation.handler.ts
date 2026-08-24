@@ -144,6 +144,11 @@ export class CodeGenerationActionHandler implements OnActivate, OnDispose {
             if (!ref) {
                 return undefined;
             }
+            // A property's type is a typed-in name rather than a reference to a `DataType`. Parameters and
+            // the rest still hand this a reference, so both shapes are read here.
+            if (typeof ref === 'string') {
+                return { name: ref };
+            }
             if (ref.__refText) {
                 return { name: ref.__refText };
             }
@@ -162,7 +167,7 @@ export class CodeGenerationActionHandler implements OnActivate, OnDispose {
                 visibility: entity.visibility
             };
 
-            if (entity.__type === 'Class' || entity.__type === 'AbstractClass') {
+            if (entity.__type === 'Class') {
                 base.isAbstract = entity.isAbstract ?? false;
 
                 base.ownedAttribute = (entity.properties ?? []).map((p: any) => ({

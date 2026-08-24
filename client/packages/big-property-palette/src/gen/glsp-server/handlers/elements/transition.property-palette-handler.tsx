@@ -24,6 +24,24 @@ export namespace TransitionPropertyPaletteHandler {
                         text={context.semanticElement.name!}
                         label='Name'
                     />
+                    <TextProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='trigger'
+                        text={context.semanticElement.trigger!}
+                        label='Trigger'
+                    />
+                    <TextProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='guard'
+                        text={context.semanticElement.guard!}
+                        label='Guard'
+                    />
+                    <TextProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='effect'
+                        text={context.semanticElement.effect!}
+                        label='Effect'
+                    />
                     <ChoiceProperty
                         elementId={context.semanticElement.__id}
                         propertyId='visibility'
@@ -37,6 +55,20 @@ export namespace TransitionPropertyPaletteHandler {
                         choices={PropertyPaletteChoices.TRANSITION_KIND}
                         choice={context.semanticElement.kind!}
                         label='Transition Kind'
+                    />
+                    <ChoiceProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='sourcePoint'
+                        choices={PropertyPaletteChoices.CONNECTION_POINT}
+                        choice={context.semanticElement.sourcePoint!}
+                        label='Source Point'
+                    />
+                    <ChoiceProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='targetPoint'
+                        choices={PropertyPaletteChoices.CONNECTION_POINT}
+                        choice={context.semanticElement.targetPoint!}
+                        label='Target Point'
                     />
                 </PropertyPalette>
             )

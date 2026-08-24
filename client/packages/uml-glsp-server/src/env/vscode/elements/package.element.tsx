@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
+import { ClassDiagramNodeTypes, PACKAGE_TAB_HEIGHT } from '@borkdominik-biguml/uml-glsp-server';
 import { GCompartmentElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import { isClass, isPackage, type Package } from '@borkdominik-biguml/uml-model-server/grammar';
 import { DefaultTypes, type Dimension, type Point } from '@eclipse-glsp/protocol';
@@ -30,6 +30,9 @@ export interface GPackageNodeElementProps {
     freeformChildren?: GModelElement[];
 }
 
+/** What a vbox leaves around its contents by default, and what a package keeps below its tab. */
+const CONTENT_PADDING = 5;
+
 export function GPackageNodeElement(props: GPackageNodeElementProps): GModelElement {
     const { node, position, size, freeformChildren } = props;
     const id = node.__id;
@@ -47,10 +50,17 @@ export function GPackageNodeElement(props: GPackageNodeElementProps): GModelElem
     }
     if (size) {
         packageNode.size = size;
-        packageNode.layoutOptions = { prefWidth: size.width, prefHeight: size.height };
     }
+    // Everything the package holds starts below the tab the view draws along its top edge, which is
+    // part of the shape rather than something laid over it.
+    packageNode.layoutOptions = {
+        paddingTop: PACKAGE_TAB_HEIGHT + CONTENT_PADDING,
+        ...(size ? { prefWidth: size.width, prefHeight: size.height } : {})
+    };
 
-    const header = <CompartmentHeader id={id} name={node.name} stereotype='package' />;
+    // No `<<package>>` above the name: the tab the shape is drawn with is what says it is a package,
+    // and UML writes the stereotype only where the shape does not already say so.
+    const header = <CompartmentHeader id={id} name={node.name} />;
     header.parent = packageNode;
     packageNode.children.push(header);
 

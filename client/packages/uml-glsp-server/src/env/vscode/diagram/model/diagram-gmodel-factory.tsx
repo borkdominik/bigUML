@@ -8,7 +8,6 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
-    isAbstractClass,
     isAbstraction,
     isAcceptEventAction,
     isActivity,
@@ -34,8 +33,10 @@ import {
     isDeploymentSpecification,
     isDevice,
     isElementImport,
+    isEntryPoint,
     isEnumeration,
     isExecutionEnvironment,
+    isExitPoint,
     isExtend,
     isFinalState,
     isFlowFinalNode,
@@ -58,6 +59,7 @@ import {
     isManifestation,
     isMergeNode,
     isMessage,
+    isNote,
     isOpaqueAction,
     isOutputPin,
     isPackage,
@@ -73,10 +75,12 @@ import {
     isStateMachine,
     isSubject,
     isSubstitution,
+    isTerminate,
+    isTextLabel,
     isTransition,
     isUsage,
     isUseCase,
-    type Class
+    type Region
 } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { GEdge, GGraph, GModelElement, GModelFactory } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
@@ -107,8 +111,10 @@ import { createDeploymentRelation } from '../../elements/deployment-relation.ele
 import { createDeploymentSpecificationElement } from '../../elements/deployment-specification.element.js';
 import { createDeviceElement } from '../../elements/device.element.js';
 import { createElementImportRelation } from '../../elements/element-import.element.js';
+import { createEntryPointElement } from '../../elements/entry-point.element.js';
 import { createEnumerationElement } from '../../elements/enumeration.element.js';
 import { createExecutionEnvironmentElement } from '../../elements/execution-environment.element.js';
+import { createExitPointElement } from '../../elements/exit-point.element.js';
 import { createExtendRelation } from '../../elements/extend-relation.element.js';
 import { createFinalStateElement } from '../../elements/final-state.element.js';
 import { createFlowFinalNodeElement } from '../../elements/flow-final-node.element.js';
@@ -131,6 +137,7 @@ import { createLiteralSpecificationElement } from '../../elements/literal-specif
 import { createManifestationRelation } from '../../elements/manifestation.element.js';
 import { createMergeNodeElement } from '../../elements/merge-node.element.js';
 import { createMessageRelation } from '../../elements/message.element.js';
+import { createNoteElement } from '../../elements/note.element.js';
 import { createOpaqueActionElement } from '../../elements/opaque-action.element.js';
 import { createOutputPinElement } from '../../elements/output-pin.element.js';
 import { createPackageImportRelation } from '../../elements/package-import-relation.element.js';
@@ -146,12 +153,19 @@ import { createStateMachineElement } from '../../elements/state-machine.element.
 import { createStateElement } from '../../elements/state.element.js';
 import { createSubjectElement } from '../../elements/subject.element.js';
 import { createSubstitutionRelation } from '../../elements/substitution-relation.element.js';
+import { createTerminateElement } from '../../elements/terminate.element.js';
+import { createTextLabelElement } from '../../elements/text-label.element.js';
 import { createTransitionRelation } from '../../elements/transition.element.js';
 import { createUsageRelation } from '../../elements/usage-relation.element.js';
 import { createUseCaseElement } from '../../elements/use-case.element.js';
 import { DiagramModelState } from '../../features/index.js';
 import { DiagramLanguageMetadata } from '../../features/model/diagram-language-metadata.js';
 import { DiagramModelIndex } from '../../features/model/diagram-model-index.js';
+
+/** Nodes that are drawn as a boundary around other, flatly listed nodes of the same diagram. */
+function isCanvasContainer(element: unknown): boolean {
+    return isSubject(element) || isStateMachine(element) || isRegion(element) || isActivity(element) || isActivityPartition(element);
+}
 
 @injectable()
 export class UmlDiagramGModelFactory implements GModelFactory {
@@ -174,8 +188,18 @@ export class UmlDiagramGModelFactory implements GModelFactory {
     protected createGraph(): GGraph | undefined {
         const diagram = this.modelState.semanticRoot.diagram;
 
-        const nodes = diagram.entities.map(e => this.createNodeElement(e)).filter(Boolean) as GModelElement[];
-        const edges = diagram.relations
+        const collectedNodes: unknown[] = [];
+        const collectedEdges: unknown[] = [...diagram.relations];
+        diagram.entities.forEach(entity => this.collectSemanticElements(entity, collectedNodes, collectedEdges));
+
+        // Subjects, state machine frames and regions act as containers drawn around other nodes, so
+        // they must always paint behind them, regardless of the order in which they were created
+        // relative to the nodes they contain. The sort is stable, so a container nested in another one
+        // keeps the depth-first order `collectSemanticElements` put it in - a region still paints in
+        // front of the frame that owns it, and behind the states that sit on it.
+        const entities = collectedNodes.sort((a, b) => Number(isCanvasContainer(b)) - Number(isCanvasContainer(a)));
+        const nodes = entities.map(e => this.createNodeElement(e)).filter(Boolean) as GModelElement[];
+        const edges = collectedEdges
             .filter((r: any) => r.source?.ref && r.target?.ref)
             .map(e => this.createEdgeElement(e))
             .filter(Boolean) as GEdge[];
@@ -188,6 +212,56 @@ export class UmlDiagramGModelFactory implements GModelFactory {
         ) as GGraph;
     }
 
+    /**
+     * Flattens the semantic model's containment into the flat list the graph is built from.
+     *
+     * The two do not agree on shape. The semantic model nests - a state machine owns regions, a region
+     * owns the states and the transitions drawn inside it, and one of those states can own regions of
+     * its own - while the graph holds every node as a direct child, placed at an absolute position, with
+     * a container drawn *behind* the nodes that sit on it rather than around them.
+     *
+     * Only `diagram.entities` and `diagram.relations` were ever walked, so anything reachable solely
+     * through a container's own properties never became a GModel element: a region and everything put
+     * inside it was stored correctly and then simply never drawn.
+     */
+    protected collectSemanticElements(element: unknown, nodes: unknown[], edges: unknown[]): void {
+        nodes.push(element);
+
+        if (isStateMachine(element)) {
+            element.regions?.forEach(region => this.collectSemanticElements(region, nodes, edges));
+        }
+
+        // A *state's* regions are the bands drawn inside the state itself (see `GStateRegionCompartment`),
+        // so the region is not a node of its own here - what is drawn on the band still is. Collected as a
+        // node as well, it would appear twice under the one id: once as the band and once as a frame of
+        // its own, standing wherever its stored position happens to put it.
+        if (isState(element)) {
+            element.regions?.forEach(region => this.collectRegionContents(region, nodes, edges));
+        }
+
+        if (isRegion(element)) {
+            this.collectRegionContents(element, nodes, edges);
+        }
+
+        // An interaction owns its lifelines and the messages between them the same way - and that is
+        // where both are put by the property palette's create actions and by `getCreationPath`, so
+        // without this a lifeline or message added there is stored correctly and never appears.
+        if (isInteraction(element)) {
+            element.lifelines?.forEach(lifeline => this.collectSemanticElements(lifeline, nodes, edges));
+            element.messages?.forEach(message => edges.push(message));
+        }
+    }
+
+    /**
+     * What is drawn on a region: the states and pseudostates put inside it, and the transitions between
+     * them - which are stored on the region rather than in the diagram's flat relation list, so they have
+     * to be picked up here or they are never drawn either.
+     */
+    protected collectRegionContents(region: Region, nodes: unknown[], edges: unknown[]): void {
+        region.subvertices?.forEach(subvertex => this.collectSemanticElements(subvertex, nodes, edges));
+        region.transitions?.forEach(transition => edges.push(transition));
+    }
+
     protected buildCtx<T>(node: T): ElementContext<T> {
         return {
             modelIndex: this.modelIndex,
@@ -198,8 +272,6 @@ export class UmlDiagramGModelFactory implements GModelFactory {
     }
 
     protected createNodeElement(element: unknown): GModelElement | undefined {
-        // AbstractClass must come before Class (AbstractClass extends Class)
-        if (isAbstractClass(element)) return createClassElement(this.buildCtx(element as Class));
         if (isClass(element)) return createClassElement(this.buildCtx(element));
         if (isInterface(element)) return createInterfaceElement(this.buildCtx(element));
         if (isDataType(element)) return createDataTypeElement(this.buildCtx(element));
@@ -252,10 +324,25 @@ export class UmlDiagramGModelFactory implements GModelFactory {
         if (isFork(element)) return createForkElement(this.buildCtx(element));
         if (isDeepHistory(element)) return createDeepHistoryElement(this.buildCtx(element));
         if (isShallowHistory(element)) return createShallowHistoryElement(this.buildCtx(element));
+        if (isExitPoint(element)) return createExitPointElement(this.buildCtx(element));
+        if (isEntryPoint(element)) return createEntryPointElement(this.buildCtx(element));
+        if (isTerminate(element)) return createTerminateElement(this.buildCtx(element));
+        // Every diagram. A note belongs to none of the groups above because it belongs to all of them -
+        // it says something about the diagram rather than being part of any one notation.
+        if (isNote(element)) return createNoteElement(this.buildCtx(element));
+        if (isTextLabel(element)) return createTextLabelElement(this.buildCtx(element));
         return undefined;
     }
 
     protected createEdgeElement(edge: unknown): GEdge | undefined {
+        const gEdge = this.buildEdgeElement(edge);
+        if (gEdge) {
+            gEdge.routingPoints = this.modelState.getRoutingPoints(gEdge.id) ?? [];
+        }
+        return gEdge;
+    }
+
+    protected buildEdgeElement(edge: unknown): GEdge | undefined {
         if (isAbstraction(edge)) return createAbstractionRelation(this.buildCtx(edge));
         if (isAssociation(edge)) return createAssociationRelation(this.buildCtx(edge));
         if (isDependency(edge)) return createDependencyRelation(this.buildCtx(edge));

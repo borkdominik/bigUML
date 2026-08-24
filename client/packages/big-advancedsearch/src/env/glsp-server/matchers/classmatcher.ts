@@ -75,13 +75,14 @@ export class ClassDiagramMatcher implements IMatcher {
 
             switch (type) {
                 case 'Class':
-                case 'AbstractClass':
                 case 'Interface':
                 case 'DataType':
                     results.push({ id, type, name, parentName });
                     break;
                 case 'Property': {
-                    const typeName = element.propertyType?.$refText;
+                    // A plain string since a property's type is typed rather than picked - it used to be a
+                    // cross-reference, which is what `$refText` read the name off.
+                    const typeName = element.propertyType;
                     results.push({
                         id,
                         type,
@@ -101,7 +102,8 @@ export class ClassDiagramMatcher implements IMatcher {
                     });
                     break;
                 case 'Parameter': {
-                    const paramTypeName = element.parameterType?.$refText;
+                    // A plain string for the same reason a property's type is - it is typed, not picked.
+                    const paramTypeName = element.parameterType;
                     results.push({
                         id,
                         type,

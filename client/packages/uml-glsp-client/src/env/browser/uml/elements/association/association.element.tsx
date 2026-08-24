@@ -9,6 +9,7 @@
 import { GEdge, GEdgeView } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 
+/** An association. */
 export class GAssociationEdge extends GEdge {}
 
 @injectable()

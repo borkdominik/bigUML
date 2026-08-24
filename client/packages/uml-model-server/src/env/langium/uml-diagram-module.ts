@@ -25,6 +25,8 @@ import { QualifiedNameProvider } from './uml-diagram-naming.js';
 import { UmlDiagramPackageManager } from './uml-diagram-package-manager.js';
 import { UmlDiagramScopeProvider } from './uml-diagram-scope-provider.js';
 import { UmlDiagramScopeComputation } from './uml-diagram-scope.js';
+import { UmlDiagramTokenBuilder } from './uml-diagram-token-builder.js';
+import { UmlDiagramValueConverter } from './uml-diagram-value-converter.js';
 import { UmlDiagramValidator } from './uml-diagram-validator.js';
 import { UmlDiagramWorkspaceManager } from './uml-diagram-workspace-manager.js';
 
@@ -103,6 +105,10 @@ export function createUmlDiagramModule(
         lsp: {
             CompletionProvider: services => new UmlDiagramCompletionProvider(services),
             Formatter: () => new UmlDiagramModelFormatter()
+        },
+        parser: {
+            TokenBuilder: () => new UmlDiagramTokenBuilder(),
+            ValueConverter: () => new UmlDiagramValueConverter()
         },
         serializer: {
             Serializer: services => new UmlDiagramSerializer(services),

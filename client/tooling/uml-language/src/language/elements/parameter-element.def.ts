@@ -7,12 +7,10 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { PropertyPalette } from '@borkdominik-biguml/big-property-palette/generator';
 import { Glsp } from '@borkdominik-biguml/uml-glsp-server/generator';
 import { Language } from '@borkdominik-biguml/uml-language-tooling';
 import 'reflect-metadata';
 import { Unbounded, type Visibility } from '../core/element.def.js';
-import type { DataTypeReference } from './data-type-element.def.js';
 
 // @ts-nocheck
 
@@ -30,8 +28,8 @@ export class Parameter extends Unbounded {
     direction?: ParameterDirection;
     effect?: EffectType;
     visibility?: Visibility;
-    @PropertyPalette.dynamic('DataType')
-    @Language.reference
-    parameterType?: DataTypeReference;
-    multiplicity?: string;
+    // Typed in rather than picked, the way a property's type is - see `Property.propertyType` for what
+    // the dropdown could not offer and what the link to a `DataType` element cost to give up.
+    @Language.text parameterType?: string;
+    @Language.text multiplicity?: string;
 }

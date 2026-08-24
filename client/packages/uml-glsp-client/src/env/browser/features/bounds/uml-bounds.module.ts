@@ -11,7 +11,7 @@ import { bindOrRebind, configureActionHandler, configureLayout, FeatureModule, G
 import { boundsModule } from '@eclipse-glsp/client/lib/features/bounds/bounds-module.js';
 import { SetViewportAction } from '@eclipse-glsp/protocol';
 import { GraphGridActionHandler, ShowGridAction, UmlGridSnapper } from './grid-snapper.js';
-import { UmlFreeFormLayouter, UmlLayouterExt } from './index.js';
+import { UmlCenteredVBoxLayouter, UmlFreeFormLayouter, UmlLayouterExt } from './index.js';
 import { UmlHiddenBoundsUpdater } from './uml-hidden-bounds-updater.js';
 
 export const umlBoundsModule = new FeatureModule(
@@ -21,6 +21,7 @@ export const umlBoundsModule = new FeatureModule(
         bindOrRebind(context, TYPES.ISnapper).to(UmlGridSnapper).inSingletonScope();
 
         configureLayout(context, UmlFreeFormLayouter.KIND, UmlFreeFormLayouter);
+        configureLayout(context, UmlCenteredVBoxLayouter.KIND, UmlCenteredVBoxLayouter);
 
         bind(GraphGridActionHandler).toSelf().inSingletonScope();
         bind(TYPES.IDiagramStartup).toService(GraphGridActionHandler);

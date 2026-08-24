@@ -12,6 +12,8 @@ import 'reflect-metadata';
 import type { Interaction } from '../elements/interaction-element.def.js';
 import type { Lifeline } from '../elements/lifeline-element.def.js';
 import type { Message } from '../elements/message-element.def.js';
+import type { Note } from '../elements/note-element.def.js';
+import type { TextLabel } from '../elements/text-label-element.def.js';
 
 // @ts-nocheck
 
@@ -24,6 +26,6 @@ export class CommunicationDiagram {
 
 type CommunicationDiagramElements = CommunicationDiagramNodes | CommunicationDiagramEdges;
 
-type CommunicationDiagramNodes = Interaction | Lifeline;
+type CommunicationDiagramNodes = Interaction | Lifeline | Note | TextLabel;
 
 type CommunicationDiagramEdges = Message;

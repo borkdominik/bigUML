@@ -25,6 +25,36 @@ import { groupBy } from 'lodash';
 import { useCallback, useContext, useEffect, useState, type ChangeEvent, type ReactElement } from 'react';
 import { PropertyPaletteReferenceItem } from './property-palette-reference-item.component.js';
 
+const MULTIPLICITY_PROPERTY_IDS = new Set(['multiplicity', 'sourceMultiplicity', 'targetMultiplicity']);
+
+/**
+ * Builds up a valid multiplicity as the user types: digits (`1`, `12`), a digit range (`1..5`),
+ * a digit range open at the top (`1..*`), or a bare `*`. Anything else (extra dots, letters,
+ * a `*` that isn't standalone or after `..`, anything typed after a `*`) is silently dropped.
+ */
+function sanitizeMultiplicity(raw: string): string {
+    let result = '';
+    let dotCount = 0;
+
+    for (const char of raw) {
+        if (/\d/.test(char)) {
+            result += char;
+        } else if (char === '.') {
+            if ((dotCount === 0 && /\d$/.test(result)) || (dotCount === 1 && result.endsWith('.'))) {
+                result += char;
+                dotCount++;
+            }
+        } else if (char === '*') {
+            if (result === '' || result.endsWith('..')) {
+                result += char;
+                break;
+            }
+        }
+    }
+
+    return result;
+}
+
 export function PropertyPalette(): ReactElement {
     const { clientId, dispatchNotification, listenAction, dispatchAction } = useContext(VSCodeContext);
     const [properties, setProperties] = useState<ElementProperties | undefined>();
@@ -192,12 +222,24 @@ export function PropertyPalette(): ReactElement {
 
         const gridTemplates = gridItems.map((item: any) => {
             if (ElementTextProperty.is(item)) {
+                const isMultiplicity = MULTIPLICITY_PROPERTY_IDS.has(item.propertyId);
                 return (
                     <div key={`${item.elementId}-${item.propertyId}`}>
                         <div className='grid-label'>{item.label}</div>
                         <div className='grid-value grid-flex'>
                             <BTextfield
-                                value={item.text}
+                                value={item.text ?? ''}
+                                onInput={
+                                    isMultiplicity
+                                        ? (e: any) => {
+                                              const input = e.target as HTMLInputElement;
+                                              const sanitized = sanitizeMultiplicity(input.value);
+                                              if (sanitized !== input.value) {
+                                                  input.value = sanitized;
+                                              }
+                                          }
+                                        : undefined
+                                }
                                 onBlur={(e: any) => onPropertyChange(item, (e.target as HTMLInputElement).value)}
                             />
                         </div>

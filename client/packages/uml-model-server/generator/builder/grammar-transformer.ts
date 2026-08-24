@@ -43,6 +43,14 @@ export interface Definition {
     multiplicity: Multiplicity;
     crossReference: boolean;
     optional: boolean;
+    /** `true` for string properties marked with `@Language.text` (free-form value). */
+    freeText: boolean;
+    /**
+     * `true` for the property an element is identified by - `generatorConfig.referenceProperty`, the one
+     * a cross-reference holds. It is the one string property that is machine-written rather than typed,
+     * and so the one that stays an identifier while the rest are read as names.
+     */
+    identifier: boolean;
 }
 
 // ============================================================================
@@ -89,7 +97,10 @@ function declarationToEntryRule(declaration: Declaration): EntryRule {
             types: property.types,
             multiplicity: property.multiplicity,
             crossReference: Decorator.has(property.decorators, 'reference'),
-            optional: property.isOptional
+            optional: property.isOptional,
+            freeText: Decorator.has(property.decorators, 'text'),
+            // The root carries no id: nothing refers to the diagram itself, so it is never given one.
+            identifier: false
         }))
     };
 }
@@ -120,30 +131,49 @@ function declarationsToTypeRules(declarations: Array<Declaration>): Array<TypeRu
         .filter(declaration => declaration.type === 'class' && !declaration.isAbstract)
         .forEach(declaration => {
             declaration.properties!.forEach(property => {
-                if (property.types.length > 1) {
-                    if (!typeRuleExists(typeRules as TypeRule[], property.types) && !typeRuleExists(inlineUnionRules, property.types)) {
-                        inlineUnionRules.push({
-                            name: `UnionType_${unionId++}`,
-                            definitions: property.types.map(type => ({
-                                typeName: type.typeName,
-                                type: type.type
-                            }))
-                        });
-                        property.types = [{ typeName: `UnionType_${unionId - 1}`, type: 'simple' }];
-                    }
+                if (property.types.length <= 1) {
+                    return;
                 }
+
+                /*
+                 * A property written as a union of types is parsed against one rule naming the whole
+                 * union, and the property is pointed at that rule. Where a rule over the same types is
+                 * already there - one declared in the language, or one made for a property written the
+                 * same way - the property points at that one instead of a second rule being made for it.
+                 *
+                 * Pointing it at the rule is the part that matters: a parser rule takes a single type
+                 * per property (see `transformDeclarationsToLangiumGrammar`), so a property left holding
+                 * its union keeps only the first type of it. That is what limited an information flow to
+                 * running into an Actor, and a transition to running into a Node.
+                 */
+                const existingName = (findTypeRule(typeRules as TypeRule[], property.types) ??
+                    findTypeRule(inlineUnionRules, property.types))?.name;
+                const typeName = existingName ?? `UnionType_${unionId++}`;
+
+                if (existingName === undefined) {
+                    inlineUnionRules.push({
+                        name: typeName,
+                        definitions: property.types.map(type => ({
+                            typeName: type.typeName,
+                            type: type.type
+                        }))
+                    });
+                }
+
+                property.types = [{ typeName, type: 'simple' }];
             });
         });
 
     return [...typeRules, ...inlineUnionRules] as TypeRule[];
 }
 
-function typeRuleExists(typeRules: Array<TypeRule>, propertyTypes: Type[]): boolean {
+/** The rule written over exactly these types, whatever order they are written in, if there is one. */
+function findTypeRule(typeRules: Array<TypeRule>, propertyTypes: Type[]): TypeRule | undefined {
     const sorted = propertyTypes
         .map(t => t.typeName)
         .sort()
         .join(',');
-    return typeRules.some(
+    return typeRules.find(
         rule =>
             rule.definitions
                 .map(t => t.typeName)
@@ -196,7 +226,9 @@ export function transformDeclarationsToLangiumGrammar(
                 type: property.types[0],
                 multiplicity: property.multiplicity,
                 crossReference: Decorator.has(property.decorators, 'reference'),
-                optional: property.isOptional
+                optional: property.isOptional,
+                freeText: Decorator.has(property.decorators, 'text'),
+                identifier: property.name === generatorConfig.referenceProperty
             }));
 
             if (!properties.find(property => property.name === generatorConfig.referenceProperty)) {
@@ -205,7 +237,9 @@ export function transformDeclarationsToLangiumGrammar(
                     type: { typeName: 'string', type: 'simple' },
                     multiplicity: Multiplicity.ONE_TO_ONE,
                     crossReference: false,
-                    optional: false
+                    optional: false,
+                    freeText: false,
+                    identifier: true
                 });
             }
 

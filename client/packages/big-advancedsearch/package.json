@@ -53,6 +53,8 @@
     "compile": "tsc -b",
     "lint": "eslint -c ./eslint.config.js",
     "lint:fix": "npm run lint -- --fix",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "tsc": "tsc",
     "watch": "concurrently --kill-others \"npm run watch:compile\" \"npm run watch:bundle\"",
     "watch:bundle": "npm run bundle -- --watch",
@@ -60,6 +62,7 @@
   },
   "dependencies": {
     "@borkdominik-biguml/big-components": "*",
+    "@borkdominik-biguml/big-minimap": "*",
     "@borkdominik-biguml/big-vscode": "*",
     "@borkdominik-biguml/uml-glsp-server": "*",
     "@borkdominik-biguml/uml-model-server": "*",
@@ -73,7 +76,8 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "vitest": "^4.1.8"
   },
   "peerDependencies": {
     "inversify": "^6.1.3",

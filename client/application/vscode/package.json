@@ -108,6 +108,24 @@
         "command": "timeline.export",
         "title": "Export Timeline",
         "icon": "$(cloud-download)"
+      },
+      {
+        "command": "bigUML.advancedsearch.toggleSyntax",
+        "title": "Syntax help",
+        "category": "bigUML",
+        "icon": "$(question)"
+      },
+      {
+        "command": "bigUML.advancedsearch.enablePreviews",
+        "title": "Show all previews",
+        "category": "bigUML",
+        "icon": "$(eye-closed)"
+      },
+      {
+        "command": "bigUML.advancedsearch.disablePreviews",
+        "title": "Hide all previews",
+        "category": "bigUML",
+        "icon": "$(eye)"
       }
     ],
     "configuration": {
@@ -227,6 +245,21 @@
           "command": "timeline.export",
           "when": "view == bigUML.panel.revision-management",
           "group": "navigation"
+        },
+        {
+          "command": "bigUML.advancedsearch.toggleSyntax",
+          "when": "view == bigUML.panel.advancedsearch",
+          "group": "navigation@1"
+        },
+        {
+          "command": "bigUML.advancedsearch.enablePreviews",
+          "when": "view == bigUML.panel.advancedsearch && !bigUML.advancedsearch.previewsOn",
+          "group": "navigation@2"
+        },
+        {
+          "command": "bigUML.advancedsearch.disablePreviews",
+          "when": "view == bigUML.panel.advancedsearch && bigUML.advancedsearch.previewsOn",
+          "group": "navigation@2"
         }
       ],
       "webview/context": [],

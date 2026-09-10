@@ -7,11 +7,16 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
+import type { ClassDiagram } from '../../../../../uml-model-server/build/gen/langium/language/ast.js';
 import type { SearchResult } from '../../common/searchresult.js';
+import type { SearchCriteria } from './search-ast.js';
 
 export interface IMatcher {
     supports(type: string): boolean;
-    match(model: any): SearchResult[];
-    supportsPartial?(partialType: string): boolean;
-    supportsList?(): string[];
+    supportsPartial(partialType: string): boolean;
+    supportsList(): string[];
+
+    match(diagram: unknown): SearchResult[];
+
+    matchAdvanced?(diagram: ClassDiagram, criteria: SearchCriteria): SearchResult[];
 }

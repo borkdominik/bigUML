@@ -141,27 +141,75 @@ export class MinimapGLSPSvgExporter {
         }
     }
 
+    /**
+     * The SVG presentation and text properties that actually affect how a node is rendered.
+     *
+     * The original Sprotty exporter inlined *every* computed CSS property (~350 per node) by
+     * iterating the whole `getComputedStyle` list and reading each value back from the target.
+     * On real diagrams that turned exporting into an O(nodes × properties) `getComputedStyle`
+     * storm with heavy layout thrashing, which dominated the search panel's load time.
+     *
+     * Inlining only this small allowlist keeps the exported thumbnails fully styled (they are
+     * rendered in a foreign webview without the diagram stylesheet) while cutting the per-node
+     * work by more than an order of magnitude.
+     */
+    protected static readonly INLINED_SVG_PROPERTIES: readonly string[] = [
+        'fill',
+        'fill-opacity',
+        'fill-rule',
+        'stroke',
+        'stroke-width',
+        'stroke-opacity',
+        'stroke-linecap',
+        'stroke-linejoin',
+        'stroke-dasharray',
+        'stroke-dashoffset',
+        'stroke-miterlimit',
+        'color',
+        'opacity',
+        'visibility',
+        'display',
+        'font-family',
+        'font-size',
+        'font-weight',
+        'font-style',
+        'font-variant',
+        'text-anchor',
+        'text-decoration',
+        'dominant-baseline',
+        'alignment-baseline',
+        'letter-spacing',
+        'word-spacing',
+        'marker-start',
+        'marker-mid',
+        'marker-end'
+    ];
+
     protected copyStyle(source: Element, target: Element, skippedProperties: string[]): void {
         const sourceStyle = getComputedStyle(source);
-        const targetStyle = getComputedStyle(target);
+
+        // Narrowing the ternary keeps the `ElementCSSInlineStyle` type guard so we can use `.style` directly.
+        const inlineTarget = this.shouldUpdateStyle(target) ? target : undefined;
 
         let style = '';
-        for (let i = 0; i < sourceStyle.length; i++) {
-            const propertyName = sourceStyle[i];
-            if (!skippedProperties.includes(propertyName)) {
-                const propertyValue = sourceStyle.getPropertyValue(propertyName);
-                const propertyPriority = sourceStyle.getPropertyPriority(propertyName);
-                if (targetStyle.getPropertyValue(propertyName) !== propertyValue) {
-                    if (this.shouldUpdateStyle(target)) {
-                        // rather set the property directly on the element to keep other values intact
-                        target.style.setProperty(propertyName, propertyValue);
-                    } else {
-                        // collect all properties to set them at once
-                        style += `${propertyName}: ${propertyValue}${propertyPriority ? ' !' + propertyPriority : ''}; `;
-                    }
-                }
+        for (const propertyName of MinimapGLSPSvgExporter.INLINED_SVG_PROPERTIES) {
+            if (skippedProperties.includes(propertyName)) {
+                continue;
+            }
+            const propertyValue = sourceStyle.getPropertyValue(propertyName);
+            if (!propertyValue) {
+                continue;
+            }
+            const propertyPriority = sourceStyle.getPropertyPriority(propertyName);
+            if (inlineTarget) {
+                // rather set the property directly on the element to keep other values intact
+                inlineTarget.style.setProperty(propertyName, propertyValue, propertyPriority);
+            } else {
+                // collect all properties to set them at once
+                style += `${propertyName}: ${propertyValue}${propertyPriority ? ' !' + propertyPriority : ''}; `;
             }
         }
+
         if (style !== '') {
             target.setAttribute('style', style.trim());
         }

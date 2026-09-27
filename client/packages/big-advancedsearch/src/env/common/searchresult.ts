@@ -13,4 +13,18 @@ export interface SearchResult {
     name: string;
     parentName?: string;
     details?: string;
+    /**
+     * Editable scalar string properties on the underlying element (e.g. `name`,
+     * `visibility`). Populated by matchers; the replace UI uses these for the
+     * property selector and per-row preview when a non-`name` property is
+     * targeted. The map's `name` value is the raw element name — distinct from
+     * the display `name` field, which may be a synthesized label (e.g. a
+     * relation's "Source → Target" string).
+     */
+    properties?: Record<string, string>;
+    svg?: string;
+    bounds?: { x: number; y: number; width: number; height: number };
+    /** For relations: the semantic ids of the connected source/target elements, used to build a composite preview. */
+    sourceId?: string;
+    targetId?: string;
 }

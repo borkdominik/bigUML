@@ -8,6 +8,11 @@ import { Action, RequestAction, type ResponseAction } from '@eclipse-glsp/protoc
 export interface RequestHighlightElementAction extends RequestAction<HighlightElementActionResponse> {
     kind: typeof RequestHighlightElementAction.KIND;
     semanticUri: string;
+    /**
+     * Element ids to fit the viewport to. Used for relations, whose own (edge) bounds are not
+     * fittable — instead we fit to the connected endpoints. Falls back to `semanticUri` when empty.
+     */
+    fitElementIds?: string[];
 }
 
 export namespace RequestHighlightElementAction {
@@ -17,11 +22,12 @@ export namespace RequestHighlightElementAction {
         return RequestAction.hasKind(obj, KIND);
     }
 
-    export function create(opts: { semanticUri: string }): RequestHighlightElementAction {
+    export function create(opts: { semanticUri: string; fitElementIds?: string[] }): RequestHighlightElementAction {
         return {
             kind: KIND,
             requestId: '',
-            semanticUri: opts.semanticUri
+            semanticUri: opts.semanticUri,
+            fitElementIds: opts.fitElementIds
         };
     }
 }

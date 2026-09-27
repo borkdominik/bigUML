@@ -10,10 +10,12 @@
 import { DiagramFeatureModule } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import type { ActionHandlerConstructor, InstanceMultiBinding } from '@eclipse-glsp/server';
 import { AdvancedSearchActionHandler } from './advancedsearch.handler.js';
+import { ReplaceActionHandler } from './replace.handler.js';
 
 class AdvancedSearchDiagramFeatureModule extends DiagramFeatureModule {
     override configureActionHandlers(binding: InstanceMultiBinding<ActionHandlerConstructor>): void {
         binding.add(AdvancedSearchActionHandler);
+        binding.add(ReplaceActionHandler);
     }
 }
 

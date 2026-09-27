@@ -8,7 +8,7 @@
  **********************************************************************************/
 
 import type { DiagramModelState } from '@borkdominik-biguml/uml-glsp-server/vscode';
-import { SelectAction, SelectAllAction } from '@eclipse-glsp/protocol';
+import { FitToScreenAction, SelectAction, SelectAllAction } from '@eclipse-glsp/protocol';
 import { ModelState, type ActionHandler, type MaybePromise } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 import { AdvancedSearchActionResponse, RequestAdvancedSearchAction } from '../common/advancedsearch.action.js';
@@ -16,6 +16,8 @@ import { HighlightElementActionResponse, RequestHighlightElementAction } from '.
 import type { SearchResult } from '../common/searchresult.js';
 import type { IMatcher } from './matchers/IMatcher.js';
 import { ClassDiagramMatcher } from './matchers/classmatcher.js';
+import { extractNameFindPattern } from './matchers/find-pattern.js';
+import { buildAst } from './matchers/visitor.js';
 
 @injectable()
 export class AdvancedSearchActionHandler implements ActionHandler {
@@ -25,6 +27,11 @@ export class AdvancedSearchActionHandler implements ActionHandler {
     readonly modelState: DiagramModelState;
 
     private readonly matchers: IMatcher[] = [new ClassDiagramMatcher()];
+
+    private readonly typeOrder: Record<string, number> = {
+        class: 0,
+        association: 99
+    };
 
     execute(action: RequestAdvancedSearchAction | RequestHighlightElementAction): MaybePromise<any[]> {
         if (RequestAdvancedSearchAction.is(action)) {
@@ -38,64 +45,78 @@ export class AdvancedSearchActionHandler implements ActionHandler {
 
     protected handleSearch(action: RequestAdvancedSearchAction): any[] {
         const diagram = this.modelState.semanticRoot.diagram;
-        const results: SearchResult[] = [];
         const rawQuery = action.query.trim();
 
-        let type: string | undefined;
-        let pattern: string | undefined;
-
-        if (rawQuery.includes(':')) {
-            const [rawType, rawPattern] = rawQuery.split(':', 2);
-            type = rawType?.trim().toLowerCase() || undefined;
-            pattern = rawPattern?.trim().toLowerCase() || undefined;
-        } else {
-            type = undefined;
-            pattern = rawQuery.toLowerCase();
+        if (diagram.$type !== 'ClassDiagram') {
+            return [
+                AdvancedSearchActionResponse.create({
+                    results: [],
+                    error: 'Advanced search is currently only available for class diagrams.'
+                })
+            ];
         }
 
-        const applicableMatchers = !type ? this.matchers : this.matchers.filter(m => m.supportsPartial?.(type as string));
+        try {
+            const results: SearchResult[] = [];
 
-        for (const matcher of applicableMatchers) {
-            results.push(...matcher.match(diagram));
-        }
+            if (rawQuery.length === 0) {
+                for (const matcher of this.matchers) {
+                    results.push(...matcher.match(diagram));
+                }
 
-        const filtered = results.filter(item => {
-            const itemType = item.type.toLowerCase();
-            const name = item.name?.toLowerCase() ?? '';
-            const details = item.details?.toLowerCase() ?? '';
-            const parentName = item.parentName?.toLowerCase() ?? '';
-            const matchesType = !type || itemType.includes(type);
-            const matchesPattern = !pattern || name.includes(pattern) || details.includes(pattern) || parentName.includes(pattern);
-            return matchesType && matchesPattern;
-        });
-
-        const unique = new Map<string, SearchResult>();
-        for (const item of filtered) {
-            const key = `${item.id}-${item.type}`;
-            const existing = unique.get(key);
-            if (!existing) {
-                unique.set(key, item);
-                continue;
+                return [AdvancedSearchActionResponse.create({ results: this.sortResults(results) })];
             }
-            const existingName = existing.name ?? '';
-            const candidateName = item.name ?? '';
-            const existingIsUnknown = existingName.includes('(unknown)');
-            const candidateIsUnknown = candidateName.includes('(unknown)');
-            if (existingIsUnknown && !candidateIsUnknown) {
-                unique.set(key, item);
-                continue;
-            }
-        }
 
-        return [AdvancedSearchActionResponse.create({ results: Array.from(unique.values()) })];
+            const criteria = buildAst(rawQuery);
+
+            for (const matcher of this.matchers) {
+                if ('matchAdvanced' in matcher && typeof matcher.matchAdvanced === 'function') {
+                    results.push(...matcher.matchAdvanced(diagram, criteria));
+                }
+            }
+
+            return [
+                AdvancedSearchActionResponse.create({
+                    results: this.sortResults(results),
+                    findPattern: extractNameFindPattern(criteria)
+                })
+            ];
+        } catch (error) {
+            console.error('Could not parse query', error);
+            const message = error instanceof Error ? error.message : String(error);
+            return [AdvancedSearchActionResponse.create({ results: [], error: message })];
+        }
     }
 
     protected handleHighlight(action: RequestHighlightElementAction): any[] {
         const uri = action.semanticUri;
+        // Edges aren't bounds-aware, so fitting to a relation's own id does nothing.
+        // Relations pass their endpoint ids here so we fit to the connected nodes instead.
+        const fitIds = action.fitElementIds?.length ? action.fitElementIds : [uri];
         return [
             SelectAllAction.create(false),
             SelectAction.create({ selectedElementsIDs: [uri] }),
+            FitToScreenAction.create(fitIds, { maxZoom: 1, padding: 50, animate: true }),
             HighlightElementActionResponse.create({ ok: true })
         ];
+    }
+
+    private sortResults(results: SearchResult[]): SearchResult[] {
+        return results.sort((a, b) => {
+            const aTypeRank = this.typeOrder[a.type.toLowerCase()] ?? 50;
+            const bTypeRank = this.typeOrder[b.type.toLowerCase()] ?? 50;
+
+            const rankComparison = aTypeRank - bTypeRank;
+            if (rankComparison !== 0) {
+                return rankComparison;
+            }
+
+            const typeComparison = a.type.localeCompare(b.type, undefined, { sensitivity: 'base' });
+            if (typeComparison !== 0) {
+                return typeComparison;
+            }
+
+            return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
+        });
     }
 }

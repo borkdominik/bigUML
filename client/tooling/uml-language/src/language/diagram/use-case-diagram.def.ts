@@ -18,6 +18,8 @@ import type { Note } from '../elements/note-element.def.js';
 import type { TextLabel } from '../elements/text-label-element.def.js';
 import type { Subject } from '../elements/subject-element.def.js';
 import type { UseCase } from '../elements/use-case-element.def.js';
+import type { GenericEdge } from '../elements/generic-edge-element.def.js';
+import type { EdgeAnchor } from '../elements/edge-anchor-element.def.js';
 
 // @ts-nocheck
 
@@ -30,6 +32,6 @@ export class UseCaseDiagram {
 
 type UseCaseDiagramElements = UseCaseDiagramNodes | UseCaseDiagramEdges;
 
-type UseCaseDiagramNodes = UseCase | Actor | Subject | Note | TextLabel;
+type UseCaseDiagramNodes = UseCase | Actor | Subject | Note | TextLabel | EdgeAnchor;
 
-type UseCaseDiagramEdges = Include | Extend | Association | Generalization;
+type UseCaseDiagramEdges = Include | Extend | Association | Generalization | GenericEdge;

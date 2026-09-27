@@ -25,46 +25,6 @@ export namespace Utils {
     }
 
     /**
-     * Return true if all given URIs match the same folder if applied with the folderProvider function.
-     * If no or only a single URI is given, true is returned.
-     *
-     * @param folderProvider mapping from URI to folder URI
-     * @param uris URIs
-     * @returns true if all folder URIs match
-     */
-    export function matchSameFolder(folderProvider: (uri?: URI) => URI | undefined, ...uris: URI[]): boolean {
-        if (uris.length < 2) {
-            return true;
-        }
-        const [first, ...rest] = uris;
-        const folder = folderProvider(first);
-        return rest.every(uri => folderProvider(uri)?.fsPath === folder?.fsPath);
-    }
-
-    /**
-     * Finds a new URI based on the given URI by increasing a counter after the file name.
-     * If a file with that name already exists, the counter is increased.
-     *
-     * @param uri base URI
-     * @returns a new URI where no file exists
-     */
-    export function findNewUri(uri: URI): URI {
-        if (!exists(uri)) {
-            return uri;
-        }
-        let newUri = uri;
-        const dirName = UriUtils.dirname(newUri);
-        const baseName = UriUtils.basename(uri);
-        const [base, ...extensions] = baseName.split('.');
-        const extension = extensions.join('.');
-        let counter = 0;
-        do {
-            newUri = UriUtils.joinPath(dirName, base + counter++ + '.' + extension);
-        } while (exists(newUri));
-        return newUri;
-    }
-
-    /**
      * Returns true if a file for the given URI exists.
      *
      * @param uri URI

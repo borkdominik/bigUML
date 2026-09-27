@@ -8,7 +8,6 @@
  *********************************************************************************/
 import {
     angleOfPoint,
-    EdgeLayoutPostprocessor,
     type EdgeRouterRegistry,
     type GEdge,
     type GModelElement,
@@ -18,6 +17,7 @@ import {
 } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { type VNode } from 'snabbdom';
+import { UmlEdgeLayoutPostprocessor } from '../../../features/edge-layout/uml-edge-layout-postprocessor.js';
 import { GMessageArrowLabel } from './message.element.js';
 
 /**
@@ -84,7 +84,8 @@ export function messageArrowGeometry(label: GMessageArrowLabel, edgeRouterRegist
  * it, and leaves every other label written along an edge to GLSP.
  */
 @injectable()
-export class MessageArrowLayoutPostprocessor extends EdgeLayoutPostprocessor {
+// Built on the UML one, since this is the postprocessor bound for every diagram (see `communication.module.ts`).
+export class MessageArrowLayoutPostprocessor extends UmlEdgeLayoutPostprocessor {
     override decorate(vnode: VNode, element: GModelElement): VNode {
         if (!(element instanceof GMessageArrowLabel)) {
             return super.decorate(vnode, element);

@@ -19,6 +19,8 @@ import { Node, type Visibility } from '../core/element.def.js';
     icon: 'uml-pseudostate-entry-point-icon'
 })
 @Glsp.defaults
+@Glsp.defaultSize({ width: 30, height: 30 })
+@Glsp.shape({ resizable: false })
 export class EntryPoint extends Node {
     name?: string;
     visibility?: Visibility;

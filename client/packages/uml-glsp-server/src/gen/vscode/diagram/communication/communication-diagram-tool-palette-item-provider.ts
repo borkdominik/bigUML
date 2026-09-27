@@ -31,6 +31,13 @@ export class CommunicationDiagramToolPaletteItemProvider extends ToolPaletteItem
                 icon: 'symbol-property',
                 children: [
                     {
+                        id: 'generic-edge',
+                        sortString: 'A',
+                        label: 'Generic Edge',
+                        icon: 'uml-connector-icon',
+                        actions: [TriggerEdgeCreationAction.create(CommunicationDiagramEdgeTypes.GENERIC_EDGE)]
+                    },
+                    {
                         id: 'text-label',
                         sortString: 'A',
                         label: 'Label',

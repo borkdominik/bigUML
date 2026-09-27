@@ -31,6 +31,13 @@ export class InformationFlowDiagramToolPaletteItemProvider extends ToolPaletteIt
                 icon: 'symbol-property',
                 children: [
                     {
+                        id: 'generic-edge',
+                        sortString: 'A',
+                        label: 'Generic Edge',
+                        icon: 'uml-connector-icon',
+                        actions: [TriggerEdgeCreationAction.create(InformationFlowDiagramEdgeTypes.GENERIC_EDGE)]
+                    },
+                    {
                         id: 'text-label',
                         sortString: 'A',
                         label: 'Label',
@@ -77,18 +84,18 @@ export class InformationFlowDiagramToolPaletteItemProvider extends ToolPaletteIt
                 icon: 'symbol-property',
                 children: [
                     {
-                        id: 'actor',
-                        sortString: 'A',
-                        label: 'Actor',
-                        icon: 'uml-actor-icon',
-                        actions: [TriggerNodeCreationAction.create(InformationFlowDiagramNodeTypes.ACTOR)]
-                    },
-                    {
                         id: 'class',
                         sortString: 'A',
                         label: 'Class',
                         icon: 'uml-class-icon',
                         actions: [TriggerNodeCreationAction.create(InformationFlowDiagramNodeTypes.CLASS)]
+                    },
+                    {
+                        id: 'actor',
+                        sortString: 'A',
+                        label: 'Actor',
+                        icon: 'uml-actor-icon',
+                        actions: [TriggerNodeCreationAction.create(InformationFlowDiagramNodeTypes.ACTOR)]
                     }
                 ],
                 actions: []

@@ -15,7 +15,7 @@ import { NamedElement, NamedElementView } from '../named-element/index.js';
 
 export class GPackageNode extends NamedElement {
     uri: string = '';
-    visibility: string = 'PUBLIC';
+    visibility: string = 'NONE';
 }
 
 /** How much of a package's width its tab takes up, and the least it may be drawn as. */

@@ -26,7 +26,17 @@ export interface ElementTextProperty extends ElementProperty {
     type: typeof ElementTextProperty.TYPE;
     text: string;
     label: string;
+    /** Values offered while the field is edited - it still takes any text. */
+    suggestions?: string[];
+    /** What the value has to be, where it is more than text - see {@link TextFormat}. */
+    format?: TextFormat;
 }
+
+/**
+ * A text value the palette holds to a shape while it is typed: `multiplicity` for a property the
+ * definition marks `@Language.multiplicity`.
+ */
+export type TextFormat = 'multiplicity';
 
 export namespace ElementTextProperty {
     export const TYPE = 'TEXT';
@@ -92,7 +102,23 @@ export namespace ElementReferenceProperty {
         label: string;
         name?: string;
         hint?: string;
+        /**
+         * The properties of the referenced element edited right in its row, one text field each - a
+         * property's name and type, say. Where it is left out the row edits `name` alone. Which fields a
+         * type offers is declared on its definition (see `PropertyPalette.inlineFields`).
+         */
+        fields?: Field[];
         deleteActions: Action[];
+    }
+
+    export interface Field {
+        propertyId: string;
+        label: string;
+        value: string;
+        /** Values offered while the field is edited - it still takes any text. */
+        suggestions?: string[];
+        /** What the value has to be, where it is more than text - see {@link TextFormat}. */
+        format?: TextFormat;
     }
 
     export interface CreateReference {

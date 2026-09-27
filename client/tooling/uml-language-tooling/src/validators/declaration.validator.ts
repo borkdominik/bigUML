@@ -8,6 +8,7 @@
  **********************************************************************************/
 import chalk from 'chalk';
 import { type Declaration, Decorator } from '../types/index.js';
+import { isValueDeclaration, isValueType } from '../utils/declaration.js';
 
 export function checkDeclarationValidity(declarations: Declaration[]): void {
     if (!declarations.find(declaration => Decorator.has(declaration.decorators, 'root'))) {
@@ -37,5 +38,23 @@ export function checkDeclarationValidity(declarations: Declaration[]): void {
                 )}]`
             )
         );
+    }
+    const valueErrors = declarations.filter(isValueDeclaration).flatMap(declaration => {
+        const errors: string[] = [];
+        if (declaration.isAbstract || (declaration.extends ?? []).length > 0 || (declaration.extendedBy ?? []).length > 0) {
+            errors.push(`${declaration.name} must be a concrete class outside any hierarchy`);
+        }
+        if (declaration.properties?.some(property => Decorator.has(property.decorators, 'reference'))) {
+            errors.push(`${declaration.name} must not hold references`);
+        }
+        return errors;
+    });
+    const referencedValues = declarations
+        .flatMap(declaration => declaration.properties ?? [])
+        .filter(property => Decorator.has(property.decorators, 'reference'))
+        .filter(property => property.types.some(type => isValueType(type.typeName, declarations)))
+        .map(property => `${property.name} references a value object`);
+    if (valueErrors.length > 0 || referencedValues.length > 0) {
+        throw new Error(chalk.red(`Invalid @value declarations. [${[...valueErrors, ...referencedValues].join(', ')}]`));
     }
 }

@@ -17,10 +17,12 @@ export namespace CommunicationDiagramNodeTypes {
     export const LIFELINE = representationTypeId('Communication', DefaultTypes.NODE, 'Lifeline');
     export const NOTE = representationTypeId('Communication', DefaultTypes.NODE, 'Note');
     export const TEXT_LABEL = representationTypeId('Communication', DefaultTypes.NODE, 'TextLabel');
+    export const EDGE_ANCHOR = representationTypeId('Communication', DefaultTypes.NODE, 'EdgeAnchor');
 }
 
 export namespace CommunicationDiagramEdgeTypes {
     export const MESSAGE = representationTypeId('Communication', DefaultTypes.EDGE, 'Message');
+    export const GENERIC_EDGE = representationTypeId('Communication', DefaultTypes.EDGE, 'GenericEdge');
 }
 
 export namespace CommunicationDiagramModelTypes {
@@ -29,9 +31,11 @@ export namespace CommunicationDiagramModelTypes {
     export const LIFELINE = CommunicationDiagramNodeTypes.LIFELINE;
     export const NOTE = CommunicationDiagramNodeTypes.NOTE;
     export const TEXT_LABEL = CommunicationDiagramNodeTypes.TEXT_LABEL;
+    export const EDGE_ANCHOR = CommunicationDiagramNodeTypes.EDGE_ANCHOR;
 
     // re-export edges
     export const MESSAGE = CommunicationDiagramEdgeTypes.MESSAGE;
+    export const GENERIC_EDGE = CommunicationDiagramEdgeTypes.GENERIC_EDGE;
 }
 
 export namespace CommunicationAstTypes {
@@ -40,7 +44,9 @@ export namespace CommunicationAstTypes {
         Lifeline: CommunicationDiagramModelTypes.LIFELINE,
         Note: CommunicationDiagramModelTypes.NOTE,
         TextLabel: CommunicationDiagramModelTypes.TEXT_LABEL,
-        Message: CommunicationDiagramModelTypes.MESSAGE
+        EdgeAnchor: CommunicationDiagramModelTypes.EDGE_ANCHOR,
+        Message: CommunicationDiagramModelTypes.MESSAGE,
+        GenericEdge: CommunicationDiagramModelTypes.GENERIC_EDGE
     };
 
     export function convertToAst(elementId: string): string {

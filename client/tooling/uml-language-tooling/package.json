@@ -29,6 +29,10 @@
     ".": {
       "types": "./build/index.d.ts",
       "default": "./build/index.js"
+    },
+    "./values": {
+      "types": "./build/values/index.d.ts",
+      "default": "./build/values/index.js"
     }
   },
   "bin": {

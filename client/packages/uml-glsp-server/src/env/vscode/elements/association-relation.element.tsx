@@ -47,8 +47,18 @@ export function createAssociationRelation(ctx: ElementContext<Relation>): GEdge 
             <EdgeMultiplicityLabel id={ctx.node.__id} end='source' multiplicity={(ctx.node as any).sourceMultiplicity} />
             <EdgeMultiplicityLabel id={ctx.node.__id} end='target' multiplicity={(ctx.node as any).targetMultiplicity} />
             {/* What either end is qualified by, in braces - `{ordered}`, `{subsets owner}`. */}
-            <EdgeModifiersLabel id={ctx.node.__id} end='source' modifiers={(ctx.node as any).sourceModifiers} />
-            <EdgeModifiersLabel id={ctx.node.__id} end='target' modifiers={(ctx.node as any).targetModifiers} />
+            <EdgeModifiersLabel
+                id={ctx.node.__id}
+                end='source'
+                modifiers={(ctx.node as any).sourceModifiers}
+                belowRoleName={!!(ctx.node as any).sourceName}
+            />
+            <EdgeModifiersLabel
+                id={ctx.node.__id}
+                end='target'
+                modifiers={(ctx.node as any).targetModifiers}
+                belowRoleName={!!(ctx.node as any).targetName}
+            />
         </GEdgeElement>
     ) as GEdge;
 }

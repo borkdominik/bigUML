@@ -14,6 +14,8 @@ import {
     GActorNodeView,
     GInformationFlowEdge,
     GInformationFlowEdgeView,
+    GGenericEdge,
+    GGenericEdgeView,
     GNoteNode,
     GNoteNodeView,
     GTextLabelNode,
@@ -42,7 +44,13 @@ export const umlInformationFlowDiagramModule = new FeatureModule((bind, unbind, 
 
     // The note and the free label, which every diagram has: both say something about the diagram
     // rather than being part of any one notation.
+    // The members of a class, for a member drawn on its own - see the package diagram.
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Property'), NamedElement, NamedElementView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Operation'), NamedElement, NamedElementView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Parameter'), NamedElement, NamedElementView);
+
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Note'), GNoteNode, GNoteNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'GenericEdge'), GGenericEdge, GGenericEdgeView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'TextLabel'), GTextLabelNode, GTextLabelNodeView);
 
     // Edges

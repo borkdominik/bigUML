@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+import { getDefaultSize } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
 import type { Dimension } from '@eclipse-glsp/protocol';
 import type { BaseElementProps } from './element-context.js';
 
@@ -14,12 +15,6 @@ import type { BaseElementProps } from './element-context.js';
  * the left edge of an accept event action and pushed out of the right edge of a send signal action.
  * Kept in one place so the two cannot drift apart, since only the side differs.
  */
-
-/**
- * What either opens at, matching the entry `GenericCreateNodeOperationHandler` writes for one. Roomy
- * enough that the notch takes its half of the height without leaving the name in a slot.
- */
-export const DEFAULT_EVENT_ACTION_SIZE: Dimension = { width: 140, height: 60 };
 
 /** Inset of the name from the borders that are not notched. */
 export const ACTION_PADDING = 8;
@@ -35,13 +30,14 @@ export function notchDepth(size: Dimension): number {
 }
 
 /**
- * A `Size` metaInfo can exist while carrying no usable dimensions (see `GenericChangeBoundsOperationHandler`),
+ * Stored `bounds` can carry no usable dimensions - a zero width or height, say -
  * which a plain `?? default` would accept - and the client layouter then collapses the shape onto its
  * name. Only positive dimensions count as a size someone chose.
  */
-export function eventActionSize(size: BaseElementProps['size']): Dimension {
+export function eventActionSize(type: string, size: BaseElementProps['size']): Dimension {
+    const defaultSize = getDefaultSize(type);
     return {
-        width: size?.width && size.width > 0 ? size.width : DEFAULT_EVENT_ACTION_SIZE.width,
-        height: size?.height && size.height > 0 ? size.height : DEFAULT_EVENT_ACTION_SIZE.height
+        width: size?.width && size.width > 0 ? size.width : defaultSize.width,
+        height: size?.height && size.height > 0 ? size.height : defaultSize.height
     };
 }

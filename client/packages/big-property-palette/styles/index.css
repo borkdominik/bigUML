@@ -172,6 +172,26 @@ h4.secondary-title {
     flex-direction: column;
 }
 
+.reference-item-body > .reference-item-fields {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    margin-right: 6px;
+    min-width: 0;
+}
+
+.reference-item-fields > vscode-textfield {
+    flex: 1;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+/* A multiplicity is a few characters at most (`0..*`), so it does not take an equal share of the row. */
+.reference-item-fields > vscode-textfield.multiplicity-field {
+    flex: 0 0 4.5em;
+}
+
 .reference-item-name > vscode-textfield {
     width: 100%;
     max-width: 100%;
@@ -206,4 +226,74 @@ h4.secondary-title {
 .autocomplete {
     margin-bottom: 6px;
     width: 100%;
+}
+
+/*
+ * The type of a property or a parameter - see `TypeCombobox`. A plain input drawn the way the palette's
+ * `vscode-textfield`s are, with the types listed under it. The list is placed against the window
+ * (`fixed`, at the field's position) so that the palette's scrolling body does not cut it off.
+ */
+.type-combobox {
+    min-width: 0;
+}
+
+.reference-item-fields > .type-combobox {
+    flex: 1;
+}
+
+.type-combobox-input {
+    width: 100%;
+    box-sizing: border-box;
+    height: 26px;
+    padding: 3px 4px;
+    border: 1px solid var(--vscode-settings-textInputBorder, var(--vscode-settings-textInputBackground, #3c3c3c));
+    border-radius: 4px;
+    outline: none;
+    background-color: var(--vscode-settings-textInputBackground, #313131);
+    color: var(--vscode-settings-textInputForeground, #cccccc);
+    font-family: var(--vscode-font-family);
+    font-size: var(--vscode-font-size, 13px);
+    font-weight: var(--vscode-font-weight, normal);
+    line-height: 18px;
+}
+
+.type-combobox-input:focus {
+    border-color: var(--vscode-focusBorder, #0078d4);
+}
+
+.type-combobox-input::placeholder {
+    color: var(--vscode-input-placeholderForeground, #989898);
+}
+
+.type-combobox-list {
+    position: fixed;
+    z-index: 100;
+    box-sizing: border-box;
+    overflow-y: auto;
+    margin: 0;
+    padding: 2px 0;
+    list-style: none;
+    background: var(--vscode-dropdown-background, #313131);
+    border: 1px solid var(--vscode-dropdown-border, var(--vscode-focusBorder, #0078d4));
+    border-radius: 4px;
+    color: var(--vscode-dropdown-foreground, #cccccc);
+    font-family: var(--vscode-font-family);
+    font-size: var(--vscode-font-size, 13px);
+}
+
+.type-combobox-list > li {
+    padding: 2px 6px;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.type-combobox-list > li.selected {
+    font-weight: bold;
+}
+
+.type-combobox-list > li.active {
+    background: var(--vscode-list-activeSelectionBackground, #04395e);
+    color: var(--vscode-list-activeSelectionForeground, #ffffff);
 }

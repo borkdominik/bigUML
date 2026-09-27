@@ -69,7 +69,7 @@ export namespace ActivityPartitionPropertyPaletteHandler {
                             .filter((e: any) => !!e && !!e.__id)
                             .map((e: any) => ({
                                 elementId: e.__id,
-                                label: e.name ?? '(unnamed node)',
+                                label: e.name ?? '(unnamed activity_node)',
                                 name: e.name ?? '',
                                 deleteActions: [DeleteElementOperation.create([e.__id])]
                             }))}

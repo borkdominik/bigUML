@@ -11,6 +11,7 @@ import { Glsp } from '@borkdominik-biguml/uml-glsp-server/generator';
 import { Language } from '@borkdominik-biguml/uml-language-tooling';
 import 'reflect-metadata';
 import { Unbounded, type Visibility } from '../core/element.def.js';
+import type { Classifier } from './property-element.def.js';
 
 // @ts-nocheck
 
@@ -20,7 +21,8 @@ export type EffectType = 'CREATE' | 'READ' | 'UPDATE' | 'DELETE';
 @Glsp.noBounds
 @Glsp.defaults
 export class Parameter extends Unbounded {
-    name: string;
+    // UML lets a parameter go unnamed; the operation's signature then shows only its type.
+    name?: string;
     isException?: boolean;
     isStream?: boolean;
     isOrdered?: boolean;
@@ -28,8 +30,8 @@ export class Parameter extends Unbounded {
     direction?: ParameterDirection;
     effect?: EffectType;
     visibility?: Visibility;
-    // Typed in rather than picked, the way a property's type is - see `Property.propertyType` for what
-    // the dropdown could not offer and what the link to a `DataType` element cost to give up.
+    // A type of the model or a typed name, the way a property's type is - see `Property.propertyType`.
     @Language.text parameterType?: string;
-    @Language.text multiplicity?: string;
+    @Language.reference parameterTypeRef?: Classifier;
+    @Language.multiplicity multiplicity?: string;
 }

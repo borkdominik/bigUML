@@ -8,6 +8,7 @@
  **********************************************************************************/
 
 import type { ClassDiagramEdges, ClassDiagramNodes } from '@borkdominik-biguml/uml-model-server/grammar';
+import { typeNameOf } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import type { SearchCriteria, SearchFilter } from './search-ast.js';
 
 export function matchesCriteriaOnElement(
@@ -129,11 +130,12 @@ function matchesFilter(element: any, filter: SearchFilter, index: Map<string, Cl
 }
 
 const filterValueExtractors: Record<string, (element: any) => unknown> = {
-    type: element => element.propertyType,
-    propertyType: element => element.propertyType,
+    // The type as it is shown: a referenced type by its name, or the name typed in.
+    type: element => typeNameOf(element, 'propertyType'),
+    propertyType: element => typeNameOf(element, 'propertyType'),
     effectType: element => element.effect,
     parameterDirection: element => element.direction,
-    parameterType: element => element.parameterType,
+    parameterType: element => typeNameOf(element, 'parameterType'),
     definingFeature: element => element.definingFeature?.ref?.name ?? element.definingFeature?.$refText
 };
 

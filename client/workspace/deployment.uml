@@ -11,7 +11,14 @@
 				"visibility": "PUBLIC",
 				"properties": [],
 				"operations": [],
-				"nestedArtifacts": []
+				"nestedArtifacts": [],
+				"bounds": {
+					"__type": "Bounds",
+					"x": 660,
+					"y": 180,
+					"width": 80,
+					"height": 30
+				}
 			},
 			{
 				"__type": "Device",
@@ -20,7 +27,14 @@
 				"visibility": "PUBLIC",
 				"nodes": [],
 				"executionEnvironments": [],
-				"deploymentSpecifications": []
+				"deploymentSpecifications": [],
+				"bounds": {
+					"__type": "Bounds",
+					"x": 870,
+					"y": 240,
+					"width": 80,
+					"height": 30
+				}
 			},
 			{
 				"__type": "ExecutionEnvironment",
@@ -29,7 +43,58 @@
 				"visibility": "PUBLIC",
 				"nestedEnvironments": [],
 				"artifacts": [],
-				"deploymentSpecifications": []
+				"deploymentSpecifications": [],
+				"bounds": {
+					"__type": "Bounds",
+					"x": 622,
+					"y": 297,
+					"width": 173.2421875,
+					"height": 24.16666603088379
+				}
+			},
+			{
+				"__type": "DeploymentPackage",
+				"__id": "DeploymentPackage_63cf903f-9dc1-4903-aa2b-19530028ec34",
+				"name": "NewDeploymentPackage1",
+				"visibility": "NONE",
+				"entities": [],
+				"bounds": {
+					"__type": "Bounds",
+					"x": 860,
+					"y": 470,
+					"width": 80,
+					"height": 30
+				}
+			},
+			{
+				"__type": "Artifact",
+				"__id": "Artifact_3a0664e2-ba88-4d3f-8a98-9f1b7eb34bbf",
+				"name": "NewArtifact2",
+				"visibility": "NONE",
+				"properties": [],
+				"operations": [],
+				"nestedArtifacts": [],
+				"bounds": {
+					"__type": "Bounds",
+					"x": 1180,
+					"y": 390,
+					"width": 80,
+					"height": 30
+				}
+			},
+			{
+				"__type": "DeploymentPackage",
+				"__id": "DeploymentPackage_a6680848-1fe2-48e8-a480-6ee957b7ca67",
+				"name": "NewDeploymentPackage2",
+				"visibility": "NONE",
+				"entities": [],
+				"bounds": {
+					"__type": "Bounds",
+					"x": 746,
+					"y": 530,
+					"width": 163.14,
+					"height": 24.17
+				}
 			}
 		],
 		"relations": [
@@ -46,76 +111,9 @@
 					"__refType": "Node",
 					"__value": "Artifact_74f65a5d-77d0-44d0-b7c0-2d8dc968ef78"
 				},
-				"visibility": "PUBLIC"
+				"visibility": "PUBLIC",
+				"routingPoints": []
 			}
 		]
-	},
-	"metaInfos": [
-		{
-			"__type": "Size",
-			"__id": "size_Artifact_74f65a5d-77d0-44d0-b7c0-2d8dc968ef78",
-			"height": 30,
-			"width": 80,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Artifact_74f65a5d-77d0-44d0-b7c0-2d8dc968ef78"
-			}
-		},
-		{
-			"__type": "Position",
-			"__id": "pos_Artifact_74f65a5d-77d0-44d0-b7c0-2d8dc968ef78",
-			"x": 660,
-			"y": 180,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Artifact_74f65a5d-77d0-44d0-b7c0-2d8dc968ef78"
-			}
-		},
-		{
-			"__type": "Size",
-			"__id": "size_Device_57099129-e806-4d33-b1ae-4c2af3981bd1",
-			"height": 30,
-			"width": 80,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Device_57099129-e806-4d33-b1ae-4c2af3981bd1"
-			}
-		},
-		{
-			"__type": "Position",
-			"__id": "pos_Device_57099129-e806-4d33-b1ae-4c2af3981bd1",
-			"x": 870,
-			"y": 240,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Device_57099129-e806-4d33-b1ae-4c2af3981bd1"
-			}
-		},
-		{
-			"__type": "Size",
-			"__id": "size_ExecutionEnvironment_a468aa00-f4b3-4bf5-96f3-4cc330e29aba",
-			"height": 24.16666603088379,
-			"width": 173.2421875,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "ExecutionEnvironment_a468aa00-f4b3-4bf5-96f3-4cc330e29aba"
-			}
-		},
-		{
-			"__type": "Position",
-			"__id": "pos_ExecutionEnvironment_a468aa00-f4b3-4bf5-96f3-4cc330e29aba",
-			"x": 622,
-			"y": 297,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "ExecutionEnvironment_a468aa00-f4b3-4bf5-96f3-4cc330e29aba"
-			}
-		}
-	]
+	}
 }

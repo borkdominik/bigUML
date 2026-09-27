@@ -49,7 +49,7 @@ export function GDataTypeNodeElement(props: GDataTypeNodeElementProps): GModelEl
         dataTypeNode.layoutOptions = { prefWidth: size.width, prefHeight: size.height };
     }
 
-    const header = <CompartmentHeader id={id} name={node.name} stereotype='DataType' />;
+    const header = <CompartmentHeader id={id} name={node.name} stereotype='dataType' />;
     header.parent = dataTypeNode;
     dataTypeNode.children.push(header);
 

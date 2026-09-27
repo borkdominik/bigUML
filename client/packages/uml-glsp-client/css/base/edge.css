@@ -44,3 +44,7 @@
 .uml-edge-dashed {
     stroke-dasharray: 15 10;
 }
+
+.uml-edge-dotted {
+    stroke-dasharray: 2 4;
+}

@@ -10,6 +10,7 @@ import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { GLabelElement, GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { Parameter } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { GModelElement } from '@eclipse-glsp/server';
+import { typeNameOf } from '../notation/typed-element.js';
 import type { BaseElementProps, ElementContext } from './core/element-context.js';
 
 export interface GParameterNodeElementProps extends BaseElementProps {
@@ -26,7 +27,7 @@ export function GParameterNodeElement(props: GParameterNodeElementProps): GModel
             cssClasses={['uml-node']}
             layout='vbox'
         >
-            <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={props.node.name} />
+            <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={props.node.name ?? typeNameOf(props.node, 'parameterType') ?? ''} />
         </GNodeElement>
     );
 }

@@ -133,21 +133,34 @@ export class CodeGenerationActionHandler implements OnActivate, OnDispose {
      * The templates expect a `packagedElement` array with resolved type names.
      */
     private buildTemplateData(entities: any[], relations: any[]): any {
+        // Every named element, however deep - a type a property references may sit inside a package.
         const nameMap = new Map<string, string>();
-        for (const entity of entities) {
-            if (entity.__id && entity.name) {
-                nameMap.set(entity.__id, entity.name);
+        const collectNames = (value: unknown): void => {
+            if (Array.isArray(value)) {
+                value.forEach(collectNames);
+            } else if (value && typeof value === 'object') {
+                const node = value as Record<string, unknown>;
+                if (typeof node.__id === 'string' && typeof node.name === 'string') {
+                    nameMap.set(node.__id, node.name);
+                }
+                Object.entries(node)
+                    .filter(([key]) => !key.startsWith('$'))
+                    .forEach(([, child]) => collectNames(child));
             }
-        }
+        };
+        collectNames(entities);
 
         const resolveTypeName = (ref: any): { name: string } | undefined => {
             if (!ref) {
                 return undefined;
             }
-            // A property's type is a typed-in name rather than a reference to a `DataType`. Parameters and
-            // the rest still hand this a reference, so both shapes are read here.
+            // A typed-in name, or a reference to a type of the model - see `Property.propertyType`.
             if (typeof ref === 'string') {
                 return { name: ref };
+            }
+            if (ref.$ref?.__id) {
+                const name = nameMap.get(ref.$ref.__id);
+                return name ? { name } : undefined;
             }
             if (ref.__refText) {
                 return { name: ref.__refText };
@@ -158,6 +171,9 @@ export class CodeGenerationActionHandler implements OnActivate, OnDispose {
             }
             return undefined;
         };
+        // The type of a property or a parameter: the type of the model it references, else the name typed.
+        const typeOf = (element: any, property: 'propertyType' | 'parameterType'): { name: string } | undefined =>
+            resolveTypeName(element[`${property}Ref`]) ?? resolveTypeName(element[property]);
 
         const elements = entities.map(entity => {
             const base: any = {
@@ -173,16 +189,17 @@ export class CodeGenerationActionHandler implements OnActivate, OnDispose {
                 base.ownedAttribute = (entity.properties ?? []).map((p: any) => ({
                     name: p.name,
                     visibility: p.visibility,
-                    type: resolveTypeName(p.propertyType)
+                    type: typeOf(p, 'propertyType')
                 }));
 
                 base.ownedOperation = (entity.operations ?? []).map((op: any) => ({
                     name: op.name,
                     visibility: op.visibility,
-                    ownedParameter: (op.parameters ?? []).map((param: any) => ({
-                        name: param.name,
+                    ownedParameter: (op.parameters ?? []).map((param: any, index: number) => ({
+                        // An unnamed parameter is valid UML, but code needs a name for it.
+                        name: param.name ?? `arg${index}`,
                         direction: param.direction,
-                        type: resolveTypeName(param.parameterType)
+                        type: typeOf(param, 'parameterType')
                     }))
                 }));
 
@@ -203,32 +220,34 @@ export class CodeGenerationActionHandler implements OnActivate, OnDispose {
                 base.ownedAttribute = (entity.properties ?? []).map((p: any) => ({
                     name: p.name,
                     visibility: p.visibility,
-                    type: resolveTypeName(p.propertyType)
+                    type: typeOf(p, 'propertyType')
                 }));
 
                 base.ownedOperation = (entity.operations ?? []).map((op: any) => ({
                     name: op.name,
                     visibility: op.visibility,
-                    ownedParameter: (op.parameters ?? []).map((param: any) => ({
-                        name: param.name,
+                    ownedParameter: (op.parameters ?? []).map((param: any, index: number) => ({
+                        // An unnamed parameter is valid UML, but code needs a name for it.
+                        name: param.name ?? `arg${index}`,
                         direction: param.direction,
-                        type: resolveTypeName(param.parameterType)
+                        type: typeOf(param, 'parameterType')
                     }))
                 }));
             } else if (entity.__type === 'DataType') {
                 base.ownedAttribute = (entity.properties ?? []).map((p: any) => ({
                     name: p.name,
                     visibility: p.visibility,
-                    type: resolveTypeName(p.propertyType)
+                    type: typeOf(p, 'propertyType')
                 }));
 
                 base.ownedOperation = (entity.operations ?? []).map((op: any) => ({
                     name: op.name,
                     visibility: op.visibility,
-                    ownedParameter: (op.parameters ?? []).map((param: any) => ({
-                        name: param.name,
+                    ownedParameter: (op.parameters ?? []).map((param: any, index: number) => ({
+                        // An unnamed parameter is valid UML, but code needs a name for it.
+                        name: param.name ?? `arg${index}`,
                         direction: param.direction,
-                        type: resolveTypeName(param.parameterType)
+                        type: typeOf(param, 'parameterType')
                     }))
                 }));
             } else if (entity.__type === 'Enumeration') {

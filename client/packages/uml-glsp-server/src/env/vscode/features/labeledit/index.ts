@@ -7,3 +7,4 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 export * from './generic-label-edit-operation-handler.js';
+export * from './uml-label-edit-validator.js';

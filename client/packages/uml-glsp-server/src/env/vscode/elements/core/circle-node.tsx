@@ -7,6 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
+import { getDefaultSize } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
 import { GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { GModelElement } from '@eclipse-glsp/server';
 import type { BaseElementProps } from './element-context.js';
@@ -17,22 +18,13 @@ import type { BaseElementProps } from './element-context.js';
  * client views drawn for them had.
  */
 
-/**
- * A flow end is small by convention: it marks a point in the flow rather than holding anything.
- *
- * Every one of them is this size, and the stored bounds are not consulted. None of these types is
- * given a `resizable` hint, so there is no size a user could have chosen deliberately - anything held
- * for them is a measurement that was written back, and reading those measurements back in is what let
- * the three drift to different sizes in the first place.
- */
-const CIRCLE_SIZE = { width: 30, height: 30 };
-
 export interface GCircleNodeElementProps extends BaseElementProps {
     id: string;
 }
 
 export function GCircleNodeElement(props: GCircleNodeElementProps): GModelElement {
-    const size = CIRCLE_SIZE;
+    // Drawn at the type's default size whatever is stored: a circle marks a point in the flow.
+    const size = getDefaultSize(props.type);
 
     return (
         <GNodeElement

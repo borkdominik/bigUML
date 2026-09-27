@@ -27,7 +27,7 @@
       "name": "(Attach) LSP Server",
       "type": "node",
       "request": "attach",
-      "address": "localhost",
+      "address": "127.0.0.1",
       "port": 6009,
       "restart": true,
       "protocol": "inspector",

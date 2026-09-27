@@ -28,6 +28,13 @@ export class PackageDiagramToolPaletteItemProvider extends ToolPaletteItemProvid
                 icon: 'symbol-property',
                 children: [
                     {
+                        id: 'generic-edge',
+                        sortString: 'A',
+                        label: 'Generic Edge',
+                        icon: 'uml-connector-icon',
+                        actions: [TriggerEdgeCreationAction.create(PackageDiagramEdgeTypes.GENERIC_EDGE)]
+                    },
+                    {
                         id: 'text-label',
                         sortString: 'A',
                         label: 'Label',
@@ -63,6 +70,29 @@ export class PackageDiagramToolPaletteItemProvider extends ToolPaletteItemProvid
                         label: 'Operation',
                         icon: 'uml-operation-icon',
                         actions: [TriggerNodeCreationAction.create(PackageDiagramNodeTypes.OPERATION)]
+                    }
+                ],
+                actions: []
+            },
+            {
+                id: 'uml.container',
+                sortString: 'A',
+                label: 'Container',
+                icon: 'symbol-property',
+                children: [
+                    {
+                        id: 'class',
+                        sortString: 'A',
+                        label: 'Class',
+                        icon: 'uml-class-icon',
+                        actions: [TriggerNodeCreationAction.create(PackageDiagramNodeTypes.CLASS)]
+                    },
+                    {
+                        id: 'package',
+                        sortString: 'A',
+                        label: 'Package',
+                        icon: 'uml-package-icon',
+                        actions: [TriggerNodeCreationAction.create(PackageDiagramNodeTypes.PACKAGE)]
                     }
                 ],
                 actions: []
@@ -114,29 +144,6 @@ export class PackageDiagramToolPaletteItemProvider extends ToolPaletteItemProvid
                         label: 'Abstraction',
                         icon: 'uml-abstraction-icon',
                         actions: [TriggerEdgeCreationAction.create(PackageDiagramEdgeTypes.ABSTRACTION)]
-                    }
-                ],
-                actions: []
-            },
-            {
-                id: 'uml.container',
-                sortString: 'A',
-                label: 'Container',
-                icon: 'symbol-property',
-                children: [
-                    {
-                        id: 'package',
-                        sortString: 'A',
-                        label: 'Package',
-                        icon: 'uml-package-icon',
-                        actions: [TriggerNodeCreationAction.create(PackageDiagramNodeTypes.PACKAGE)]
-                    },
-                    {
-                        id: 'class',
-                        sortString: 'A',
-                        label: 'Class',
-                        icon: 'uml-class-icon',
-                        actions: [TriggerNodeCreationAction.create(PackageDiagramNodeTypes.CLASS)]
                     }
                 ],
                 actions: []

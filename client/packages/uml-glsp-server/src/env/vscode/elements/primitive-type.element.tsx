@@ -44,7 +44,7 @@ export function GPrimitiveTypeNodeElement(props: GPrimitiveTypeNodeElementProps)
         primNode.layoutOptions = { prefWidth: size.width, prefHeight: size.height };
     }
 
-    const header = <CompartmentHeader id={id} name={node.name} stereotype='PrimitiveType' />;
+    const header = <CompartmentHeader id={id} name={node.name} stereotype='primitive' />;
     header.parent = primNode;
     primNode.children.push(header);
 

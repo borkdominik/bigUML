@@ -22,6 +22,8 @@ import type { PackageMerge } from '../elements/package-merge-element.def.js';
 import type { Parameter } from '../elements/parameter-element.def.js';
 import type { Property } from '../elements/property-element.def.js';
 import type { Usage } from '../elements/usage-element.def.js';
+import type { GenericEdge } from '../elements/generic-edge-element.def.js';
+import type { EdgeAnchor } from '../elements/edge-anchor-element.def.js';
 
 // @ts-nocheck
 
@@ -34,6 +36,6 @@ export class PackageDiagram {
 
 type PackageDiagramElements = PackageDiagramNodes | PackageDiagramEdges;
 
-type PackageDiagramNodes = Package | Class | Property | Operation | Parameter | Note | TextLabel;
+type PackageDiagramNodes = Package | Class | Property | Operation | Parameter | Note | TextLabel | EdgeAnchor;
 
-type PackageDiagramEdges = PackageImport | PackageMerge | ElementImport | Dependency | Abstraction | Usage;
+type PackageDiagramEdges = PackageImport | PackageMerge | ElementImport | Dependency | Abstraction | Usage | GenericEdge;

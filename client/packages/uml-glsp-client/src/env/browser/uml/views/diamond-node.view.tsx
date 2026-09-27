@@ -11,7 +11,7 @@ import { type GNode, RectangularNodeView, type RenderingContext, svg } from '@ec
 import { injectable } from 'inversify';
 import { type VNode } from 'snabbdom';
 import { hitStrokePolygon } from './hit-area.js';
-import { outsideLabel } from './outside-label.js';
+import { placeOutsideLabels } from './outside-label.js';
 
 /**
  * The diamond UML draws for a branch point - a choice pseudostate on a state machine, a decision or
@@ -31,6 +31,8 @@ export class DiamondNodeView extends RectangularNodeView {
         const size = { width: Math.max(0, node.bounds.width), height: Math.max(0, node.bounds.height) };
         const { width, height } = size;
         const points = `${width / 2},0 ${width},${height / 2} ${width / 2},${height} 0,${height / 2}`;
+        // The name is a label child of the node, written under the shape.
+        placeOutsideLabels(node as GNode, size, 'below');
 
         return (
             <g class-selected={node.selected} class-mouseover={node.hoverFeedback}>
@@ -38,7 +40,6 @@ export class DiamondNodeView extends RectangularNodeView {
                     beside it rather than on it. */}
                 {hitStrokePolygon(points)}
                 <polygon points={points} class-uml-node-background />
-                {outsideLabel(node, size, 'below')}
                 {context.renderChildren(node)}
             </g>
         ) as any;

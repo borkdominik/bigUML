@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { representationTypeId } from '@borkdominik-biguml/uml-glsp-server';
+import { CommonModelTypes, representationTypeId } from '@borkdominik-biguml/uml-glsp-server';
 import { configureModelElement, FeatureModule } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import {
@@ -38,6 +38,10 @@ import {
     GJoinNodeView,
     GMergeNode,
     GMergeNodeView,
+    GStateCompartment,
+    GStateCompartmentView,
+    GGenericEdge,
+    GGenericEdgeView,
     GNoteNode,
     GNoteNodeView,
     GOpaqueActionNode,
@@ -65,6 +69,9 @@ export const umlActivityDiagramModule = new FeatureModule((bind, unbind, isBound
         GActivityPartitionNode,
         GActivityPartitionNodeView
     );
+    // A lane of a partition: selectable, which selects the subpartition it stands for - the same kind of
+    // compartment the band a region of a state is drawn as.
+    configureModelElement(context, CommonModelTypes.COMP_PARTITION_LANE, GStateCompartment, GStateCompartmentView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'OpaqueAction'), GOpaqueActionNode, GOpaqueActionNodeView);
     configureModelElement(
         context,
@@ -120,6 +127,7 @@ export const umlActivityDiagramModule = new FeatureModule((bind, unbind, isBound
     // The note and the free label, which every diagram has: both say something about the diagram
     // rather than being part of any one notation.
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Note'), GNoteNode, GNoteNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'GenericEdge'), GGenericEdge, GGenericEdgeView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'TextLabel'), GTextLabelNode, GTextLabelNodeView);
 
     // Edges

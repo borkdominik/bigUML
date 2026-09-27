@@ -235,6 +235,28 @@
       }
     ],
     "menus": {
+      "commandPalette": [
+        {
+          "command": "timeline.import",
+          "when": "false"
+        },
+        {
+          "command": "timeline.export",
+          "when": "false"
+        },
+        {
+          "command": "bigUML.advancedsearch.toggleSyntax",
+          "when": "false"
+        },
+        {
+          "command": "bigUML.advancedsearch.enablePreviews",
+          "when": "false"
+        },
+        {
+          "command": "bigUML.advancedsearch.disablePreviews",
+          "when": "false"
+        }
+      ],
       "view/title": [
         {
           "command": "timeline.import",
@@ -329,19 +351,19 @@
           "id": "bigUML.panel.code-generation",
           "name": "Code Generation",
           "type": "webview",
-          "when": "bigUML.isRunning"
+          "when": "false"
         },
         {
           "id": "bigUML.panel.advancedsearch",
           "name": "Advanced Search",
           "type": "webview",
-          "when": "bigUML.isRunning"
+          "when": "false"
         },
         {
           "id": "bigUML.panel.revision-management",
           "name": "Timeline",
           "type": "webview",
-          "when": "bigUML.isRunning"
+          "when": "false"
         }
       ]
     },

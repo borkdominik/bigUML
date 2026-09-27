@@ -30,7 +30,7 @@ const DEFAULT_PARAMETER_NODE_SIZE: Dimension = { width: 120, height: 50 };
 const PARAMETER_NODE_PADDING = 8;
 
 /**
- * A `Size` metaInfo can exist while carrying no usable dimensions (see `GenericChangeBoundsOperationHandler`),
+ * Stored `bounds` can carry no usable dimensions - a zero width or height, say -
  * which a plain `?? default` would accept - and the box would then be laid out down onto its own name.
  * Only positive dimensions count as a size someone chose.
  */

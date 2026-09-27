@@ -62,7 +62,7 @@ export interface EnableDefaultToolsAction extends Action {
 export namespace EnableDefaultToolsAction {
     export const KIND = 'enable-default-tools';
 
-    export function is(object: unknown): object is EnableToolsAction {
+    export function is(object: unknown): object is EnableDefaultToolsAction {
         return Action.hasKind(object, KIND);
     }
 

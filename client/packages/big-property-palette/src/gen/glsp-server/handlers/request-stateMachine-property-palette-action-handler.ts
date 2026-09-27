@@ -13,10 +13,12 @@ import { inject, injectable } from 'inversify';
 import {
     isChoice,
     isDeepHistory,
+    isEdgeAnchor,
     isEntryPoint,
     isExitPoint,
     isFinalState,
     isFork,
+    isGenericEdge,
     isInitialState,
     isJoin,
     isNote,
@@ -33,10 +35,12 @@ import { DiagramModelState, DiagramLanguageMetadata } from '@borkdominik-biguml/
 import type { DiagramLanguageMetadata as DiagramLanguageMetadataType } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import { ChoicePropertyPaletteHandler } from './elements/choice.property-palette-handler.js';
 import { DeepHistoryPropertyPaletteHandler } from './elements/deep-history.property-palette-handler.js';
+import { EdgeAnchorPropertyPaletteHandler } from './elements/edge-anchor.property-palette-handler.js';
 import { EntryPointPropertyPaletteHandler } from './elements/entry-point.property-palette-handler.js';
 import { ExitPointPropertyPaletteHandler } from './elements/exit-point.property-palette-handler.js';
 import { FinalStatePropertyPaletteHandler } from './elements/final-state.property-palette-handler.js';
 import { ForkPropertyPaletteHandler } from './elements/fork.property-palette-handler.js';
+import { GenericEdgePropertyPaletteHandler } from './elements/generic-edge.property-palette-handler.js';
 import { InitialStatePropertyPaletteHandler } from './elements/initial-state.property-palette-handler.js';
 import { JoinPropertyPaletteHandler } from './elements/join.property-palette-handler.js';
 import { NotePropertyPaletteHandler } from './elements/note.property-palette-handler.js';
@@ -79,12 +83,16 @@ export class RequestStateMachinePropertyPaletteActionHandler implements ActionHa
 
             const context = { semanticElement, languageMetadata: this.languageMetadata };
 
-            if (isTextLabel(semanticElement)) {
+            if (isEdgeAnchor(semanticElement)) {
+                return EdgeAnchorPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isGenericEdge(semanticElement)) {
+                return GenericEdgePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isTransition(semanticElement)) {
+                return TransitionPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isTextLabel(semanticElement)) {
                 return TextLabelPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isNote(semanticElement)) {
                 return NotePropertyPaletteHandler.getPropertyPalette(context);
-            } else if (isTransition(semanticElement)) {
-                return TransitionPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isTerminate(semanticElement)) {
                 return TerminatePropertyPaletteHandler.getPropertyPalette(context);
             } else if (isStatePart(semanticElement)) {

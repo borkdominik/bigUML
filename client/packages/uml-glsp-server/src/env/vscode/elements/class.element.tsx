@@ -18,9 +18,9 @@ import { GPropertyNodeElement } from './property.element.js';
 
 export class GClassNode extends GNode {
     override type = ClassDiagramNodeTypes.CLASS;
-    // A class is resized freely, so the name and the compartments under it have to stay in the middle
-    // of the box at whatever height it is dragged to. Plain `vbox` stacks them from the top border down
-    // and leaves the whole of the added height empty below them (see `UmlCenteredVBoxLayouter`).
+    // A class is resized freely: a class holding only its name keeps it in the middle of the box at
+    // whatever height it is dragged to, while one with attributes or operations keeps its name at the
+    // top with the compartments under it (see `UmlCenteredVBoxLayouter`).
     override layout = 'uml-centered-vbox';
     name: string = 'UNDEFINED CLASS NAME';
     isAbstract: boolean = false;

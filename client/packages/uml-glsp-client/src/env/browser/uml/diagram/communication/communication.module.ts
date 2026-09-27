@@ -13,6 +13,8 @@ import {
     GInteractionNode,
     GInteractionNodeView,
     GMessageArrowLabel,
+    GGenericEdge,
+    GGenericEdgeView,
     GNoteNode,
     GNoteNodeView,
     GTextLabelNode,
@@ -36,6 +38,7 @@ export const umlCommunicationDiagramModule = new FeatureModule((bind, unbind, is
     // The note and the free label, which every diagram has: both say something about the diagram
     // rather than being part of any one notation.
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Note'), GNoteNode, GNoteNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'GenericEdge'), GGenericEdge, GGenericEdgeView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'TextLabel'), GTextLabelNode, GTextLabelNodeView);
 
     // Edges

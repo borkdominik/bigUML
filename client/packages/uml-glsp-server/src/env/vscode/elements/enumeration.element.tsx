@@ -66,7 +66,7 @@ export function createEnumerationElement(ctx: ElementContext<Enumeration>): GMod
 
     const valuesSection =
         ctx.node.values?.length > 0 ? (
-            <SectionCompartment id={ctx.node.__id + '_literal_component'}>
+            <SectionCompartment id={ctx.node.__id + '_literal_component'} divider>
                 {ctx.node.values.map(v => (
                     <GEnumerationLiteralNodeElement node={v} />
                 ))}

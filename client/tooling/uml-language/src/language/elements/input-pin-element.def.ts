@@ -20,9 +20,7 @@ import { Unbounded, type Visibility } from '../core/element.def.js';
 })
 @Glsp.defaults
 // A pin is placed by the action that owns it - on the boundary, at the middle of its input side - so it
-// has no bounds of its own to store. Writing them was worse than pointless: a pin lives inside the
-// action's `inputPins`, and a `Size` or `Position` at the diagram root cannot reach a nested element to
-// name it, so the reference went out as the word `undefined` and the file no longer parsed.
+// has no bounds of its own to store.
 @Glsp.noBounds
 export class InputPin extends Unbounded {
     name: string;

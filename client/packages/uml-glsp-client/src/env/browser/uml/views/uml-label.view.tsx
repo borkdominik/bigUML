@@ -17,6 +17,7 @@ import {
     hoverFeedbackFeature,
     isEdgeLayoutable,
     isEditableLabel,
+    layoutableChildFeature,
     type Nameable,
     nameFeature,
     RectangularNode,
@@ -56,6 +57,14 @@ export class GEditableLabel extends GLabel implements EditableLabel {
     static override readonly DEFAULT_FEATURES = [...GLabel.DEFAULT_FEATURES, editLabelFeature, hoverFeedbackFeature];
 
     hoverFeedback = false;
+}
+
+/**
+ * An editable name drawn beside its shape rather than inside it - under a diamond, say. Left out by the
+ * layouter, so it is not measured into the size of the node it belongs to; the node's view places it.
+ */
+export class GOutsideNameLabel extends GEditableLabel {
+    static override readonly DEFAULT_FEATURES = GEditableLabel.DEFAULT_FEATURES.filter(feature => feature !== layoutableChildFeature);
 }
 
 @injectable()

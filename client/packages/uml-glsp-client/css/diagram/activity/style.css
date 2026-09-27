@@ -1,13 +1,13 @@
-/* A partition is the lane its actions are drawn along, and those actions are flat siblings drawn on top
-   of it rather than children of it - so like the state machine frame it stays transparent, or an opaque
-   band this wide would hide whatever sits behind it.
+/* A partition is the lanes its actions are drawn in. It stays transparent, the way the state machine frame
+   does, so that a block this wide does not paint over the canvas it stands on. Only its own background is
+   meant - `>` - and not that of the actions drawn inside it.
 
    `pointer-events` is what `fill: none` alone gets wrong: an unfilled shape is not painted inside its
    outline, so nothing there answers a click and the lane can only be caught by its one-pixel border -
    which leaves it looking impossible to select, to drag against its neighbour, or to delete. `all` makes
-   the whole band answer while still drawing nothing, and the actions on it keep their own clicks because
-   a lane is a canvas container and so is painted behind them. */
-.uml-activity-partition-node .uml-node-background {
+   the whole band answer while still drawing nothing, and the actions in it keep their own clicks because
+   they are drawn over it. */
+.uml-activity-partition-node > .uml-node-background {
     fill: none;
     pointer-events: all;
     /* No outline of its own: a rectangle is closed on all four sides and the block is open at its far
@@ -19,7 +19,7 @@
    when they stand side by side, which is how the notation draws a swimlane either way round. Left
    unstyled otherwise so it takes the colour and width `.uml-node` sets for the shape - which is also what
    still thickens it on hover and on selection. */
-.uml-activity-partition-node .uml-partition-outline {
+.uml-activity-partition-node > .uml-partition-outline {
     fill: none;
 }
 
@@ -29,7 +29,7 @@
    `stroke: none` takes back the stroke `.uml-node` sets for the shape - drawn inside the node's own
    group, the glyphs would otherwise be outlined, and thicken further whenever the lane is selected. This
    is the same reason the history pseudostate's glyph takes it back. */
-.uml-activity-partition-node .uml-partition-name {
+.uml-activity-partition-node > .uml-partition-name {
     fill: var(--uml-label);
     stroke: none;
     text-anchor: middle;

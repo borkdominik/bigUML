@@ -19,6 +19,7 @@ import { Node, type Visibility } from '../core/element.def.js';
     icon: 'uml-central-buffer-node-icon'
 })
 @Glsp.defaults
+@Glsp.defaultSize({ width: 80, height: 60 })
 export class CentralBufferNode extends Node {
     name: string;
     visibility?: Visibility;

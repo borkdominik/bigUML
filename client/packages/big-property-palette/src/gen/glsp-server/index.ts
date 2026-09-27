@@ -32,6 +32,7 @@ export * from './handlers/elements/deployment-package.property-palette-handler.j
 export * from './handlers/elements/deployment-specification.property-palette-handler.js';
 export * from './handlers/elements/deployment.property-palette-handler.js';
 export * from './handlers/elements/device.property-palette-handler.js';
+export * from './handlers/elements/edge-anchor.property-palette-handler.js';
 export * from './handlers/elements/element-import.property-palette-handler.js';
 export * from './handlers/elements/entry-point.property-palette-handler.js';
 export * from './handlers/elements/enumeration-literal.property-palette-handler.js';
@@ -44,6 +45,7 @@ export * from './handlers/elements/flow-final-node.property-palette-handler.js';
 export * from './handlers/elements/fork-node.property-palette-handler.js';
 export * from './handlers/elements/fork.property-palette-handler.js';
 export * from './handlers/elements/generalization.property-palette-handler.js';
+export * from './handlers/elements/generic-edge.property-palette-handler.js';
 export * from './handlers/elements/include.property-palette-handler.js';
 export * from './handlers/elements/information-flow.property-palette-handler.js';
 export * from './handlers/elements/initial-node.property-palette-handler.js';
@@ -60,6 +62,7 @@ export * from './handlers/elements/literal-specification.property-palette-handle
 export * from './handlers/elements/manifestation.property-palette-handler.js';
 export * from './handlers/elements/merge-node.property-palette-handler.js';
 export * from './handlers/elements/message.property-palette-handler.js';
+export * from './handlers/elements/nary-association.property-palette-handler.js';
 export * from './handlers/elements/note.property-palette-handler.js';
 export * from './handlers/elements/opaque-action.property-palette-handler.js';
 export * from './handlers/elements/operation.property-palette-handler.js';

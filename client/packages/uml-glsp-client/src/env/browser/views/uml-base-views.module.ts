@@ -8,14 +8,17 @@
  *********************************************************************************/
 
 import {
+    bindOrRebind,
     configureDefaultModelElements,
     DefaultTypes,
+    EdgeLayoutPostprocessor,
     FeatureModule,
     GCompartmentView,
     GGraph,
     overrideModelElement,
     TYPES
 } from '@eclipse-glsp/client';
+import { UmlEdgeLayoutPostprocessor } from '../features/edge-layout/uml-edge-layout-postprocessor.js';
 import { CompartmentSelectionFeedback } from './processors/feedback.postprocessor.js';
 import { SVGIdCreatorService } from './services/svg-id-creator.service.js';
 import { GUmlCompartment } from './uml-compartment.js';
@@ -26,6 +29,8 @@ export const umlBaseViewsModule = new FeatureModule((bind, unbind, isBound, rebi
 
     bind(TYPES.IVNodePostprocessor).to(CompartmentSelectionFeedback);
     bind(SVGIdCreatorService).toSelf().inSingletonScope();
+    // Edge labels that can stand off the line further than they sit in from its end (see `UmlEdgePlacement`).
+    bindOrRebind(context, EdgeLayoutPostprocessor).to(UmlEdgeLayoutPostprocessor).inSingletonScope();
 
     configureDefaultModelElements(context);
 

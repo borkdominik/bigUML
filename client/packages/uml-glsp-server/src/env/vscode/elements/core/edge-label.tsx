@@ -7,9 +7,10 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { CommonModelTypes, storableText } from '@borkdominik-biguml/uml-glsp-server';
+import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { GLabelElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { GModelElement } from '@eclipse-glsp/server';
+import { propertyLabelId } from '../../notation/label-ids.js';
 
 /*
  * NOTE: for rotated edge labels GLSP/sprotty interprets `side` in SVG screen coordinates,
@@ -30,14 +31,12 @@ const HORIZONTAL_NAME_PLACEMENT = { rotate: false, side: 'bottom', position: 0.5
 /** Below the edge, so a stereotype does not overlap the name. */
 const STEREOTYPE_PLACEMENT = { rotate: true, side: 'top', position: 0.5, offset: 7 } as const;
 
-/** Where the name is written, which is where a guard is written too when the edge carries no name. */
-const NAME_POSITION = NAME_PLACEMENT.position;
-
 /**
- * How far along the edge a guard stands off the name it shares the line with. Enough to read as two
- * labels rather than one, and not so far that a guard on a short edge is dragged out to the end of it.
+ * Below the edge, opposite the name. A guard is written here when the edge carries a name as well, so the
+ * two stand either side of the line at its middle - clear of each other on an edge of any length, which
+ * stepping one along the line from the other is not.
  */
-const GUARD_STEP = 0.2;
+const GUARD_UNDER_NAME_PLACEMENT = { ...NAME_PLACEMENT, side: 'top' } as const;
 
 /*
  * Multiplicities sit above the edge at its two ends. `offset` does double duty here: for
@@ -52,12 +51,24 @@ const SOURCE_ROLE_NAME_PLACEMENT = { rotate: true, side: 'top', position: 0, off
 const TARGET_ROLE_NAME_PLACEMENT = { rotate: true, side: 'top', position: 1, offset: 7 } as const;
 
 /**
- * A property string sits below the edge beside the end it belongs to, just inside the role name written
- * at the end itself - which is where UML writes it, and which keeps the two from being laid one on top
- * of the other.
+ * A property string sits at the end it belongs to, on the side the role name is written on: under the
+ * role name where the end has one - one line further from the edge - and in its place where it has none.
+ *
+ * Only the distance from the line grows. `offset` also says how far in from the end of the edge a label
+ * starts, so it stays the role name's and the extra distance goes in `perpendicularOffset`, which the
+ * client reads for that alone (see `UmlEdgePlacement`) - the two labels line up at the same start.
  */
-const SOURCE_MODIFIERS_PLACEMENT = { rotate: true, side: 'top', position: 0.15, offset: 7 } as const;
-const TARGET_MODIFIERS_PLACEMENT = { rotate: true, side: 'top', position: 0.85, offset: 7 } as const;
+const MODIFIERS_LINE_OFFSET = 18;
+function modifiersPlacement(end: 'source' | 'target', belowRoleName: boolean) {
+    const offset = SOURCE_ROLE_NAME_PLACEMENT.offset;
+    return {
+        rotate: true,
+        side: 'top',
+        position: end === 'source' ? 0 : 1,
+        offset,
+        ...(belowRoleName ? { perpendicularOffset: offset + MODIFIERS_LINE_OFFSET } : {})
+    } as const;
+}
 
 export interface EdgeNameLabelProps {
     id: string;
@@ -81,7 +92,7 @@ export function EdgeNameLabel(props: EdgeNameLabelProps): GModelElement | null {
 
     return (
         <GLabelElement
-            id={props.id + '_name_label'}
+            id={propertyLabelId(props.id, 'name')}
             type={CommonModelTypes.LABEL_EDGE_NAME}
             text={props.name}
             args={{ highlight: true }}
@@ -89,13 +100,6 @@ export function EdgeNameLabel(props: EdgeNameLabelProps): GModelElement | null {
         />
     );
 }
-
-/**
- * What the id of a guard label ends in. Read back by `GenericLabelEditOperationHandler` to tell which
- * property the edit belongs to: every other label on an edge writes the element's name, and a guard
- * label edited as a name would put the condition where the name goes.
- */
-export const EDGE_GUARD_LABEL_SUFFIX = '_guard_label';
 
 export interface EdgeGuardLabelProps {
     id: string;
@@ -111,27 +115,25 @@ export interface EdgeGuardLabelProps {
  * brackets are notation and not data, so they are put on here rather than stored, and a guard that is
  * not set gets no label at all rather than an empty pair of them.
  *
- * Written like the name and in the same place, except where the edge carries a name as well: the two
- * would then be laid one on top of the other, so the guard steps along the line to clear it - after the
- * name where the name is written first, before it where the name is written later. Either way the pair
- * keeps to the middle of the edge rather than running out to an end of it.
+ * Written like the name and in the same place, above the middle of the edge - except where the edge
+ * carries a name as well, which is then above the line and the guard below it.
  */
 export function EdgeGuardLabel(props: EdgeGuardLabelProps): GModelElement | null {
     if (!props.guard) {
         return null;
     }
 
-    const position = props.named ? (NAME_POSITION <= 0.5 ? NAME_POSITION + GUARD_STEP : NAME_POSITION - GUARD_STEP) : NAME_POSITION;
+    const placement = props.named ? GUARD_UNDER_NAME_PLACEMENT : NAME_PLACEMENT;
 
     return (
         <GLabelElement
-            id={props.id + EDGE_GUARD_LABEL_SUFFIX}
+            id={propertyLabelId(props.id, 'guard')}
             type={CommonModelTypes.LABEL_EDGE_NAME}
             text={`[${props.guard}]`}
             // The same editable label the name is, so the condition can be retyped on the line it is
-            // written on. What comes back has the brackets taken off again - see the suffix above.
+            // written on. The id names the property the label stands for - see `propertyLabelId`.
             args={{ highlight: true }}
-            edgePlacement={{ rotate: props.orientation !== 'horizontal', side: 'bottom', position, offset: 7 }}
+            edgePlacement={{ ...placement, rotate: props.orientation !== 'horizontal' }}
         />
     );
 }
@@ -154,9 +156,11 @@ export function EdgeMultiplicityLabel(props: EdgeMultiplicityLabelProps): GModel
 
     return (
         <GLabelElement
-            id={`${props.id}_${props.end}_multiplicity_label`}
-            type={CommonModelTypes.LABEL_TEXT}
+            // Editable in place: the id names the property the edit is written back to (see `labelProperty`).
+            id={propertyLabelId(props.id, `${props.end}Multiplicity`)}
+            type={CommonModelTypes.LABEL_EDGE_NAME}
             text={props.multiplicity}
+            args={{ highlight: true }}
             edgePlacement={props.end === 'source' ? SOURCE_MULTIPLICITY_PLACEMENT : TARGET_MULTIPLICITY_PLACEMENT}
         />
     );
@@ -180,22 +184,23 @@ export function EdgeRoleNameLabel(props: EdgeRoleNameLabelProps): GModelElement 
 
     return (
         <GLabelElement
-            id={`${props.id}_${props.end}_role_name_label`}
-            type={CommonModelTypes.LABEL_TEXT}
+            // Editable in place: the id names the property the edit is written back to (see `labelProperty`).
+            id={propertyLabelId(props.id, `${props.end}Name`)}
+            type={CommonModelTypes.LABEL_EDGE_NAME}
             text={props.name}
+            args={{ highlight: true }}
             edgePlacement={props.end === 'source' ? SOURCE_ROLE_NAME_PLACEMENT : TARGET_ROLE_NAME_PLACEMENT}
         />
     );
 }
-
-/** What the id of a property string label ends in, per end - read back by the label edit handler. */
-export const EDGE_MODIFIERS_LABEL_SUFFIX = '_modifiers_label';
 
 export interface EdgeModifiersLabelProps {
     id: string;
     /** Which end of the relation the property string belongs to. */
     end: 'source' | 'target';
     modifiers?: string;
+    /** Whether the end also carries a role name, which the property string is then written under. */
+    belowRoleName?: boolean;
 }
 
 /**
@@ -204,8 +209,8 @@ export interface EdgeModifiersLabelProps {
  * braces is added to the edge.
  *
  * Editable in place like the name and the guard are. The braces are notation: they are put on here and
- * taken off again by `storableModifiers` on the way back, which is also what keeps the value storable at
- * all - the grammar has no terminal a `{` inside a value could match.
+ * taken off again by the label edit handler on the way back, which is also what keeps the value storable
+ * at all - the grammar has no terminal a `{` inside a value could match.
  */
 export function EdgeModifiersLabel(props: EdgeModifiersLabelProps): GModelElement | null {
     if (!props.modifiers) {
@@ -214,23 +219,13 @@ export function EdgeModifiersLabel(props: EdgeModifiersLabelProps): GModelElemen
 
     return (
         <GLabelElement
-            id={`${props.id}_${props.end}${EDGE_MODIFIERS_LABEL_SUFFIX}`}
+            id={propertyLabelId(props.id, `${props.end}Modifiers`)}
             type={CommonModelTypes.LABEL_EDGE_NAME}
             text={`{${props.modifiers}}`}
             args={{ highlight: true }}
-            edgePlacement={props.end === 'source' ? SOURCE_MODIFIERS_PLACEMENT : TARGET_MODIFIERS_PLACEMENT}
+            edgePlacement={modifiersPlacement(props.end, props.belowRoleName ?? false)}
         />
     );
-}
-
-/**
- * A property string as it can be stored: without the braces it is written in, and `undefined` where
- * nothing is left of it. The braces come off as part of `storableText`, which takes out everything the
- * grammar has no terminal for - the commas of `{ordered, unique}` among them, so what comes back is
- * `ordered unique` rather than a file that will not open.
- */
-export function storableModifiers(text: string): string | undefined {
-    return storableText(text);
 }
 
 export interface EdgeStereotypeLabelProps {

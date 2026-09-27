@@ -32,6 +32,8 @@ import { Node } from '../core/element.def.js';
     icon: 'uml-string-expression-icon'
 })
 @Glsp.defaults
+@Glsp.floating
+@Glsp.defaultSize({ width: 160, height: 34 })
 export class TextLabel extends Node {
     /**
      * What the label says. Opens holding the word `Label` for the reason a note opens holding `Note`:

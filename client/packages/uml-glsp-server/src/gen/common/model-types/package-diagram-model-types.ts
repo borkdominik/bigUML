@@ -20,6 +20,7 @@ export namespace PackageDiagramNodeTypes {
     export const PARAMETER = representationTypeId('Package', DefaultTypes.NODE, 'Parameter');
     export const NOTE = representationTypeId('Package', DefaultTypes.NODE, 'Note');
     export const TEXT_LABEL = representationTypeId('Package', DefaultTypes.NODE, 'TextLabel');
+    export const EDGE_ANCHOR = representationTypeId('Package', DefaultTypes.NODE, 'EdgeAnchor');
 }
 
 export namespace PackageDiagramEdgeTypes {
@@ -29,6 +30,7 @@ export namespace PackageDiagramEdgeTypes {
     export const DEPENDENCY = representationTypeId('Package', DefaultTypes.EDGE, 'Dependency');
     export const ABSTRACTION = representationTypeId('Package', DefaultTypes.EDGE, 'Abstraction');
     export const USAGE = representationTypeId('Package', DefaultTypes.EDGE, 'Usage');
+    export const GENERIC_EDGE = representationTypeId('Package', DefaultTypes.EDGE, 'GenericEdge');
 }
 
 export namespace PackageDiagramModelTypes {
@@ -40,6 +42,7 @@ export namespace PackageDiagramModelTypes {
     export const PARAMETER = PackageDiagramNodeTypes.PARAMETER;
     export const NOTE = PackageDiagramNodeTypes.NOTE;
     export const TEXT_LABEL = PackageDiagramNodeTypes.TEXT_LABEL;
+    export const EDGE_ANCHOR = PackageDiagramNodeTypes.EDGE_ANCHOR;
 
     // re-export edges
     export const PACKAGE_IMPORT = PackageDiagramEdgeTypes.PACKAGE_IMPORT;
@@ -48,6 +51,7 @@ export namespace PackageDiagramModelTypes {
     export const DEPENDENCY = PackageDiagramEdgeTypes.DEPENDENCY;
     export const ABSTRACTION = PackageDiagramEdgeTypes.ABSTRACTION;
     export const USAGE = PackageDiagramEdgeTypes.USAGE;
+    export const GENERIC_EDGE = PackageDiagramEdgeTypes.GENERIC_EDGE;
 }
 
 export namespace PackageAstTypes {
@@ -59,12 +63,14 @@ export namespace PackageAstTypes {
         Parameter: PackageDiagramModelTypes.PARAMETER,
         Note: PackageDiagramModelTypes.NOTE,
         TextLabel: PackageDiagramModelTypes.TEXT_LABEL,
+        EdgeAnchor: PackageDiagramModelTypes.EDGE_ANCHOR,
         PackageImport: PackageDiagramModelTypes.PACKAGE_IMPORT,
         PackageMerge: PackageDiagramModelTypes.PACKAGE_MERGE,
         ElementImport: PackageDiagramModelTypes.ELEMENT_IMPORT,
         Dependency: PackageDiagramModelTypes.DEPENDENCY,
         Abstraction: PackageDiagramModelTypes.ABSTRACTION,
-        Usage: PackageDiagramModelTypes.USAGE
+        Usage: PackageDiagramModelTypes.USAGE,
+        GenericEdge: PackageDiagramModelTypes.GENERIC_EDGE
     };
 
     export function convertToAst(elementId: string): string {

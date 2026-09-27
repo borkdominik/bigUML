@@ -8,7 +8,7 @@
  *********************************************************************************/
 /** @jsx svg */
 import { OUTSIDE_LABEL_ARG } from '@borkdominik-biguml/uml-glsp-server';
-import { type ArgsAware, type Dimension, type GModelElement, svg } from '@eclipse-glsp/client';
+import { type ArgsAware, type Dimension, type GModelElement, GLabel, type GParentElement, layoutableChildFeature, svg } from '@eclipse-glsp/client';
 import { type VNode } from 'snabbdom';
 
 /** Distance between a shape and the name written next to it. */
@@ -56,6 +56,26 @@ export function outsideLabel(element: GModelElement & Partial<ArgsAware>, size: 
             {text}
         </text>
     ) as any;
+}
+
+/**
+ * Places the name labels of a node beside its shape - the labels `GOutsideNameLabel` stands for, which
+ * the layouter leaves alone. Unlike {@link outsideLabel} these are elements, so that a name can be edited
+ * on the canvas, and are placed by their measured size: centred under the shape once they have one.
+ */
+export function placeOutsideLabels(node: GParentElement, size: Dimension, side: 'below'): void {
+    for (const child of node.children) {
+        if (child instanceof GLabel && !isLaidOut(child)) {
+            const width = Math.max(0, child.size.width);
+            if (side === 'below') {
+                child.position = { x: (size.width - width) / 2, y: size.height + LABEL_GAP };
+            }
+        }
+    }
+}
+
+function isLaidOut(label: GLabel): boolean {
+    return label.hasFeature(layoutableChildFeature);
 }
 
 /**

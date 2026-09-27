@@ -9,9 +9,11 @@
 
 import { BButton, BCheckbox, BContextMenu, BOption, BTextfield, classNames, VSCodeContext } from '@borkdominik-biguml/big-components';
 import { UpdateElementPropertyAction, type ElementReferenceProperty } from '@borkdominik-biguml/big-property-palette';
+import { isValidMultiplicity, sanitizeMultiplicity } from '@borkdominik-biguml/uml-glsp-server';
 import { CompoundOperation, DeleteElementOperation } from '@eclipse-glsp/protocol';
 import { useCallback, useContext, useEffect, useRef, useState, type ChangeEvent, type ReactElement } from 'react';
 import Sortable from 'sortablejs';
+import { TypeCombobox } from './type-combobox.component.js';
 
 export interface PropertyDeleteEventDetail {
     references: ElementReferenceProperty.Reference[];
@@ -68,13 +70,13 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
         [dispatchAction]
     );
 
-    const onNameChange = useCallback(
-        (item: ElementReferenceProperty.Reference, name: string) => {
+    const onFieldChange = useCallback(
+        (item: ElementReferenceProperty.Reference, propertyId: string, value: string) => {
             dispatchAction(
                 UpdateElementPropertyAction.create({
                     elementId: item.elementId,
-                    propertyId: 'name',
-                    value: name
+                    propertyId,
+                    value
                 })
             );
         },
@@ -213,19 +215,68 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
     );
 
     const renderItem = useCallback(
-        (item: ElementReferenceProperty, ref: ElementReferenceProperty.Reference) => {
+        (item: ElementReferenceProperty, ref: ElementReferenceProperty.Reference, index: number) => {
             return (
-                <div className='reference-item' data-id={ref.elementId} key={ref.elementId}>
+                // Keyed by position as well: rows need not stand for elements of their own - the bend
+                // points of an edge all carry the edge's id.
+                <div className='reference-item' data-id={ref.elementId} key={`${ref.elementId}-${index}`}>
                     <div className='reference-item-body'>
                         {item.isOrderable && <div className='handle codicon codicon-gripper'></div>}
-                        {ref.name === undefined ? (
+                        {ref.fields && ref.fields.length > 0 ? (
+                            // The fields the referenced type declares, side by side, each written back on its own.
+                            <div className='reference-item-fields'>
+                                {ref.fields.map(field => {
+                                    // Held to the same rules as the palette's own multiplicity field: what
+                                    // cannot be part of one is dropped as it is typed, and one left half-typed
+                                    // goes back to the stored value instead of being written.
+                                    const isMultiplicity = field.format === 'multiplicity';
+                                    if (field.suggestions) {
+                                        return (
+                                            <TypeCombobox
+                                                key={field.propertyId}
+                                                value={field.value}
+                                                suggestions={field.suggestions}
+                                                title={field.label}
+                                                onCommit={value => onFieldChange(ref, field.propertyId, value)}
+                                            />
+                                        );
+                                    }
+                                    return (
+                                        <BTextfield
+                                            key={field.propertyId}
+                                            className={classNames({ 'multiplicity-field': isMultiplicity })}
+                                            value={field.value}
+                                            placeholder={field.label}
+                                            title={field.label}
+                                            onInput={(e: any) => {
+                                                const input = e.target as HTMLInputElement;
+                                                if (isMultiplicity) {
+                                                    const sanitized = sanitizeMultiplicity(input.value);
+                                                    if (sanitized !== input.value) {
+                                                        input.value = sanitized;
+                                                    }
+                                                }
+                                            }}
+                                            onBlur={(e: any) => {
+                                                const input = e.target as HTMLInputElement;
+                                                if (isMultiplicity && input.value !== '' && !isValidMultiplicity(input.value)) {
+                                                    input.value = field.value;
+                                                    return;
+                                                }
+                                                onFieldChange(ref, field.propertyId, input.value);
+                                            }}
+                                        />
+                                    );
+                                })}
+                            </div>
+                        ) : ref.name === undefined ? (
                             <div className='reference-item-label'>{ref.label}</div>
                         ) : (
                             <div className='reference-item-name'>
                                 <BTextfield
                                     value={ref.name}
                                     onInput={() => {}}
-                                    onBlur={(e: any) => onNameChange(ref, (e.target as HTMLInputElement).value)}
+                                    onBlur={(e: any) => onFieldChange(ref, 'name', (e.target as HTMLInputElement).value)}
                                 />
                             </div>
                         )}
@@ -244,7 +295,7 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
                 </div>
             );
         },
-        [onDelete, onNavigate, onNameChange]
+        [onDelete, onNavigate, onFieldChange]
     );
 
     const renderHeader = useCallback(
@@ -268,6 +319,7 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
                 <div className='reference-header'>
                     <h4 className='reference-header-title'>{item.label}</h4>
                     <div className='reference-header-actions'>
+                        {deletable.length > 0 && <BButton secondary icon='trash' title='Delete all' onClick={() => onDelete(deletable)} />}
                         {creates.length > 0 && (
                             <div className='reference-create'>
                                 <BButton
@@ -288,7 +340,6 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
                                 )}
                             </div>
                         )}
-                        {deletable.length > 0 && <BButton secondary icon='trash' title='Delete all' onClick={() => onDelete(deletable)} />}
                     </div>
                 </div>
             );
@@ -301,7 +352,7 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
             return (
                 <div className='reference-body'>
                     {item.isAutocomplete && renderAutocomplete(item)}
-                    <div ref={itemsElementRef}>{item.references.map(ref => renderItem(item, ref))}</div>
+                    <div ref={itemsElementRef}>{item.references.map((ref, index) => renderItem(item, ref, index))}</div>
                 </div>
             );
         },

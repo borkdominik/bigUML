@@ -6,47 +6,10 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import {
-    type ConnectionPoint,
-    type ConnectionPointLayout,
-    connectionPointId,
-    offeredConnectionPoints,
-    turnableDefaultSize
-} from '@borkdominik-biguml/uml-glsp-server';
-import {
-    isChoice,
-    isDecisionNode,
-    isFork,
-    isForkNode,
-    isJoin,
-    isJoinNode,
-    isMergeNode,
-    isOpaqueAction
-} from '@borkdominik-biguml/uml-model-server/grammar';
+import { type ConnectionPoint, connectionPointId, offeredConnectionPoints } from '@borkdominik-biguml/uml-glsp-server';
+import { connectionPointLayoutOf } from '../../geometry/connection-point-layout.js';
+import { nodeSize } from '../../geometry/node-size.js';
 import type { ElementContext } from './element-context.js';
-
-/**
- * Resolving a pinned end of an edge, shared by the two edges that can hold a pin - the state machine's
- * transition and the activity diagram's control flow. The two run between the same shapes drawn the
- * same way, so a pin has to mean the same thing on both.
- */
-
-/** How an element lays its connection points out, or `undefined` for the shapes that have none. */
-function layoutOf(node: unknown): ConnectionPointLayout | undefined {
-    if (isChoice(node) || isDecisionNode(node) || isMergeNode(node)) {
-        return 'diamond';
-    }
-    if (isFork(node) || isJoin(node) || isForkNode(node) || isJoinNode(node)) {
-        return 'bar';
-    }
-    // The action offers the same two side points its pins sit on, so a flow dropped on one of those dots
-    // is pinned there and stays pinned - without this the point would be recorded and then ignored on
-    // the next read, and the flow would spring back to the middle of the shape.
-    if (isOpaqueAction(node)) {
-        return 'sides';
-    }
-    return undefined;
-}
 
 /**
  * The element an edge attaches to at one end: the port on a pinned connection point, or the shape
@@ -60,18 +23,13 @@ function layoutOf(node: unknown): ConnectionPointLayout | undefined {
  * the shape is what a turned bar should do anyway: the flow keeps crossing it.
  */
 export function pinnedEndpointId(ctx: ElementContext, elementId: string, node: unknown, point: ConnectionPoint | undefined): string {
-    const layout = point ? layoutOf(node) : undefined;
+    const layout = point ? connectionPointLayoutOf(node) : undefined;
     if (!layout) {
         return elementId;
     }
 
-    const stored = ctx.modelIndex.findSize(elementId);
-    // Mirrors the shape elements, which fall back to their default size on bounds that were never set
-    // or were stored as zero - the points have to sit on the shape that is actually drawn.
-    const size = stored?.width && stored?.height && stored.width > 0 && stored.height > 0 ? stored : turnableDefaultSize(node);
-    if (!size) {
-        return elementId;
-    }
-
+    // The points have to sit on the shape that is actually drawn, which falls back to the type's
+    // default size on bounds that were never set or were stored as zero - as the shape elements do.
+    const size = nodeSize((node as { $type: string }).$type, ctx.modelIndex.findSize(elementId));
     return offeredConnectionPoints(layout, size).includes(point!) ? connectionPointId(elementId, point!) : elementId;
 }

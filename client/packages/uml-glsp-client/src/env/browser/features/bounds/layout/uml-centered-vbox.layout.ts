@@ -7,9 +7,17 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { connectionPointPosition, parseConnectionPointId, PIN_SIZE, type PinSide, pinPosition } from '@borkdominik-biguml/uml-glsp-server';
-import { type GChildElement, type GParentElement, isBoundsAware, type LayoutContainer, type StatefulLayouter } from '@eclipse-glsp/client';
+import {
+    GCompartment,
+    type GChildElement,
+    type GParentElement,
+    hasArgs,
+    isBoundsAware,
+    type LayoutContainer,
+    type StatefulLayouter
+} from '@eclipse-glsp/client';
 import { VBoxLayouterExt, type VBoxLayoutOptionsExt } from '@eclipse-glsp/client/lib/features/bounds/vbox-layout.js';
-import { Dimension, type Point } from '@eclipse-glsp/protocol';
+import { DefaultTypes, Dimension, type Point } from '@eclipse-glsp/protocol';
 import { injectable } from 'inversify';
 import { isEqual } from 'lodash';
 import { GInputPinNode, GOutputPinNode } from '../../../uml/elements/pin/index.js';
@@ -38,9 +46,11 @@ export class UmlCenteredVBoxLayouter extends VBoxLayouterExt {
         grabbingChildren?: number
     ): Point {
         // A child grabbing the free vertical space already fills the container, so there is nothing
-        // left to center - shifting on top of that would push it out through the bottom border.
+        // left to center - shifting on top of that would push it out through the bottom border. A box
+        // divided into compartments is not centered either: its name stays under the top border with the
+        // compartments stacked beneath it, and the space left over is the last compartment's.
         const childrenHeight = this.getChildrenSize(container, containerOptions, layouter).height;
-        const freeHeight = grabbingChildren ? 0 : Math.max(0, maxHeight - childrenHeight);
+        const freeHeight = grabbingChildren || hasCompartments(container) ? 0 : Math.max(0, maxHeight - childrenHeight);
 
         // The children are stacked from `paddingTop` downwards, so half of the space they leave over
         // is exactly the offset that centers the whole stack.
@@ -141,4 +151,16 @@ export class UmlCenteredVBoxLayouter extends VBoxLayouterExt {
         boundsData.bounds = next;
         boundsData.boundsChanged = true;
     }
+}
+
+/** Whether a box is divided into compartments under its name - see `SectionCompartment`'s `divider`. */
+function hasCompartments(container: GParentElement): boolean {
+    return container.children.some(
+        child =>
+            child instanceof GCompartment &&
+            child.type !== DefaultTypes.COMPARTMENT_HEADER &&
+            child.children.length > 0 &&
+            hasArgs(child) &&
+            child.args['divider'] === true
+    );
 }

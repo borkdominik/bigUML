@@ -10,18 +10,41 @@
 
 import { validateSync } from 'class-validator';
 import type { AstNode } from 'langium';
-import { isClass, isDataType } from '../langium/language/ast.js';
-import { ClassValidationElement, DataTypeValidationElement } from './validation-elements.js';
+import { isGenericEdge, isAssociation, isProperty, isParameter, isDataType, isClass } from '../langium/language/ast.js';
+import {
+    GenericEdgeValidationElement,
+    AssociationValidationElement,
+    PropertyValidationElement,
+    ParameterValidationElement,
+    DataTypeValidationElement,
+    ClassValidationElement
+} from './validation-elements.js';
 
 export function validateNode(node: AstNode): void {
     let errors: any[] = [];
 
-    if (isClass(node)) {
-        errors = validateSync(new ClassValidationElement(node));
+    if (isGenericEdge(node)) {
+        errors = validateSync(new GenericEdgeValidationElement(node));
+    }
+
+    if (isAssociation(node)) {
+        errors = validateSync(new AssociationValidationElement(node));
+    }
+
+    if (isProperty(node)) {
+        errors = validateSync(new PropertyValidationElement(node));
+    }
+
+    if (isParameter(node)) {
+        errors = validateSync(new ParameterValidationElement(node));
     }
 
     if (isDataType(node)) {
         errors = validateSync(new DataTypeValidationElement(node));
+    }
+
+    if (isClass(node)) {
+        errors = validateSync(new ClassValidationElement(node));
     }
 
     if (errors.length) {

@@ -8,9 +8,9 @@
  **********************************************************************************/
 import { OUTSIDE_LABEL_ARG } from '@borkdominik-biguml/uml-glsp-server';
 import { GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
-import type { Dimension } from '@eclipse-glsp/protocol';
 import type { GModelElement } from '@eclipse-glsp/server';
 import { connectionPorts } from './connection-ports.js';
+import { nodeSize } from '../../geometry/node-size.js';
 import type { BaseElementProps } from './element-context.js';
 
 /**
@@ -18,9 +18,6 @@ import type { BaseElementProps } from './element-context.js';
  * are pseudostates, and on the activity diagram, where they are control nodes. Both are built here so
  * that the four elements cannot drift apart, the way their two client views had.
  */
-
-/** A bar opens horizontal; drag it taller than it is wide to stand it up. */
-const DEFAULT_FORK_JOIN_SIZE = { width: 120, height: 10 };
 
 /** A bar thinner than this could no longer be grabbed to resize it back. */
 const MIN_FORK_JOIN_EXTENT = 6;
@@ -42,15 +39,8 @@ export interface GForkJoinNodeElementProps extends BaseElementProps {
  * reads that back off the bounds. Nothing normalises them here, because a bar dragged taller than it
  * is wide is a bar the user has stood up - rewriting that would undo the resize as it happened.
  */
-function barSize(size: BaseElementProps['size']): Dimension {
-    if (!size?.width || !size?.height || size.width <= 0 || size.height <= 0) {
-        return DEFAULT_FORK_JOIN_SIZE;
-    }
-    return { width: size.width, height: size.height };
-}
-
 export function GForkJoinNodeElement(props: GForkJoinNodeElementProps): GModelElement {
-    const size = barSize(props.size);
+    const size = nodeSize(props.type, props.size);
 
     return (
         <GNodeElement

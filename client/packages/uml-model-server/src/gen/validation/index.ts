@@ -8,5 +8,6 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
+export * from './multiplicity-properties.js';
 export * from './validation-elements.js';
 export * from './validator.js';

@@ -10,11 +10,12 @@ import { GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { Interaction } from '@borkdominik-biguml/uml-model-server/grammar';
 import { type Dimension } from '@eclipse-glsp/protocol';
 import type { GModelElement } from '@eclipse-glsp/server';
-import { FrameNameTag } from './core/index.js';
+import { FrameNameTag, FreeformCompartment } from './core/index.js';
 import type { BaseElementProps, ElementContext } from './core/element-context.js';
 
 export interface GInteractionNodeElementProps extends BaseElementProps {
     node: Interaction;
+    freeformChildren?: GModelElement[];
 }
 
 /**
@@ -34,7 +35,7 @@ const MIN_INTERACTION_SIZE = { width: 400, height: 300 };
 const FRAME_PADDING = 8;
 
 /**
- * A `Size` metaInfo can exist while carrying no usable dimensions (see `GenericChangeBoundsOperationHandler`),
+ * Stored `bounds` can carry no usable dimensions - a zero width or height, say -
  * which a plain `?? default` would happily accept - and the client layouter then collapses the frame onto its
  * name label because its preferred size resolves to 0. So only positive dimensions count as a persisted size.
  */
@@ -77,6 +78,7 @@ export function GInteractionNodeElement(props: GInteractionNodeElementProps): GM
             }}
         >
             <FrameNameTag id={props.node.__id} keyword='interaction' name={props.node.name} />
+            {props.freeformChildren && <FreeformCompartment ownerId={props.node.__id}>{props.freeformChildren}</FreeformCompartment>}
         </GNodeElement>
     );
 }
@@ -84,5 +86,18 @@ export function GInteractionNodeElement(props: GInteractionNodeElementProps): GM
 export function createInteractionElement(ctx: ElementContext<Interaction>): GModelElement {
     const position = ctx.modelIndex.findPosition(ctx.node.__id);
     const size = ctx.modelIndex.findSize(ctx.node.__id);
-    return <GInteractionNodeElement node={ctx.node} position={position} size={size} type={ctx.elementType} />;
+
+    // An interaction draws the lifelines it holds inside its own compartment, the way a package draws
+    // what it holds - so they move with it, and it grows to keep them in.
+    const freeformChildren = (ctx.node.lifelines ?? []).map(lifeline => ctx.renderNode(lifeline)).filter(Boolean) as GModelElement[];
+
+    return (
+        <GInteractionNodeElement
+            node={ctx.node}
+            position={position}
+            size={size}
+            type={ctx.elementType}
+            freeformChildren={freeformChildren.length > 0 ? freeformChildren : undefined}
+        />
+    );
 }

@@ -11,12 +11,14 @@ import { GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { Activity } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { Dimension } from '@eclipse-glsp/protocol';
 import type { GModelElement } from '@eclipse-glsp/server';
-import { FrameNameTag } from './core/index.js';
-import type { BaseElementProps, ElementContext } from './core/element-context.js';
+import { FrameNameTag, FreeformCompartment } from './core/index.js';
+import { type BaseElementProps, type ElementContext, renderContainedNodes } from './core/element-context.js';
 import { GPropertyRowElement } from './property.element.js';
 
 export interface GActivityNodeElementProps extends BaseElementProps {
     node: Activity;
+    /** The flow drawn inside the activity - its nodes, see `FreeformCompartment`. */
+    freeformChildren?: GModelElement[];
 }
 
 /**
@@ -38,7 +40,7 @@ const FRAME_PADDING = 8;
 
 
 /**
- * A `Size` metaInfo can exist while carrying no usable dimensions (see `GenericChangeBoundsOperationHandler`),
+ * Stored `bounds` can carry no usable dimensions - a zero width or height, say -
  * which a plain `?? default` would accept - and the client layouter then collapses the frame onto its name.
  * Only positive dimensions count as a size someone chose.
  */
@@ -102,6 +104,7 @@ export function GActivityNodeElement(props: GActivityNodeElementProps): GModelEl
             {(props.node.parameters ?? []).map(parameter =>
                 GPropertyRowElement({ node: parameter, type: ActivityDiagramNodeTypes.PROPERTY })
             )}
+            {props.freeformChildren && <FreeformCompartment ownerId={props.node.__id}>{props.freeformChildren}</FreeformCompartment>}
         </GNodeElement>
     );
 }
@@ -109,5 +112,13 @@ export function GActivityNodeElement(props: GActivityNodeElementProps): GModelEl
 export function createActivityElement(ctx: ElementContext<Activity>): GModelElement {
     const position = ctx.modelIndex.findPosition(ctx.node.__id);
     const size = ctx.modelIndex.findSize(ctx.node.__id);
-    return <GActivityNodeElement node={ctx.node} position={position} size={size} type={ctx.elementType} />;
+    return (
+        <GActivityNodeElement
+            node={ctx.node}
+            position={position}
+            size={size}
+            type={ctx.elementType}
+            freeformChildren={renderContainedNodes(ctx)}
+        />
+    );
 }

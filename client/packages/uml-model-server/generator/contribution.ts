@@ -9,6 +9,7 @@
 
 import type { GeneratorContext, GeneratorResult } from '@borkdominik-biguml/uml-language-tooling';
 import path from 'path';
+import { properties } from '../src/env/generator-config.js';
 import { transformDeclarationsToLangiumGrammar } from './builder/grammar-transformer.js';
 import { renderDiagramSerializer } from './render/diagram-serializer.renderer.js';
 import { renderLangiumText } from './render/langium.renderer.js';
@@ -17,7 +18,7 @@ import { renderValidation } from './render/validation.renderer.js';
 export function generate({ outputPath, declarations, definitionPath }: GeneratorContext): GeneratorResult {
     const results: { path: string; content: string }[] = [];
 
-    const generatorConfig = { referenceProperty: '__id' };
+    const generatorConfig = { referenceProperty: properties.referenceProperty };
     const languageId = 'uml-diagram';
     const languageName = 'UmlDiagram';
 
@@ -35,7 +36,7 @@ export function generate({ outputPath, declarations, definitionPath }: Generator
         content: serializerText
     });
 
-    const validationFiles = renderValidation(outputPath, definitionPath);
+    const validationFiles = renderValidation(outputPath, definitionPath, declarations);
     results.push(...validationFiles);
 
     // Langium CLI generates additional files (ast.ts, grammar.ts, module.ts) after this generator runs.

@@ -70,11 +70,12 @@ export namespace <%~ it.diagramName %>AstTypes {
     };
 <% } %>
 
+<% /* An alias is only a way to create its AST type; what is stored is drawn as the type itself. */ %>
     const typeMap: Record<string, string> = {
-<% it.nodes.forEach(function(entry) { %>
+<% it.nodes.filter(function(entry) { return !entry.template; }).forEach(function(entry) { %>
         '<%~ entry.astName %>': <%~ it.diagramName %>DiagramModelTypes.<%~ entry.constName %>,
 <% }) %>
-<% it.edges.forEach(function(entry) { %>
+<% it.edges.filter(function(entry) { return !entry.template; }).forEach(function(entry) { %>
         '<%~ entry.astName %>': <%~ it.diagramName %>DiagramModelTypes.<%~ entry.constName %>,
 <% }) %>
     };

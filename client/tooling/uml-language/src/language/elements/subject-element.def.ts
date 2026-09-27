@@ -20,6 +20,7 @@ import type { UseCase } from './use-case-element.def.js';
     icon: 'uml-component-icon'
 })
 @Glsp.defaults
+@Glsp.defaultSize({ width: 400, height: 600 })
 export class Subject extends Node {
     name: string;
     visibility?: Visibility;

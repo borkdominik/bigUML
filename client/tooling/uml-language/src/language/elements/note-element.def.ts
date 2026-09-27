@@ -22,10 +22,8 @@ import { Node } from '../core/element.def.js';
  * diagram gets one, because there is nothing about any of them that makes an aside less useful.
  *
  * It carries a body and no name. A note is the text it holds - there is no second thing to call it, and
- * a name would be a second label to keep in step with the one the reader actually sees. Text rather than
- * a plain string, because what people write in a note is prose: `LangiumText` takes the punctuation an
- * identifier cannot (see the `LANGIUM_PUNCT` terminal), so `when() weglassen -> completion event` is
- * storable where a name would have had to be filtered down to words.
+ * a name would be a second label to keep in step with the one the reader actually sees. Text, because
+ * what people write in a note is prose, and stored as written - brackets and braces included.
  */
 @Glsp.toolPalette({
     // Grouped with the free label, which is the same thing with the box taken away - see `TextLabel`.
@@ -36,6 +34,9 @@ import { Node } from '../core/element.def.js';
     icon: 'uml-comment-icon'
 })
 @Glsp.defaults
+// Attached to what it comments on with a line rather than by containment, so it is in nothing.
+@Glsp.floating
+@Glsp.defaultSize({ width: 180, height: 90 })
 export class Note extends Node {
     /**
      * What the note says. Opens holding the word `Note` rather than nothing at all: a note is only its

@@ -6,11 +6,11 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { OUTSIDE_LABEL_ARG } from '@borkdominik-biguml/uml-glsp-server';
-import { GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
-import type { Dimension } from '@eclipse-glsp/protocol';
+import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
+import { GLabelElement, GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { GModelElement } from '@eclipse-glsp/server';
 import { connectionPorts } from './connection-ports.js';
+import { nodeSize } from '../../geometry/node-size.js';
 import type { BaseElementProps } from './element-context.js';
 
 /**
@@ -18,9 +18,6 @@ import type { BaseElementProps } from './element-context.js';
  * the activity diagram. Built in one place so that the three cannot drift apart, the way their client
  * views had.
  */
-
-/** A branch diamond is small by convention: the guards belong on the outgoing edges, not inside it. */
-const DEFAULT_DIAMOND_SIZE = { width: 40, height: 40 };
 
 /** Below this the diamond could no longer be grabbed to resize it back. */
 const MIN_DIAMOND_EXTENT = 12;
@@ -37,15 +34,8 @@ export interface GDiamondNodeElementProps extends BaseElementProps {
     connectionPoints?: boolean;
 }
 
-function diamondSize(size: BaseElementProps['size']): Dimension {
-    if (!size?.width || !size?.height || size.width <= 0 || size.height <= 0) {
-        return DEFAULT_DIAMOND_SIZE;
-    }
-    return { width: size.width, height: size.height };
-}
-
 export function GDiamondNodeElement(props: GDiamondNodeElementProps): GModelElement {
-    const size = diamondSize(props.size);
+    const size = nodeSize(props.type, props.size);
 
     return (
         <GNodeElement
@@ -54,13 +44,12 @@ export function GDiamondNodeElement(props: GDiamondNodeElementProps): GModelElem
             position={props.position}
             size={size}
             cssClasses={['uml-node']}
-            args={{ [OUTSIDE_LABEL_ARG]: props.name ?? '' }}
-            // The name is drawn beside the shape by the view rather than laid out inside it, so this node
-            // has no label child - one would be measured into the node's own size by the layouter and
-            // stretch the shape to the width of a name that is not in it. The `layout` still matters
-            // though: `HiddenBoundsUpdater` sizes every node from the bounding box of what its view
-            // renders, and only a layout container gets that measurement overridden - without one the
-            // name drawn outside would be measured in, and the node would grow on every single render.
+            // The name is drawn under the shape rather than laid out inside it. Its label is of a type the
+            // layouter leaves out (see `GOutsideNameLabel`), so it is not measured into the node's own size
+            // and cannot stretch the shape to the width of a name that is not in it. The `layout` still
+            // matters though: `HiddenBoundsUpdater` sizes every node from the bounding box of what its view
+            // renders, and only a layout container gets that measurement overridden - without one the name
+            // drawn outside would be measured in, and the node would grow on every single render.
             layout='vbox'
             layoutOptions={{
                 paddingTop: 0,
@@ -76,6 +65,14 @@ export function GDiamondNodeElement(props: GDiamondNodeElementProps): GModelElem
             {/* Ports are not laid out - `GPort` has no layoutable-child feature - so the vbox above
                 leaves them on the tips this places them on. */}
             {props.connectionPoints ? connectionPorts(props.id, size, 'diamond') : undefined}
+            {/* A label of its own, so that the name can be written on the canvas: `<id>_name_label` is what
+                the label edit writes back into the name. Placed by the view, under the shape. */}
+            <GLabelElement
+                id={`${props.id}_name_label`}
+                type={CommonModelTypes.LABEL_OUTSIDE_NAME}
+                text={props.name ?? ''}
+                cssClasses={['uml-outside-label']}
+            />
         </GNodeElement>
     );
 }

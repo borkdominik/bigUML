@@ -9,7 +9,7 @@
 import { representationTypeId } from '@borkdominik-biguml/uml-glsp-server';
 import { configureModelElement, FeatureModule, GEdge, PolylineEdgeView } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
-import { GNoteNode, GNoteNodeView, GTextLabelNode, GTextLabelNodeView, NamedElement, NamedElementView } from '../../elements/index.js';
+import { GGenericEdge, GGenericEdgeView, GNoteNode, GNoteNodeView, GTextLabelNode, GTextLabelNodeView, NamedElement, NamedElementView } from '../../elements/index.js';
 import { GEditableLabel, GEditableLabelView } from '../../views/uml-label.view.js';
 
 const R = 'Deployment';
@@ -26,11 +26,11 @@ export const umlDeploymentDiagramModule = new FeatureModule((bind, unbind, isBou
     // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Device'), GDeviceNode, GDeviceNodeView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'ExecutionEnvironment'), NamedElement, NamedElementView);
     // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'ExecutionEnvironment'), GExecutionEnvironmentNode, GExecutionEnvironmentNodeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Model'), NamedElement, NamedElementView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'DeploymentModel'), NamedElement, NamedElementView);
     // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Model'), GModelNode, GModelNodeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Node'), NamedElement, NamedElementView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'DeploymentNode'), NamedElement, NamedElementView);
     // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Node'), GUmlNodeNode, GUmlNodeNodeView);
-    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Package'), NamedElement, NamedElementView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'DeploymentPackage'), NamedElement, NamedElementView);
     // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Package'), GPackageNode, GPackageNodeView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Property'), NamedElement, NamedElementView);
     // configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Property'), GPropertyNode, GPropertyNodeView);
@@ -44,6 +44,7 @@ export const umlDeploymentDiagramModule = new FeatureModule((bind, unbind, isBou
     // The note and the free label, which every diagram has: both say something about the diagram
     // rather than being part of any one notation.
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Note'), GNoteNode, GNoteNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'GenericEdge'), GGenericEdge, GGenericEdgeView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'TextLabel'), GTextLabelNode, GTextLabelNodeView);
 
     // Edges

@@ -25,8 +25,8 @@ import { type ConnectionPoint } from './transition-element.def.js';
 @Glsp.defaults
 export class Association extends Relation {
     name?: string;
-    @Language.text sourceMultiplicity?: string = '*';
-    @Language.text targetMultiplicity?: string = '*';
+    @Language.multiplicity sourceMultiplicity?: string;
+    @Language.multiplicity targetMultiplicity?: string;
     sourceName?: string;
     targetName?: string;
     /**

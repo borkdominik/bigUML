@@ -15,6 +15,8 @@ export namespace CommonModelTypes {
     export const LABEL_NAME = 'uml-label:name';
     export const LABEL_TEXT = 'uml-label:text';
     export const LABEL_EDGE_NAME = 'uml-label:edge-name';
+    /** A name drawn beside a shape too small to hold it, rather than laid out inside the shape. */
+    export const LABEL_OUTSIDE_NAME = 'uml-label:outside-name';
     export const COMP_HEADER = 'uml-comp:header';
     export const COMP_ROOT_COMPONENT = 'uml-comp:root-component';
     export const COMP_CONTAINER = 'uml-comp:container';
@@ -37,6 +39,12 @@ export namespace CommonModelTypes {
      */
     export const COMP_STATE_REGION = 'uml-comp:state-region';
     export const COMP_STATE_PARTS = 'uml-comp:state-parts';
+    /**
+     * One lane of a swimlane: the band a subpartition is drawn as, carrying its id, which the nodes in
+     * the lane are drawn inside and dropped onto. A type of its own for the same reason the region band
+     * has one - it takes a hint of its own, which says what may be dropped on it.
+     */
+    export const COMP_PARTITION_LANE = 'uml-comp:partition-lane';
 }
 
 /**

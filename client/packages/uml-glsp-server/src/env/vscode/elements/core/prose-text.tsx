@@ -9,6 +9,7 @@
 import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { GLabelElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { GModelElement } from '@eclipse-glsp/server';
+import { propertyLabelId } from '../../notation/label-ids.js';
 
 /**
  * The writing on the two elements that are writing and nothing else: a note, and a label standing on its
@@ -27,7 +28,7 @@ import type { GModelElement } from '@eclipse-glsp/server';
  * `GenericLabelEditOperationHandler` trims back to find the element a retyped line belongs to. It names
  * the body here rather than the name these elements have none of.
  */
-export const BODY_LABEL_SUFFIX = '_body_label';
+export const BODY_LABEL_SUFFIX = propertyLabelId('', 'body');
 
 /**
  * What one character of the body takes across, near enough.
@@ -70,7 +71,7 @@ export interface ProseLabelProps {
 export function ProseLabel(props: ProseLabelProps): GModelElement {
     return (
         <GLabelElement
-            id={props.id + BODY_LABEL_SUFFIX}
+            id={propertyLabelId(props.id, 'body')}
             type={CommonModelTypes.LABEL_NAME}
             text={props.text}
             args={{ wrapAtColumns: props.columns }}

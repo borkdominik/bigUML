@@ -9,8 +9,8 @@
 import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { GLabelElement, GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { OpaqueAction } from '@borkdominik-biguml/uml-model-server/grammar';
-import type { Dimension } from '@eclipse-glsp/protocol';
 import type { GModelElement } from '@eclipse-glsp/server';
+import { nodeSize } from '../geometry/node-size.js';
 import type { BaseElementProps, ElementContext } from './core/element-context.js';
 import { connectionPorts } from './core/connection-ports.js';
 import { attachedPins } from './core/pin-node.js';
@@ -18,15 +18,6 @@ import { attachedPins } from './core/pin-node.js';
 export interface GOpaqueActionNodeElementProps extends BaseElementProps {
     node: OpaqueAction;
 }
-
-/**
- * What an action opens at, matching the size `GenericCreateNodeOperationHandler` writes for one - the
- * two have to agree, or the pins would be placed against a shape of one size and drawn on another.
- *
- * Tall enough to hold a name that runs to a second line, which an action's name usually does: `Add to
- * Shopping Cart` reads as two lines rather than one long strip.
- */
-const DEFAULT_ACTION_SIZE = { width: 80, height: 60 };
 
 /** Inset of the action name from the action border. */
 const ACTION_PADDING = 8;
@@ -36,15 +27,8 @@ const ACTION_PADDING = 8;
  * that were never stored, or stored as zero, fall back to the size a new action is given rather than to
  * nothing - a pin placed against a zero-height action would sit on its corner.
  */
-function actionSize(size: BaseElementProps['size']): Dimension {
-    if (!size?.width || !size?.height || size.width <= 0 || size.height <= 0) {
-        return DEFAULT_ACTION_SIZE;
-    }
-    return { width: size.width, height: size.height };
-}
-
 export function GOpaqueActionNodeElement(props: GOpaqueActionNodeElementProps): GModelElement {
-    const size = actionSize(props.size);
+    const size = nodeSize(props.type, props.size);
 
     return (
         <GNodeElement

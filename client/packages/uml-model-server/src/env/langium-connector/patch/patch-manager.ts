@@ -1,6 +1,5 @@
 /**********************************************************************************
  * Copyright (c) 2026 borkdominik and others.
- * Copyright (c) 2023 CrossBreeze.
  *
  * This program and the accompanying materials are made available under the
  * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
@@ -8,205 +7,126 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import { loggerFactory } from '@borkdominik-biguml/big-common';
-import { v4 as uuidv4 } from 'uuid';
+import type { AstNode, GenericAstNode } from 'langium';
 import { URI } from 'vscode-uri';
-import { type SharedServices } from '../model-module.js';
-import { jsonPatch } from '../util/json-types.js';
-import {
-    addUUID,
-    cleanJSON,
-    findUUID,
-    rebuildLangiumReferences,
-    rebuildReferences,
-    removeUUID,
-    updateReferences
-} from './patch-manager.util.js';
-
-interface RedoUndo {
-    next?: RedoUndo;
-    prev?: RedoUndo;
-    redo?: Map<string, string>;
-    undo?: Map<string, string>;
-}
+import { type ClientId, DIAGRAM_CLIENT } from '../client-id.js';
+import { DocumentSynchronizer } from '../document/document-synchronizer.js';
+import { type ModelServerSharedServices } from '../model-module.js';
+import { type jsonPatch } from '../util/json-types.js';
+import { AffectedDocumentCollector } from './affected-documents.js';
+import { applyJsonPatch, type JsonDocuments } from './json-patch-applier.js';
+import { type DocumentTexts, UndoRedoHistory } from './undo-redo-history.js';
 
 const logger = loggerFactory('PatchManager');
 
+/**
+ * Applies a JSON patch to a document and writes the outcome back - to that document and to every
+ * document whose references the change touched - then remembers the texts before and after so the
+ * patch can be undone and redone.
+ *
+ * The steps are each somebody else's: the affected documents come from the
+ * {@link AffectedDocumentCollector}, the patched JSON from {@link applyJsonPatch}, the linked AST from
+ * the language's JSON serializer, the consistent write from the {@link DocumentSynchronizer} and the
+ * history from the {@link UndoRedoHistory}. What is left here is the order they happen in.
+ */
 export class PatchManager {
-    redoUndoMap: Map<string, RedoUndo> = new Map<string, RedoUndo>();
+    protected readonly synchronizer: DocumentSynchronizer;
+    protected readonly affectedDocuments: AffectedDocumentCollector;
+    protected readonly history = new UndoRedoHistory();
 
-    constructor(
-        protected shared: SharedServices,
-        protected documentManager = shared.workspace.TextDocumentManager,
-        protected documents = shared.workspace.LangiumDocuments,
-        protected documentBuilder = shared.workspace.DocumentBuilder,
-        protected indexManager = shared.workspace.IndexManager
-    ) {}
+    constructor(protected readonly shared: ModelServerSharedServices) {
+        this.synchronizer = new DocumentSynchronizer(shared);
+        this.affectedDocuments = new AffectedDocumentCollector(shared.workspace.LangiumDocuments, shared.workspace.IndexManager);
+    }
 
-    async applyPatch(_patch: jsonPatch.Operation | Array<jsonPatch.Operation>, _uri: string, client?: string) {
-        logger.log(`Applying patch to document: ${_uri}`, _patch);
-        await this.documentManager.open(_uri, undefined, client);
-        let documents = new Set<string>();
-        documents = await this.collectAffectedDocuments(documents, _uri);
-        const documentMap = new Map();
-        const originalDocumentMap = new Map();
-        for (const uri of documents) {
-            const documentUri = URI.parse(uri).path;
-            await this.documentManager.open(documentUri, undefined, client);
-            const document = await this.documents.getOrCreateDocument(URI.parse(documentUri));
-            const jsonSerializer = this.shared.ServiceRegistry.getServices(URI.parse(documentUri)).serializer.JsonSerializer;
-            documentMap.set(documentUri, JSON.parse(jsonSerializer.serialize(document.parseResult.value)));
-            originalDocumentMap.set(documentUri, document.textDocument.getText());
+    async applyPatch(patch: jsonPatch.Operation | readonly jsonPatch.Operation[], uri: string, client?: ClientId): Promise<AstNode | undefined> {
+        logger.log(`Applying patch to document: ${uri}`, patch);
+        const operations = Array.isArray(patch) ? patch : [patch as jsonPatch.Operation];
+        const targetPath = URI.parse(uri).path;
+
+        const before: DocumentTexts = new Map();
+        const documents: JsonDocuments = new Map();
+        for (const affectedUri of await this.affectedDocuments.collect(uri)) {
+            const path = URI.parse(affectedUri).path;
+            await this.shared.workspace.TextDocumentManager.open(path, undefined, client);
+            const document = await this.synchronizer.document(path);
+            const serializer = this.servicesFor(path).serializer.JsonSerializer;
+            documents.set(path, JSON.parse(serializer.serialize(document.parseResult.value)));
+            before.set(path, document.textDocument.getText());
         }
-        _uri = URI.parse(_uri).path;
 
-        const patch = Array.isArray(_patch) ? _patch : [_patch];
-        addUUID(documentMap);
-        updateReferences(documentMap);
-        // Typed rather than left to be inferred: it is assigned inside the callback below, which the
-        // compiler does not follow, so an untyped `let` never widens past `undefined`.
-        let result: jsonPatch.OperationResult<any> | undefined;
-        patch.forEach(patchOp => {
-            if ((patchOp.op === 'replace' || patchOp.op === 'add') && typeof patchOp.value === 'object') {
-                if (patchOp.op === 'replace') {
-                    patchOp.value['__tmp_uuid__'] = findUUID(JSON.parse(JSON.stringify(documentMap.get(_uri))), patchOp.path);
-                } else if (patchOp.op === 'add') {
-                    patchOp.value['__tmp_uuid__'] = uuidv4();
-                }
+        const patched = this.link(applyJsonPatch(documents, targetPath, operations));
+
+        const after: DocumentTexts = new Map();
+        let root: AstNode | undefined;
+        for (const [path, ast] of patched) {
+            const text = this.servicesFor(path).serializer.Serializer.serialize(ast);
+            after.set(path, text);
+            const written = await this.write(path, text, path === targetPath, client);
+            if (path === targetPath) {
+                root = written;
             }
-            result = jsonPatch.applyOperation(documentMap.get(_uri), patchOp);
-        });
-        // Only when something was applied. `result` is the outcome of the last operation, so a patch that
-        // carries none leaves it unset - and reading a new document off nothing failed the whole edit
-        // rather than doing nothing to it, which is what an empty patch asks for.
-        if (result) {
-            documentMap.set(_uri, result.newDocument);
         }
-        rebuildReferences(documentMap);
-        removeUUID(documentMap);
-        cleanJSON(documentMap);
-        rebuildLangiumReferences(
-            documentMap,
-            this.shared.ServiceRegistry.getServices(URI.parse(_uri)).workspace.AstNodeLocator,
-            this.shared.ServiceRegistry.getServices(URI.parse(_uri)).references.NameProvider,
-            this.documents
-        );
-        const retVal = await this.updateDocuments(documentMap, _uri, client);
-        await this.updateRedoUndo(documentMap, originalDocumentMap, _uri);
-        return retVal;
+
+        this.history.record(targetPath, before, after);
+        return root;
     }
 
-    async updateRedoUndo(documentMap: any, originalDocumentMap: any, _uri: any) {
-        let redoUndo;
-        if (!this.redoUndoMap.has(URI.parse(_uri).path)) {
-            redoUndo = {};
-        } else {
-            redoUndo = this.redoUndoMap.get(URI.parse(_uri).path);
-        }
-        if (redoUndo!.next) {
-            redoUndo!.next = undefined;
-            redoUndo!.redo = undefined;
-        }
-
-        const redoMap = new Map();
-        const undoMap = new Map();
-        documentMap.forEach((value: any, key: any) => {
-            redoMap.set(key, value);
-            undoMap.set(key, originalDocumentMap.get(key));
-        });
-
-        const newRedoUndo: RedoUndo = { prev: redoUndo, undo: undoMap };
-        redoUndo!.next = newRedoUndo;
-        redoUndo!.redo = redoMap;
-        redoUndo = newRedoUndo;
-        this.redoUndoMap.set(URI.parse(_uri).path, redoUndo);
+    async undo(uri: string, client?: ClientId): Promise<AstNode | undefined> {
+        const targetPath = URI.parse(uri).path;
+        const texts = this.history.undo(targetPath);
+        return texts ? this.restore(texts, targetPath, client) : (await this.synchronizer.document(uri)).parseResult.value;
     }
 
-    async updateDocuments(documentMap: Map<string, any>, _uri: string, client?: string) {
-        let retVal;
-        for (const [key, value] of documentMap.entries()) {
-            const serializers = this.shared.ServiceRegistry.getServices(URI.parse(key)).serializer;
-            const document = await this.documents.getOrCreateDocument(URI.parse(key));
-            const text = serializers.Serializer.serialize(value);
-            const version = this.documentManager.getClientDocumentVersion(key, client ?? 'text');
+    async redo(uri: string, client?: ClientId): Promise<AstNode | undefined> {
+        const targetPath = URI.parse(uri).path;
+        const texts = this.history.redo(targetPath);
+        return texts ? this.restore(texts, targetPath, client) : (await this.synchronizer.document(uri)).parseResult.value;
+    }
 
-            /** if text editor triggered changes on non-text editors, update non-text editor version to match text-editor version  */
-            if (client !== 'text' && version < this.documentManager.getClientDocumentVersion(key, 'text')) {
-                await this.documentManager.update(
-                    URI.parse(key).toString(),
-                    this.documentManager.getClientDocumentVersion(key, 'text'),
-                    text,
-                    client
-                );
-                /** do not update document manager version, as it has already been updated by text-editor */
+    /**
+     * Turns the patched JSON back into linked ASTs. A reference from one patched document into another
+     * is resolved against the patched version of that other document, not the one still on disk.
+     */
+    protected link(documents: JsonDocuments): Map<string, AstNode> {
+        const linked = documents as Map<string, GenericAstNode>;
+        for (const [path, json] of linked) {
+            this.servicesFor(path).serializer.JsonSerializer.link(json, documentPath => linked.get(documentPath));
+        }
+        return linked;
+    }
+
+    /** Writes one document's new text; the patched document is rebuilt, the others are saved. */
+    protected async write(path: string, text: string, isTarget: boolean, client?: ClientId): Promise<AstNode> {
+        const outcome = await this.synchronizer.write(path, text, client);
+        if (outcome === 'written') {
+            if (isTarget) {
+                await this.shared.workspace.DocumentBuilder.update([URI.parse(path)], []);
             } else {
-                this.shared.workspace.TextDocuments.update(document.textDocument, text, version);
-                await this.documentManager.update(URI.parse(key).toString(), document.textDocument.version + 1, text, client);
-                if (key !== _uri) {
-                    await this.documentManager.save(URI.parse(key).toString(), text);
-                } else {
-                    await this.documentBuilder.update([URI.parse(key)], []);
-                    retVal = document.parseResult.value;
-                }
-            }
-            documentMap.set(key, text);
-        }
-        return retVal;
-    }
-
-    async collectAffectedDocuments(docs: Set<string>, uri: string) {
-        docs.add(URI.parse(uri).toString());
-
-        for (const doc of this.documents.all) {
-            await this.indexManager.updateReferences(doc);
-            if (this.indexManager.isAffected(doc, docs)) {
-                if (!docs.has(doc.uri.toString())) {
-                    docs.add(doc.uri.toString());
-                    docs = new Set([...(await this.collectAffectedDocuments(docs, doc.uri.toString()))]);
-                }
+                await this.shared.workspace.TextDocumentManager.save(path, text);
             }
         }
-        return docs;
+        return (await this.synchronizer.document(path)).parseResult.value;
     }
 
-    async undo(uri: string, _client?: string) {
-        let redoUndo = this.redoUndoMap.get(URI.parse(uri).path);
-        if (redoUndo && redoUndo.prev && redoUndo.undo) {
-            const undoMap = redoUndo.undo;
-            const retVal = await this.redoUndoPatch(undoMap, uri);
-            redoUndo = redoUndo.prev;
-            this.redoUndoMap.set(URI.parse(uri).path, redoUndo);
-            return retVal;
-        } else {
-            const document = await this.documents.getOrCreateDocument(URI.parse(uri));
-            return document.parseResult.value;
-        }
-    }
-    async redo(uri: string, _client?: string) {
-        let redoUndo = this.redoUndoMap.get(URI.parse(uri).path);
-        if (redoUndo && redoUndo.next && redoUndo.redo) {
-            const redoMap = redoUndo.redo;
-            const retVal = await this.redoUndoPatch(redoMap, uri);
-            redoUndo = redoUndo.next;
-            this.redoUndoMap.set(URI.parse(uri).path, redoUndo);
-            return retVal;
-        } else {
-            const document = await this.documents.getOrCreateDocument(URI.parse(uri));
-            return document.parseResult.value;
-        }
-    }
-
-    async redoUndoPatch(map: Map<string, string>, uri: string, client?: string) {
-        let retVal;
-        for (const [key, value] of map.entries()) {
-            await this.documentManager.open(URI.parse(key).path, undefined, client ?? 'glsp');
-            const document = await this.documents.getOrCreateDocument(URI.parse(key));
-            await this.documentManager.update(URI.parse(key).path, document.textDocument.version + 1, value, client ?? 'glsp');
-            await this.documentManager.save(URI.parse(key).path, value);
-            if (URI.parse(key).path === URI.parse(uri).path) {
-                await this.documentBuilder.update([URI.parse(key)], []);
-                retVal = document.parseResult.value;
+    /** Puts every document back to a remembered text. */
+    protected async restore(texts: DocumentTexts, targetPath: string, client: ClientId = DIAGRAM_CLIENT): Promise<AstNode | undefined> {
+        const documentManager = this.shared.workspace.TextDocumentManager;
+        let root: AstNode | undefined;
+        for (const [path, text] of texts) {
+            await documentManager.open(path, undefined, client);
+            const document = await this.synchronizer.document(path);
+            await documentManager.update(path, document.textDocument.version + 1, text, client);
+            await documentManager.save(path, text);
+            if (path === targetPath) {
+                await this.shared.workspace.DocumentBuilder.update([URI.parse(path)], []);
+                root = document.parseResult.value;
             }
         }
-        return retVal;
+        return root;
+    }
+
+    protected servicesFor(path: string) {
+        return this.shared.ServiceRegistry.getServices(URI.parse(path));
     }
 }

@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { type Declaration, Decorator, Multiplicity, type Property, type Type } from '@borkdominik-biguml/uml-language-tooling';
+import { type Declaration, Decorator, isValueDeclaration, isValueProperty, Multiplicity, type Property, type Type } from '@borkdominik-biguml/uml-language-tooling';
 
 // ============================================================================
 // Langium grammar types — specific to the model-server's grammar generation
@@ -98,11 +98,32 @@ function declarationToEntryRule(declaration: Declaration): EntryRule {
             multiplicity: property.multiplicity,
             crossReference: Decorator.has(property.decorators, 'reference'),
             optional: property.isOptional,
-            freeText: Decorator.has(property.decorators, 'text'),
+            freeText: Decorator.has(property.decorators, 'text') || Decorator.has(property.decorators, 'multiplicity'),
             // The root carries no id: nothing refers to the diagram itself, so it is never given one.
             identifier: false
         }))
     };
+}
+
+/**
+ * An aliased class has no parser rule of its own - it is stored as the type it aliases - so a union
+ * naming it names that type instead, once.
+ */
+function resolveAliasedTypes(declarations: Array<Declaration>, types: Type[]): Type[] {
+    const seen = new Set<string>();
+    return types
+        .map(type => {
+            const aliasDec = Decorator.find(declarations.find(d => d.name === type.typeName)?.decorators ?? [], 'alias');
+            const alias = aliasDec ? Decorator.getArg<string>(aliasDec) : undefined;
+            return alias ? { ...type, typeName: alias } : type;
+        })
+        .filter(type => {
+            if (seen.has(type.typeName)) {
+                return false;
+            }
+            seen.add(type.typeName);
+            return true;
+        });
 }
 
 function declarationsToTypeRules(declarations: Array<Declaration>): Array<TypeRule> {
@@ -110,7 +131,7 @@ function declarationsToTypeRules(declarations: Array<Declaration>): Array<TypeRu
         .filter(declaration => declaration.type === 'type')
         .map(declaration => ({
             name: declaration.name,
-            definitions: declaration.properties!.map(property => property.types)?.flat() ?? []
+            definitions: resolveAliasedTypes(declarations, declaration.properties!.map(property => property.types)?.flat() ?? [])
         }))
         .concat(
             declarations
@@ -221,17 +242,27 @@ export function transformDeclarationsToLangiumGrammar(
                 allProperties.set(prop.name, prop);
             }
 
-            const properties: Array<Definition> = Array.from(allProperties.values()).map(property => ({
+            // Layout (a value such as `bounds`) is written after everything else an element holds: the
+            // grammar reads the keys in one fixed order, and the parent-first order above would otherwise
+            // put an edge's `routingPoints` in the middle of whatever its concrete class adds.
+            const ordered = Array.from(allProperties.values());
+            const sorted = [
+                ...ordered.filter(property => !isValueProperty(property, declarations)),
+                ...ordered.filter(property => isValueProperty(property, declarations))
+            ];
+
+            const properties: Array<Definition> = sorted.map(property => ({
                 name: property.name,
                 type: property.types[0],
                 multiplicity: property.multiplicity,
                 crossReference: Decorator.has(property.decorators, 'reference'),
                 optional: property.isOptional,
-                freeText: Decorator.has(property.decorators, 'text'),
+                freeText: Decorator.has(property.decorators, 'text') || Decorator.has(property.decorators, 'multiplicity'),
                 identifier: property.name === generatorConfig.referenceProperty
             }));
 
-            if (!properties.find(property => property.name === generatorConfig.referenceProperty)) {
+            // A value object is no element and carries no id of its own.
+            if (!isValueDeclaration(d) && !properties.find(property => property.name === generatorConfig.referenceProperty)) {
                 properties.unshift({
                     name: generatorConfig.referenceProperty,
                     type: { typeName: 'string', type: 'simple' },

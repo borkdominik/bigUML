@@ -201,35 +201,3 @@ export function GGraphElement(props: GGraphElementProps): GGraph {
     wireParent(graph);
     return graph;
 }
-
-// ============================================================================
-// DividerElement - commonly used separator node
-// ============================================================================
-
-export interface DividerElementProps {
-    id?: string;
-    type?: string;
-    text?: string;
-    cssClasses?: string[];
-}
-
-export function DividerElement(props: DividerElementProps): GNode {
-    const node = new GNode();
-    node.id = props.id ?? uuid.v4();
-    node.type = props.type ?? 'divider';
-    node.layout = 'hbox';
-    node.layoutOptions = { hGrab: true };
-    node.cssClasses = props.cssClasses ?? [];
-    node.children = [];
-    if (props.text) {
-        const label = new GLabel();
-        label.id = uuid.v4();
-        label.type = DefaultTypes.LABEL;
-        label.text = props.text;
-        label.cssClasses = ['uml-divider-subtitle'];
-        label.children = [];
-        label.parent = node;
-        node.children.push(label);
-    }
-    return node;
-}

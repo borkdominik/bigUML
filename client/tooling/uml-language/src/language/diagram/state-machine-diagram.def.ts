@@ -26,6 +26,8 @@ import type { StateMachine } from '../elements/state-machine-element.def.js';
 import type { StatePart } from '../elements/state-part-element.def.js';
 import type { Terminate } from '../elements/terminate-element.def.js';
 import type { Transition } from '../elements/transition-element.def.js';
+import type { GenericEdge } from '../elements/generic-edge-element.def.js';
+import type { EdgeAnchor } from '../elements/edge-anchor-element.def.js';
 
 // @ts-nocheck
 
@@ -54,6 +56,7 @@ type StateMachineDiagramNodes =
     | EntryPoint
     | Terminate
     | Note
-    | TextLabel;
+    | TextLabel
+    | EdgeAnchor;
 
-type StateMachineDiagramEdges = Transition;
+type StateMachineDiagramEdges = Transition | GenericEdge;

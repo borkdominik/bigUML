@@ -28,6 +28,7 @@ export * from './execution-environment/index.js';
 export * from './extend/index.js';
 export * from './final-state/index.js';
 export * from './generalization/index.js';
+export * from './generic-edge/index.js';
 export * from './include/index.js';
 export * from './information-flow/index.js';
 export * from './instance-specification/index.js';

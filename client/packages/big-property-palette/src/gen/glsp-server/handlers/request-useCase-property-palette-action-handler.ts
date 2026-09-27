@@ -13,8 +13,10 @@ import { inject, injectable } from 'inversify';
 import {
     isActor,
     isAssociation,
+    isEdgeAnchor,
     isExtend,
     isGeneralization,
+    isGenericEdge,
     isInclude,
     isNote,
     isSubject,
@@ -25,8 +27,10 @@ import { DiagramModelState, DiagramLanguageMetadata } from '@borkdominik-biguml/
 import type { DiagramLanguageMetadata as DiagramLanguageMetadataType } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import { ActorPropertyPaletteHandler } from './elements/actor.property-palette-handler.js';
 import { AssociationPropertyPaletteHandler } from './elements/association.property-palette-handler.js';
+import { EdgeAnchorPropertyPaletteHandler } from './elements/edge-anchor.property-palette-handler.js';
 import { ExtendPropertyPaletteHandler } from './elements/extend.property-palette-handler.js';
 import { GeneralizationPropertyPaletteHandler } from './elements/generalization.property-palette-handler.js';
+import { GenericEdgePropertyPaletteHandler } from './elements/generic-edge.property-palette-handler.js';
 import { IncludePropertyPaletteHandler } from './elements/include.property-palette-handler.js';
 import { NotePropertyPaletteHandler } from './elements/note.property-palette-handler.js';
 import { SubjectPropertyPaletteHandler } from './elements/subject.property-palette-handler.js';
@@ -63,7 +67,11 @@ export class RequestUseCasePropertyPaletteActionHandler implements ActionHandler
 
             const context = { semanticElement, languageMetadata: this.languageMetadata };
 
-            if (isUseCase(semanticElement)) {
+            if (isEdgeAnchor(semanticElement)) {
+                return EdgeAnchorPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isGenericEdge(semanticElement)) {
+                return GenericEdgePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isUseCase(semanticElement)) {
                 return UseCasePropertyPaletteHandler.getPropertyPalette(context);
             } else if (isSubject(semanticElement)) {
                 return SubjectPropertyPaletteHandler.getPropertyPalette(context);

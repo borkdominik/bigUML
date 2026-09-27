@@ -13,13 +13,13 @@ import { AstUtils, DefaultTokenBuilder, type Grammar, GrammarAST, RegExpUtils, t
  * Where a keyword may legally appear in the JSON-shaped concrete syntax.
  *
  * The generated grammar spells every JSON field out as keywords, e.g.
- * `'"name"' ':' '"' name=LangiumName '"'`. Chevrotain lexes without parser context and prefers
+ * `'"name"' ':' name=STRING`. Chevrotain lexes without parser context and prefers
  * keyword tokens over terminals, so a *value* that happens to equal a field name or a type
  * literal (`{"name": "x"}`, `{"name": "Class"}`) is lexed as that keyword and the parse fails.
  * Keys and values are distinguishable by their surroundings though: a key is always followed by
  * `:`, a value always preceded by `<its key>:`. Recording those positions lets us restrict each
  * keyword's pattern to the position it was declared in, so that everywhere else the value is
- * lexed as a plain `LANGIUM_ID` and any name becomes legal again.
+ * lexed as a plain `STRING` and any name becomes legal again.
  */
 interface KeywordPosition {
     /** The keyword is used as a JSON field name (it is followed by `:`). */
@@ -44,7 +44,16 @@ export class UmlDiagramTokenBuilder extends DefaultTokenBuilder {
 
     override buildTokens(grammar: Grammar, options?: TokenBuilderOptions): TokenVocabulary {
         this.keywordPositions = collectKeywordPositions(grammar);
-        return super.buildTokens(grammar, options);
+        const tokens = super.buildTokens(grammar, options) as TokenType[];
+
+        // A value opens with the same `"` an enum value does, so the lone quote gives way to a whole
+        // string wherever one can be read - which the string's matcher decides (see `matchString`).
+        const string = tokens.find(token => token.name === 'STRING');
+        const quote = tokens.find(token => token.name === '"');
+        if (string && quote) {
+            quote.LONGER_ALT = string;
+        }
+        return tokens;
     }
 
     protected override buildKeywordToken(
@@ -66,6 +75,13 @@ export class UmlDiagramTokenBuilder extends DefaultTokenBuilder {
 
     protected override buildTerminalToken(terminal: GrammarAST.TerminalRule): TokenType {
         const token = super.buildTerminalToken(terminal);
+        if (terminal.name === 'STRING') {
+            const enumValues = enumValuesByKey(this.keywordPositions);
+            token.PATTERN = { exec: (text: string, offset: number) => matchString(text, offset, enumValues) };
+            token.LINE_BREAKS = false;
+            token.START_CHARS_HINT = ['"'];
+            return token;
+        }
         if (terminal.name === 'LANGIUM_BOOL') {
             // Booleans are never quoted in this syntax, so `"true"` is a legal name.
             token.PATTERN = /(?<!")(?:true|false)/;
@@ -95,6 +111,59 @@ export class UmlDiagramTokenBuilder extends DefaultTokenBuilder {
         }
         return undefined;
     }
+}
+
+/** A JSON string, with exactly the escapes JSON has - anything else could not be read back by `JSON.parse`. */
+const JSON_STRING = /"(?:[^"\\\r\n]|\\(?:["\\/bfnrt]|u[0-9a-fA-F]{4}))*"/y;
+
+/**
+ * Matches a JSON string at `offset`, where a value or an unknown key can stand - after a `:`, a `,`, a
+ * `[` or a `{`. Not the quote that closes an enum value (`"PUBLIC"` is the quote, the keyword and the
+ * quote again), which follows the keyword; and not an enum value itself, which is left to its keywords
+ * so that it keeps its type - `"visibility": "PUBLIC"` - while `"name": "PUBLIC"` is a string.
+ */
+function matchString(text: string, offset: number, enumValues: Map<string, Set<string>>): RegExpExecArray | null {
+    JSON_STRING.lastIndex = offset;
+    const match = JSON_STRING.exec(text);
+    if (!match) {
+        return null;
+    }
+    let before = offset - 1;
+    while (before >= 0 && /\s/.test(text[before])) {
+        before--;
+    }
+    const opener = text[before];
+    if (opener !== ':' && opener !== ',' && opener !== '[' && opener !== '{') {
+        return null;
+    }
+    if (opener === ':') {
+        let keyEnd = before - 1;
+        while (keyEnd >= 0 && /\s/.test(text[keyEnd])) {
+            keyEnd--;
+        }
+        const keyStart = text.lastIndexOf('"', keyEnd - 1);
+        const values = keyStart >= 0 ? enumValues.get(text.slice(keyStart, keyEnd + 1)) : undefined;
+        if (values?.has(match[0].slice(1, -1))) {
+            return null;
+        }
+    }
+    return match;
+}
+
+/** The enum values each key holds somewhere in the grammar, keyed by the key as it is written - `"visibility"`. */
+function enumValuesByKey(positions: Map<string, KeywordPosition>): Map<string, Set<string>> {
+    const byKey = new Map<string, Set<string>>();
+    for (const [keyword, position] of positions) {
+        if (!position.quotedValue) {
+            continue;
+        }
+        for (const key of position.valueOfKeys) {
+            const values = byKey.get(key) ?? new Set<string>();
+            values.add(keyword);
+            byKey.set(key, values);
+        }
+    }
+    return byKey;
 }
 
 /** Collects the positions every keyword of the grammar is used in. */

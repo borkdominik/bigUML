@@ -17,18 +17,27 @@ import {
     RequestStateMachinePropertyPaletteActionHandler,
     RequestUseCasePropertyPaletteActionHandler
 } from '@borkdominik-biguml/big-property-palette/gen/glsp-server';
+import { offeredConnectionPoints } from '@borkdominik-biguml/uml-glsp-server';
+import { isMultiplicityProperty } from '@borkdominik-biguml/uml-model-server/validation';
 import {
     BEHAVIOR_LABEL_PARTS,
     BEHAVIOR_LABEL_PROPERTY_ID,
+    classifiersOf,
     composeBehaviorLabel,
+    connectionPointLayoutOf,
+    DiagramLanguageMetadata,
+    DiagramModelState,
     mergesIntoSamePackage,
     messagesOnLink,
+    nodeSize,
     ORIENTATION_PROPERTY_ID,
-    turnableDefaultSize
-} from '@borkdominik-biguml/uml-glsp-server';
-import { DiagramLanguageMetadata, DiagramModelState } from '@borkdominik-biguml/uml-glsp-server/vscode';
+    isTypedProperty,
+    turnableDefaultSize,
+    typeNameOf
+} from '@borkdominik-biguml/uml-glsp-server/vscode';
 import type { DiagramLanguageMetadata as DiagramLanguageMetadataType } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import {
+    isEdge,
     isMessage,
     isPackage,
     isPackageMerge,
@@ -44,6 +53,7 @@ import {
 import { type ActionHandler, CreateEdgeOperation, DeleteElementOperation, type MaybePromise } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 import type { AstNode } from 'langium';
+import { BEND_POINTS_PROPERTY_ID, bendPointReferences } from './bend-points.js';
 import { ChoiceProperty, ReferenceProperty, TextProperty } from './components.js';
 import { PropertyPaletteChoices } from './property-palette-util.js';
 
@@ -115,23 +125,186 @@ export class RequestPropertyPaletteActionHandler implements ActionHandler {
 
         const handler = new ctor();
         Object.assign(handler, { modelState: this.modelState, languageMetadata: this.languageMetadata });
-        return Promise.resolve(handler.execute(action)).then(actions =>
-            actions.map(a =>
-                this.withMergedPackagesProperty(
-                    this.withLinkMessagesProperty(
-                        this.withOrientationProperty(
-                            this.asBehaviorLabelPalette(
-                                this.withComposedPartLabels(this.withoutDeadContainmentProperties(a), action.elementId),
-                                action.elementId
-                            ),
-                            action.elementId
-                        ),
-                        action.elementId
-                    ),
-                    action.elementId
-                )
-            )
-        );
+        return Promise.resolve(handler.execute(action)).then(actions => actions.map(a => this.enrich(a, action.elementId)));
+    }
+
+    /**
+     * What the hand-written steps add to or change in a generated palette, applied in this order. Each
+     * one leaves a palette it has nothing to do with as it is.
+     */
+    protected enrich(action: any, elementId?: string): any {
+        const steps: Array<(action: any, elementId?: string) => any> = [
+            a => this.withoutDeadContainmentProperties(a),
+            (a, id) => this.withUsableConnectionPoints(a, id),
+            (a, id) => this.withTypeSuggestions(a, id),
+            (a, id) => this.withTextFormats(a, id),
+            (a, id) => this.withComposedPartLabels(a, id),
+            (a, id) => this.asBehaviorLabelPalette(a, id),
+            (a, id) => this.withOrientationProperty(a, id),
+            (a, id) => this.withLinkMessagesProperty(a, id),
+            (a, id) => this.withMergedPackagesProperty(a, id),
+            (a, id) => this.withBendPointsProperty(a, id)
+        ];
+        return steps.reduce((current, step) => step(current, elementId), action);
+    }
+
+    /**
+     * Marks the text fields that hold a multiplicity, the fields of a listed element's row as well - which
+     * ones do is the definitions' to say (`@Language.multiplicity`), and the palette holds them to what a
+     * multiplicity is while they are typed.
+     */
+    protected withTextFormats(action: any, elementId?: string): any {
+        if (!SetPropertyPaletteAction.is(action) || !action.palette?.items || !elementId) {
+            return action;
+        }
+        const typeOf = (id: string): string | undefined => (this.modelState.index.findIdElement(id) as { $type?: string } | undefined)?.$type;
+
+        const items = action.palette.items.map((item: any) => {
+            if (item.type === 'TEXT' && isMultiplicityProperty(typeOf(item.elementId), item.propertyId)) {
+                return { ...item, format: 'multiplicity' };
+            }
+            if (item.type === 'REFERENCE' && item.references?.some((ref: any) => ref.fields?.length)) {
+                return {
+                    ...item,
+                    references: item.references.map((ref: any) => ({
+                        ...ref,
+                        fields: ref.fields?.map((field: any) =>
+                            isMultiplicityProperty(typeOf(ref.elementId), field.propertyId) ? { ...field, format: 'multiplicity' } : field
+                        )
+                    }))
+                };
+            }
+            return item;
+        });
+        return { ...action, palette: { ...action.palette, items } };
+    }
+
+    /**
+     * The type of a property or a parameter, shown as the one value it is to the user - the name of the
+     * type it references, or the name typed in - and offered the types of the model while it is edited.
+     * The same for the type field of a row listing the properties of a class. What is typed is stored
+     * as a reference or as text by `TypedElementExtension`.
+     */
+    protected withTypeSuggestions(action: any, elementId?: string): any {
+        if (!SetPropertyPaletteAction.is(action) || !action.palette?.items || !elementId) {
+            return action;
+        }
+        const element = this.modelState.index.findIdElement(elementId);
+        if (!element) {
+            return action;
+        }
+
+        let suggestions: string[] | undefined;
+        const typeNames = (): string[] => (suggestions ??= [...new Set(classifiersOf(element).map(classifier => classifier.name!))]);
+        const typed = (id: string, property: string): { value: string; suggestions: string[] } => ({
+            value: typeNameOf(this.modelState.index.findIdElement(id), property) ?? '',
+            suggestions: typeNames()
+        });
+
+        const items = action.palette.items.map((item: any) => {
+            if (item.type === 'TEXT' && isTypedProperty(item.propertyId)) {
+                const { value, suggestions } = typed(item.elementId, item.propertyId);
+                return { ...item, text: value, suggestions };
+            }
+            if (item.type === 'REFERENCE' && item.references?.some((ref: any) => ref.fields?.some((field: any) => isTypedProperty(field.propertyId)))) {
+                return {
+                    ...item,
+                    references: item.references.map((ref: any) => ({
+                        ...ref,
+                        fields: ref.fields?.map((field: any) =>
+                            isTypedProperty(field.propertyId) ? { ...field, ...typed(ref.elementId, field.propertyId) } : field
+                        )
+                    }))
+                };
+            }
+            return item;
+        });
+        return { ...action, palette: { ...action.palette, items } };
+    }
+
+    /**
+     * Offers the `sourcePoint`/`targetPoint` of an edge only where its end has connection points, and
+     * only the points it has. A class or a use case has none; a diamond has its four tips, but a bar only
+     * its two long faces and an action only its two sides (see `offeredConnectionPoints`). A point the
+     * end does not offer is ignored when the edge is drawn (see `pinnedEndpointId`), so choosing one
+     * would change nothing - the field is left out, or narrowed to what does something.
+     */
+    protected withUsableConnectionPoints(action: any, elementId?: string): any {
+        if (!SetPropertyPaletteAction.is(action) || !action.palette?.items || !elementId) {
+            return action;
+        }
+        const element = this.modelState.index.findIdElement(elementId) as
+            | { source?: { ref?: unknown }; target?: { ref?: unknown } }
+            | undefined;
+        if (!element || !isEdge(element)) {
+            return action;
+        }
+
+        const offered: Record<string, readonly string[]> = {
+            sourcePoint: this.offeredPoints(element.source?.ref),
+            targetPoint: this.offeredPoints(element.target?.ref)
+        };
+
+        const items = action.palette.items
+            .filter((item: any) => !(item.propertyId in offered) || offered[item.propertyId].length > 0)
+            .map((item: any) =>
+                item.propertyId in offered && Array.isArray(item.choices)
+                    ? {
+                          ...item,
+                          // `automatic` (the empty value) stays: it is how a pin is taken off again.
+                          choices: item.choices.filter((choice: any) => choice.value === '' || offered[item.propertyId].includes(choice.value))
+                      }
+                    : item
+            );
+        return { ...action, palette: { ...action.palette, items } };
+    }
+
+    /** The connection points an edge end offers, as it is drawn - none for a shape that has no layout of them. */
+    protected offeredPoints(end: unknown): readonly string[] {
+        const layout = connectionPointLayoutOf(end);
+        const node = end as { __id?: string; $type?: string } | undefined;
+        if (!layout || !node?.__id || !node.$type) {
+            return [];
+        }
+        return offeredConnectionPoints(layout, nodeSize(node.$type, this.modelState.index.findSize(node.__id)));
+    }
+
+    /**
+     * Lists the bend points of a selected edge under its properties, each one's coordinates editable
+     * and each one removable. They are layout rather than a property of the edge, so nothing is
+     * generated for them; edits come back under ids of their own (see `bend-points.ts`). An edge drawn
+     * straight has none, and gets no section.
+     */
+    protected withBendPointsProperty(action: any, elementId?: string): any {
+        if (!SetPropertyPaletteAction.is(action) || !action.palette?.items || !elementId) {
+            return action;
+        }
+        if (!isEdge(this.modelState.index.findIdElement(elementId))) {
+            return action;
+        }
+        const points = this.modelState.getRoutingPoints(elementId) ?? [];
+        if (points.length === 0) {
+            return action;
+        }
+
+        return {
+            ...action,
+            palette: {
+                ...action.palette,
+                items: [
+                    ...action.palette.items,
+                    ReferenceProperty({
+                        elementId,
+                        propertyId: BEND_POINTS_PROPERTY_ID,
+                        label: 'Bend Points',
+                        // A bend point has no palette of its own to go to.
+                        isNavigable: false,
+                        references: bendPointReferences(elementId, points),
+                        creates: []
+                    })
+                ]
+            }
+        };
     }
 
     /**
@@ -294,7 +467,7 @@ export class RequestPropertyPaletteActionHandler implements ActionHandler {
                         })),
                         // Every package of the diagram that is not already gathered by this connector,
                         // and not the one they are all merged into - a package cannot merge itself.
-                        creates: packagesIn(this.modelState.index.root)
+                        creates: packagesIn(this.modelState.semanticRoot)
                             .filter(candidate => candidate.__id !== merged.__id && !alreadyMerged.has(candidate.__id))
                             .map(candidate => ({
                                 label: `Merge ${nodeLabel(candidate)}`,

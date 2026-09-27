@@ -10,6 +10,7 @@ import { OUTSIDE_LABEL_ARG } from '@borkdominik-biguml/uml-glsp-server';
 import { GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { Dimension } from '@eclipse-glsp/protocol';
 import type { GModelElement } from '@eclipse-glsp/server';
+import { nodeSize } from '../../geometry/node-size.js';
 import type { BaseElementProps } from './element-context.js';
 
 /**
@@ -17,9 +18,6 @@ import type { BaseElementProps } from './element-context.js';
  * histories, the two points on a state's border, and the terminate cross. Built in one place so they
  * cannot drift apart, the way the diamonds and the bars had.
  */
-
-/** Such a pseudostate is a mark and nothing else, so it opens at the size that mark needs and no more. */
-const DEFAULT_MARK_SIZE = { width: 30, height: 30 };
 
 /** Below this the mark could no longer be grabbed to resize it back. */
 const MIN_MARK_EXTENT = 12;
@@ -39,22 +37,19 @@ export interface GPseudostateMarkNodeElementProps extends BaseElementProps {
  * `NODE_SIZE_OVERRIDES` gave these a square of their own still hold that size, so it is squared here
  * rather than only at creation.
  *
- * A `Size` metaInfo can also exist while carrying no usable dimensions (see
- * `GenericChangeBoundsOperationHandler`), which a plain `?? default` would happily accept - and the
+ * Stored `bounds` can also carry no usable dimensions - a zero width or height, say - which a plain `?? default` would happily accept - and the
  * client layouter then collapses the circle to nothing because its preferred size resolves to 0.
  */
-function markSize(size: BaseElementProps['size']): Dimension {
-    if (!size?.width || !size?.height || size.width <= 0 || size.height <= 0) {
-        return DEFAULT_MARK_SIZE;
-    }
+function markSize(type: string, size: BaseElementProps['size']): Dimension {
     // The smaller of the two: the mark is drawn to the shorter side either way, so this is the square it
     // already occupies rather than a size the shape has to grow into.
-    const extent = Math.min(size.width, size.height);
+    const drawn = nodeSize(type, size);
+    const extent = Math.min(drawn.width, drawn.height);
     return { width: extent, height: extent };
 }
 
 export function GPseudostateMarkNodeElement(props: GPseudostateMarkNodeElementProps): GModelElement {
-    const size = markSize(props.size);
+    const size = markSize(props.type, props.size);
 
     return (
         <GNodeElement

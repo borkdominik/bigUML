@@ -29,10 +29,12 @@ export namespace StateMachineDiagramNodeTypes {
     export const TERMINATE = representationTypeId('StateMachine', DefaultTypes.NODE, 'Terminate');
     export const NOTE = representationTypeId('StateMachine', DefaultTypes.NODE, 'Note');
     export const TEXT_LABEL = representationTypeId('StateMachine', DefaultTypes.NODE, 'TextLabel');
+    export const EDGE_ANCHOR = representationTypeId('StateMachine', DefaultTypes.NODE, 'EdgeAnchor');
 }
 
 export namespace StateMachineDiagramEdgeTypes {
     export const TRANSITION = representationTypeId('StateMachine', DefaultTypes.EDGE, 'Transition');
+    export const GENERIC_EDGE = representationTypeId('StateMachine', DefaultTypes.EDGE, 'GenericEdge');
 }
 
 export namespace StateMachineDiagramModelTypes {
@@ -53,9 +55,11 @@ export namespace StateMachineDiagramModelTypes {
     export const TERMINATE = StateMachineDiagramNodeTypes.TERMINATE;
     export const NOTE = StateMachineDiagramNodeTypes.NOTE;
     export const TEXT_LABEL = StateMachineDiagramNodeTypes.TEXT_LABEL;
+    export const EDGE_ANCHOR = StateMachineDiagramNodeTypes.EDGE_ANCHOR;
 
     // re-export edges
     export const TRANSITION = StateMachineDiagramEdgeTypes.TRANSITION;
+    export const GENERIC_EDGE = StateMachineDiagramEdgeTypes.GENERIC_EDGE;
 }
 
 export namespace StateMachineAstTypes {
@@ -76,7 +80,9 @@ export namespace StateMachineAstTypes {
         Terminate: StateMachineDiagramModelTypes.TERMINATE,
         Note: StateMachineDiagramModelTypes.NOTE,
         TextLabel: StateMachineDiagramModelTypes.TEXT_LABEL,
-        Transition: StateMachineDiagramModelTypes.TRANSITION
+        EdgeAnchor: StateMachineDiagramModelTypes.EDGE_ANCHOR,
+        Transition: StateMachineDiagramModelTypes.TRANSITION,
+        GenericEdge: StateMachineDiagramModelTypes.GENERIC_EDGE
     };
 
     export function convertToAst(elementId: string): string {

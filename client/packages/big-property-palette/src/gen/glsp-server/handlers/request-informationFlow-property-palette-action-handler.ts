@@ -13,6 +13,8 @@ import { inject, injectable } from 'inversify';
 import {
     isActor,
     isClass,
+    isEdgeAnchor,
+    isGenericEdge,
     isInformationFlow,
     isNote,
     isOperation,
@@ -24,6 +26,8 @@ import { DiagramModelState, DiagramLanguageMetadata } from '@borkdominik-biguml/
 import type { DiagramLanguageMetadata as DiagramLanguageMetadataType } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import { ActorPropertyPaletteHandler } from './elements/actor.property-palette-handler.js';
 import { ClassPropertyPaletteHandler } from './elements/class.property-palette-handler.js';
+import { EdgeAnchorPropertyPaletteHandler } from './elements/edge-anchor.property-palette-handler.js';
+import { GenericEdgePropertyPaletteHandler } from './elements/generic-edge.property-palette-handler.js';
 import { InformationFlowPropertyPaletteHandler } from './elements/information-flow.property-palette-handler.js';
 import { NotePropertyPaletteHandler } from './elements/note.property-palette-handler.js';
 import { OperationPropertyPaletteHandler } from './elements/operation.property-palette-handler.js';
@@ -61,20 +65,24 @@ export class RequestInformationFlowPropertyPaletteActionHandler implements Actio
 
             const context = { semanticElement, languageMetadata: this.languageMetadata };
 
-            if (isTextLabel(semanticElement)) {
+            if (isEdgeAnchor(semanticElement)) {
+                return EdgeAnchorPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isGenericEdge(semanticElement)) {
+                return GenericEdgePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isTextLabel(semanticElement)) {
                 return TextLabelPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isNote(semanticElement)) {
                 return NotePropertyPaletteHandler.getPropertyPalette(context);
             } else if (isProperty(semanticElement)) {
                 return PropertyPropertyPaletteHandler.getPropertyPalette(context);
-            } else if (isActor(semanticElement)) {
-                return ActorPropertyPaletteHandler.getPropertyPalette(context);
-            } else if (isParameter(semanticElement)) {
-                return ParameterPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isOperation(semanticElement)) {
                 return OperationPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isParameter(semanticElement)) {
+                return ParameterPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isClass(semanticElement)) {
                 return ClassPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isActor(semanticElement)) {
+                return ActorPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isInformationFlow(semanticElement)) {
                 return InformationFlowPropertyPaletteHandler.getPropertyPalette(context);
             }

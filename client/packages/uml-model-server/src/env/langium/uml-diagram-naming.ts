@@ -64,17 +64,7 @@ export class QualifiedNameProvider implements NameProvider {
         if (!node) {
             return undefined;
         }
-        const name = this.getLocalName(node);
-        // let parent = node.$container;
-        // while (parent && isIdAstNode(parent)) {
-        //   name = concat(parent[properties.referenceProperty], name);
-        //   parent = parent.$container;
-        // }
-        //  while (parent && isNamed(parent)) {
-        //    name = concat(parent.name, name);
-        //    parent = parent.$container;
-        //  }
-        return name;
+        return this.getLocalName(node);
     }
 
     /**
@@ -97,6 +87,6 @@ export class QualifiedNameProvider implements NameProvider {
     }
 
     getNameNode(node: AstNode): CstNode | undefined {
-        return GrammarUtils.findNodeForProperty(node.$cstNode, '__id');
+        return GrammarUtils.findNodeForProperty(node.$cstNode, properties.referenceProperty);
     }
 }

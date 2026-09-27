@@ -14,6 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
+    DIAGRAM_CLIENT,
     type DiagramSerializer,
     type ModelService,
     type QualifiedNameProvider,
@@ -45,13 +46,6 @@ export class DiagramModelState extends DefaultModelState implements JsonModelSta
     protected _semanticUri: string;
     protected _semanticRoot: Diagram;
     protected _packageId: string;
-
-    /**
-     * Manually routed edge points, kept in memory only for the lifetime of this session.
-     * The GModel is rebuilt from the semantic model after every operation, so without this,
-     * routing points would be lost as soon as any other operation (e.g. moving a connected node) runs.
-     */
-    protected readonly _routingPoints = new Map<string, Point[]>();
 
     protected readonly onDidLoadSourceModelEmitter = new Emitter<void>();
     readonly onDidLoadSourceModel = this.onDidLoadSourceModelEmitter.event;
@@ -109,7 +103,7 @@ export class DiagramModelState extends DefaultModelState implements JsonModelSta
 
     async updateSemanticRoot(content?: string, doNotUpdateSemanticRoot?: boolean): Promise<void> {
         if (!doNotUpdateSemanticRoot) {
-            this._semanticRoot = await this.modelService.update(this.semanticUri, content ?? this.semanticRoot, 'glsp');
+            this._semanticRoot = await this.modelService.update(this.semanticUri, content ?? this.semanticRoot, DIAGRAM_CLIENT);
         }
 
         this.index.indexSemanticRoot(this.semanticRoot);
@@ -117,7 +111,7 @@ export class DiagramModelState extends DefaultModelState implements JsonModelSta
 
     async sendModelPatch(patch: string): Promise<void> {
         try {
-            this._semanticRoot = await this.modelService.patch(this.semanticUri, patch, 'glsp');
+            this._semanticRoot = await this.modelService.patch(this.semanticUri, patch, DIAGRAM_CLIENT);
             this.index.indexSemanticRoot(this.semanticRoot);
         } catch (ex: unknown) {
             console.error('Error applying model patch:', ex);
@@ -133,7 +127,7 @@ export class DiagramModelState extends DefaultModelState implements JsonModelSta
 
     async updateSourceModel(sourceModel: DiagramSourceModel, doNotUpdateSemanticRoot?: boolean): Promise<void> {
         if (!doNotUpdateSemanticRoot) {
-            this._semanticRoot = await this.modelService.update<Diagram>(this.semanticUri, sourceModel.text ?? this.semanticRoot, 'glsp');
+            this._semanticRoot = await this.modelService.update<Diagram>(this.semanticUri, sourceModel.text ?? this.semanticRoot, DIAGRAM_CLIENT);
         }
 
         this.index.indexSemanticRoot(this.semanticRoot);
@@ -157,11 +151,12 @@ export class DiagramModelState extends DefaultModelState implements JsonModelSta
         this.index.indexSemanticRoot(this.semanticRoot);
     }
 
+    /**
+     * The bend points of an edge, read from its `routingPoints` - written there by
+     * `GenericChangeRoutingPointsOperationHandler`, so they are saved with the file and undone with the
+     * rest of the model.
+     */
     getRoutingPoints(edgeId: string): Point[] | undefined {
-        return this._routingPoints.get(edgeId);
-    }
-
-    setRoutingPoints(edgeId: string, points: Point[]): void {
-        this._routingPoints.set(edgeId, points);
+        return this.index.findRoutingPoints(edgeId)?.map(point => ({ x: point.x, y: point.y }));
     }
 }

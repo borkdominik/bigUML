@@ -12,6 +12,7 @@ import type { Actor } from '@borkdominik-biguml/uml-model-server/grammar';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import type { GModelElement } from '@eclipse-glsp/server';
 import { representationTypeId } from '../../common/model/model-type-utils.js';
+import { propertyLabelId } from '../notation/label-ids.js';
 import type { BaseElementProps, ElementContext } from './core/element-context.js';
 
 export interface GActorNodeElementProps extends BaseElementProps {
@@ -36,6 +37,14 @@ export function GActorNodeElement(props: GActorNodeElementProps): GModelElement 
                 id={`${props.node.__id}_stickfigure`}
                 type={representationTypeId(representation, DefaultTypes.NODE, 'ActorStickfigure')}
             />
+            {/* Above the name, in the braces UML writes a property string in - `{abstract}`. */}
+            {props.node.modifiers && (
+                <GLabelElement
+                    id={propertyLabelId(props.node.__id, 'modifiers')}
+                    type={CommonModelTypes.LABEL_TEXT}
+                    text={`{${props.node.modifiers}}`}
+                />
+            )}
             <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={props.node.name} />
         </GNodeElement>
     );

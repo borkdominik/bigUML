@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { type Declaration, Decorator, lcFirst, type Property, toConstant, toHuman } from '@borkdominik-biguml/uml-language-tooling';
+import { type Declaration, Decorator, isValueProperty, lcFirst, type Property, toConstant, toHuman } from '@borkdominik-biguml/uml-language-tooling';
 import { isAbstractType, isEdgeType, isInDiagramTypes, optionConstant } from '../utils/declaration.utils.js';
 
 export interface PropertyDescriptor {
@@ -41,6 +41,8 @@ export function buildPropertyDescriptor(prop: Property, declarations: Declaratio
 
     if (Decorator.has(prop.decorators, 'reference')) return;
     if (prop.types?.[0]?.type === 'constant') return;
+    // Layout - `bounds`, `routingPoints` - is edited on the canvas, and bend points in a section of their own.
+    if (isValueProperty(prop, declarations)) return;
 
     const id = prop.name;
     const first = prop.types?.[0];
@@ -74,6 +76,7 @@ export function buildPropertyDescriptor(prop: Property, declarations: Declaratio
                 `    elementId: e.__id,`,
                 `    label: e.name ?? '(unnamed ${toConstant(typeName).toLowerCase()})',`,
                 `    name: e.name ?? '',`,
+                ...inlineFieldsExpr(typeName, declarations),
                 `    deleteActions: [DeleteElementOperation.create([e.__id])]`,
                 `}))`
             ].join('\n                            '),
@@ -116,4 +119,19 @@ export function buildPropertyDescriptor(prop: Property, declarations: Declaratio
     }
 
     return;
+}
+
+/**
+ * The `fields` of a list row, where the listed type declares any with `@PropertyPalette.inlineFields` -
+ * nothing otherwise, which leaves the row editing the name alone.
+ */
+function inlineFieldsExpr(typeName: string, declarations: Declaration[]): string[] {
+    const declaration = declarations.find(d => d.type === 'class' && d.name === typeName);
+    const decorator = declaration ? Decorator.find(declaration.decorators, 'inlineFields') : undefined;
+    const propertyIds = (decorator?.args ?? []).filter((arg): arg is string => typeof arg === 'string');
+    if (propertyIds.length === 0) {
+        return [];
+    }
+    const fields = propertyIds.map(propertyId => `{ propertyId: '${propertyId}', label: '${toHuman(propertyId)}', value: e.${propertyId} ?? '' }`);
+    return [`    fields: [${fields.join(', ')}],`];
 }

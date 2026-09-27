@@ -7,20 +7,20 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import { ClassDiagramNodeTypes, PACKAGE_TAB_HEIGHT } from '@borkdominik-biguml/uml-glsp-server';
-import { GCompartmentElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
-import { isClass, isPackage, type Package } from '@borkdominik-biguml/uml-model-server/grammar';
-import { DefaultTypes, type Dimension, type Point } from '@eclipse-glsp/protocol';
+import { type Package } from '@borkdominik-biguml/uml-model-server/grammar';
+import { type Dimension, type Point } from '@eclipse-glsp/protocol';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';
-import { createClassElement } from './class.element.js';
 import type { ElementContext } from './core/element-context.js';
-import { CompartmentHeader } from './core/index.js';
+import { CompartmentHeader, FreeformCompartment } from './core/index.js';
 
 export class GPackageNode extends GNode {
     override type = ClassDiagramNodeTypes.PACKAGE;
-    override layout = 'vbox';
+    // An empty package keeps its name in the middle of the body below the tab at whatever size it is
+    // dragged to; once it holds elements the name stays at the top above them (see `UmlCenteredVBoxLayouter`).
+    override layout = 'uml-centered-vbox';
     name: string = 'UNDEFINED CLASS NAME';
     uri: string = 'UNDEFINED URI';
-    visibility: string = 'PUBLIC';
+    visibility: string = 'NONE';
 }
 
 export interface GPackageNodeElementProps {
@@ -41,7 +41,7 @@ export function GPackageNodeElement(props: GPackageNodeElementProps): GModelElem
     packageNode.id = id;
     packageNode.name = node.name;
     packageNode.uri = node.uri ?? 'UNDEFINED URI';
-    packageNode.visibility = node.visibility ?? 'PUBLIC';
+    packageNode.visibility = node.visibility ?? 'NONE';
     packageNode.cssClasses = ['uml-node', 'uml-package-node'];
     packageNode.children = [];
 
@@ -66,15 +66,9 @@ export function GPackageNodeElement(props: GPackageNodeElementProps): GModelElem
 
     if (freeformChildren && freeformChildren.length > 0) {
         const freeformComp = (
-            <GCompartmentElement
-                id={id + '_freeform'}
-                type={DefaultTypes.COMPARTMENT}
-                layout='freeform'
-                args={{ 'children-container': true, divider: true }}
-                layoutOptions={{ hAlign: 'left', resizeContainer: true }}
-            >
+            <FreeformCompartment ownerId={id} divider>
                 {freeformChildren}
-            </GCompartmentElement>
+            </FreeformCompartment>
         );
         freeformComp.parent = packageNode;
         packageNode.children.push(freeformComp);
@@ -87,16 +81,9 @@ export function createPackageElement(ctx: ElementContext<Package>): GModelElemen
     const position = ctx.modelIndex.findPosition(ctx.node.__id);
     const size = ctx.modelIndex.findSize(ctx.node.__id);
 
-    const freeformChildren: GModelElement[] = [];
-    if (ctx.node.entities?.length > 0) {
-        for (const entity of ctx.node.entities) {
-            if (isPackage(entity)) {
-                freeformChildren.push(createPackageElement({ ...ctx, node: entity }));
-            } else if (isClass(entity)) {
-                freeformChildren.push(createClassElement({ ...ctx, node: entity }));
-            }
-        }
-    }
+    // A package draws what it holds inside its own compartment, whatever that is - rendered the way the
+    // factory renders it on the canvas, so a package holds the same shapes the canvas does.
+    const freeformChildren = (ctx.node.entities ?? []).map(entity => ctx.renderNode(entity)).filter(Boolean) as GModelElement[];
 
     return (
         <GPackageNodeElement

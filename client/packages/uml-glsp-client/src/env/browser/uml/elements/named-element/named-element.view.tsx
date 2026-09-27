@@ -98,7 +98,9 @@ export class NamedElementView extends RectangularNodeView {
         // TODO: Remove after switching to builder based approach for all gmodels
         return (
             <g class-selected={element.selected} class-mouseover={element.hoverFeedback}>
-                {(element.args['border'] === true || element.args['build_by'] === undefined) && this.renderBackground(element)}
+                {element.args['border'] === true || element.args['build_by'] === undefined
+                    ? this.renderBackground(element)
+                    : this.renderMemberHighlight(element)}
 
                 {renderCompartmentSeparators(element)}
 
@@ -109,10 +111,30 @@ export class NamedElementView extends RectangularNodeView {
 
     /**
      * The element's own children, drawn over its shape. Split out from `render` so that a node can
-     * draw one of them differently - a class scales its name with the box, see `GClassNodeView`.
+     * draw one of them differently.
      */
     protected renderContent(element: NamedElement, context: RenderingContext): (VNode | undefined)[] {
         return context.renderChildren(element);
+    }
+
+    /**
+     * The row a member - a property, an operation, a literal - is drawn in, which has no shape of its
+     * own. Transparent until the member is hovered or selected (see `uml-member-highlight`), so that a
+     * selected member shows as selected, and a click between the letters of its text still lands on the
+     * member instead of falling through to the class behind it.
+     */
+    protected renderMemberHighlight(element: NamedElement): VNode {
+        return (
+            <rect
+                x={0}
+                y={0}
+                rx={2}
+                ry={2}
+                width={Math.max(0, element.bounds.width)}
+                height={Math.max(0, element.bounds.height)}
+                class-uml-member-highlight
+            />
+        ) as any;
     }
 
     /**

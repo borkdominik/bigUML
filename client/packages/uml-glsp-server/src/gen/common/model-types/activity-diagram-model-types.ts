@@ -32,10 +32,12 @@ export namespace ActivityDiagramNodeTypes {
     export const PROPERTY = representationTypeId('Activity', DefaultTypes.NODE, 'Property');
     export const NOTE = representationTypeId('Activity', DefaultTypes.NODE, 'Note');
     export const TEXT_LABEL = representationTypeId('Activity', DefaultTypes.NODE, 'TextLabel');
+    export const EDGE_ANCHOR = representationTypeId('Activity', DefaultTypes.NODE, 'EdgeAnchor');
 }
 
 export namespace ActivityDiagramEdgeTypes {
     export const CONTROL_FLOW = representationTypeId('Activity', DefaultTypes.EDGE, 'ControlFlow');
+    export const GENERIC_EDGE = representationTypeId('Activity', DefaultTypes.EDGE, 'GenericEdge');
 }
 
 export namespace ActivityDiagramModelTypes {
@@ -59,9 +61,11 @@ export namespace ActivityDiagramModelTypes {
     export const PROPERTY = ActivityDiagramNodeTypes.PROPERTY;
     export const NOTE = ActivityDiagramNodeTypes.NOTE;
     export const TEXT_LABEL = ActivityDiagramNodeTypes.TEXT_LABEL;
+    export const EDGE_ANCHOR = ActivityDiagramNodeTypes.EDGE_ANCHOR;
 
     // re-export edges
     export const CONTROL_FLOW = ActivityDiagramEdgeTypes.CONTROL_FLOW;
+    export const GENERIC_EDGE = ActivityDiagramEdgeTypes.GENERIC_EDGE;
 }
 
 export namespace ActivityAstTypes {
@@ -85,7 +89,9 @@ export namespace ActivityAstTypes {
         Property: ActivityDiagramModelTypes.PROPERTY,
         Note: ActivityDiagramModelTypes.NOTE,
         TextLabel: ActivityDiagramModelTypes.TEXT_LABEL,
-        ControlFlow: ActivityDiagramModelTypes.CONTROL_FLOW
+        EdgeAnchor: ActivityDiagramModelTypes.EDGE_ANCHOR,
+        ControlFlow: ActivityDiagramModelTypes.CONTROL_FLOW,
+        GenericEdge: ActivityDiagramModelTypes.GENERIC_EDGE
     };
 
     export function convertToAst(elementId: string): string {

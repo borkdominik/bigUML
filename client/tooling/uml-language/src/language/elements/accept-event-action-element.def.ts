@@ -19,6 +19,8 @@ import { Node, type Visibility } from '../core/element.def.js';
     icon: 'uml-accept-event-action-icon'
 })
 @Glsp.defaults
+// Wider than a plain action: half its height is given over to the notch.
+@Glsp.defaultSize({ width: 140, height: 60 })
 export class AcceptEventAction extends Node {
     name: string;
     visibility?: Visibility;

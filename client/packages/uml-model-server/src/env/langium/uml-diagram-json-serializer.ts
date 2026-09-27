@@ -20,7 +20,6 @@ import {
     type CstNode,
     type DocumentSegment,
     type GenericAstNode,
-    type JsonSerializer,
     type JsonSerializeOptions,
     type LangiumDocuments,
     type Mutable,
@@ -30,18 +29,20 @@ import {
 import { type LangiumServices } from 'langium/lsp';
 import { URI } from 'vscode-uri';
 import { properties } from '../generator-config.js';
+import type { DocumentResolver, LinkingJsonSerializer } from './extended-services.js';
 
-interface IntermediateReference {
+/** A reference as it is written to JSON: by id or by path, and by document where it crosses one. */
+export interface IntermediateReference {
     $refText?: string;
     $ref?: Language.Reference<AstNode>;
     $error?: string;
 }
 
-function isIntermediateReference(obj: unknown): obj is IntermediateReference {
+export function isIntermediateReference(obj: unknown): obj is IntermediateReference {
     return typeof obj === 'object' && !!obj && ('$ref' in obj || '$error' in obj);
 }
 
-export class UmlDiagramJsonSerializer implements JsonSerializer {
+export class UmlDiagramJsonSerializer implements LinkingJsonSerializer {
     protected ignoreProperties = new Set(['$container', '$containerProperty', '$containerIndex', '$document', '$cstNode']);
     protected readonly astNodeLocator: AstNodeLocator;
     protected readonly nameProvider: NameProvider;
@@ -66,8 +67,12 @@ export class UmlDiagramJsonSerializer implements JsonSerializer {
 
     deserialize<T extends AstNode = AstNode>(content: string): T {
         const root = JSON.parse(content);
-        this.linkNode(root, root);
+        this.link(root);
         return root;
+    }
+
+    link(root: GenericAstNode, resolveDocument?: DocumentResolver): void {
+        this.linkNode(root, root, resolveDocument);
     }
 
     protected replacer(key: string, value: unknown, { refText, sourceText, textRegions }: JsonSerializeOptions = {}): unknown {
@@ -94,8 +99,10 @@ export class UmlDiagramJsonSerializer implements JsonSerializer {
                     }
                 };
             } else {
+                // The text is all that is left of a reference that does not resolve, so it is kept
+                // whatever the options say - dropped, the reference would be written back as nothing.
                 return {
-                    $refText,
+                    $refText: value.$refText,
                     $error: value.error?.message ?? 'Could not resolve reference'
                 };
             }
@@ -146,21 +153,34 @@ export class UmlDiagramJsonSerializer implements JsonSerializer {
         return undefined;
     }
 
-    protected linkNode(node: GenericAstNode, root: AstNode, container?: AstNode, containerProperty?: string, containerIndex?: number) {
+    /**
+     * Turns a parsed JSON tree back into a linked AST: every node knows its container, and every
+     * serialised reference is a live `Reference` again. A reference into another document is looked
+     * up in that document as it is *now* - or, where `resolveDocument` answers, in the version being
+     * written alongside this one.
+     */
+    protected linkNode(
+        node: GenericAstNode,
+        root: AstNode,
+        resolveDocument: DocumentResolver | undefined,
+        container?: AstNode,
+        containerProperty?: string,
+        containerIndex?: number
+    ): void {
         for (const [propertyName, item] of Object.entries(node)) {
             if (Array.isArray(item)) {
                 for (let index = 0; index < item.length; index++) {
                     const element = item[index];
                     if (isIntermediateReference(element)) {
-                        item[index] = this.reviveReference(node, propertyName, root, element);
+                        item[index] = this.reviveReference(node, propertyName, root, element, resolveDocument);
                     } else if (isAstNode(element)) {
-                        this.linkNode(element as GenericAstNode, root, node, propertyName, index);
+                        this.linkNode(element as GenericAstNode, root, resolveDocument, node, propertyName, index);
                     }
                 }
             } else if (isIntermediateReference(item)) {
-                node[propertyName] = this.reviveReference(node, propertyName, root, item);
+                node[propertyName] = this.reviveReference(node, propertyName, root, item, resolveDocument);
             } else if (isAstNode(item)) {
-                this.linkNode(item as GenericAstNode, root, node, propertyName);
+                this.linkNode(item as GenericAstNode, root, resolveDocument, node, propertyName);
             }
         }
         const mutable = node as Mutable<GenericAstNode>;
@@ -173,53 +193,56 @@ export class UmlDiagramJsonSerializer implements JsonSerializer {
         container: AstNode,
         property: string,
         root: AstNode,
-        reference: IntermediateReference
+        reference: IntermediateReference,
+        resolveDocument: DocumentResolver | undefined
     ): Reference | undefined {
-        let refText = reference.$refText;
+        const refText = reference.$refText;
         if (reference.$ref) {
-            const ref = this.getRefNode(root, reference.$ref);
-            if (!refText) {
-                refText = this.nameProvider.getName(ref);
+            const ref = this.getRefNode(root, reference.$ref, resolveDocument);
+            if (ref) {
+                return {
+                    $refText: refText ?? this.nameProvider.getName(ref) ?? '',
+                    ref
+                } satisfies Mutable<Reference> as Reference;
             }
-            return {
-                $refText: refText ?? '',
-                ref
-            } satisfies Mutable<Reference> as Reference;
-        } else if (reference.$error) {
-            const ref: Mutable<Reference> = {
-                $refText: refText ?? '',
-                ref: undefined
-            };
-            ref.error = {
-                message: reference.$error ?? '',
-                info: { container, property, reference: ref }
-            };
-            return ref;
-        } else {
-            return undefined;
+            // The target is gone. The reference stays unresolved under the id it named, so that what is
+            // written back still says which element it meant rather than nothing at all.
+            return this.unresolved(container, property, refText ?? (reference.$ref[properties.referenceProperty] as string | undefined) ?? '', 'Could not resolve reference');
         }
+        if (reference.$error) {
+            return this.unresolved(container, property, refText ?? '', reference.$error);
+        }
+        return undefined;
     }
 
-    protected getRefNode<T extends AstNode>(root: AstNode, ref: Language.Reference<T>): AstNode {
-        if (ref[properties.referenceProperty] as string) {
-            if (ref.__documentUri) {
-                const doc = this.langiumDocs.getDocument(URI.parse(ref.__documentUri));
-                return this.getAstNodeById(doc!.parseResult.value, ref[properties.referenceProperty] as string)!;
-            }
-            return this.getAstNodeById(root, ref[properties.referenceProperty] as string)!;
-        } else if (ref.__path) {
-            if (ref.__documentUri) {
-                const doc = this.langiumDocs.getDocument(URI.parse(ref.__documentUri));
-                return this.astNodeLocator.getAstNode(doc!.parseResult.value, ref.__path)!;
-            }
-            return this.astNodeLocator.getAstNode(root, ref.__path.substring(1))!;
+    protected unresolved(container: AstNode, property: string, refText: string, message: string): Reference {
+        const ref: Mutable<Reference> = { $refText: refText, ref: undefined };
+        ref.error = { message, info: { container, property, reference: ref } };
+        return ref;
+    }
+
+    /** The element a serialised reference names, or `undefined` where there is no such element. */
+    protected getRefNode<T extends AstNode>(root: AstNode, ref: Language.Reference<T>, resolveDocument: DocumentResolver | undefined): AstNode | undefined {
+        const id = ref[properties.referenceProperty] as string | undefined;
+        const scope = ref.__documentUri ? this.documentRoot(ref.__documentUri, resolveDocument) : root;
+        if (!scope) {
+            return undefined;
         }
-        return root;
+        if (id) {
+            return this.getAstNodeById(scope, id);
+        }
+        if (ref.__path) {
+            return this.astNodeLocator.getAstNode(scope, ref.__documentUri ? ref.__path : ref.__path.substring(1));
+        }
+        return undefined;
+    }
+
+    /** The root of another document a reference points into, or `undefined` where the document is not known. */
+    protected documentRoot(documentPath: string, resolveDocument: DocumentResolver | undefined): AstNode | undefined {
+        return resolveDocument?.(documentPath) ?? this.langiumDocs.getDocument(URI.parse(documentPath))?.parseResult.value;
     }
 
     private getAstNodeById<T extends AstNode = AstNode>(node: AstNode, id: string): T | undefined {
-        const retNode = AstUtils.streamAst(node).find((astNode: any) => astNode[properties.referenceProperty] === id);
-        if (retNode) return retNode as T;
-        return node as T;
+        return AstUtils.streamAst(node).find(astNode => (astNode as GenericAstNode)[properties.referenceProperty] === id) as T | undefined;
     }
 }

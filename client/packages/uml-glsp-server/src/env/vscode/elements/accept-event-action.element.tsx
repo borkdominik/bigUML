@@ -18,7 +18,7 @@ export interface GAcceptEventActionNodeElementProps extends BaseElementProps {
 }
 
 export function GAcceptEventActionNodeElement(props: GAcceptEventActionNodeElementProps): GModelElement {
-    const size = eventActionSize(props.size);
+    const size = eventActionSize(props.type, props.size);
 
     return (
         <GNodeElement

@@ -21,6 +21,7 @@ import type { StatePart } from './state-part-element.def.js';
     icon: 'uml-state-icon'
 })
 @Glsp.defaults
+@Glsp.defaultSize({ width: 160, height: 70 })
 export class State extends Node {
     name: string;
     /** The lines of the state's second compartment - its internal activities and transitions. */
@@ -29,10 +30,10 @@ export class State extends Node {
      * How tall that compartment is drawn, where the user has given it a height of its own rather than
      * letting it sit at the height of the lines in it.
      *
-     * Held on the state rather than as a `Size` metaInfo, which is where every other dimension in a
-     * diagram lives: a metaInfo is keyed by the element it belongs to, and the compartment is not an
-     * element - it is part of how a state is drawn. `regionHeight` below is held here for the same
-     * reason, even though a region *is* an element (see `GStateRegionCompartment`).
+     * Held on the state rather than in `bounds`, which is where every other dimension in a diagram
+     * lives: the compartment is not an element - it is part of how a state is drawn. `regionHeight`
+     * below is held here for the same reason, even though a region *is* an element (see
+     * `GStateRegionCompartment`).
      */
     partsHeight?: number;
     visibility?: Visibility;

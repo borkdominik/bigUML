@@ -8,21 +8,13 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { type Command, type DefaultModelState } from '@eclipse-glsp/server';
+import type { Command } from '@eclipse-glsp/server';
+import type { DiagramModelState } from '../model/diagram-model-state.js';
 
-interface ModelState extends DefaultModelState {
-    sendModelPatch(string: any): any;
-    redo(): any;
-    undo(): any;
-}
-
-/**
- * A custom recording command that tracks updates during exection through a textual semantic state.
- * Tracking updates ensures that we have proper undo/redo support
- */
+/** A command that applies a JSON patch to the semantic model, with undo and redo handled by the model service. */
 export class ModelPatchCommand implements Command {
     constructor(
-        protected state: ModelState,
+        protected state: DiagramModelState,
         protected modelPatch?: string
     ) {}
     async undo(): Promise<void> {
@@ -31,7 +23,7 @@ export class ModelPatchCommand implements Command {
     async redo(): Promise<void> {
         await this.state.redo();
     }
-    canUndo?(): boolean {
+    canUndo(): boolean {
         return true;
     }
 

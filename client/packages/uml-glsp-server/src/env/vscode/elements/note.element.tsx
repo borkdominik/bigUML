@@ -51,7 +51,7 @@ const MIN_NOTE_SIZE = { width: 60, height: 40 };
 const EMPTY_NOTE_BODY = 'Note';
 
 /**
- * A `Size` metaInfo can exist while carrying no usable dimensions (see `GenericChangeBoundsOperationHandler`),
+ * Stored `bounds` can carry no usable dimensions - a zero width or height, say -
  * which a plain `?? default` would happily accept - and the client layouter then collapses the note onto its
  * text because its preferred size resolves to 0. So only positive dimensions count as a persisted size.
  */

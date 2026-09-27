@@ -13,7 +13,7 @@ import * as fs from 'fs';
 import { inject, injectable } from 'inversify';
 import * as path from 'path';
 import { URI } from 'vscode-uri';
-import { getEmptyDiagram } from '../../../../../gen/vscode/get-empty-diagram.js';
+import { createEmptyDiagram } from '../../../../../gen/vscode/diagram-registry.js';
 
 @injectable()
 export class CreateNewFileActionHandler implements ActionHandler {
@@ -27,7 +27,7 @@ export class CreateNewFileActionHandler implements ActionHandler {
         const filePath = `${URI.parse(sourceUri).fsPath}.uml`;
         const dirPath = path.dirname(filePath);
 
-        const model = getEmptyDiagram(action.diagramType);
+        const model = createEmptyDiagram(action.diagramType);
         if (!model) {
             throw new Error(`Unsupported diagram type: ${action.diagramType}`);
         }

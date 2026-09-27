@@ -10,11 +10,13 @@ import { GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { StateMachine } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { Dimension } from '@eclipse-glsp/protocol';
 import type { GModelElement } from '@eclipse-glsp/server';
-import { FrameNameTag } from './core/index.js';
-import type { BaseElementProps, ElementContext } from './core/element-context.js';
+import { FrameNameTag, FreeformCompartment } from './core/index.js';
+import { type BaseElementProps, type ElementContext, renderContents } from './core/element-context.js';
 
 export interface GStateMachineNodeElementProps extends BaseElementProps {
     node: StateMachine;
+    /** The regions the state machine holds, drawn inside its frame - see `FreeformCompartment`. */
+    freeformChildren?: GModelElement[];
 }
 
 /**
@@ -36,7 +38,7 @@ const MIN_STATE_MACHINE_SIZE = { width: 400, height: 300 };
 const FRAME_PADDING = 8;
 
 /**
- * A `Size` metaInfo can exist while carrying no usable dimensions (see `GenericChangeBoundsOperationHandler`),
+ * Stored `bounds` can carry no usable dimensions - a zero width or height, say -
  * which a plain `?? default` would happily accept - and the client layouter then collapses the frame onto its
  * name label because its preferred size resolves to 0. So only positive dimensions count as a persisted size.
  */
@@ -79,6 +81,7 @@ export function GStateMachineNodeElement(props: GStateMachineNodeElementProps): 
             }}
         >
             <FrameNameTag id={props.node.__id} keyword='state machine' name={props.node.name} />
+            {props.freeformChildren && <FreeformCompartment ownerId={props.node.__id}>{props.freeformChildren}</FreeformCompartment>}
         </GNodeElement>
     );
 }
@@ -86,5 +89,8 @@ export function GStateMachineNodeElement(props: GStateMachineNodeElementProps): 
 export function createStateMachineElement(ctx: ElementContext<StateMachine>): GModelElement {
     const position = ctx.modelIndex.findPosition(ctx.node.__id);
     const size = ctx.modelIndex.findSize(ctx.node.__id);
-    return <GStateMachineNodeElement node={ctx.node} position={position} size={size} type={ctx.elementType} />;
+    const freeformChildren = renderContents(ctx, ctx.node.regions);
+    return (
+        <GStateMachineNodeElement node={ctx.node} position={position} size={size} type={ctx.elementType} freeformChildren={freeformChildren} />
+    );
 }

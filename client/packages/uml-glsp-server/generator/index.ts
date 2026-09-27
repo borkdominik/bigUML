@@ -9,6 +9,5 @@
 
 export * from './contribution.js';
 export * from './decorator/glsp-server.decorator.js';
-export * from './render/diagram-language-metadata.renderer.js';
 export * from './render/model-types.renderer.js';
 export * from './render/tool-palette.renderer.js';

@@ -7,7 +7,8 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 /** @jsx svg */
-import { type GNode, RectangularNodeView, type RenderingContext, svg } from '@eclipse-glsp/client';
+import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
+import { type BoundsAware, type GChildElement, type GNode, isBoundsAware, RectangularNodeView, type RenderingContext, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { type VNode } from 'snabbdom';
 import { NamedElement } from '../named-element/named-element.view.js';
@@ -22,9 +23,10 @@ const NAME_BAND_DEPTH = 32;
  * rounded, each lane carrying a band with its name in it and a rule separating that band from the part
  * the actions are drawn on.
  *
- * The lanes are drawn here rather than added as children, because a lane is part of what the shape is:
- * drawn, they cannot be dragged apart, selected away from the partition, or left behind when it moves.
- * Their names and which way they run are read off `args`, which the server fills from the partition.
+ * The lanes are compartments of the partition, laid out by it - so they cannot be dragged apart or left
+ * behind when it moves, and each grows to hold what stands in it. What is drawn here is what a layouter
+ * cannot draw: the rules between the lanes and their names, turned on their side, wherever the lanes
+ * ended up. Which way they run is read off `args`.
  *
  * Flipped, the same lanes stand beside one another as columns instead of stacking as rows, and their
  * names are written straight along the top rather than turned on their side - the notation writes a
@@ -41,18 +43,19 @@ export class GActivityPartitionNodeView extends RectangularNodeView {
         const height = Math.max(0, element.bounds.height);
         const args = (element as unknown as { args?: Record<string, unknown> }).args ?? {};
         const vertical = args['vertical'] === true;
-        const laneCount = Math.max(1, Number(args['laneCount'] ?? 1));
-
-        // Along the lanes: down the block when they stack, across it when they stand side by side.
-        const laneExtent = (vertical ? width : height) / laneCount;
+        const laneCompartments = element.children.filter(child => child.type === CommonModelTypes.COMP_PARTITION_LANE).filter((child): child is GChildElement & BoundsAware => isBoundsAware(child));
         // Never deeper than the lane it is measured into, so a block dragged small keeps a band that
         // still fits: across the lanes when they stack, down them when they stand side by side.
         const bandDepth = Math.min(NAME_BAND_DEPTH, vertical ? height : width);
 
-        const lanes = [];
-        for (let lane = 0; lane < laneCount; lane++) {
-            const offset = lane * laneExtent;
-            const name = String(args[`lane${lane}`] ?? '');
+        const lanes: VNode[] = [];
+        laneCompartments.forEach((laneCompartment, lane) => {
+            // Where the lane starts along the partition and how far it runs: down the block when the lanes
+            // stack, across it when they stand side by side. The last one runs to the far edge.
+            const offset = vertical ? laneCompartment.bounds.x : laneCompartment.bounds.y;
+            const last = lane === laneCompartments.length - 1;
+            const laneExtent = last ? (vertical ? width : height) - offset : vertical ? laneCompartment.bounds.width : laneCompartment.bounds.height;
+            const name = String((laneCompartment as unknown as { args?: Record<string, unknown> }).args?.['name'] ?? '');
 
             if (lane > 0) {
                 // The rule between one lane and the next. The outer rectangle draws the two ends.
@@ -93,7 +96,7 @@ export class GActivityPartitionNodeView extends RectangularNodeView {
                     {name}
                 </text>
             );
-        }
+        });
 
         return (
             <g class-selected={element.selected} class-mouseover={element.hoverFeedback}>

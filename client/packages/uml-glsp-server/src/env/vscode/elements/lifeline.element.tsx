@@ -10,6 +10,7 @@ import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { GLabelElement, GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { Lifeline } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { GModelElement } from '@eclipse-glsp/server';
+import { nodeSize } from '../geometry/node-size.js';
 import type { BaseElementProps, ElementContext } from './core/element-context.js';
 
 export interface GLifelineNodeElementProps extends BaseElementProps {
@@ -17,14 +18,21 @@ export interface GLifelineNodeElementProps extends BaseElementProps {
 }
 
 export function GLifelineNodeElement(props: GLifelineNodeElementProps): GModelElement {
+    // Held at the size it was given: the client lays the node out and would otherwise shrink it back
+    // around its name after every resize.
+    const size = nodeSize('Lifeline', props.size);
+
     return (
         <GNodeElement
             id={props.node.__id}
             type={props.type}
             position={props.position}
-            size={props.size}
+            size={size}
             cssClasses={['uml-node']}
-            layout='vbox'
+            // Its name in the middle of the box at whatever size it is dragged to, and at the top once the
+            // box holds something (see `UmlCenteredVBoxLayouter`).
+            layout='uml-centered-vbox'
+            layoutOptions={{ prefWidth: size.width, prefHeight: size.height }}
         >
             <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={props.node.name} />
         </GNodeElement>

@@ -13,8 +13,6 @@ import {
     GAbstractionEdgeView,
     GAssociationEdge,
     GAssociationEdgeView,
-    GChoiceNode,
-    GChoiceNodeView,
     GClassNode,
     GClassNodeView,
     GDataTypeNode,
@@ -33,6 +31,10 @@ import {
     GInterfaceNodeView,
     GInterfaceRealizationEdge,
     GInterfaceRealizationEdgeView,
+    GNaryAssociationNode,
+    GNaryAssociationNodeView,
+    GGenericEdge,
+    GGenericEdgeView,
     GNoteNode,
     GNoteNodeView,
     GOperationNode,
@@ -58,14 +60,17 @@ import {
     GTextLabelNode,
     GTextLabelNodeView,
     GUsageEdge,
-    GUsageEdgeView
+    GUsageEdgeView,
+    GElementImportEdge,
+    GElementImportEdgeView,
+    NamedElement,
+    NamedElementView
 } from '../../elements/index.js';
 
 export const umlClassDiagramModule = new FeatureModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
 
     // Nodes
-    configureModelElement(context, ClassDiagramNodeTypes.CHOICE, GChoiceNode, GChoiceNodeView);
     configureModelElement(context, ClassDiagramNodeTypes.CLASS, GClassNode, GClassNodeView);
     configureModelElement(context, ClassDiagramNodeTypes.DATA_TYPE, GDataTypeNode, GDataTypeNodeView);
     configureModelElement(context, ClassDiagramNodeTypes.ENUMERATION, GEnumerationNode, GEnumerationNodeView);
@@ -77,6 +82,10 @@ export const umlClassDiagramModule = new FeatureModule((bind, unbind, isBound, r
     configureModelElement(context, ClassDiagramNodeTypes.PROPERTY, GPropertyNode, GPropertyNodeView);
     configureModelElement(context, ClassDiagramNodeTypes.PRIMITIVE_TYPE, GPrimitiveTypeNode, GPrimitiveTypeNodeView);
     configureModelElement(context, ClassDiagramNodeTypes.SLOT, GSlotNode, GSlotNodeView);
+    // The diamond an association between more than two classes is drawn through.
+    configureModelElement(context, ClassDiagramNodeTypes.NARY_ASSOCIATION, GNaryAssociationNode, GNaryAssociationNodeView);
+    // A value of an instance's slot drawn as a node of its own - `name = value`.
+    configureModelElement(context, ClassDiagramNodeTypes.LITERAL_SPECIFICATION, NamedElement, NamedElementView);
     configureModelElement(
         context,
         ClassDiagramNodeTypes.INSTANCE_SPECIFICATION,
@@ -87,11 +96,15 @@ export const umlClassDiagramModule = new FeatureModule((bind, unbind, isBound, r
     // The note and the free label, which every diagram has: both say something about the diagram
     // rather than being part of any one notation.
     configureModelElement(context, ClassDiagramNodeTypes.NOTE, GNoteNode, GNoteNodeView);
+    configureModelElement(context, ClassDiagramEdgeTypes.GENERIC_EDGE, GGenericEdge, GGenericEdgeView);
     configureModelElement(context, ClassDiagramNodeTypes.TEXT_LABEL, GTextLabelNode, GTextLabelNodeView);
 
     // Edges
     configureModelElement(context, ClassDiagramEdgeTypes.ABSTRACTION, GAbstractionEdge, GAbstractionEdgeView);
     configureModelElement(context, ClassDiagramEdgeTypes.ASSOCIATION, GAssociationEdge, GAssociationEdgeView);
+    // Created from their own palette entries, and drawn as the association they are stored as.
+    configureModelElement(context, ClassDiagramEdgeTypes.AGGREGATION, GAssociationEdge, GAssociationEdgeView);
+    configureModelElement(context, ClassDiagramEdgeTypes.COMPOSITION, GAssociationEdge, GAssociationEdgeView);
     configureModelElement(context, ClassDiagramEdgeTypes.DEPENDENCY, GDependencyEdge, GDependencyEdgeView);
     configureModelElement(context, ClassDiagramEdgeTypes.INTERFACE_REALIZATION, GInterfaceRealizationEdge, GInterfaceRealizationEdgeView);
     configureModelElement(context, ClassDiagramEdgeTypes.GENERALIZATION, GGeneralizationEdge, GGeneralizationEdgeView);
@@ -99,5 +112,6 @@ export const umlClassDiagramModule = new FeatureModule((bind, unbind, isBound, r
     configureModelElement(context, ClassDiagramEdgeTypes.SUBSTITUTION, GSubstitutionEdge, GSubstitutionEdgeView);
     configureModelElement(context, ClassDiagramEdgeTypes.USAGE, GUsageEdge, GUsageEdgeView);
     configureModelElement(context, ClassDiagramEdgeTypes.PACKAGE_IMPORT, GPackageImportEdge, GPackageImportEdgeView);
+    configureModelElement(context, ClassDiagramEdgeTypes.ELEMENT_IMPORT, GElementImportEdge, GElementImportEdgeView);
     configureModelElement(context, ClassDiagramEdgeTypes.PACKAGE_MERGE, GPackageMergeEdge, GPackageMergeEdgeView);
 });

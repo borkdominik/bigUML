@@ -20,8 +20,10 @@ import {
     isDeploymentPackage,
     isDeploymentSpecification,
     isDevice,
+    isEdgeAnchor,
     isExecutionEnvironment,
     isGeneralization,
+    isGenericEdge,
     isManifestation,
     isNote,
     isOperation,
@@ -40,8 +42,10 @@ import { DeploymentNodePropertyPaletteHandler } from './elements/deployment-node
 import { DeploymentPackagePropertyPaletteHandler } from './elements/deployment-package.property-palette-handler.js';
 import { DeploymentSpecificationPropertyPaletteHandler } from './elements/deployment-specification.property-palette-handler.js';
 import { DevicePropertyPaletteHandler } from './elements/device.property-palette-handler.js';
+import { EdgeAnchorPropertyPaletteHandler } from './elements/edge-anchor.property-palette-handler.js';
 import { ExecutionEnvironmentPropertyPaletteHandler } from './elements/execution-environment.property-palette-handler.js';
 import { GeneralizationPropertyPaletteHandler } from './elements/generalization.property-palette-handler.js';
+import { GenericEdgePropertyPaletteHandler } from './elements/generic-edge.property-palette-handler.js';
 import { ManifestationPropertyPaletteHandler } from './elements/manifestation.property-palette-handler.js';
 import { NotePropertyPaletteHandler } from './elements/note.property-palette-handler.js';
 import { OperationPropertyPaletteHandler } from './elements/operation.property-palette-handler.js';
@@ -79,7 +83,11 @@ export class RequestDeploymentPropertyPaletteActionHandler implements ActionHand
 
             const context = { semanticElement, languageMetadata: this.languageMetadata };
 
-            if (isTextLabel(semanticElement)) {
+            if (isEdgeAnchor(semanticElement)) {
+                return EdgeAnchorPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isGenericEdge(semanticElement)) {
+                return GenericEdgePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isTextLabel(semanticElement)) {
                 return TextLabelPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isNote(semanticElement)) {
                 return NotePropertyPaletteHandler.getPropertyPalette(context);
@@ -87,10 +95,10 @@ export class RequestDeploymentPropertyPaletteActionHandler implements ActionHand
                 return GeneralizationPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isProperty(semanticElement)) {
                 return PropertyPropertyPaletteHandler.getPropertyPalette(context);
-            } else if (isParameter(semanticElement)) {
-                return ParameterPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isOperation(semanticElement)) {
                 return OperationPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isParameter(semanticElement)) {
+                return ParameterPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isDependency(semanticElement)) {
                 return DependencyPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isManifestation(semanticElement)) {

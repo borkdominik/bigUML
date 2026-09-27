@@ -1,0 +1,79 @@
+// AUTO-GENERATED – DO NOT EDIT
+/**********************************************************************************
+ * Copyright (c) 2026 borkdominik and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ **********************************************************************************/
+
+import type { ToolPaletteItemProvider } from '@eclipse-glsp/server';
+import type { interfaces } from 'inversify';
+import * as uuid from 'uuid';
+<% it.diagrams.forEach(function(diagram) { %>
+import {
+    <%~ diagram.name %>AstTypes,
+    <%~ diagram.name %>DiagramEdgeTypes,
+    <%~ diagram.name %>DiagramNodeTypes
+} from '../common/model-types/<%~ diagram.kebab %>-diagram-model-types.js';
+import { <%~ diagram.name %>DiagramToolPaletteItemProvider } from './diagram/<%~ diagram.kebab %>/<%~ diagram.kebab %>-diagram-tool-palette-item-provider.js';
+<% }) %>
+
+/** One diagram of the language and what serves it. */
+export interface DiagramRegistration {
+    /** The literal a model stores in `diagram.diagramType` - `CLASS`, `STATE_MACHINE`, ... */
+    diagramType: string;
+    /** The diagram's name as it prefixes its generated classes - `Class`, `StateMachine`, ... */
+    name: string;
+    /** The AST type of the diagram itself - `ClassDiagram`, `StateMachineDiagram`, ... */
+    astType: string;
+    /** The element type ids of every node of the diagram. */
+    nodeTypeIds: string[];
+    /** The element type ids of every edge of the diagram. */
+    edgeTypeIds: string[];
+    /** The AST type an element type id of the diagram is stored as. */
+    convertToAst(elementTypeId: string): string;
+    /** The element type id an element stored as `astType` is drawn as in the diagram. */
+    convertToElementType(astType: string): string;
+    toolPaletteItemProvider: interfaces.Newable<ToolPaletteItemProvider>;
+}
+
+/** Every diagram there is. Wiring that needs a per-diagram class iterates this rather than naming each. */
+export const DIAGRAM_REGISTRY: readonly DiagramRegistration[] = [
+<% it.diagrams.forEach(function(diagram) { %>
+    {
+        diagramType: '<%~ diagram.diagramType %>',
+        name: '<%~ diagram.name %>',
+        astType: '<%~ diagram.astType %>',
+        nodeTypeIds: Object.values(<%~ diagram.name %>DiagramNodeTypes),
+        edgeTypeIds: Object.values(<%~ diagram.name %>DiagramEdgeTypes),
+        convertToAst: <%~ diagram.name %>AstTypes.convertToAst,
+        convertToElementType: <%~ diagram.name %>AstTypes.convertToElementType,
+        toolPaletteItemProvider: <%~ diagram.name %>DiagramToolPaletteItemProvider
+    },
+<% }) %>
+];
+
+/** The diagram a model stores as `diagramType` - matched in any case, `CLASS` as well as `class`. */
+export function findDiagramRegistration(diagramType: string | undefined): DiagramRegistration | undefined {
+    return DIAGRAM_REGISTRY.find(diagram => diagram.diagramType === diagramType?.toUpperCase());
+}
+
+/** A new, empty model of the diagram - what a new file of it is written as. */
+export function createEmptyDiagram(diagramType: string) {
+    const diagram = findDiagramRegistration(diagramType);
+    if (!diagram) {
+        return undefined;
+    }
+    return {
+        $type: 'Diagram' as const,
+        diagram: {
+            $type: diagram.astType,
+            __id: `diagram_${uuid.v4()}`,
+            diagramType: diagram.diagramType,
+            entities: [],
+            relations: []
+        }
+    };
+}

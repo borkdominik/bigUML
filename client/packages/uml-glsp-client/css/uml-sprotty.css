@@ -11,6 +11,14 @@
     text-anchor: middle;
 }
 
+body .sprotty-popup {
+    font-family: var(--vscode-font-family, 'Helvetica Neue', Helvetica, Arial, sans-serif);
+    color: var(--vscode-editorHoverWidget-foreground, black);
+    background: var(--vscode-editorHoverWidget-background, white);
+    border-color: var(--vscode-editorHoverWidget-border, black);
+    box-shadow: 0 2px 8px var(--vscode-widget-shadow, rgba(0, 0, 0, 0.16));
+}
+
 .sprotty-popup-title {
     font-weight: bold;
     margin-bottom: 10px;

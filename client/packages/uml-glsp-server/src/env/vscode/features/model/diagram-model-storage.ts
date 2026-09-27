@@ -14,9 +14,9 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
+import { DIAGRAM_CLIENT } from '@borkdominik-biguml/uml-model-server';
 import { type Diagram, isDiagram } from '@borkdominik-biguml/uml-model-server/grammar';
 import {
-    ActionDispatcher,
     type ClientSession,
     type ClientSessionListener,
     ClientSessionManager,
@@ -37,7 +37,6 @@ export class DiagramModelStorage implements SourceModelStorage, ClientSessionLis
     @inject(Logger) protected logger: Logger;
     @inject(DiagramModelState) protected state: DiagramModelState;
     @inject(ClientSessionManager) protected sessionManager: ClientSessionManager;
-    @inject(ActionDispatcher) protected actionDispatcher: ActionDispatcher;
 
     @postConstruct()
     protected init(): void {
@@ -48,7 +47,7 @@ export class DiagramModelStorage implements SourceModelStorage, ClientSessionLis
         // load semantic model from document in language model service
         const sourceUri = this.getSourceUri(action);
         const rootUri = sourceUri;
-        const root = await this.state.modelService.request(rootUri, isDiagram, 'glsp');
+        const root = await this.state.modelService.request(rootUri, isDiagram, DIAGRAM_CLIENT);
         if (!root) {
             throw new GLSPServerError('Expected BigUML Diagram Root');
         }
@@ -73,7 +72,7 @@ export class DiagramModelStorage implements SourceModelStorage, ClientSessionLis
 
     sessionDisposed(_clientSession: ClientSession): void {
         // close loaded document for modification
-        this.state.modelService.close(this.state.semanticUri, 'glsp');
+        this.state.modelService.close(this.state.semanticUri, DIAGRAM_CLIENT);
     }
 
     protected getSourceUri(action: RequestModelAction): string {

@@ -45,7 +45,7 @@ function buildTypeRuleElementSerializer(rules: LangiumGrammar): string {
         .map(ruleElement => {
             const retType = getReturnTypeFromDefinitions(ruleElement.definitions);
             const body = retType
-                ? `return ${retType === 'string' ? `'"' + element + '"'` : 'element'};`
+                ? `return ${retType === 'string' ? 'JSON.stringify(element)' : 'element'};`
                 : ruleElement.definitions
                       .map(
                           element =>
@@ -122,16 +122,17 @@ function serializePropertyValue(property: Definition, elementString: string, ref
         // resort for the reference that carries no text either: the value has to be *something*, an empty
         // one being a `__value` the grammar cannot lex.
         return (
-            `'{' + ' "__type": "Reference", "__refType": "${property.type!.typeName}", "__value": "' + (` +
+            `'{' + ' "__type": "Reference", "__refType": "${property.type!.typeName}", "__value": ' + JSON.stringify(` +
             elementString +
             `.ref?.${referenceProperty} ?? (${elementString}.$refText || "undefined"))` +
-            ` + '"}'`
+            ` + '}'`
         );
     } else if (SIMPLE_TYPES.includes(property.type!.typeName)) {
-        return property.type!.typeName === 'string' ? `'"' + ${elementString} + '"'` : `${elementString}+ ""`;
+        // Written as JSON writes a string, escapes and all - which is what the grammar reads back.
+        return property.type!.typeName === 'string' ? `JSON.stringify(${elementString})` : `${elementString}+ ""`;
     } else {
         if (property.type!.type === 'constant') {
-            return `'"' + ${elementString}+ '"'`;
+            return `JSON.stringify(${elementString})`;
         } else {
             return `this.serialize${property.type!.typeName}(${elementString})`;
         }

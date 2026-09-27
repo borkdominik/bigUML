@@ -18,7 +18,7 @@ export interface GSendSignalActionNodeElementProps extends BaseElementProps {
 }
 
 export function GSendSignalActionNodeElement(props: GSendSignalActionNodeElementProps): GModelElement {
-    const size = eventActionSize(props.size);
+    const size = eventActionSize(props.type, props.size);
 
     return (
         <GNodeElement

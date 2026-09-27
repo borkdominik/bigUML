@@ -27,7 +27,7 @@ const DEFAULT_BUFFER_SIZE: Dimension = { width: 80, height: 60 };
 const BUFFER_PADDING = 8;
 
 /**
- * A `Size` metaInfo can exist while carrying no usable dimensions (see `GenericChangeBoundsOperationHandler`),
+ * Stored `bounds` can carry no usable dimensions - a zero width or height, say -
  * which a plain `?? default` would accept - and the client layouter then collapses the box onto its name.
  * Only positive dimensions count as a size someone chose.
  */

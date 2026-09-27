@@ -22,5 +22,5 @@ import { Association } from './association-element.def.js';
 @Glsp.defaults
 @Glsp.alias('Association')
 export class Composition extends Association {
-    override sourceAggregation?: AggregationType = 'COMPOSITE';
+    override targetAggregation?: AggregationType = 'COMPOSITE';
 }

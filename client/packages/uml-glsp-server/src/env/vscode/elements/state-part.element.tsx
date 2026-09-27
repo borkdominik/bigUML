@@ -6,7 +6,8 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { composeBehaviorLabel, CommonModelTypes, StateMachineDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
+import { CommonModelTypes, StateMachineDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
+import { composeBehaviorLabel } from '../notation/behavior-label.js';
 import { GLabelElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { StatePart } from '@borkdominik-biguml/uml-model-server/grammar';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';

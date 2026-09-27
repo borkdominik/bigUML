@@ -8,7 +8,7 @@
  **********************************************************************************/
 import * as jsonPatch from 'fast-json-patch';
 import type { AstNode, GenericAstNode, Reference } from 'langium';
-import type { IntermediatePatchReference } from '../patch/patch-manager.util.js';
+import type { IntermediateReference } from '../../langium/uml-diagram-json-serializer.js';
 
 export { GenericAstNode, jsonPatch };
 
@@ -36,7 +36,7 @@ export interface SerializedRecordNode extends SerializeAstNode<AstNode> {
 
 type SerializeValue<V> =
     V extends Reference<any>
-        ? IntermediatePatchReference
+        ? IntermediateReference
         : V extends AstNode
           ? SerializeAstNode<V>
           : V extends readonly (infer U)[]
@@ -47,7 +47,7 @@ type SerializeValue<V> =
 
 type SourceValue<V> =
     V extends Reference<any>
-        ? IntermediatePatchReference
+        ? IntermediateReference
         : V extends AstNode
           ? SourceAstNode<V>
           : V extends readonly (infer U)[]

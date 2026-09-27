@@ -1,58 +1,51 @@
 /**********************************************************************************
  * Copyright (c) 2026 borkdominik and others.
- * Copyright (c) 2023 CrossBreeze.
  *
  * This program and the accompanying materials are made available under the
  * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { type AstNode, DefaultServiceRegistry, type Hydrator, type JsonSerializer, type LangiumCoreServices } from 'langium';
-import { type LangiumServices, type LangiumSharedServices } from 'langium/lsp';
-import { type TextDocument } from 'vscode-languageserver-textdocument';
-import { type URI } from 'vscode-uri';
-import { type ModelService } from './model-service.js';
-import { type OpenTextDocumentManager } from './open-text-document-manager.js';
-import { type OpenableTextDocuments } from './openable-text-documents.js';
-import { type Serializer } from './serializer.js';
-
-/***************************
- * Shared Module
- ***************************/
-export interface ExtendedLangiumServices extends LangiumServices {
-    serializer: {
-        Hydrator: Hydrator;
-        JsonSerializer: JsonSerializer;
-        Serializer: Serializer<AstNode>;
-    };
-}
-
-export class ExtendedServiceRegistry extends DefaultServiceRegistry {
-    override register(language: LangiumCoreServices): void {
-        super.register(language);
-    }
-
-    override getServices(uri: URI): ExtendedLangiumServices {
-        return super.getServices(uri) as ExtendedLangiumServices;
-    }
-}
-
-export type AddedSharedServices = {
-    ServiceRegistry: ExtendedServiceRegistry;
-};
-
-export const SharedServices = Symbol('SharedServices');
-export type SharedServices = Omit<LangiumSharedServices, 'ServiceRegistry'> & AddedSharedServices & AddedSharedModelServices;
+import type { Module } from 'langium';
+import { type LangiumSharedServices } from 'langium/lsp';
+import { TextDocument } from 'vscode-languageserver-textdocument';
+import { type ExtendedServiceRegistry } from '../langium/extended-services.js';
+import { OpenTextDocumentManager } from './document/open-text-document-manager.js';
+import { OpenableTextDocuments } from './document/openable-text-documents.js';
+import { ModelService } from './model-service.js';
+import { PatchManager } from './patch/patch-manager.js';
 
 /**
- * Extension to the default shared model services by Langium.
+ * The services that make the language a model server: the facade non-LSP clients such as the diagram
+ * go through, and the document bookkeeping that keeps them and the text editor in step.
  */
 export interface AddedSharedModelServices {
     workspace: {
-        /* override */ TextDocuments: OpenableTextDocuments<TextDocument>; // more accessible text document store
-        TextDocumentManager: OpenTextDocumentManager; // open text document facade used by the model service
+        /** Langium's text document store, made openable from inside the server. */
+        TextDocuments: OpenableTextDocuments<TextDocument>;
+        /** Which client holds which document at which version. */
+        TextDocumentManager: OpenTextDocumentManager;
     };
     model: {
-        ModelService: ModelService; // facade to access the Langium semantic models without being a language client
+        /** Access to the semantic models without being a language client. */
+        ModelService: ModelService;
     };
 }
+
+export type ModelServerSharedServices = Omit<LangiumSharedServices, 'ServiceRegistry'> & {
+    ServiceRegistry: ExtendedServiceRegistry;
+} & AddedSharedModelServices;
+
+/** @deprecated Use {@link ModelServerSharedServices}. */
+export type SharedServices = ModelServerSharedServices;
+
+/** Composed into the shared services by the language's module. */
+export const ModelServerSharedModule: Module<ModelServerSharedServices, AddedSharedModelServices> = {
+    workspace: {
+        TextDocuments: () => new OpenableTextDocuments(TextDocument),
+        TextDocumentManager: services => new OpenTextDocumentManager(services)
+    },
+    model: {
+        ModelService: services => new ModelService(services, new PatchManager(services))
+    }
+};

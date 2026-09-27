@@ -6,7 +6,8 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { messagesOnLink, representationTypeId } from '@borkdominik-biguml/uml-glsp-server';
+import { representationTypeId } from '@borkdominik-biguml/uml-glsp-server';
+import { messagesOnLink } from '../notation/message-link.js';
 import { GEdgeElement, GLabelElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import { type Message } from '@borkdominik-biguml/uml-model-server/grammar';
 import { DefaultTypes } from '@eclipse-glsp/protocol';

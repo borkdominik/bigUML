@@ -10,6 +10,7 @@
 // classmatcher.ts
 
 import type { ClassDiagram, ClassDiagramEdges, ClassDiagramNodes } from '@borkdominik-biguml/uml-model-server/grammar';
+import { typeNameOf } from '@borkdominik-biguml/uml-glsp-server/vscode';
 
 import { EDITABLE_SPECS } from '../../common/search-filter-spec.js';
 import type { SearchResult } from '../../common/searchresult.js';
@@ -122,7 +123,7 @@ export class ClassDiagramMatcher implements IMatcher {
                         type,
                         name,
                         parentName,
-                        details: this.buildTypedDetails(element.propertyType, parentName),
+                        details: this.buildTypedDetails(typeNameOf(element, 'propertyType'), parentName),
                         properties
                     });
                     break;
@@ -144,7 +145,7 @@ export class ClassDiagramMatcher implements IMatcher {
                         type,
                         name,
                         parentName,
-                        details: this.buildTypedDetails(element.parameterType, parentName),
+                        details: this.buildTypedDetails(typeNameOf(element, 'parameterType'), parentName),
                         properties
                     });
                     break;

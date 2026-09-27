@@ -19,6 +19,7 @@ import { Node, type Visibility } from '../core/element.def.js';
     icon: 'uml-merge-node-icon'
 })
 @Glsp.defaults
+@Glsp.defaultSize({ width: 40, height: 40 })
 export class MergeNode extends Node {
     name?: string;
     visibility?: Visibility;

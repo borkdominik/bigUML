@@ -12,14 +12,15 @@ import { GCompartmentElement, GLabelElement } from '@borkdominik-biguml/uml-glsp
 import type { Property } from '@borkdominik-biguml/uml-model-server/grammar';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';
+import { typeNameOf } from '../notation/typed-element.js';
 import { getVisibilitySymbol, InlineCompartment } from './core/index.js';
 
 export class GPropertyNode extends GNode {
     override type = ClassDiagramNodeTypes.PROPERTY;
     name: string = 'UNDEFINED PROPERTY NAME';
     propertyType?: string;
-    visibility: string = 'PUBLIC';
-    multiplicity: string = '1';
+    visibility: string = 'NONE';
+    multiplicity?: string;
 }
 
 export interface GPropertyNodeElementProps {
@@ -30,9 +31,9 @@ export function GPropertyNodeElement(props: GPropertyNodeElementProps): GModelEl
     const { node } = props;
     const id = node.__id;
 
-    const propertyTypeName = node.propertyType;
-    const visibility = node.visibility ?? 'PUBLIC';
-    const multiplicity = node.multiplicity ?? '1';
+    const propertyTypeName = typeNameOf(node, 'propertyType');
+    const visibility = node.visibility ?? 'NONE';
+    const multiplicity = node.multiplicity;
 
     const propNode = new GPropertyNode();
     propNode.id = id;
@@ -79,7 +80,7 @@ export function GPropertyNodeElement(props: GPropertyNodeElementProps): GModelEl
                 }}
             >
                 <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={propertyTypeName} />
-                {multiplicity !== '1' ? <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={`[${multiplicity}]`} /> : null}
+                {multiplicity && multiplicity !== '1' ? <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={`[${multiplicity}]`} /> : null}
             </GCompartmentElement>
         );
         rightSideChildren.push(colonLabel, detailComp);
@@ -106,8 +107,8 @@ export function GPropertyRowElement(props: { node: Property; type: string }): GM
     const { node } = props;
     const id = node.__id;
 
-    const propertyTypeName = node.propertyType;
-    const multiplicity = node.multiplicity ?? '1';
+    const propertyTypeName = typeNameOf(node, 'propertyType');
+    const multiplicity = node.multiplicity;
 
     const rowNode = new GPropertyNode();
     rowNode.type = props.type;
@@ -129,7 +130,7 @@ export function GPropertyRowElement(props: { node: Property; type: string }): GM
     };
     rowNode.name = node.name!;
     rowNode.propertyType = propertyTypeName;
-    rowNode.visibility = node.visibility ?? 'PUBLIC';
+    rowNode.visibility = node.visibility ?? 'NONE';
     rowNode.multiplicity = multiplicity;
     rowNode.cssClasses = ['uml-font-member'];
     // A row is text written on the frame, not a shape of its own. `NamedElementView` paints its rounded
@@ -166,7 +167,7 @@ export function GPropertyRowElement(props: { node: Property; type: string }): GM
                     }}
                 >
                     <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={propertyTypeName} />
-                    {multiplicity !== '1' ? <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={`[${multiplicity}]`} /> : null}
+                    {multiplicity && multiplicity !== '1' ? <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={`[${multiplicity}]`} /> : null}
                 </GCompartmentElement>
             </InlineCompartment>
         );

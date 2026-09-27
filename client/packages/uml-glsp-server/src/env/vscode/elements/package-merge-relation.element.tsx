@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { leadsMergeGroup } from '@borkdominik-biguml/uml-glsp-server';
+import { leadsMergeGroup } from '../notation/package-merge-group.js';
 import { GEdgeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { Relation } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { GEdge } from '@eclipse-glsp/server';

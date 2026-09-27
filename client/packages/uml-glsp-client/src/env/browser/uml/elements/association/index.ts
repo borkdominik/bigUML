@@ -7,3 +7,4 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 export * from './association.element.js';
+export * from './nary-association.element.js';

@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { type Declaration } from '../types/index.js';
+import { type Declaration, Decorator, type Property } from '../types/index.js';
 
 /**
  * Extracts the type names from a type alias declaration's synthetic property.
@@ -54,9 +54,24 @@ function resolveMembers(alias: Declaration, typeAliasMap: Map<string, Declaratio
     return resolved;
 }
 
+/** Whether the declaration is a value object, see `@Language.value`. */
+export function isValueDeclaration(declaration: Declaration | undefined): boolean {
+    return declaration?.type === 'class' && Decorator.has(declaration.decorators, 'value');
+}
+
+/** Whether the type of this name is a value object, see `@Language.value`. */
+export function isValueType(typeName: string | undefined, declarations: Declaration[]): boolean {
+    return typeName !== undefined && declarations.some(d => d.name === typeName && isValueDeclaration(d));
+}
+
+/** Whether the property holds value objects, see `@Language.value`. */
+export function isValueProperty(property: Property, declarations: Declaration[]): boolean {
+    return property.types.some(t => t.type === 'complex' && isValueType(t.typeName, declarations));
+}
+
 /**
  * Returns concrete element declarations — non-abstract classes that are not
- * the root `Diagram`, diagram containers, meta info types, or relation base classes.
+ * the root `Diagram`, diagram containers, or value objects.
  */
 export function getConcreteElements(declarations: Declaration[]): Declaration[] {
     return declarations.filter(
@@ -65,7 +80,7 @@ export function getConcreteElements(declarations: Declaration[]): Declaration[] 
             !d.isAbstract &&
             d.name !== 'Diagram' &&
             !d.name!.endsWith('Diagram') &&
-            !(d.extends ?? []).includes('MetaInfo')
+            !isValueDeclaration(d)
     );
 }
 

@@ -74,7 +74,7 @@ function getNodeDecls(decls: LangiumDeclaration[]): LangiumDeclaration[] {
             d.name !== 'Relation' &&
             d.name !== 'Entity' &&
             d.name !== 'ElementWithSizeAndPosition' &&
-            !(d.extends ?? []).includes('MetaInfo')
+            !isValueDeclaration(d)
     );
 }
 ```

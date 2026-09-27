@@ -6,46 +6,51 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import {
-    behaviorLabelPatch,
-    storableGuard,
-    storableName,
-    storableProse,
-    type BehaviorLabelElement
-} from '@borkdominik-biguml/uml-glsp-server';
-import { isInitialState, isNote, isStatePart, isTextLabel, isTransition } from '@borkdominik-biguml/uml-model-server/grammar';
+import { isValidMultiplicity, storableName, storableProse, storableText } from '@borkdominik-biguml/uml-glsp-server';
+import { isMultiplicityProperty } from '@borkdominik-biguml/uml-model-server/validation';
+import { hasNoName, hasOptionalName } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
 import { ApplyLabelEditOperation, type Command, OperationHandler } from '@eclipse-glsp/server';
-import { injectable } from 'inversify';
+import type * as jsonpatch from 'fast-json-patch';
+import { inject, injectable, multiInject, optional } from 'inversify';
 import { type AstNode, isAstNode } from 'langium';
-
-type LabelPatch = { op: 'add'; path: string; value: string } | { op: 'remove'; path: string };
-
-/** What the label beside a transition's guard stands for: the rest of `trigger [guard] / effect`. */
-const TRANSITION_LABEL_PARTS = ['trigger', 'effect'] as const;
-import { EDGE_GUARD_LABEL_SUFFIX, EDGE_MODIFIERS_LABEL_SUFFIX, storableModifiers } from '../../elements/core/edge-label.js';
+import { labelProperty } from '../../notation/label-ids.js';
 import { ModelPatchCommand } from '../command/model-patch-command.js';
 import { type DiagramModelState } from '../model/diagram-model-state.js';
+import { firstClaim, MutationExtension } from '../mutation/extension/mutation-extension.js';
+import { ModelPatchBuilder } from '../mutation/model-patch.js';
 
+/**
+ * Writes what was typed on a label back into the property the label stands for.
+ *
+ * Which property that is comes from the label's id (see `labelProperty`): `<id>_name_label` writes the
+ * name, `<id>_guard_label` the guard, `<id>_body_label` a note's text. A label that stands for more than
+ * one property - the `trigger [guard] / effect` line - is taken over by a {@link MutationExtension}.
+ */
 @injectable()
 export class GenericLabelEditOperationHandler extends OperationHandler {
     override operationType = ApplyLabelEditOperation.KIND;
 
     declare readonly modelState: DiagramModelState;
 
-    override createCommand(operation: ApplyLabelEditOperation): Command {
+    @inject(ModelPatchBuilder)
+    protected readonly patches: ModelPatchBuilder;
+
+    @multiInject(MutationExtension)
+    @optional()
+    protected readonly extensions: MutationExtension[] = [];
+
+    override createCommand(operation: ApplyLabelEditOperation): Command | undefined {
         const patch = this.buildPatch(operation);
-        return new ModelPatchCommand(this.modelState, patch);
+        if (patch.length === 0) {
+            return undefined;
+        }
+        return new ModelPatchCommand(this.modelState, JSON.stringify(patch));
     }
 
     /**
-     * The element a label belongs to. A label's id is that element's id with a suffix naming the label -
-     * `<id>_name_label` - so the suffix is cut back a part at a time until what is left is an id the
-     * model knows, longest first.
-     *
-     * Cutting at the first `_` instead took the element id itself apart: ids are written `<type>_<uuid>`
-     * (see `createRandomUUID`), so every label resolved to the bare type name, which is no element at
-     * all - and `buildPatch` then dropped every edit on the floor. Trimming rather than matching a fixed
-     * suffix also keeps this working for ids that carry an underscore of their own.
+     * The element a label belongs to. A label's id is that element's id with a suffix naming the label,
+     * so the suffix is cut back a part at a time until what is left is an id the model knows, longest
+     * first - ids are written `<type>_<uuid>` and may carry underscores of their own.
      */
     protected getSemanticIdFromLabelId(labelId: string): string {
         const parts = labelId.split('_');
@@ -58,121 +63,62 @@ export class GenericLabelEditOperationHandler extends OperationHandler {
         return labelId;
     }
 
-    // override if some types use a different field
-
-    protected getLabelPropertyName(_astNode: unknown): string {
-        return 'name';
-    }
-
-    protected buildPatch(operation: ApplyLabelEditOperation): string {
+    protected buildPatch(operation: ApplyLabelEditOperation): jsonpatch.Operation[] {
         const semanticId = this.getSemanticIdFromLabelId(operation.labelId);
         const node = this.modelState.index.findSemanticElement(semanticId, isAstNode);
-        if (!node) {
-            return JSON.stringify([]);
-        }
-        // Labels that stand for a property of their own rather than for the element's name: the guard an
-        // edge writes in brackets, and the property string either end of an association writes in braces.
-        // Every other label on an edge is the name, which is what the rest of this method writes, so they
-        // are told apart by what the label's id ends in.
-        if (operation.labelId.endsWith(EDGE_GUARD_LABEL_SUFFIX)) {
-            return JSON.stringify(this.buildGuardPatch(node, semanticId, operation.text));
-        }
-        if (operation.labelId.endsWith(EDGE_MODIFIERS_LABEL_SUFFIX)) {
-            // Which end it belongs to is in the id as well: `<id>_source_modifiers_label`.
-            const end = operation.labelId.endsWith(`_target${EDGE_MODIFIERS_LABEL_SUFFIX}`) ? 'target' : 'source';
-            return JSON.stringify(this.buildPropertyPatch(node, semanticId, `${end}Modifiers`, storableModifiers(operation.text)));
-        }
-
-        // A note and a free label are the text they hold and have no name at all, so the one label each
-        // carries stands for its `body`. Emptying it is refused rather than written through: either with
-        // nothing in it is nothing on the canvas to see it by, and - since both are written by typing on
-        // that label - nothing left to click to start writing in again.
-        if (isNote(node) || isTextLabel(node)) {
-            // `storableProse` rather than `storableText`: neither has notation to take back off, so a
-            // bracket typed into one is a bracket and is kept - see the filter for what still cannot be.
-            const body = storableProse(operation.text);
-            return JSON.stringify(body === undefined ? [] : this.buildPropertyPatch(node, semanticId, 'body', body));
-        }
-
-        // The two elements labelled `trigger [guard] / effect` - a transition, and one line of a
-        // state's second compartment. Their label is that notation rather than any one property, so
-        // editing it writes all three parts at once.
-        if (isTransition(node) || isStatePart(node)) {
-            const basePath = this.modelState.index.findPath(semanticId);
-            return JSON.stringify(
-                basePath
-                    ? behaviorLabelPatch(basePath, node as BehaviorLabelElement, operation.text, {
-                          required: isStatePart(node),
-                          // A transition writes its guard on a label of its own, so this one stands for the
-                          // other two: it may still set a guard typed in brackets, but it never clears the
-                          // one the guard label holds. One line of a state's compartment has no second label
-                          // and stands for the whole notation.
-                          parts: isTransition(node) ? TRANSITION_LABEL_PARTS : undefined
-                      })
-                    : []
-            );
-        }
-
-        const prop = this.getLabelPropertyName(node);
-        const path = this.modelState.index.findPath(semanticId) + '/' + prop;
-
-        if (prop === 'name' && operation.text.trim().length === 0) {
-            // InitialState is anonymous in UML, so clearing its name removes the property
-            // entirely rather than persisting an empty string, which the grammar can't re-parse.
-            if (isInitialState(node) && node.name !== undefined) {
-                return JSON.stringify([{ op: 'remove' as const, path }]);
-            }
-            return JSON.stringify([]);
-        }
-
-        // Filtered rather than written as typed. A name is parsed as an identifier, so a bracket, a comma
-        // or an accented letter in one is not stored badly - it is stored, the file is written, and the
-        // next read of it fails. `[ok]` typed onto a control flow is what found this.
-        const value = prop === 'name' ? storableName(operation.text) : operation.text;
-        if (value === undefined) {
-            return JSON.stringify([]);
-        }
-
-        return JSON.stringify([
-            {
-                op: 'replace' as const,
-                path,
-                value
-            }
-        ]);
-    }
-
-    /**
-     * Writes a guard typed on the line back onto the element, without the brackets it is written in -
-     * which the user may well have retyped, and which cannot be stored in any case.
-     *
-     * Emptying it clears the guard rather than storing an empty string, which the grammar cannot
-     * re-parse: `LangiumText` matches one token or more. A guard that was not set and was left empty is
-     * no edit at all.
-     */
-    protected buildGuardPatch(node: AstNode, semanticId: string, text: string): LabelPatch[] {
-        return this.buildPropertyPatch(node, semanticId, 'guard', storableGuard(text));
-    }
-
-    /**
-     * Writes one property of an element from the label that stands for it, or clears it where the label
-     * was emptied - a property the element does not carry and that was left empty is no edit at all.
-     *
-     * The value comes in already stripped of whatever the notation wraps it in, because that is what the
-     * user retypes and what the grammar could not hold: it spells JSON structure out in keywords, and a
-     * stored `[` or `{` leaves the model unparseable. An empty string is no more storable, which is why
-     * clearing removes the property rather than writing one - `LangiumText` matches one token or more.
-     */
-    protected buildPropertyPatch(node: AstNode, semanticId: string, property: string, value: string | undefined): LabelPatch[] {
-        const basePath = this.modelState.index.findPath(semanticId);
-        if (!basePath) {
+        const elementPath = this.modelState.index.findPath(semanticId);
+        if (!node || !elementPath) {
             return [];
         }
 
-        const path = `${basePath}/${property}`;
-        if (value !== undefined) {
-            return [{ op: 'add', path, value }];
+        const property = labelProperty(operation.labelId, semanticId) ?? 'name';
+        const edit = { labelId: operation.labelId, text: operation.text, node, semanticId, elementPath, property };
+        const claimed = firstClaim(this.extensions, extension => extension.editLabel?.(edit));
+        if (claimed) {
+            return claimed;
         }
-        return (node as unknown as Record<string, unknown>)[property] !== undefined ? [{ op: 'remove', path }] : [];
+
+        // Filtered rather than written as typed: a bracket or a comma the grammar has no terminal for
+        // is not stored badly - it is stored, the file is written, and the next read of it fails.
+        const value = this.storableValue(property, operation.text);
+        const current = (node as unknown as Record<string, unknown>)[property];
+
+        // Refused here as well as while typing (see `UmlLabelEditValidator`): a multiplicity that is not a
+        // whole one - `1.`, `5..2`, `abc` - is dropped rather than stored.
+        if (value !== undefined && isMultiplicityProperty(node.$type, property) && !isValidMultiplicity(value)) {
+            return [];
+        }
+
+        // The label an element is drawn as cannot be emptied: with nothing in it there is nothing on the
+        // canvas to see the element by, and nothing left to click to start writing in again. The one
+        // exception is a name the grammar writes as optional, which is cleared by removing it.
+        if (value === undefined && property === this.primaryLabelProperty(node) && !(property === 'name' && hasOptionalName(node.$type))) {
+            return [];
+        }
+
+        const patch = this.patches.property(elementPath, property, current, value);
+        return patch ? [patch] : [];
+    }
+
+    /** The property an element is drawn as: its name, or - for an element that has none - its body. */
+    protected primaryLabelProperty(node: AstNode): string {
+        return hasNoName(node.$type) ? 'body' : 'name';
+    }
+
+    /**
+     * A typed value as the property can hold it, or nothing where none of it can be stored. A name is
+     * parsed as an identifier; a body is prose and keeps its punctuation; everything else is notation
+     * that comes in wrapped in what the renderer put around it - the brackets of a guard, the braces of
+     * a property string - which is taken off again here.
+     */
+    protected storableValue(property: string, value: string): string | undefined {
+        // A role name (`sourceName`, `targetName`) is parsed as an identifier just as a name is.
+        if (property === 'name' || property.endsWith('Name')) {
+            return storableName(value);
+        }
+        if (property === 'body') {
+            return storableProse(value);
+        }
+        return storableText(value);
     }
 }

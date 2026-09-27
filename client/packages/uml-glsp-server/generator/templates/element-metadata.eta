@@ -1,0 +1,142 @@
+// AUTO-GENERATED – DO NOT EDIT
+/**********************************************************************************
+ * Copyright (c) 2026 borkdominik and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ **********************************************************************************/
+
+/**
+ * Everything the GLSP server knows about an element type, declared on the element definition through
+ * the `@Glsp.*` decorators and rendered here. The generic handlers, the diagram configuration and the
+ * gmodel factory read this rather than keeping lists of element names of their own.
+ */
+
+/** A containment property of an element and the concrete AST types it may hold. */
+export interface ElementContainment {
+    property: string;
+    childTypes: string[];
+}
+
+export interface ElementSize {
+    width: number;
+    height: number;
+}
+
+export interface ElementShapeOptions {
+    repositionable: boolean;
+    resizable: boolean;
+    deletable: boolean;
+}
+
+export interface ElementMetadata {
+    /** The AST type the element is stored as - its own name, unless it is an alias of another type. */
+    astType: string;
+    /** Whether the element is drawn as a node, an edge, or is placed by its owner (`unbounded`). */
+    kind: 'node' | 'edge' | 'unbounded';
+    /** Whether the element stores no `bounds` of its own. */
+    noBounds: boolean;
+    /** Whether UML only lets the element exist inside an owner. Every `noBounds` element is owned. */
+    owned: boolean;
+    /** Whether the element is never written inside another element, wherever it is dropped. */
+    floating: boolean;
+    /** The size a newly created node opens at, where the element declares one. */
+    defaultSize?: ElementSize;
+    /** Children a node is created with, written into `property` by the patch that creates it. */
+    opensWith?: { property: string; count: number };
+    /** The shape type hint the client is given for the node. */
+    shape: ElementShapeOptions;
+    /** The containment properties of the element. */
+    contains: ElementContainment[];
+    /** Whether the element's name may be cleared - the grammar writes it as optional. */
+    optionalName: boolean;
+    /** Whether the element has no name at all - a note, which is the text it holds. */
+    unnamed: boolean;
+    /** The values a new element is created with. */
+    defaults: ElementDefault[];
+}
+
+/** A value a new element of a type is created with. */
+export interface ElementDefault {
+    property: string;
+    defaultValue: unknown;
+}
+
+/** What a node opens at when its element declares no size of its own. */
+export const DEFAULT_NODE_SIZE: ElementSize = { width: 80, height: 30 };
+
+export const elementMetadata: Record<string, ElementMetadata> = <%~ JSON.stringify(it.entries, null, 4) %>;
+
+/** The elements an element type id names by its template rather than its AST type - see `elementKeyOf`. */
+const templateElements: Record<string, string> = <%~ JSON.stringify(it.templates, null, 4) %>;
+
+/**
+ * The AST type an element type id names: the last segment of `<representation>__[<template>__]<AstType>`.
+ * A bare AST type is returned as it is.
+ */
+export function astTypeOf(typeIdOrAstType: string): string {
+    const segments = typeIdOrAstType.split('__');
+    return segments[segments.length - 1];
+}
+
+/**
+ * The element an element type id or an AST type stands for. An id with a template names the element it
+ * was made from there - `class__aggregation__Association` is an `Aggregation`, stored as an `Association`.
+ */
+export function elementKeyOf(typeIdOrAstType: string): string {
+    const segments = typeIdOrAstType.split('__');
+    const template = segments.length >= 3 ? templateElements[segments[segments.length - 2]] : undefined;
+    return template ?? segments[segments.length - 1];
+}
+
+export function getElementMetadata(typeIdOrAstType: string): ElementMetadata | undefined {
+    return elementMetadata[elementKeyOf(typeIdOrAstType)];
+}
+
+/** The AST type a new element of this type id is stored as - an alias as the type it aliases. */
+export function storedAstTypeOf(typeIdOrAstType: string): string {
+    return getElementMetadata(typeIdOrAstType)?.astType ?? astTypeOf(typeIdOrAstType);
+}
+
+/** The values a new element of this type is created with - fresh ones on every call, so they can be changed. */
+export function getDefaultProperties(typeIdOrAstType: string): ElementDefault[] {
+    return (getElementMetadata(typeIdOrAstType)?.defaults ?? []).map(entry => ({ ...entry, defaultValue: structuredClone(entry.defaultValue) }));
+}
+
+/** Whether the element stores no `bounds` of its own. */
+export function isNoBounds(typeIdOrAstType: string): boolean {
+    return getElementMetadata(typeIdOrAstType)?.noBounds ?? false;
+}
+
+/** Whether clearing this element's name can be stored, by removing the property altogether. */
+export function hasOptionalName(typeIdOrAstType: string): boolean {
+    return getElementMetadata(typeIdOrAstType)?.optionalName ?? false;
+}
+
+/** Whether the element carries no name at all - a note, which is the text it holds. */
+export function hasNoName(typeIdOrAstType: string): boolean {
+    return getElementMetadata(typeIdOrAstType)?.unnamed ?? false;
+}
+
+/** Whether an element of this type can only be created inside an owner, never on the canvas by itself. */
+export function isOwnedElementType(typeIdOrAstType: string): boolean {
+    return getElementMetadata(typeIdOrAstType)?.owned ?? false;
+}
+
+/** Whether an element of this type is never written inside another element. */
+export function isFloatingType(typeIdOrAstType: string): boolean {
+    return getElementMetadata(typeIdOrAstType)?.floating ?? false;
+}
+
+/** The size a new node of this type opens at. */
+export function getDefaultSize(typeIdOrAstType: string): ElementSize {
+    return getElementMetadata(typeIdOrAstType)?.defaultSize ?? DEFAULT_NODE_SIZE;
+}
+
+/** The property of `containerType` a child of `childType` is written into, if the container holds such children. */
+export function getContainmentProperty(containerType: string, childType: string): string | undefined {
+    const child = astTypeOf(childType);
+    return getElementMetadata(containerType)?.contains.find(entry => entry.childTypes.includes(child))?.property;
+}

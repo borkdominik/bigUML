@@ -9,3 +9,4 @@
 export * from './id-util.js';
 export * from './json-types.js';
 export * from './json-util.js';
+export * from './name-util.js';

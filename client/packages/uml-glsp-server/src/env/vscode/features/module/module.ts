@@ -21,6 +21,7 @@ import {
     type OperationHandlerConstructor,
     type SourceModelStorage
 } from '@eclipse-glsp/server';
+import type { interfaces } from 'inversify';
 import { GenericLabelEditOperationHandler } from '../labeledit/generic-label-edit-operation-handler.js';
 import { DiagramGModelSerializer } from '../model/diagram-gmodel-serializer.js';
 import { DiagramModelIndex } from '../model/diagram-model-index.js';
@@ -29,6 +30,7 @@ import { DiagramModelStorage } from '../model/diagram-model-storage.js';
 import { DiagramOperationHandlerRegistryInitializer } from '../model/diagram-operation-handler-registry-initializer.js';
 import { CreateNewFileActionHandler } from '../model/handler/create-new-file-action-handler.js';
 import { RequestSemanticModelActionHandler } from '../model/index.js';
+import { ModelPatchBuilder } from '../mutation/model-patch.js';
 import {
     GenericChangeBoundsOperationHandler,
     GenericChangeRoutingPointsOperationHandler,
@@ -49,6 +51,11 @@ export abstract class BigDiagramModule extends DiagramModule {
 
     addDiagramFeatureModule(module: DiagramFeatureModule): void {
         this.featureModules.push(module);
+    }
+
+    protected override configure(bind: interfaces.Bind, unbind: interfaces.Unbind, isBound: interfaces.IsBound, rebind: interfaces.Rebind): void {
+        super.configure(bind, unbind, isBound, rebind);
+        bind(ModelPatchBuilder).toSelf().inSingletonScope();
     }
 
     protected bindSourceModelStorage(): BindingTarget<SourceModelStorage> {

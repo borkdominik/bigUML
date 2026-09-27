@@ -20,10 +20,12 @@ export namespace InformationFlowDiagramNodeTypes {
     export const PARAMETER = representationTypeId('InformationFlow', DefaultTypes.NODE, 'Parameter');
     export const NOTE = representationTypeId('InformationFlow', DefaultTypes.NODE, 'Note');
     export const TEXT_LABEL = representationTypeId('InformationFlow', DefaultTypes.NODE, 'TextLabel');
+    export const EDGE_ANCHOR = representationTypeId('InformationFlow', DefaultTypes.NODE, 'EdgeAnchor');
 }
 
 export namespace InformationFlowDiagramEdgeTypes {
     export const INFORMATION_FLOW = representationTypeId('InformationFlow', DefaultTypes.EDGE, 'InformationFlow');
+    export const GENERIC_EDGE = representationTypeId('InformationFlow', DefaultTypes.EDGE, 'GenericEdge');
 }
 
 export namespace InformationFlowDiagramModelTypes {
@@ -35,9 +37,11 @@ export namespace InformationFlowDiagramModelTypes {
     export const PARAMETER = InformationFlowDiagramNodeTypes.PARAMETER;
     export const NOTE = InformationFlowDiagramNodeTypes.NOTE;
     export const TEXT_LABEL = InformationFlowDiagramNodeTypes.TEXT_LABEL;
+    export const EDGE_ANCHOR = InformationFlowDiagramNodeTypes.EDGE_ANCHOR;
 
     // re-export edges
     export const INFORMATION_FLOW = InformationFlowDiagramEdgeTypes.INFORMATION_FLOW;
+    export const GENERIC_EDGE = InformationFlowDiagramEdgeTypes.GENERIC_EDGE;
 }
 
 export namespace InformationFlowAstTypes {
@@ -49,7 +53,9 @@ export namespace InformationFlowAstTypes {
         Parameter: InformationFlowDiagramModelTypes.PARAMETER,
         Note: InformationFlowDiagramModelTypes.NOTE,
         TextLabel: InformationFlowDiagramModelTypes.TEXT_LABEL,
-        InformationFlow: InformationFlowDiagramModelTypes.INFORMATION_FLOW
+        EdgeAnchor: InformationFlowDiagramModelTypes.EDGE_ANCHOR,
+        InformationFlow: InformationFlowDiagramModelTypes.INFORMATION_FLOW,
+        GenericEdge: InformationFlowDiagramModelTypes.GENERIC_EDGE
     };
 
     export function convertToAst(elementId: string): string {

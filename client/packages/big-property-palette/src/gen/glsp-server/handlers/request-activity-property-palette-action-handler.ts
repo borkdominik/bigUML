@@ -19,8 +19,10 @@ import {
     isCentralBufferNode,
     isControlFlow,
     isDecisionNode,
+    isEdgeAnchor,
     isFlowFinalNode,
     isForkNode,
+    isGenericEdge,
     isInitialNode,
     isInputPin,
     isJoinNode,
@@ -42,8 +44,10 @@ import { ActivityPartitionPropertyPaletteHandler } from './elements/activity-par
 import { CentralBufferNodePropertyPaletteHandler } from './elements/central-buffer-node.property-palette-handler.js';
 import { ControlFlowPropertyPaletteHandler } from './elements/control-flow.property-palette-handler.js';
 import { DecisionNodePropertyPaletteHandler } from './elements/decision-node.property-palette-handler.js';
+import { EdgeAnchorPropertyPaletteHandler } from './elements/edge-anchor.property-palette-handler.js';
 import { FlowFinalNodePropertyPaletteHandler } from './elements/flow-final-node.property-palette-handler.js';
 import { ForkNodePropertyPaletteHandler } from './elements/fork-node.property-palette-handler.js';
+import { GenericEdgePropertyPaletteHandler } from './elements/generic-edge.property-palette-handler.js';
 import { InitialNodePropertyPaletteHandler } from './elements/initial-node.property-palette-handler.js';
 import { InputPinPropertyPaletteHandler } from './elements/input-pin.property-palette-handler.js';
 import { JoinNodePropertyPaletteHandler } from './elements/join-node.property-palette-handler.js';
@@ -85,7 +89,11 @@ export class RequestActivityPropertyPaletteActionHandler implements ActionHandle
 
             const context = { semanticElement, languageMetadata: this.languageMetadata };
 
-            if (isTextLabel(semanticElement)) {
+            if (isEdgeAnchor(semanticElement)) {
+                return EdgeAnchorPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isGenericEdge(semanticElement)) {
+                return GenericEdgePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isTextLabel(semanticElement)) {
                 return TextLabelPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isNote(semanticElement)) {
                 return NotePropertyPaletteHandler.getPropertyPalette(context);
@@ -117,14 +125,14 @@ export class RequestActivityPropertyPaletteActionHandler implements ActionHandle
                 return CentralBufferNodePropertyPaletteHandler.getPropertyPalette(context);
             } else if (isActivityPartition(semanticElement)) {
                 return ActivityPartitionPropertyPaletteHandler.getPropertyPalette(context);
-            } else if (isActivityParameterNode(semanticElement)) {
-                return ActivityParameterNodePropertyPaletteHandler.getPropertyPalette(context);
             } else if (isActivityFinalNode(semanticElement)) {
                 return ActivityFinalNodePropertyPaletteHandler.getPropertyPalette(context);
-            } else if (isActivity(semanticElement)) {
-                return ActivityPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isAcceptEventAction(semanticElement)) {
                 return AcceptEventActionPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isActivityParameterNode(semanticElement)) {
+                return ActivityParameterNodePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isActivity(semanticElement)) {
+                return ActivityPropertyPaletteHandler.getPropertyPalette(context);
             }
 
             return [SetPropertyPaletteAction.create()];

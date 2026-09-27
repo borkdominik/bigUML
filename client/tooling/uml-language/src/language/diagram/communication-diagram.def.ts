@@ -14,6 +14,8 @@ import type { Lifeline } from '../elements/lifeline-element.def.js';
 import type { Message } from '../elements/message-element.def.js';
 import type { Note } from '../elements/note-element.def.js';
 import type { TextLabel } from '../elements/text-label-element.def.js';
+import type { GenericEdge } from '../elements/generic-edge-element.def.js';
+import type { EdgeAnchor } from '../elements/edge-anchor-element.def.js';
 
 // @ts-nocheck
 
@@ -26,6 +28,6 @@ export class CommunicationDiagram {
 
 type CommunicationDiagramElements = CommunicationDiagramNodes | CommunicationDiagramEdges;
 
-type CommunicationDiagramNodes = Interaction | Lifeline | Note | TextLabel;
+type CommunicationDiagramNodes = Interaction | Lifeline | Note | TextLabel | EdgeAnchor;
 
-type CommunicationDiagramEdges = Message;
+type CommunicationDiagramEdges = Message | GenericEdge;

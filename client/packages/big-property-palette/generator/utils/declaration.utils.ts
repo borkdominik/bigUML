@@ -7,17 +7,14 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import {
-    type Declaration,
-    Decorator,
-    extractTypeNames,
-    getConcreteElements,
-    getDiagramDeclarations,
-    toConstant
-} from '@borkdominik-biguml/uml-language-tooling';
+import { type Declaration, Decorator, extractTypeNames, getConcreteElements, getDiagramDeclarations, resolveTypeAliasMembers, toConstant } from '@borkdominik-biguml/uml-language-tooling';
 
+/**
+ * The elements a handler is generated for. An aliased class is not one: it is stored as the type it
+ * aliases, so it has no AST type of its own and is edited by that type's handler.
+ */
 export function getNodeDecls(decls: Declaration[]): Declaration[] {
-    return getConcreteElements(decls);
+    return getConcreteElements(decls).filter(decl => !Decorator.has(decl.decorators, 'alias'));
 }
 
 /**
@@ -38,6 +35,32 @@ export function getDiagramForElement(elementName: string, declarations: Declarat
     }
 
     return 'Class';
+}
+
+/** A property whose choices are the elements of the model its declared type admits. */
+export interface DynamicProperty {
+    /** The name given to `@PropertyPalette.dynamic`, which names the choice list in the generated handler. */
+    typeName: string;
+    /** The concrete AST types the property may refer to, resolved from its declared type. */
+    memberTypes: string[];
+}
+
+export function getDynamicProperties(decl: Declaration, declarations: Declaration[]): DynamicProperty[] {
+    const byName = new Map<string, DynamicProperty>();
+    for (const property of decl.properties ?? []) {
+        const dynamic = Decorator.find(property.decorators, 'dynamic');
+        const typeName = dynamic ? Decorator.getArg<string>(dynamic) : undefined;
+        if (!typeName) {
+            continue;
+        }
+        const memberTypes = property.types.flatMap(type => {
+            const alias = declarations.find(d => d.type === 'type' && d.name === type.typeName);
+            return alias ? resolveTypeAliasMembers(alias, declarations) : [type.typeName];
+        });
+        const existing = byName.get(typeName);
+        byName.set(typeName, { typeName, memberTypes: Array.from(new Set([...(existing?.memberTypes ?? []), ...memberTypes])) });
+    }
+    return [...byName.values()];
 }
 
 export function getDynamicPropertyTypes(decl: Declaration): string[] {

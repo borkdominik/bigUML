@@ -78,6 +78,16 @@ svg .uml-node .uml-node-background {
  * The one being aimed at grows, so it is clear which of the four a click would take. Emphasis by size
  * rather than by colour, which is how `.uml-node` and `.uml-edge` mark hover and selection too.
  */
+/*
+ * The dots at the middle of the edges, which another edge can be drawn to, come out while an edge being
+ * drawn is aimed at something it can end on - which pointing at an edge is (see
+ * `UmlEdgeCreationToolMouseListener`). They are not inside their edge, so hovering it cannot show them.
+ */
+.edge-creation-select-source-mode .uml-edge-center,
+.edge-creation-select-target-mode .uml-edge-center {
+    opacity: 1;
+}
+
 .uml-connection-point.mouseover > circle,
 .uml-connection-point.selected > circle {
     r: 5;
@@ -201,4 +211,29 @@ svg .uml-node .uml-node-background {
     stroke: var(--uml-border);
     stroke-width: 1;
     stroke-dasharray: 3 3;
+}
+
+/*
+ * The row of a member - a property, an operation, a literal. Transparent rather than unfilled, so the
+ * whole row answers to the pointer and not only the glyphs of its text; shown only while the member is
+ * hovered or selected, since a member has no shape of its own to thicken the way a node does.
+ */
+.uml-member-highlight {
+    fill: transparent;
+    stroke: none;
+}
+
+/* Also while a label inside the row is hovered: an editable label takes the hover for itself, which
+   would otherwise clear it off the row the moment the pointer reached the text. */
+.mouseover:not(.selected) > .uml-member-highlight,
+:not(.selected):has(.mouseover) > .uml-member-highlight {
+    fill: var(--uml-selection-border);
+    fill-opacity: 0.3;
+}
+
+.selected > .uml-member-highlight {
+    fill: var(--uml-selection-border);
+    fill-opacity: 0.5;
+    stroke: var(--uml-border);
+    stroke-width: 1;
 }

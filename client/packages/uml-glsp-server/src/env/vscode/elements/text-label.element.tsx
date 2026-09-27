@@ -60,7 +60,7 @@ const MIN_LABEL_SIZE = { width: 40, height: 22 };
 const EMPTY_LABEL_BODY = 'Label';
 
 /**
- * A `Size` metaInfo can exist while carrying no usable dimensions (see `GenericChangeBoundsOperationHandler`),
+ * Stored `bounds` can carry no usable dimensions - a zero width or height, say -
  * which a plain `?? default` would happily accept - and the client layouter then collapses the label onto its
  * text because its preferred size resolves to 0. So only positive dimensions count as a persisted size.
  */

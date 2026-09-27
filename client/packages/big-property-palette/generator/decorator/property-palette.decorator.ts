@@ -14,6 +14,7 @@ declare module '@borkdominik-biguml/uml-language-tooling' {
     interface DecoratorNameRegistry {
         skip: true;
         dynamic: true;
+        inlineFields: true;
     }
 }
 
@@ -43,5 +44,16 @@ export namespace PropertyPalette {
             existing.push(`dynamic:${value}`);
             (constructor as any).__customDecorators = existing;
         }) as any;
+    }
+
+    /**
+     * The properties edited right in the row an element gets in its owner's list, one text field each,
+     * in the order given. Without it the row edits the element's name alone.
+     *
+     * Example: `@PropertyPalette.inlineFields('name', 'propertyType')` on `Property` lets a class's
+     * properties be named and typed straight from the class's palette.
+     */
+    export function inlineFields(..._propertyIds: string[]): ClassDecorator {
+        return () => {};
     }
 }

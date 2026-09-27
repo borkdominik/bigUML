@@ -8,5 +8,8 @@
  **********************************************************************************/
 export * from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
 export * from './diagram/index.js';
+export * from './extensions/index.js';
 export * from './features/index.js';
+export * from './geometry/index.js';
+export * from './notation/index.js';
 export * from './launch.js';

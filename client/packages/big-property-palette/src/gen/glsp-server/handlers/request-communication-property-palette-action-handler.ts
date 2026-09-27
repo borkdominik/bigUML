@@ -10,9 +10,19 @@
 import { RequestPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
 import { type ActionHandler, type MaybePromise } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
-import { isInteraction, isLifeline, isMessage, isNote, isTextLabel } from '@borkdominik-biguml/uml-model-server/grammar';
+import {
+    isEdgeAnchor,
+    isGenericEdge,
+    isInteraction,
+    isLifeline,
+    isMessage,
+    isNote,
+    isTextLabel
+} from '@borkdominik-biguml/uml-model-server/grammar';
 import { DiagramModelState, DiagramLanguageMetadata } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import type { DiagramLanguageMetadata as DiagramLanguageMetadataType } from '@borkdominik-biguml/uml-glsp-server/vscode';
+import { EdgeAnchorPropertyPaletteHandler } from './elements/edge-anchor.property-palette-handler.js';
+import { GenericEdgePropertyPaletteHandler } from './elements/generic-edge.property-palette-handler.js';
 import { InteractionPropertyPaletteHandler } from './elements/interaction.property-palette-handler.js';
 import { LifelinePropertyPaletteHandler } from './elements/lifeline.property-palette-handler.js';
 import { MessagePropertyPaletteHandler } from './elements/message.property-palette-handler.js';
@@ -49,7 +59,11 @@ export class RequestCommunicationPropertyPaletteActionHandler implements ActionH
 
             const context = { semanticElement, languageMetadata: this.languageMetadata };
 
-            if (isTextLabel(semanticElement)) {
+            if (isEdgeAnchor(semanticElement)) {
+                return EdgeAnchorPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isGenericEdge(semanticElement)) {
+                return GenericEdgePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isTextLabel(semanticElement)) {
                 return TextLabelPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isNote(semanticElement)) {
                 return NotePropertyPaletteHandler.getPropertyPalette(context);

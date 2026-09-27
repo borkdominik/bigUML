@@ -20,6 +20,8 @@ import {
     GGeneralizationEdgeView,
     GIncludeEdge,
     GIncludeEdgeView,
+    GGenericEdge,
+    GGenericEdgeView,
     GNoteNode,
     GNoteNodeView,
     GSubjectNode,
@@ -53,6 +55,7 @@ export const umlUseCaseDiagramModule = new FeatureModule((bind, unbind, isBound,
     // The note and the free label, which every diagram has: both say something about the diagram
     // rather than being part of any one notation.
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'Note'), GNoteNode, GNoteNodeView);
+    configureModelElement(context, representationTypeId(R, DefaultTypes.EDGE, 'GenericEdge'), GGenericEdge, GGenericEdgeView);
     configureModelElement(context, representationTypeId(R, DefaultTypes.NODE, 'TextLabel'), GTextLabelNode, GTextLabelNodeView);
 
     // Edges

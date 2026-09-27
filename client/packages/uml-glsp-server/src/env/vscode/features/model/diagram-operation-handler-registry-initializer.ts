@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { OperationHandlerRegistryInitializer } from '@eclipse-glsp/server';
+import { CreateOperationHandler, OperationHandlerRegistryInitializer } from '@eclipse-glsp/server';
 import { inject, injectable, postConstruct } from 'inversify';
 import { DiagramModelState } from './diagram-model-state.js';
 
@@ -29,8 +29,15 @@ export class DiagramOperationHandlerRegistryInitializer extends OperationHandler
         this.modelState.onDidLoadSourceModel(() => this.reregisterHandlers());
     }
 
+    /**
+     * Only the create handlers: they are registered once per element type they create, and which types
+     * those are is not known until the model has loaded. Every other handler is keyed by its operation
+     * alone and was registered correctly the first time - registering it again is refused as a duplicate.
+     */
     protected reregisterHandlers(): void {
-        const handlers = this.handlerConstructors.map(constructor => this.factory(constructor));
-        handlers.forEach(handler => this.registry.registerHandler(handler));
+        this.handlerConstructors
+            .map(constructor => this.factory(constructor))
+            .filter(handler => CreateOperationHandler.is(handler))
+            .forEach(handler => this.registry.registerHandler(handler));
     }
 }

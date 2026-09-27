@@ -185,9 +185,9 @@ export class ClassDiagramMatcher implements IMatcher {
             const sourceId = relation.source?.ref?.__id;
             const targetId = relation.target?.ref?.__id;
 
-            const sourceName = relation.source?.ref?.name ?? relation.source?.$refText ?? idToName.get(sourceId ?? '') ?? '(unknown)';
+            const sourceName = this.nameOf(relation.source?.ref) ?? relation.source?.$refText ?? idToName.get(sourceId ?? '') ?? '(unknown)';
 
-            const targetName = relation.target?.ref?.name ?? relation.target?.$refText ?? idToName.get(targetId ?? '') ?? '(unknown)';
+            const targetName = this.nameOf(relation.target?.ref) ?? relation.target?.$refText ?? idToName.get(targetId ?? '') ?? '(unknown)';
             const relationName =
                 'name' in relation && relation.name ? `${relation.name}: ${sourceName} → ${targetName}` : `${sourceName} → ${targetName}`;
 
@@ -201,6 +201,11 @@ export class ClassDiagramMatcher implements IMatcher {
                 targetId
             });
         }
+    }
+
+    private nameOf(node: object | undefined): string | undefined {
+        // Not every node is named - a Note, for one, only has a body.
+        return node && 'name' in node && typeof node.name === 'string' ? node.name : undefined;
     }
 
     private extractProperties(element: any): Record<string, string> | undefined {

@@ -52,7 +52,7 @@ export function CodeGeneration(): ReactElement {
             RequestCodeGenerationAction.create({
                 options: options,
                 language,
-                languageOptions: language === 'java' ? javaOptions : typescriptOptions,
+                languageOptions: language === 'java' ? javaOptions : typescriptOptions
             })
         );
     }, [dispatchAction, language, javaOptions, typescriptOptions, options]);
@@ -64,15 +64,19 @@ export function CodeGeneration(): ReactElement {
     return (
         <div>
             <div style={{ marginBottom: '8px' }}>
-                <label htmlFor="language-select" style={{ marginRight: '8px' }}>Language:</label>
-                <select id="language-select" value={language} onChange={handleLanguageChange}>
-                    <option value="java">Java</option>
-                    <option value="typescript">TypeScript</option>
+                <label htmlFor='language-select' style={{ marginRight: '8px' }}>
+                    Language:
+                </label>
+                <select id='language-select' value={language} onChange={handleLanguageChange}>
+                    <option value='java'>Java</option>
+                    <option value='typescript'>TypeScript</option>
                 </select>
             </div>
             <div style={{ marginBottom: '8px' }}>
                 <span>Selected TemplateFile: {options.templateFile ?? 'Default'}</span>
-                <button onClick={selectTemplateFile} style={{ marginLeft: '8px' }}>Select Template File</button>
+                <button onClick={selectTemplateFile} style={{ marginLeft: '8px' }}>
+                    Select Template File
+                </button>
             </div>
             {language === 'java' && (
                 <JavaCodeGenerationConfig
@@ -89,7 +93,9 @@ export function CodeGeneration(): ReactElement {
                 />
             )}
             <div>
-                <button onClick={generateCode} style={{ marginLeft: '8px' }} disabled={isGenerationDisabled}>Generate</button>
+                <button onClick={generateCode} style={{ marginLeft: '8px' }} disabled={isGenerationDisabled}>
+                    Generate
+                </button>
             </div>
         </div>
     );

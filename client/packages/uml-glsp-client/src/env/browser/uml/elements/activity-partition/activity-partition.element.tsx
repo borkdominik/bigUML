@@ -8,7 +8,15 @@
  *********************************************************************************/
 /** @jsx svg */
 import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
-import { type BoundsAware, type GChildElement, type GNode, isBoundsAware, RectangularNodeView, type RenderingContext, svg } from '@eclipse-glsp/client';
+import {
+    type BoundsAware,
+    type GChildElement,
+    type GNode,
+    isBoundsAware,
+    RectangularNodeView,
+    type RenderingContext,
+    svg
+} from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { type VNode } from 'snabbdom';
 import { NamedElement } from '../named-element/named-element.view.js';
@@ -43,7 +51,9 @@ export class GActivityPartitionNodeView extends RectangularNodeView {
         const height = Math.max(0, element.bounds.height);
         const args = (element as unknown as { args?: Record<string, unknown> }).args ?? {};
         const vertical = args['vertical'] === true;
-        const laneCompartments = element.children.filter(child => child.type === CommonModelTypes.COMP_PARTITION_LANE).filter((child): child is GChildElement & BoundsAware => isBoundsAware(child));
+        const laneCompartments = element.children
+            .filter(child => child.type === CommonModelTypes.COMP_PARTITION_LANE)
+            .filter((child): child is GChildElement & BoundsAware => isBoundsAware(child));
         // Never deeper than the lane it is measured into, so a block dragged small keeps a band that
         // still fits: across the lanes when they stack, down them when they stand side by side.
         const bandDepth = Math.min(NAME_BAND_DEPTH, vertical ? height : width);
@@ -54,7 +64,11 @@ export class GActivityPartitionNodeView extends RectangularNodeView {
             // stack, across it when they stand side by side. The last one runs to the far edge.
             const offset = vertical ? laneCompartment.bounds.x : laneCompartment.bounds.y;
             const last = lane === laneCompartments.length - 1;
-            const laneExtent = last ? (vertical ? width : height) - offset : vertical ? laneCompartment.bounds.width : laneCompartment.bounds.height;
+            const laneExtent = last
+                ? (vertical ? width : height) - offset
+                : vertical
+                  ? laneCompartment.bounds.width
+                  : laneCompartment.bounds.height;
             const name = String((laneCompartment as unknown as { args?: Record<string, unknown> }).args?.['name'] ?? '');
 
             if (lane > 0) {
@@ -85,14 +99,9 @@ export class GActivityPartitionNodeView extends RectangularNodeView {
              * however the block is dragged. A stacked lane's name is turned a quarter anticlockwise, read
              * from the bottom up, which is how UML writes one.
              */
-            const centre = vertical
-                ? { x: offset + laneExtent / 2, y: bandDepth / 2 }
-                : { x: bandDepth / 2, y: offset + laneExtent / 2 };
+            const centre = vertical ? { x: offset + laneExtent / 2, y: bandDepth / 2 } : { x: bandDepth / 2, y: offset + laneExtent / 2 };
             lanes.push(
-                <text
-                    class-uml-partition-name={true}
-                    transform={`translate(${centre.x}, ${centre.y})${vertical ? '' : ' rotate(-90)'}`}
-                >
+                <text class-uml-partition-name={true} transform={`translate(${centre.x}, ${centre.y})${vertical ? '' : ' rotate(-90)'}`}>
                     {name}
                 </text>
             );

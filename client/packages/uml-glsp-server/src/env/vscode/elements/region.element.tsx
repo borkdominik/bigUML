@@ -94,5 +94,7 @@ export function createRegionElement(ctx: ElementContext<Region>): GModelElement 
     const position = ctx.modelIndex.findPosition(ctx.node.__id);
     const size = ctx.modelIndex.findSize(ctx.node.__id);
     const freeformChildren = renderContents(ctx, ctx.node.subvertices);
-    return <GRegionNodeElement node={ctx.node} position={position} size={size} type={ctx.elementType} freeformChildren={freeformChildren} />;
+    return (
+        <GRegionNodeElement node={ctx.node} position={position} size={size} type={ctx.elementType} freeformChildren={freeformChildren} />
+    );
 }

@@ -162,5 +162,7 @@ export function createActivityPartitionElement(ctx: ElementContext<ActivityParti
     } else {
         laneContents.set(ctx.node.__id, renderContents(ctx, ctx.node.nodes));
     }
-    return <GActivityPartitionNodeElement node={ctx.node} position={position} size={size} type={ctx.elementType} laneContents={laneContents} />;
+    return (
+        <GActivityPartitionNodeElement node={ctx.node} position={position} size={size} type={ctx.elementType} laneContents={laneContents} />
+    );
 }

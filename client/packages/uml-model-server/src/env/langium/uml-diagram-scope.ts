@@ -8,7 +8,15 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { type AstNode, type AstNodeDescription, AstUtils, type Cancellation, DefaultScopeComputation, type LangiumDocument, type MultiMap } from 'langium';
+import {
+    type AstNode,
+    type AstNodeDescription,
+    AstUtils,
+    type Cancellation,
+    DefaultScopeComputation,
+    type LangiumDocument,
+    type MultiMap
+} from 'langium';
 import { type UmlDiagramServices } from './uml-diagram-module.js';
 import { type QualifiedNameProvider } from './uml-diagram-naming.js';
 import { type UmlDiagramPackageManager, UNKNOWN_PROJECT_ID, UNKNOWN_PROJECT_REFERENCE } from './uml-diagram-package-manager.js';

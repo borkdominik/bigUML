@@ -91,6 +91,12 @@ export function createStateMachineElement(ctx: ElementContext<StateMachine>): GM
     const size = ctx.modelIndex.findSize(ctx.node.__id);
     const freeformChildren = renderContents(ctx, ctx.node.regions);
     return (
-        <GStateMachineNodeElement node={ctx.node} position={position} size={size} type={ctx.elementType} freeformChildren={freeformChildren} />
+        <GStateMachineNodeElement
+            node={ctx.node}
+            position={position}
+            size={size}
+            type={ctx.elementType}
+            freeformChildren={freeformChildren}
+        />
     );
 }

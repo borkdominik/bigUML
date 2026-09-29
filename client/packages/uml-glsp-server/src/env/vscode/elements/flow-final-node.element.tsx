@@ -14,12 +14,5 @@ import type { ElementContext } from './core/element-context.js';
 export function createFlowFinalNodeElement(ctx: ElementContext<FlowFinalNode>): GModelElement {
     const position = ctx.modelIndex.findPosition(ctx.node.__id);
     const size = ctx.modelIndex.findSize(ctx.node.__id);
-    return (
-        <GCircleNodeElement
-            id={ctx.node.__id}
-            position={position}
-            size={size}
-            type={ctx.elementType}
-        />
-    );
+    return <GCircleNodeElement id={ctx.node.__id} position={position} size={size} type={ctx.elementType} />;
 }

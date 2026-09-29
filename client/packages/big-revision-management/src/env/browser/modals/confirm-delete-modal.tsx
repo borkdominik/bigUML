@@ -21,10 +21,16 @@ export function ConfirmDeleteModal({ name, onConfirm, onCancel }: ConfirmDeleteM
             <div style={modalStyle}>
                 <h3 style={titleStyle}>Delete Timeline Entry</h3>
                 <hr style={dividerStyle} />
-                <p style={textStyle}>Are you sure you want to delete the timeline entry <b>{name}</b>?</p>
+                <p style={textStyle}>
+                    Are you sure you want to delete the timeline entry <b>{name}</b>?
+                </p>
                 <div style={buttonRowStyle}>
-                    <button onClick={onCancel} style={cancelButtonStyle}>Cancel</button>
-                    <button onClick={onConfirm} style={exportButtonStyle}>Delete</button>
+                    <button onClick={onCancel} style={cancelButtonStyle}>
+                        Cancel
+                    </button>
+                    <button onClick={onConfirm} style={exportButtonStyle}>
+                        Delete
+                    </button>
                 </div>
             </div>
         </div>

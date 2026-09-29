@@ -80,7 +80,9 @@ export function GPropertyNodeElement(props: GPropertyNodeElementProps): GModelEl
                 }}
             >
                 <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={propertyTypeName} />
-                {multiplicity && multiplicity !== '1' ? <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={`[${multiplicity}]`} /> : null}
+                {multiplicity && multiplicity !== '1' ? (
+                    <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={`[${multiplicity}]`} />
+                ) : null}
             </GCompartmentElement>
         );
         rightSideChildren.push(colonLabel, detailComp);
@@ -167,7 +169,9 @@ export function GPropertyRowElement(props: { node: Property; type: string }): GM
                     }}
                 >
                     <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={propertyTypeName} />
-                    {multiplicity && multiplicity !== '1' ? <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={`[${multiplicity}]`} /> : null}
+                    {multiplicity && multiplicity !== '1' ? (
+                        <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={`[${multiplicity}]`} />
+                    ) : null}
                 </GCompartmentElement>
             </InlineCompartment>
         );

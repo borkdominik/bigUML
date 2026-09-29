@@ -60,9 +60,7 @@ export function GInstanceSpecificationNodeElement(props: GInstanceSpecificationN
     return instNode;
 }
 
-export function createInstanceSpecificationElement(
-    ctx: ElementContext<InstanceSpecification>
-): GModelElement {
+export function createInstanceSpecificationElement(ctx: ElementContext<InstanceSpecification>): GModelElement {
     const position = ctx.modelIndex.findPosition(ctx.node.__id);
     const size = ctx.modelIndex.findSize(ctx.node.__id);
 

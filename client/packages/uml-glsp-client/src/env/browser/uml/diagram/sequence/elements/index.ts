@@ -10,4 +10,3 @@
  ********************************************************************************/
 export * from './interacton.model.js';
 export * from './lifeline.model.js';
-

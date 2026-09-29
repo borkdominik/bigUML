@@ -139,7 +139,7 @@ function serializePropertyValue(property: Definition, elementString: string, ref
     }
 }
 
-function buildRootElementSerializer(rules: LangiumGrammar, referenceProperty: string): string {
+function buildRootElementSerializer(rules: LangiumGrammar, _referenceProperty: string): string {
     const rootElement = rules.entryRule;
     const lines = [`if (is${rootElement.name}(root)) {`];
     for (const ruleElement of rootElement.definitions) {

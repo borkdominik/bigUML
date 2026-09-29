@@ -95,9 +95,7 @@ export class UmlGridSnapper implements ISnapper {
             return undefined;
         }
 
-        const snapped = handle
-            ? this.snapLaneEdge(position, handle, neighbours)
-            : this.snapLaneCorner(position, lane, neighbours);
+        const snapped = handle ? this.snapLaneEdge(position, handle, neighbours) : this.snapLaneCorner(position, lane, neighbours);
         if (!snapped.x && !snapped.y) {
             return undefined;
         }
@@ -209,7 +207,7 @@ export class GraphGridActionHandler implements IActionHandler, IDiagramStartup {
 
     postModelInitialization(): void {
         if (GraphGridActionHandler.ENABLED) {
-            this.actionDispatcher.requestUntil<ViewportResult>(GetViewportAction.create()).then(result => {
+            void this.actionDispatcher.requestUntil<ViewportResult>(GetViewportAction.create()).then(result => {
                 this.showGrid(true);
                 this.moveGrid(result!.viewport);
             });

@@ -45,5 +45,5 @@ shared.workspace.WorkspaceManager.onWorkspaceInitialized(() => {
     // Start the graphical language server with the shared services
     startGLSPServer({ shared, language: UmlDiagram }, [propertyPaletteModule, outlineModule /* , advancedSearchGlspModule */]);
     // Start the JSON server with the shared services
-    startModelServer({ shared });
+    void startModelServer({ shared });
 });

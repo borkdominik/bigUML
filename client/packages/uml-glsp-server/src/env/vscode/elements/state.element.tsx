@@ -101,12 +101,7 @@ export function createStateElement(ctx: ElementContext<State>): GModelElement {
     const bandHeight = regionBandHeight(ctx.node.regionHeight);
     const bandWidth = stateSize(size, ctx.node, bandHeight).width - 2 * STATE_PADDING;
     const regionBands = regions.map((region, index) => (
-        <GStateRegionCompartment
-            node={region}
-            divided={index > 0}
-            width={bandWidth}
-            substates={renderContents(ctx, region.subvertices)}
-        />
+        <GStateRegionCompartment node={region} divided={index > 0} width={bandWidth} substates={renderContents(ctx, region.subvertices)} />
     ));
 
     return (

@@ -73,6 +73,6 @@ class GLSPReadyStartup implements IDiagramStartup {
     protected actionDispatcher: IActionDispatcher;
 
     public postRequestModel(): MaybePromise<void> {
-        this.actionDispatcher.dispatch(GLSPIsReadyAction.create());
+        void this.actionDispatcher.dispatch(GLSPIsReadyAction.create());
     }
 }

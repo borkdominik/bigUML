@@ -84,10 +84,10 @@ export class UmlToolPalette extends KeyboardToolPalette {
                     selectedElementIds: []
                 }
             });
-            this.actionDispatcher.requestUntil(requestAction).then(response => {
+            void this.actionDispatcher.requestUntil(requestAction).then(response => {
                 if (SetContextActions.is(response)) {
                     this.paletteItems = response.actions.map(e => e as PaletteItem);
-                    this.actionDispatcher.dispatchAll([
+                    void this.actionDispatcher.dispatchAll([
                         SetUIExtensionVisibilityAction.create({ extensionId: ToolPalette.ID, visible: !this.editorContext.isReadonly })
                     ]);
                 }
@@ -188,7 +188,7 @@ export class UmlToolPalette extends KeyboardToolPalette {
 
         container.onclick = _event => {
             const modelIds: string[] = [this.modelRootId];
-            this.actionDispatcher.dispatch(RequestMarkersAction.create(modelIds));
+            void this.actionDispatcher.dispatch(RequestMarkersAction.create(modelIds));
         };
         container.appendChild(this.createKeyboardShotcut(VALIDATION_TOOL_KEY[0]));
         container.appendChild(icon);
@@ -263,7 +263,7 @@ export class UmlToolPalette extends KeyboardToolPalette {
 
     protected createIcon(cssClass: string): HTMLDivElement {
         const icon = document.createElement('div');
-        icon.classList.add(...['uml-icon', cssClass]);
+        icon.classList.add('uml-icon', cssClass);
         return icon;
     }
 

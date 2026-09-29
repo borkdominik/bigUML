@@ -11,7 +11,7 @@
  * Core language decorators that define the structure of the UML grammar.
  * These are used in def files and interpreted by the tooling parser and generators.
  */
- 
+
 export namespace Language {
     /**
      * Marks a class as the root entry point of the grammar.
@@ -71,5 +71,4 @@ export namespace Language {
         /** the id of the referenced element */
         [ref: string]: string | T | undefined;
     }
-
 }

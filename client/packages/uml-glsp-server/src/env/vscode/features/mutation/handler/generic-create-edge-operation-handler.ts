@@ -119,7 +119,10 @@ export class GenericCreateEdgeOperationHandler extends OperationHandler implemen
      * a centre dot. The anchor is the edge's existing one where it has one - every edge attached to an edge
      * shares it - and otherwise added to `anchors`, next to the diagram's other elements.
      */
-    protected anchorReferenceFor(endId: string, anchors: jsonPatch.AddOperation<unknown>[]): ReturnType<typeof this.referenceTo> | undefined {
+    protected anchorReferenceFor(
+        endId: string,
+        anchors: jsonPatch.AddOperation<unknown>[]
+    ): ReturnType<typeof this.referenceTo> | undefined {
         const edgeId = parseEdgeCenterId(endId);
         const edge = edgeId ? this.modelState.index.findIdElement(edgeId) : undefined;
         if (!edgeId || !edge) {
@@ -168,7 +171,12 @@ export class GenericCreateEdgeOperationHandler extends OperationHandler implemen
      * Asked of the grammar rather than kept as a list, so an edge given the property later is pinnable
      * by that alone.
      */
-    protected setConnectionPoint(value: Record<string, unknown>, astType: string, property: string, point: ConnectionPoint | undefined): void {
+    protected setConnectionPoint(
+        value: Record<string, unknown>,
+        astType: string,
+        property: string,
+        point: ConnectionPoint | undefined
+    ): void {
         if (point && property in reflection.getTypeMetaData(astType).properties) {
             value[property] = point;
         } else {

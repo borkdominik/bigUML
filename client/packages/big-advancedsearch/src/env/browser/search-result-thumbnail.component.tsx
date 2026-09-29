@@ -22,10 +22,7 @@ export function SearchResultThumbnail({ svg, bounds, loading }: SearchResultThum
 
         return (
             <div className='result-item__thumbnail-container'>
-                <svg
-                    className='result-item__thumbnail result-item__thumbnail--dynamic'
-                    viewBox={viewBox}
-                >
+                <svg className='result-item__thumbnail result-item__thumbnail--dynamic' viewBox={viewBox}>
                     <g dangerouslySetInnerHTML={{ __html: svg }} />
                 </svg>
             </div>

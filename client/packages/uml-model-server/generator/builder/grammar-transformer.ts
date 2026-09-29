@@ -6,7 +6,15 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { type Declaration, Decorator, isValueDeclaration, isValueProperty, Multiplicity, type Property, type Type } from '@borkdominik-biguml/uml-language-tooling';
+import {
+    type Declaration,
+    Decorator,
+    isValueDeclaration,
+    isValueProperty,
+    Multiplicity,
+    type Property,
+    type Type
+} from '@borkdominik-biguml/uml-language-tooling';
 
 // ============================================================================
 // Langium grammar types — specific to the model-server's grammar generation
@@ -167,8 +175,9 @@ function declarationsToTypeRules(declarations: Array<Declaration>): Array<TypeRu
                  * its union keeps only the first type of it. That is what limited an information flow to
                  * running into an Actor, and a transition to running into a Node.
                  */
-                const existingName = (findTypeRule(typeRules as TypeRule[], property.types) ??
-                    findTypeRule(inlineUnionRules, property.types))?.name;
+                const existingName = (
+                    findTypeRule(typeRules as TypeRule[], property.types) ?? findTypeRule(inlineUnionRules, property.types)
+                )?.name;
                 const typeName = existingName ?? `UnionType_${unionId++}`;
 
                 if (existingName === undefined) {

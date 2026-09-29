@@ -33,10 +33,14 @@ export class UmlDiagramValidator {
         AstUtils.streamAllContents(model).forEach((astNode: AstNode & { __id?: string }) => {
             if (astNode[properties.referenceProperty as keyof AstNode] !== undefined) {
                 if (reported.has(astNode[properties.referenceProperty as keyof AstNode])) {
-                    accept('error', `Element has non-unique ${properties.referenceProperty} ${astNode[properties.referenceProperty as keyof AstNode]}.`, {
-                        node: astNode,
-                        property: properties.referenceProperty
-                    });
+                    accept(
+                        'error',
+                        `Element has non-unique ${properties.referenceProperty} ${astNode[properties.referenceProperty as keyof AstNode]}.`,
+                        {
+                            node: astNode,
+                            property: properties.referenceProperty
+                        }
+                    );
                 }
                 reported.add(astNode[properties.referenceProperty as keyof AstNode]);
             }

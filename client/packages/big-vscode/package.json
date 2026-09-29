@@ -36,13 +36,13 @@
     "@borkdominik-biguml/uml-model-server": "workspace:*",
     "@eclipse-glsp/protocol": "catalog:",
     "@eclipse-glsp/vscode-integration": "catalog:",
-    "@types/vscode": "^1.63.0",
+    "@types/vscode": "catalog:",
     "reflect-metadata": "catalog:",
     "sprotty": "catalog:",
     "vscode-messenger": "catalog:",
     "vscode-messenger-common": "catalog:"
   },
   "peerDependencies": {
-    "inversify": "^6.2.1"
+    "inversify": "catalog:"
   }
 }

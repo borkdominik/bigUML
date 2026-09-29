@@ -55,6 +55,6 @@
     "vscode-uri": "catalog:"
   },
   "peerDependencies": {
-    "inversify": "^6.2.1"
+    "inversify": "catalog:"
   }
 }

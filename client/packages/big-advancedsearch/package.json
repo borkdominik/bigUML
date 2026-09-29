@@ -59,8 +59,8 @@
     "vitest": "catalog:"
   },
   "peerDependencies": {
-    "inversify": "^6.1.3",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "inversify": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
   }
 }

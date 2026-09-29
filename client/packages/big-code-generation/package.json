@@ -48,8 +48,8 @@
     "react-dom": "catalog:"
   },
   "peerDependencies": {
-    "inversify": "^6.2.1",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "inversify": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
   }
 }

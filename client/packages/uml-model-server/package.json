@@ -30,7 +30,7 @@
     "eta": "catalog:",
     "fast-json-patch": "catalog:",
     "langium": "catalog:",
-    "type-fest": "^5.0.0",
+    "type-fest": "catalog:",
     "uuid": "catalog:",
     "vscode-jsonrpc": "catalog:",
     "vscode-languageclient": "catalog:",

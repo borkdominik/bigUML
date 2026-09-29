@@ -42,6 +42,6 @@
     "@eclipse-glsp/vscode-integration-webview": "catalog:"
   },
   "peerDependencies": {
-    "inversify": "^6.2.1"
+    "inversify": "catalog:"
   }
 }

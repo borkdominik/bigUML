@@ -32,7 +32,7 @@
   "dependencies": {
     "@borkdominik-biguml/big-vscode": "workspace:*",
     "@eclipse-glsp/protocol": "catalog:",
-    "@vscode-elements/react-elements": "^2.4.0",
+    "@vscode-elements/react-elements": "catalog:",
     "lodash": "catalog:",
     "vscode-messenger-common": "catalog:",
     "vscode-messenger-webview": "catalog:"
@@ -44,7 +44,7 @@
     "react-dom": "catalog:"
   },
   "peerDependencies": {
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react": "catalog:",
+    "react-dom": "catalog:"
   }
 }

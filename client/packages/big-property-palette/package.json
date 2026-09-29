@@ -56,19 +56,19 @@
     "langium": "catalog:",
     "lodash": "catalog:",
     "reflect-metadata": "catalog:",
-    "sortablejs": "^1.15.0",
+    "sortablejs": "catalog:",
     "vscode-messenger-common": "catalog:"
   },
   "devDependencies": {
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@types/sortablejs": "^1.15.0",
+    "@types/sortablejs": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"
   },
   "peerDependencies": {
-    "inversify": "^6.2.1",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "inversify": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
   }
 }

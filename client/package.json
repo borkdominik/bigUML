@@ -29,16 +29,16 @@
   "devDependencies": {
     "@types/lodash": "catalog:",
     "@types/node": "catalog:",
-    "concurrently": "^9.1.2",
-    "knip": "^6.38.0",
-    "lefthook": "^2.1.14",
-    "nodemon": "^3.1.14",
-    "oxfmt": "^0.70.0",
-    "oxlint": "^1.85.0",
-    "oxlint-tsgolint": "^7.0.2003",
-    "rimraf": "^6.0.1",
+    "concurrently": "catalog:",
+    "knip": "catalog:",
+    "lefthook": "catalog:",
+    "nodemon": "catalog:",
+    "oxfmt": "catalog:",
+    "oxlint": "catalog:",
+    "oxlint-tsgolint": "catalog:",
+    "rimraf": "catalog:",
     "tsx": "catalog:",
-    "typescript": "^7.0.2"
+    "typescript": "catalog:"
   },
   "engines": {
     "node": ">=24.14.0"

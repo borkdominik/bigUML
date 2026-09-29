@@ -62,6 +62,8 @@ const common: es.BuildOptions = {
     sourcemap: isProduction ? false : 'inline',
     color: true,
     logLevel: 'info',
+    // Read by the logger configuration (`big-common`) to only log warnings and errors in production
+    define: { __PRODUCTION__: JSON.stringify(isProduction) },
     // Replaces the tsconfig lookup. JSX runtimes that differ from React are selected per file by pragma.
     tsconfigRaw: {
         compilerOptions: {

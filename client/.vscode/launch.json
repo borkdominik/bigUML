@@ -15,8 +15,7 @@
       ],
       "sourceMaps": true,
       "smartStep": true,
-      "outFiles": ["${workspaceFolder}/application/vscode/build/**/*.cjs"],
-      "preLaunchTask": "Watch (esbuild)"
+      "outFiles": ["${workspaceFolder}/application/vscode/build/**/*.cjs"]
     },
     {
       "name": "(Attach) LSP Server",

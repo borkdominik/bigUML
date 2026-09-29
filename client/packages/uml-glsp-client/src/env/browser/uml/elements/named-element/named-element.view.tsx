@@ -12,9 +12,7 @@ import {
     containerFeature,
     type EditableLabel,
     type GChildElement,
-    GCompartment,
     GLabel,
-    hasArgs,
     isEditableLabel,
     layoutableChildFeature,
     nameFeature,
@@ -22,11 +20,12 @@ import {
     type RenderingContext,
     svg
 } from '@eclipse-glsp/client';
-import { type Args, DefaultTypes } from '@eclipse-glsp/protocol';
+import { type Args } from '@eclipse-glsp/protocol';
 import { injectable } from 'inversify';
 import { type VNode } from 'snabbdom';
 // eslint-disable-next-line no-restricted-imports
 import { alignFeature } from 'sprotty';
+import { renderCompartmentSeparators } from '../../views/compartment-separator.js';
 import { GLabeledNode } from '../../views/uml-label.view.js';
 
 export class NamedElement extends GLabeledNode implements ArgsAware {
@@ -96,39 +95,63 @@ export class NamedElementView extends RectangularNodeView {
             return undefined;
         }
 
-        const compartment = element.children.find(
-            c =>
-                c instanceof GCompartment &&
-                c.type !== DefaultTypes.COMPARTMENT_HEADER &&
-                c.children.length > 0 &&
-                hasArgs(c) &&
-                c.args['divider'] === true
-        ) as GCompartment | undefined;
-
         // TODO: Remove after switching to builder based approach for all gmodels
         return (
             <g class-selected={element.selected} class-mouseover={element.hoverFeedback}>
-                {(element.args['border'] === true || element.args['build_by'] === undefined) && (
-                    <rect
-                        x={0}
-                        y={0}
-                        rx={2}
-                        ry={2}
-                        width={Math.max(0, element.bounds.width)}
-                        height={Math.max(0, element.bounds.height)}
-                        class-uml-node-background
-                    />
-                )}
+                {element.args['border'] === true || element.args['build_by'] === undefined
+                    ? this.renderBackground(element)
+                    : this.renderMemberHighlight(element)}
 
-                {compartment && (
-                    <path
-                        class-uml-comp-separator
-                        d={`M 0,${compartment.position.y}  L ${element.bounds.width},${compartment.position.y}`}
-                    ></path>
-                )}
+                {renderCompartmentSeparators(element)}
 
-                {context.renderChildren(element)}
+                {this.renderContent(element, context)}
             </g>
+        ) as any;
+    }
+
+    /**
+     * The element's own children, drawn over its shape. Split out from `render` so that a node can
+     * draw one of them differently.
+     */
+    protected renderContent(element: NamedElement, context: RenderingContext): (VNode | undefined)[] {
+        return context.renderChildren(element);
+    }
+
+    /**
+     * The row a member - a property, an operation, a literal - is drawn in, which has no shape of its
+     * own. Transparent until the member is hovered or selected (see `uml-member-highlight`), so that a
+     * selected member shows as selected, and a click between the letters of its text still lands on the
+     * member instead of falling through to the class behind it.
+     */
+    protected renderMemberHighlight(element: NamedElement): VNode {
+        return (
+            <rect
+                x={0}
+                y={0}
+                rx={2}
+                ry={2}
+                width={Math.max(0, element.bounds.width)}
+                height={Math.max(0, element.bounds.height)}
+                class-uml-member-highlight
+            />
+        ) as any;
+    }
+
+    /**
+     * The shape the element is drawn as, behind its labels and compartments. A rounded box unless an
+     * element says otherwise - a package draws itself as a folder, see `GPackageNodeView`.
+     */
+    protected renderBackground(element: NamedElement): VNode {
+        return (
+            <rect
+                x={0}
+                y={0}
+                rx={2}
+                ry={2}
+                width={Math.max(0, element.bounds.width)}
+                height={Math.max(0, element.bounds.height)}
+                class-uml-node-background
+            />
         ) as any;
     }
 }

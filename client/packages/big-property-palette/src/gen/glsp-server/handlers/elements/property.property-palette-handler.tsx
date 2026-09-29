@@ -12,10 +12,7 @@ import {
 } from '@borkdominik-biguml/big-property-palette/glsp-server';
 
 export namespace PropertyPropertyPaletteHandler {
-    export function getPropertyPalette(
-        context: GetPropertyPaletteHandlerContext<Property>,
-        dataTypeChoices: any
-    ): SetPropertyPaletteAction[] {
+    export function getPropertyPalette(context: GetPropertyPaletteHandlerContext<Property>): SetPropertyPaletteAction[] {
         return [
             SetPropertyPaletteAction.create(
                 <PropertyPalette
@@ -83,15 +80,10 @@ export namespace PropertyPropertyPaletteHandler {
                         text={context.semanticElement.multiplicity!}
                         label='Multiplicity'
                     />
-                    <ChoiceProperty
+                    <TextProperty
                         elementId={context.semanticElement.__id}
                         propertyId='propertyType'
-                        choices={dataTypeChoices}
-                        choice={
-                            (context.semanticElement.propertyType as any)?.ref?.__id
-                                ? (context.semanticElement.propertyType as any).ref.__id + '_refValue'
-                                : ''
-                        }
+                        text={context.semanticElement.propertyType!}
                         label='Property Type'
                     />
                     <ChoiceProperty

@@ -39,17 +39,17 @@ export function startGLSPServer(services: UmlDiagramLSPServices, modules: (Conta
         layoutConfigurator: LayeredLayoutConfigurator
     });
 
-    const classDiagramModule = new UmlDiagramModule();
+    const diagramModule = new UmlDiagramModule();
     const containerModules: ContainerModule[] = [];
     for (const module of modules) {
         if (module instanceof DiagramFeatureModule) {
-            classDiagramModule.addDiagramFeatureModule(module);
+            diagramModule.addDiagramFeatureModule(module);
         } else {
             containerModules.push(module);
         }
     }
 
-    const serverModule = new UmlServerModule().configureDiagramModule(classDiagramModule, elkLayoutModule, ...containerModules);
+    const serverModule = new UmlServerModule().configureDiagramModule(diagramModule, elkLayoutModule, ...containerModules);
     launcher.configure(serverModule);
     try {
         return launcher.start({

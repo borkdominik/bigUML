@@ -28,6 +28,12 @@ export class ActorView extends ShapeView {
 
         return (
             <g class-selected={element.selected} class-mouseover={element.hoverFeedback}>
+                {/*
+                 * The actor is the stick figure alone - no box is drawn around it. This rectangle is
+                 * what makes the space the figure occupies clickable: it is invisible but still painted,
+                 * so the actor can be picked up anywhere across it rather than only on the strokes of
+                 * the figure itself. `visibility: hidden` would take it out of the hit testing.
+                 */}
                 <rect
                     x={0}
                     y={0}
@@ -35,7 +41,7 @@ export class ActorView extends ShapeView {
                     ry={2}
                     width={Math.max(0, element.bounds.width)}
                     height={Math.max(0, element.bounds.height)}
-                    visibility='hidden'
+                    class-uml-hit-area
                 />
                 {context.renderChildren(element)}
             </g>

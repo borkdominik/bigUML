@@ -9,10 +9,11 @@
 
 import { Glsp } from '@borkdominik-biguml/uml-glsp-server/generator';
 import 'reflect-metadata';
-import type { AbstractClass } from '../elements/abstract-class-element.def.js';
 import type { Abstraction } from '../elements/abstraction-element.def.js';
+import type { Aggregation } from '../elements/aggregation-element.def.js';
 import type { Association } from '../elements/association-element.def.js';
 import type { Class } from '../elements/class-element.def.js';
+import type { Composition } from '../elements/composition-element.def.js';
 import type { DataType } from '../elements/data-type-element.def.js';
 import type { Dependency } from '../elements/dependency-element.def.js';
 import type { ElementImport } from '../elements/element-import-element.def.js';
@@ -23,6 +24,9 @@ import type { InstanceSpecification } from '../elements/instance-specification-e
 import type { Interface } from '../elements/interface-element.def.js';
 import type { InterfaceRealization } from '../elements/interface-realization-element.def.js';
 import type { LiteralSpecification } from '../elements/literal-specification-element.def.js';
+import type { NaryAssociation } from '../elements/nary-association-element.def.js';
+import type { Note } from '../elements/note-element.def.js';
+import type { TextLabel } from '../elements/text-label-element.def.js';
 import type { Operation } from '../elements/operation-element.def.js';
 import type { Package } from '../elements/package-element.def.js';
 import type { PackageImport } from '../elements/package-import-element.def.js';
@@ -34,6 +38,8 @@ import type { Realization } from '../elements/realization-element.def.js';
 import type { Slot } from '../elements/slot-element.def.js';
 import type { Substitution } from '../elements/substitution-element.def.js';
 import type { Usage } from '../elements/usage-element.def.js';
+import type { GenericEdge } from '../elements/generic-edge-element.def.js';
+import type { EdgeAnchor } from '../elements/edge-anchor-element.def.js';
 
 // @ts-nocheck
 
@@ -50,7 +56,6 @@ type ClassDiagramNodes =
     | Enumeration
     | EnumerationLiteral
     | Class
-    | AbstractClass
     | Interface
     | Package
     | Property
@@ -60,12 +65,18 @@ type ClassDiagramNodes =
     | PrimitiveType
     | InstanceSpecification
     | Slot
-    | LiteralSpecification;
+    | LiteralSpecification
+    | NaryAssociation
+    | Note
+    | TextLabel
+    | EdgeAnchor;
 
 type ClassDiagramEdges =
     | Abstraction
     | Dependency
     | Association
+    | Aggregation
+    | Composition
     | ElementImport
     | InterfaceRealization
     | Generalization
@@ -73,4 +84,5 @@ type ClassDiagramEdges =
     | PackageMerge
     | Realization
     | Substitution
-    | Usage;
+    | Usage
+    | GenericEdge;

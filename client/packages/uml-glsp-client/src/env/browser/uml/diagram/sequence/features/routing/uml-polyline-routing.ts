@@ -7,18 +7,30 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { Bounds, type GRoutableElement, Point, PolylineEdgeRouter, type RoutedPoint } from '@eclipse-glsp/client';
+import { Bounds, type GRoutableElement, Point, type RoutedPoint } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
+import { UmlPolylineEdgeRouter } from '../../../../../features/routing/package-merge-router.js';
 import { LifelineElement } from '../../elements/index.js';
 
+/**
+ * Anchors an edge arriving at a lifeline to its head rather than to its middle.
+ *
+ * Built on `UmlPolylineEdgeRouter` and standing aside for it on everything else, because there is only
+ * one router to be had: a diagram's edges are routed by whichever router holds the polyline kind, and
+ * only one can. What is peculiar to a sequence diagram is added to what every diagram is drawn with,
+ * rather than taking its place.
+ */
 // TODO: Sequence Diagram Specific
 @injectable()
-export class SDPolylineEdgeRouter extends PolylineEdgeRouter {
+export class SDPolylineEdgeRouter extends UmlPolylineEdgeRouter {
     override route(edge: GRoutableElement): RoutedPoint[] {
         const source = edge.source;
         const target = edge.target;
         if (source === undefined || target === undefined) {
             return [];
+        }
+        if (!(target instanceof LifelineElement)) {
+            return super.route(edge);
         }
 
         let sourceAnchor: Point;
@@ -28,12 +40,11 @@ export class SDPolylineEdgeRouter extends PolylineEdgeRouter {
         this.cleanupRoutingPoints(edge, routingPoints, false, false);
         const rpCount = routingPoints !== undefined ? routingPoints.length : 0;
         if (rpCount === 0) {
-            // Use the target center as start anchor reference
-            let startRef = Bounds.center(target.bounds);
-            // TODO: Sequence diagram specific
-            if (target instanceof LifelineElement) {
-                startRef = Point.add(startRef, { x: 0, y: target.headerHeight() / 2 - target.bounds.height / 2 });
-            }
+            // The head of the lifeline rather than its middle, which is the point the edge is aimed at.
+            const startRef = Point.add(Bounds.center(target.bounds), {
+                x: 0,
+                y: target.headerHeight() / 2 - target.bounds.height / 2
+            });
             sourceAnchor = this.getTranslatedAnchor(source, startRef, target.parent, edge, edge.sourceAnchorCorrection);
             // Use the source center as end anchor reference
             const endRef = Bounds.center(source.bounds);

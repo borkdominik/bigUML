@@ -194,7 +194,7 @@ sequenceDiagram
     Client->>Server: CreateNodeOperation
     Server->>Handler: createCommand(operation)
 
-    Note over Handler: Build JSON patch using:<br>- DiagramModelIndex (id→path)<br>- getCreationPath() (parent→child property)<br>- getDefaultValue() (property defaults)<br>- GridSnapper.snap() (position)
+    Note over Handler: Build JSON patch using:<br>- DiagramModelIndex (id→path)<br>- getContainmentProperty() (parent→child property)<br>- getDefaultProperties() (property defaults)<br>- GridSnapper.snap() (position)
 
     Handler-->>Cmd: new ModelPatchCommand(state, patch)
     Server->>Cmd: execute()
@@ -277,14 +277,14 @@ flowchart TD
         CE["GenericCreateEdgeOperationHandler<br>add patch at /diagram/relations/-"]
         DEL["GenericDeleteOperationHandler<br>remove patches (relations first)"]
         UPD["GenericUpdateOperationHandler<br>replace patch at property path"]
-        CB["GenericChangeBoundsOperationHandler<br>replace size/position in metaInfos"]
+        CB["GenericChangeBoundsOperationHandler<br>replace bounds on the element"]
         LE["GenericLabelEditOperationHandler<br>replace /name at element path"]
     end
 
     subgraph "Patch Construction"
         IDX["DiagramModelIndex<br>findSemanticElement(id) → AST node<br>idToPath(id) → JSON path"]
-        CP["getCreationPath(parentType, childType)<br>→ property name (e.g. 'properties')"]
-        DV["getDefaultValue(type)<br>→ default property values"]
+        CP["getContainmentProperty(parentType, childType)<br>→ property name (e.g. 'properties')"]
+        DV["getDefaultProperties(typeId)<br>→ default property values"]
     end
 
     CN --> IDX
@@ -315,7 +315,7 @@ flowchart TD
 Each handler follows the same pattern:
 
 1. Look up the target element via `DiagramModelIndex` to get its JSON path
-2. Use generated helpers (`getCreationPath`, `getDefaultValue`) to determine where and what to write
+2. Use the generated element metadata (`getContainmentProperty`, `getDefaultProperties`) to determine where and what to write
 3. Build a JSON patch array (`[{op: 'add'|'replace'|'remove', path, value}]`)
 4. Return a `ModelPatchCommand` that the server executes
 
@@ -370,8 +370,8 @@ flowchart LR
 | `packages/uml-glsp-server/src/env/jsx/jsx-runtime.ts`                              | Custom JSX runtime producing GModelElements                             |
 | `packages/uml-glsp-server/src/env/jsx/components.ts`                               | Shared JSX components (`GCompartmentElement`, `GLabelElement`, etc.)    |
 | `packages/uml-glsp-server/src/gen/common/model-types/`                             | Generated model type constants (node/edge type IDs)                     |
-| `packages/uml-glsp-server/src/gen/vscode/get-creation-path.ts`                     | Generated parent→child property mappings                                |
-| `packages/uml-glsp-server/src/gen/vscode/get-default-value.ts`                     | Generated default property values per element type                      |
+| `packages/uml-glsp-server/src/gen/vscode/element-metadata.ts`                      | Generated per-element metadata: containment, defaults, bounds, naming   |
+| `packages/uml-glsp-server/src/gen/vscode/diagram-registry.ts`                      | Generated per-diagram registry: type ids, AST conversion, empty model   |
 
 ## Usage Examples
 
@@ -440,7 +440,7 @@ The JSX runtime converts this into a `GNode` tree with nested `GCompartment` and
 
 **Why JSX for GModel construction?** GModel trees are deeply nested (graph → node → compartment → label). Imperative construction with `new GNode()` / `.children.push()` is verbose and hard to read. JSX provides a declarative, HTML-like syntax that mirrors the visual structure. The custom `jsx-runtime.ts` is minimal (~50 lines) and produces standard `GModelElement` instances, so there is no runtime overhead beyond what imperative code would have.
 
-**Why generic operation handlers instead of per-element handlers?** UML has 20+ element types with identical CRUD patterns - create at a path, delete with relations, update a property. Per-element handlers would duplicate this logic. The generic handlers use generated metadata (`getCreationPath`, `getDefaultValue`, model type constants) to handle any element type. Element-specific behavior is encoded in the language definition (`def.ts`) and flows through the generation pipeline, not through handler code.
+**Why generic operation handlers instead of per-element handlers?** UML has 20+ element types with identical CRUD patterns - create at a path, delete with relations, update a property. Per-element handlers would duplicate this logic. The generic handlers use generated metadata (`element-metadata.ts`, `diagram-registry.ts`, model type constants) to handle any element type. Element-specific behavior is encoded in the language definition (`def.ts`) and flows through the generation pipeline, not through handler code.
 
 **Why `DiagramFeatureModule` as an extension point?** Feature packages like property palette and outline need to register action handlers on the GLSP server without modifying the core `UmlDiagramModule`. `DiagramFeatureModule` provides `configureOperationHandlers()` and `configureActionHandlers()` hooks that `BigDiagramModule` calls during DI setup, keeping the extension modular and reversible.
 

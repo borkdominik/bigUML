@@ -15,7 +15,8 @@ import { CompartmentHeader } from './core/index.js';
 
 export class GPrimitiveTypeNode extends GNode {
     override type = ClassDiagramNodeTypes.PRIMITIVE_TYPE;
-    override layout = 'vbox';
+    // Kept in the middle of the box at whatever height it is dragged to, as for a class - see `GClassNode`.
+    override layout = 'uml-centered-vbox';
     name: string = 'UNDEFINED DataType NAME';
 }
 
@@ -43,7 +44,7 @@ export function GPrimitiveTypeNodeElement(props: GPrimitiveTypeNodeElementProps)
         primNode.layoutOptions = { prefWidth: size.width, prefHeight: size.height };
     }
 
-    const header = <CompartmentHeader id={id} name={node.name} stereotype='PrimitiveType' />;
+    const header = <CompartmentHeader id={id} name={node.name} stereotype='primitive' />;
     header.parent = primNode;
     primNode.children.push(header);
 

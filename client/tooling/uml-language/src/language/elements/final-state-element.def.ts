@@ -19,6 +19,8 @@ import { Node, type Visibility } from '../core/element.def.js';
     icon: 'uml-final-state-icon'
 })
 @Glsp.defaults
+@Glsp.defaultSize({ width: 30, height: 30 })
+@Glsp.shape({ resizable: false })
 export class FinalState extends Node {
     name?: string;
     visibility?: Visibility;

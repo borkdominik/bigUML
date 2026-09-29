@@ -18,7 +18,8 @@ import { GSlotNodeElement } from './slot.element.js';
 
 export class GInstanceSpecificationNode extends GNode {
     override type = ClassDiagramNodeTypes.INSTANCE_SPECIFICATION;
-    override layout = 'vbox';
+    // Kept in the middle of the box at whatever height it is dragged to, as for a class - see `GClassNode`.
+    override layout = 'uml-centered-vbox';
     name: string = 'UNDEFINED CLASS NAME';
 }
 
@@ -67,7 +68,7 @@ export function createInstanceSpecificationElement(
 
     const slotsSection =
         ctx.node.slots?.length > 0 ? (
-            <SectionCompartment id={ctx.node.__id + '_count_context_1'} dividerText='Slots'>
+            <SectionCompartment id={ctx.node.__id + '_count_context_1'} divider>
                 {ctx.node.slots.map(s => (
                     <GSlotNodeElement node={s} />
                 ))}

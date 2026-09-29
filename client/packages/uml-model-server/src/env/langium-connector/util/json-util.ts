@@ -6,38 +6,38 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-type JSONValue = string | number | boolean | null | JSONObject | JSONArray;
-interface JSONObject {
-    [key: string]: JSONValue;
-}
-type JSONArray = JSONValue[];
-type JSONPathNode = {
-    value: JSONValue;
-    path: string;
-};
 
-export function findNodes(json: JSONValue, expression: string, value?: any): Array<JSONPathNode> {
-    const allElements: any = [];
-    collect(json, '$', allElements);
-    return allElements.filter((element: any) => {
-        if (typeof element.value === 'object' && Object.keys(element.value).includes(expression)) {
-            return value ? element.value[expression] === value : true;
+/** A value inside a JSON tree and where it sits, as a JSONPath expression - `$.diagram.entities[2]`. */
+export interface JsonPathNode {
+    value: unknown;
+    path: string;
+}
+
+/**
+ * Every object in the tree that carries the given property - and, where a value is given, carries it
+ * with that value.
+ */
+export function findNodes(json: unknown, property: string, value?: unknown): JsonPathNode[] {
+    const nodes: JsonPathNode[] = [];
+    collect(json, '$', nodes);
+    return nodes.filter(node => {
+        if (typeof node.value !== 'object' || node.value === null || !(property in node.value)) {
+            return false;
         }
-        return false;
+        return value === undefined ? true : (node.value as Record<string, unknown>)[property] === value;
     });
 }
 
-export function collect(json: JSONValue, currentPath: string, pathNodes: Array<JSONPathNode>) {
-    if (json !== undefined && json !== null && typeof json === 'object') {
+/** Every value in the tree, depth first, each with its path. */
+export function collect(json: unknown, currentPath: string, nodes: JsonPathNode[]): void {
+    if (typeof json === 'object' && json !== null) {
         if (Array.isArray(json)) {
-            json.forEach((subJson, index) => {
-                collect(subJson, currentPath + '[' + index + ']', pathNodes);
-            });
+            json.forEach((element, index) => collect(element, `${currentPath}[${index}]`, nodes));
         } else {
-            Object.keys(json).forEach(key => {
-                collect(json[key], currentPath + '.' + key, pathNodes);
-            });
+            for (const [key, child] of Object.entries(json)) {
+                collect(child, `${currentPath}.${key}`, nodes);
+            }
         }
     }
-    pathNodes.push({ path: currentPath, value: json });
+    nodes.push({ path: currentPath, value: json });
 }

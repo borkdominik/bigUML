@@ -7,56 +7,64 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 /** @jsx svg */
-import {
-    EdgeRouterRegistry,
-    type GEdge,
-    getSubType,
-    GLabelView,
-    type Point,
-    type RenderingContext,
-    type RoutedPoint,
-    setAttr,
-    svg
-} from '@eclipse-glsp/client';
+import { EdgeRouterRegistry, getSubType, GLabelView, type Point, type RenderingContext, setAttr, svg } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 import { type VNode } from 'snabbdom';
-import { type GEditableLabel } from '../../views/uml-label.view.js';
+import { messageArrowGeometry } from './message-arrow-placement.js';
+import { type GMessageArrowLabel } from './message.element.js';
+
+/**
+ * The label of a message on a communication diagram, written beside the link with a short arrow
+ * showing which way the message runs.
+ *
+ * A communication diagram puts the messages *beside* the link rather than on it - the link is an
+ * association between two lifelines and carries no direction of its own, while several messages can
+ * run along it in either direction, each with its own sequence number. So the arrow belongs to the
+ * label, not to the edge, which is why it is drawn here.
+ */
+
+/** How far off the arrow the message text is written. */
+const TEXT_GAP = 10;
+
+/** How far the text is pushed to one side before it is hung off that edge rather than centred. */
+const TEXT_CORNER = 0.5;
+
+/** Where the text goes when the link cannot be measured: above the arrow, as for a horizontal link. */
+const FALLBACK_DIRECTION: Point = { x: 0, y: -1 };
+
+/**
+ * The arrow, pointing right, drawn about the label's own origin - which the placement has already put
+ * a fixed clearance off the link - so that turning it to follow the link needs no further translation.
+ * Stroked rather than filled, with an open head, which is how UML draws a message arrow.
+ */
+const ARROW_PATH = 'M -12.5,0 L 12.5,0 M 5.5,-6 L 12.5,0 L 5.5,6';
 
 @injectable()
 export class MessageArrowLabelView extends GLabelView {
     @inject(EdgeRouterRegistry) edgeRouterRegistry: EdgeRouterRegistry;
 
-    override render(labelNode: Readonly<GEditableLabel>, _context: RenderingContext): VNode {
-        let rotation = 0;
-        if (labelNode.edgePlacement !== undefined) {
-            const parent = labelNode.parent as GEdge;
-            const segments = this.edgeRouterRegistry.route(parent);
-            const router = this.edgeRouterRegistry.get(parent.routerKind);
-
-            const position = router.pointAt(parent, labelNode.edgePlacement.position);
-            if (position !== undefined) {
-                rotation = this.getRotation(position, segments);
-            }
-        }
+    override render(labelNode: Readonly<GMessageArrowLabel>, _context: RenderingContext): VNode {
+        // Only the arrow turns: the text is written upright whichever way the link runs, because a
+        // sequence number read sideways is not worth the tidiness. It is written on the far side of
+        // the arrow - away from the link, along the same direction the placement moved the arrow -
+        // since between the two it would be laid back over the link it labels.
+        const geometry = messageArrowGeometry(labelNode, this.edgeRouterRegistry);
+        const away = geometry?.away ?? FALLBACK_DIRECTION;
 
         const vnode: any = (
             <g class-selected={labelNode.selected} class-sprotty-label-node={true}>
-                <defs>
-                    <g id='arrow-right'>
-                        <path d='M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z' />
-                    </g>
-                </defs>
-
-                <text class-sprotty-label={true} x={0} y={-8}>
+                <path class-uml-message-arrow={true} d={ARROW_PATH} transform={`rotate(${geometry?.angle ?? 0})`} />
+                {/* Hung off whichever edge of the text faces the link, so that a long message name
+                    grows away from the link rather than back across it. */}
+                <text
+                    class-sprotty-label={true}
+                    x={away.x * TEXT_GAP}
+                    y={away.y * TEXT_GAP}
+                    style-text-anchor={horizontalAnchor(away.x)}
+                    style-dominant-baseline={verticalAnchor(away.y)}
+                >
                     {labelNode.text}
                 </text>
-
-                <use
-                    href='#arrow-right'
-                    style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
-                    transform={`translate(-12) rotate(${rotation})`}
-                    transform-origin='12 12'
-                />
             </g>
         );
 
@@ -66,17 +74,20 @@ export class MessageArrowLabelView extends GLabelView {
         }
         return vnode;
     }
+}
 
-    private getRotation(point: Point, segments: RoutedPoint[]): number {
-        const sameX = segments.filter(segment => Math.abs(segment.x - point.x) < 0.01);
-        const sameY = segments.filter(segment => Math.abs(segment.y - point.y) < 0.01);
-
-        if (sameX.length === 2) {
-            return sameX[0].y > sameX[1].y ? -90 : 90;
-        } else if (sameY.length === 2) {
-            return sameY[0].x > sameY[1].x ? -180 : 0;
-        } else {
-            return 0;
-        }
+/** Written from the arrow outwards, or centred over it where the link runs too flat to say. */
+function horizontalAnchor(x: number): string {
+    if (x > TEXT_CORNER) {
+        return 'start';
     }
+    return x < -TEXT_CORNER ? 'end' : 'middle';
+}
+
+/** The same, for a link running too steeply for the text to be written above or below its arrow. */
+function verticalAnchor(y: number): string {
+    if (y > TEXT_CORNER) {
+        return 'hanging';
+    }
+    return y < -TEXT_CORNER ? 'auto' : 'middle';
 }

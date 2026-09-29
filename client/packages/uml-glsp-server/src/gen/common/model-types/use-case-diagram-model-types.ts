@@ -16,6 +16,9 @@ export namespace UseCaseDiagramNodeTypes {
     export const USE_CASE = representationTypeId('UseCase', DefaultTypes.NODE, 'UseCase');
     export const ACTOR = representationTypeId('UseCase', DefaultTypes.NODE, 'Actor');
     export const SUBJECT = representationTypeId('UseCase', DefaultTypes.NODE, 'Subject');
+    export const NOTE = representationTypeId('UseCase', DefaultTypes.NODE, 'Note');
+    export const TEXT_LABEL = representationTypeId('UseCase', DefaultTypes.NODE, 'TextLabel');
+    export const EDGE_ANCHOR = representationTypeId('UseCase', DefaultTypes.NODE, 'EdgeAnchor');
 }
 
 export namespace UseCaseDiagramEdgeTypes {
@@ -23,6 +26,7 @@ export namespace UseCaseDiagramEdgeTypes {
     export const EXTEND = representationTypeId('UseCase', DefaultTypes.EDGE, 'Extend');
     export const ASSOCIATION = representationTypeId('UseCase', DefaultTypes.EDGE, 'Association');
     export const GENERALIZATION = representationTypeId('UseCase', DefaultTypes.EDGE, 'Generalization');
+    export const GENERIC_EDGE = representationTypeId('UseCase', DefaultTypes.EDGE, 'GenericEdge');
 }
 
 export namespace UseCaseDiagramModelTypes {
@@ -30,12 +34,16 @@ export namespace UseCaseDiagramModelTypes {
     export const USE_CASE = UseCaseDiagramNodeTypes.USE_CASE;
     export const ACTOR = UseCaseDiagramNodeTypes.ACTOR;
     export const SUBJECT = UseCaseDiagramNodeTypes.SUBJECT;
+    export const NOTE = UseCaseDiagramNodeTypes.NOTE;
+    export const TEXT_LABEL = UseCaseDiagramNodeTypes.TEXT_LABEL;
+    export const EDGE_ANCHOR = UseCaseDiagramNodeTypes.EDGE_ANCHOR;
 
     // re-export edges
     export const INCLUDE = UseCaseDiagramEdgeTypes.INCLUDE;
     export const EXTEND = UseCaseDiagramEdgeTypes.EXTEND;
     export const ASSOCIATION = UseCaseDiagramEdgeTypes.ASSOCIATION;
     export const GENERALIZATION = UseCaseDiagramEdgeTypes.GENERALIZATION;
+    export const GENERIC_EDGE = UseCaseDiagramEdgeTypes.GENERIC_EDGE;
 }
 
 export namespace UseCaseAstTypes {
@@ -43,10 +51,14 @@ export namespace UseCaseAstTypes {
         UseCase: UseCaseDiagramModelTypes.USE_CASE,
         Actor: UseCaseDiagramModelTypes.ACTOR,
         Subject: UseCaseDiagramModelTypes.SUBJECT,
+        Note: UseCaseDiagramModelTypes.NOTE,
+        TextLabel: UseCaseDiagramModelTypes.TEXT_LABEL,
+        EdgeAnchor: UseCaseDiagramModelTypes.EDGE_ANCHOR,
         Include: UseCaseDiagramModelTypes.INCLUDE,
         Extend: UseCaseDiagramModelTypes.EXTEND,
         Association: UseCaseDiagramModelTypes.ASSOCIATION,
-        Generalization: UseCaseDiagramModelTypes.GENERALIZATION
+        Generalization: UseCaseDiagramModelTypes.GENERALIZATION,
+        GenericEdge: UseCaseDiagramModelTypes.GENERIC_EDGE
     };
 
     export function convertToAst(elementId: string): string {

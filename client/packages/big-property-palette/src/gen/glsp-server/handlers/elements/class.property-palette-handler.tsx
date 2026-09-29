@@ -43,6 +43,11 @@ export namespace ClassPropertyPaletteHandler {
                                 elementId: e.__id,
                                 label: e.name ?? '(unnamed property)',
                                 name: e.name ?? '',
+                                fields: [
+                                    { propertyId: 'name', label: 'Name', value: e.name ?? '' },
+                                    { propertyId: 'propertyType', label: 'Property Type', value: e.propertyType ?? '' },
+                                    { propertyId: 'multiplicity', label: 'Multiplicity', value: e.multiplicity ?? '' }
+                                ],
                                 deleteActions: [DeleteElementOperation.create([e.__id])]
                             }))}
                         creates={[

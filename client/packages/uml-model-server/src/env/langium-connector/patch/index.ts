@@ -6,5 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+export * from './affected-documents.js';
+export * from './json-patch-applier.js';
 export * from './patch-manager.js';
-export * from './patch-manager.util.js';
+export * from './undo-redo-history.js';

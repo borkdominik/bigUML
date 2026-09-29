@@ -9,4 +9,5 @@
 export * from './default-diagram-language-metadata.js';
 export * from './diagram-language-metadata.js';
 export * from './diagram-model-state.js';
+export * from './diagram-services.js';
 export * from './handler/index.js';

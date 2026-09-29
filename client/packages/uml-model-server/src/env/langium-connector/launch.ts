@@ -1,6 +1,5 @@
 /**********************************************************************************
  * Copyright (c) 2026 borkdominik and others.
- * Copyright (c) 2023 CrossBreeze.
  *
  * This program and the accompanying materials are made available under the
  * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
@@ -10,89 +9,65 @@
 import { loggerFactory } from '@borkdominik-biguml/big-common';
 import * as net from 'net';
 import * as rpc from 'vscode-jsonrpc/node.js';
-import { type URI } from 'vscode-uri';
+import { type AddedSharedModelServices } from './model-module.js';
 import { ModelServer } from './model-server.js';
 
 const JSON_SERVER_PORT = 5999;
 const JSON_SERVER_HOST = 'localhost';
 
-const currentConnections: rpc.MessageConnection[] = [];
-
 const logger = loggerFactory('ModelServerLaunch');
 
+/** What the model server needs of the language services: the model service to answer requests with. */
+export interface ModelServerContext {
+    shared: Pick<AddedSharedModelServices, 'model'>;
+}
+
 /**
- * Creates a socket-based RCP model server that acts as a facade to the Langium-based semantic model index (documents).
+ * Serves the model over JSON-RPC on a socket, one {@link ModelServer} per connected client.
  *
- * @param services language services
- * @returns a promise that is resolved as soon as the server is shut down or rejects if an error occurs
+ * @returns a promise that resolves once the server is shut down, or rejects if it fails
  */
-export function startModelServer(services: any, _workspaceFolder: URI): Promise<void> {
-    const netServer = net.createServer(socket => createClientConnection(socket, services));
+export function startModelServer(services: ModelServerContext): Promise<void> {
+    const connections: rpc.MessageConnection[] = [];
+    const close = (netServer: net.Server): void => {
+        connections.forEach(connection => connection.dispose());
+        netServer.close();
+    };
+
+    const netServer = net.createServer(socket => {
+        const connection = createClientConnection(socket, services);
+        connections.push(connection);
+    });
     netServer.listen(JSON_SERVER_PORT, JSON_SERVER_HOST);
     netServer.on('listening', () => {
         const addressInfo = netServer.address();
         if (!addressInfo) {
             logger.error('Could not resolve JSON Server address info. Shutting down.');
             close(netServer);
-            return;
         } else if (typeof addressInfo === 'string') {
             logger.error(`JSON Server is unexpectedly listening to pipe or domain socket "${addressInfo}". Shutting down.`);
             close(netServer);
-            return;
+        } else {
+            logger.log(`Startup completed. Accepting requests on port:${addressInfo.port}`);
         }
-        logger.log(`Startup completed. Accepting requests on port:${addressInfo.port}`);
     });
-    netServer.on('error', err => {
-        logger.error('JSON server experienced error', err);
+    netServer.on('error', error => {
+        logger.error('JSON server experienced error', error);
         close(netServer);
     });
     return new Promise((resolve, reject) => {
-        netServer.on('close', () => resolve(undefined));
+        netServer.on('close', () => resolve());
         netServer.on('error', error => reject(error));
     });
 }
 
-/**
- * Create a new connection for an incoming client on the given socket. Each client gets their own connection and model server instance.
- *
- * @param socket socket connection
- * @param services language services
- * @returns a promise that is resolved as soon as the connection is closed or rejects if an error occurs
- */
-async function createClientConnection(socket: net.Socket, services: any): Promise<void> {
+function createClientConnection(socket: net.Socket, services: ModelServerContext): rpc.MessageConnection {
     logger.log(`Starting model server connection for client: '${socket.localAddress}'`);
-    const connection = createConnection(socket);
-    currentConnections.push(connection);
-
+    const connection = rpc.createMessageConnection(new rpc.SocketMessageReader(socket), new rpc.SocketMessageWriter(socket), console);
     const modelServer = new ModelServer(connection, services.shared.model.ModelService);
     connection.onDispose(() => modelServer.dispose());
     socket.on('close', () => modelServer.dispose());
-
     connection.listen();
     logger.log(`Connecting to client: '${socket.localAddress}'`);
-
-    return new Promise((resolve, rejects) => {
-        connection.onClose(() => resolve(undefined));
-        connection.onError(error => rejects(error));
-    });
-}
-
-/**
- * Creates an RPC-message connection for the given socket.
- *
- * @param socket socket
- * @returns message connection
- */
-function createConnection(socket: net.Socket): rpc.MessageConnection {
-    return rpc.createMessageConnection(new rpc.SocketMessageReader(socket), new rpc.SocketMessageWriter(socket), console);
-}
-
-/**
- * Closes the server.
- *
- * @param netServer server to be closed
- */
-function close(netServer: net.Server): void {
-    currentConnections.forEach(connection => connection.dispose());
-    netServer.close();
+    return connection;
 }

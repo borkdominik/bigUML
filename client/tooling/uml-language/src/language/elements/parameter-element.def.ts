@@ -7,12 +7,11 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { PropertyPalette } from '@borkdominik-biguml/big-property-palette/generator';
 import { Glsp } from '@borkdominik-biguml/uml-glsp-server/generator';
 import { Language } from '@borkdominik-biguml/uml-language-tooling';
 import 'reflect-metadata';
 import { Unbounded, type Visibility } from '../core/element.def.js';
-import type { DataTypeReference } from './data-type-element.def.js';
+import type { Classifier } from './property-element.def.js';
 
 // @ts-nocheck
 
@@ -22,7 +21,8 @@ export type EffectType = 'CREATE' | 'READ' | 'UPDATE' | 'DELETE';
 @Glsp.noBounds
 @Glsp.defaults
 export class Parameter extends Unbounded {
-    name: string;
+    // UML lets a parameter go unnamed; the operation's signature then shows only its type.
+    name?: string;
     isException?: boolean;
     isStream?: boolean;
     isOrdered?: boolean;
@@ -30,8 +30,8 @@ export class Parameter extends Unbounded {
     direction?: ParameterDirection;
     effect?: EffectType;
     visibility?: Visibility;
-    @PropertyPalette.dynamic('DataType')
-    @Language.reference
-    parameterType?: DataTypeReference;
-    multiplicity?: string;
+    // A type of the model or a typed name, the way a property's type is - see `Property.propertyType`.
+    @Language.text parameterType?: string;
+    @Language.reference parameterTypeRef?: Classifier;
+    @Language.multiplicity multiplicity?: string;
 }

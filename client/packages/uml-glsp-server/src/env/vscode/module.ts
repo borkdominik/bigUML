@@ -56,7 +56,7 @@ export class UmlGLSPServer extends DefaultGLSPServer {
     }
 
     protected override handleProcessError(message: ActionMessage, reason: any): void | PromiseLike<void> {
-        let errorMsg = `Could not process action: '${message.action.kind}`;
+        let errorMsg = `Could not process action: '${message.action.kind}'`;
         this.logger.error(errorMsg);
         this.logger.error(reason);
         let details: string | undefined = reason?.toString?.();

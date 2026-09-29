@@ -12,9 +12,13 @@ import 'reflect-metadata';
 import type { Actor } from '../elements/actor-element.def.js';
 import type { Class } from '../elements/class-element.def.js';
 import type { InformationFlow } from '../elements/information-flow-element.def.js';
+import type { Note } from '../elements/note-element.def.js';
+import type { TextLabel } from '../elements/text-label-element.def.js';
 import type { Operation } from '../elements/operation-element.def.js';
 import type { Parameter } from '../elements/parameter-element.def.js';
 import type { Property } from '../elements/property-element.def.js';
+import type { GenericEdge } from '../elements/generic-edge-element.def.js';
+import type { EdgeAnchor } from '../elements/edge-anchor-element.def.js';
 
 // @ts-nocheck
 
@@ -27,6 +31,6 @@ export class InformationFlowDiagram {
 
 type InformationFlowDiagramElements = InformationFlowDiagramNodes | InformationFlowDiagramEdges;
 
-type InformationFlowDiagramNodes = Actor | Class | Property | Operation | Parameter;
+type InformationFlowDiagramNodes = Actor | Class | Property | Operation | Parameter | Note | TextLabel | EdgeAnchor;
 
-type InformationFlowDiagramEdges = InformationFlow;
+type InformationFlowDiagramEdges = InformationFlow | GenericEdge;

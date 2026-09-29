@@ -10,7 +10,7 @@ import {
     CursorCSS,
     cursorFeedbackAction,
     EdgeCreationTool,
-    EdgeCreationToolMouseListener,
+    type EdgeCreationToolMouseListener,
     EnableDefaultToolsAction,
     FeedbackEdgeEndMovingMouseListener,
     findParentByFeature,
@@ -26,6 +26,7 @@ import {
 } from '@eclipse-glsp/client/lib/features/tools/edge-creation/dangling-edge-feedback.js';
 import { type Action, CreateEdgeOperation, type Point } from '@eclipse-glsp/protocol';
 import { inject, injectable, optional } from 'inversify';
+import { UmlEdgeCreationToolMouseListener } from '../../../../../features/tools/edge-creation/uml-edge-creation-tool-mouse-listener.js';
 import { sequence } from '../../elements/index.js';
 import { isSequence } from '../../elements/interacton.model.js';
 import {
@@ -76,7 +77,9 @@ export class SDEdgeCreationTool extends EdgeCreationTool {
 }
 
 @injectable()
-export class SDEdgeCreationToolMouseListener extends EdgeCreationToolMouseListener {
+// Extends the generic UML listener so that edges can be drawn to other edges here too - this tool is the one
+// bound for every diagram, see `umlSequenceDiagramModule`.
+export class SDEdgeCreationToolMouseListener extends UmlEdgeCreationToolMouseListener {
     protected sourcePosition?: Point;
     protected targetPosition?: Point;
 

@@ -10,6 +10,7 @@
 // classmatcher.ts
 
 import type { ClassDiagram, ClassDiagramEdges, ClassDiagramNodes } from '@borkdominik-biguml/uml-model-server/grammar';
+import { typeNameOf } from '@borkdominik-biguml/uml-glsp-server/vscode';
 
 import { EDITABLE_SPECS } from '../../common/search-filter-spec.js';
 import type { SearchResult } from '../../common/searchresult.js';
@@ -106,7 +107,6 @@ export class ClassDiagramMatcher implements IMatcher {
 
             switch (type) {
                 case 'Class':
-                case 'AbstractClass':
                 case 'Interface':
                 case 'DataType':
                 case 'Enumeration':
@@ -123,7 +123,7 @@ export class ClassDiagramMatcher implements IMatcher {
                         type,
                         name,
                         parentName,
-                        details: this.buildTypedDetails(element.propertyType?.$refText, parentName),
+                        details: this.buildTypedDetails(typeNameOf(element, 'propertyType'), parentName),
                         properties
                     });
                     break;
@@ -145,7 +145,7 @@ export class ClassDiagramMatcher implements IMatcher {
                         type,
                         name,
                         parentName,
-                        details: this.buildTypedDetails(element.parameterType?.$refText, parentName),
+                        details: this.buildTypedDetails(typeNameOf(element, 'parameterType'), parentName),
                         properties
                     });
                     break;
@@ -186,9 +186,9 @@ export class ClassDiagramMatcher implements IMatcher {
             const sourceId = relation.source?.ref?.__id;
             const targetId = relation.target?.ref?.__id;
 
-            const sourceName = relation.source?.ref?.name ?? relation.source?.$refText ?? idToName.get(sourceId ?? '') ?? '(unknown)';
+            const sourceName = this.nameOf(relation.source?.ref) ?? relation.source?.$refText ?? idToName.get(sourceId ?? '') ?? '(unknown)';
 
-            const targetName = relation.target?.ref?.name ?? relation.target?.$refText ?? idToName.get(targetId ?? '') ?? '(unknown)';
+            const targetName = this.nameOf(relation.target?.ref) ?? relation.target?.$refText ?? idToName.get(targetId ?? '') ?? '(unknown)';
             const relationName =
                 'name' in relation && relation.name ? `${relation.name}: ${sourceName} → ${targetName}` : `${sourceName} → ${targetName}`;
 
@@ -202,6 +202,11 @@ export class ClassDiagramMatcher implements IMatcher {
                 targetId
             });
         }
+    }
+
+    private nameOf(node: object | undefined): string | undefined {
+        // Not every node is named - a Note, for one, only has a body.
+        return node && 'name' in node && typeof node.name === 'string' ? node.name : undefined;
     }
 
     private extractProperties(element: any): Record<string, string> | undefined {

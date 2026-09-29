@@ -1,70 +1,520 @@
 {
 	"diagram": {
 		"__type": "StateMachineDiagram",
-		"__id": "diagram_a11bdf81-edaf-40f7-a53f-3732a885869a",
+		"__id": "diagram_b261fda7-bd2f-4eac-9698-8702bbcb1ded",
 		"diagramType": "STATE_MACHINE",
 		"entities": [
 			{
-				"__type": "Region",
-				"__id": "Region_af67d9fd-36aa-4b79-9013-d3a3c45119a4",
-				"name": "NewRegion1",
+				"__type": "InitialState",
+				"__id": "InitialState_d5bffe19-aa75-45de-8ddd-dfa49c7c3c83",
+				"name": "Initial",
 				"visibility": "PUBLIC",
-				"subvertices": [],
-				"transitions": []
+				"bounds": {
+					"__type": "Bounds",
+					"x": 40,
+					"y": 300,
+					"width": 30,
+					"height": 30
+				}
 			},
 			{
-				"__type": "Choice",
-				"__id": "Choice_ba8b2673-9854-492e-b63d-722cd02bc7f7",
-				"name": "NewChoice1",
-				"visibility": "PUBLIC"
+				"__type": "State",
+				"__id": "State_c225c646-19d1-4e07-be4b-a637ff022fde",
+				"name": "A",
+				"parts": [
+					{
+						"__type": "StatePart",
+						"__id": "StatePart_d000bb37-b024-4e38-9717-65d2920a280b",
+						"trigger": "entry",
+						"effect": "v6"
+					},
+					{
+						"__type": "StatePart",
+						"__id": "StatePart_074d7e75-9b04-41ae-baeb-826031713b0b",
+						"trigger": "e33",
+						"effect": "b6"
+					}
+				],
+				"visibility": "PUBLIC",
+				"regions": [
+					{
+						"__type": "Region",
+						"__id": "Region_faf40c13-b308-4d13-926c-880e2549a5e7",
+						"name": "SA1",
+						"visibility": "PUBLIC",
+						"subvertices": [
+							{
+								"__type": "InitialState",
+								"__id": "InitialState_51f6a2a2-21cf-4fd2-9228-ef649157bfc6",
+								"name": "Initial SA1",
+								"visibility": "PUBLIC",
+								"bounds": {
+									"__type": "Bounds",
+									"x": 158,
+									"y": 250,
+									"width": 30,
+									"height": 30
+								}
+							},
+							{
+								"__type": "State",
+								"__id": "State_f3608fc1-dd4d-4da8-bbe1-dfd7175633b2",
+								"name": "B",
+								"parts": [
+									{
+										"__type": "StatePart",
+										"__id": "StatePart_b0512900-2523-4075-b75f-fea0495013a8",
+										"trigger": "entry",
+										"effect": "a2"
+									},
+									{
+										"__type": "StatePart",
+										"__id": "StatePart_c29ddee8-5319-43e7-a19b-f725a5ced64a",
+										"trigger": "do",
+										"effect": "b6"
+									}
+								],
+								"visibility": "PUBLIC",
+								"regions": [],
+								"bounds": {
+									"__type": "Bounds",
+									"x": 241,
+									"y": 221,
+									"width": 150,
+									"height": 81.5
+								}
+							},
+							{
+								"__type": "State",
+								"__id": "State_4e5e5739-63a3-4620-b8c6-c4efca02d310",
+								"name": "C",
+								"parts": [
+									{
+										"__type": "StatePart",
+										"__id": "StatePart_f8c26b2b-76a7-4428-9858-c92c3416dd1b",
+										"trigger": "entry",
+										"effect": "v4"
+									}
+								],
+								"visibility": "PUBLIC",
+								"regions": [],
+								"bounds": {
+									"__type": "Bounds",
+									"x": 499,
+									"y": 215,
+									"width": 150,
+									"height": 80
+								}
+							},
+							{
+								"__type": "FinalState",
+								"__id": "FinalState_1b3e6af6-fb01-4319-aa76-69b2dea51fac",
+								"name": "Final SA1",
+								"visibility": "PUBLIC",
+								"bounds": {
+									"__type": "Bounds",
+									"x": 562,
+									"y": 78,
+									"width": 30,
+									"height": 30
+								}
+							}
+						],
+						"transitions": []
+					},
+					{
+						"__type": "Region",
+						"__id": "Region_c95c54cc-aca0-4528-a73b-cba29c34d02f",
+						"name": "SA2",
+						"visibility": "PUBLIC",
+						"subvertices": [
+							{
+								"__type": "InitialState",
+								"__id": "InitialState_33e37a62-3004-443e-9dbe-aa70e7041979",
+								"name": "Initial SA2",
+								"visibility": "PUBLIC",
+								"bounds": {
+									"__type": "Bounds",
+									"x": 149,
+									"y": 552,
+									"width": 30,
+									"height": 30
+								}
+							},
+							{
+								"__type": "State",
+								"__id": "State_ebdfe5b2-1a63-42df-8437-f3496488e22d",
+								"name": "D",
+								"parts": [
+									{
+										"__type": "StatePart",
+										"__id": "StatePart_1cb7ec10-c76e-4dc8-9ee4-057a6e488e21",
+										"trigger": "exit",
+										"effect": "h6"
+									},
+									{
+										"__type": "StatePart",
+										"__id": "StatePart_e125a4be-574e-4f02-a3cb-bdb00161c5f3",
+										"trigger": "f3",
+										"guard": "t5",
+										"effect": "a"
+									}
+								],
+								"visibility": "PUBLIC",
+								"regions": [],
+								"bounds": {
+									"__type": "Bounds",
+									"x": 225,
+									"y": 501,
+									"width": 150,
+									"height": 110
+								}
+							},
+							{
+								"__type": "FinalState",
+								"__id": "FinalState_57adf1ff-c2d6-445c-aff4-973a006e8969",
+								"name": "Final SA2",
+								"visibility": "PUBLIC",
+								"bounds": {
+									"__type": "Bounds",
+									"x": 582,
+									"y": 547,
+									"width": 30,
+									"height": 30
+								}
+							}
+						],
+						"transitions": []
+					}
+				],
+				"regionHeight": 270,
+				"bounds": {
+					"__type": "Bounds",
+					"x": 120,
+					"y": 60,
+					"width": 720,
+					"height": 620
+				}
+			},
+			{
+				"__type": "State",
+				"__id": "State_150be5ac-c54b-4047-9a0f-1731b0b6b6b3",
+				"name": "E",
+				"parts": [],
+				"visibility": "PUBLIC",
+				"regions": [],
+				"bounds": {
+					"__type": "Bounds",
+					"x": 956,
+					"y": 307,
+					"width": 150,
+					"height": 120
+				}
+			},
+			{
+				"__type": "State",
+				"__id": "State_4d7d1036-30b4-41de-8b05-4a61166eab59",
+				"name": "F",
+				"parts": [
+					{
+						"__type": "StatePart",
+						"__id": "StatePart_ebcc6ec7-f64b-4c0c-b3f4-49dd203f8f64",
+						"trigger": "f4",
+						"effect": "g++"
+					}
+				],
+				"visibility": "PUBLIC",
+				"regions": [],
+				"bounds": {
+					"__type": "Bounds",
+					"x": 980,
+					"y": 601,
+					"width": 150,
+					"height": 100
+				}
+			},
+			{
+				"__type": "FinalState",
+				"__id": "FinalState_2a58faed-4533-4b56-ab70-c957ac40f940",
+				"name": "Final",
+				"visibility": "PUBLIC",
+				"bounds": {
+					"__type": "Bounds",
+					"x": 1258,
+					"y": 644,
+					"width": 30,
+					"height": 30
+				}
 			}
 		],
-		"relations": []
-	},
-	"metaInfos": [
-		{
-			"__type": "Size",
-			"__id": "size_Region_af67d9fd-36aa-4b79-9013-d3a3c45119a4",
-			"height": 30,
-			"width": 80,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Region_af67d9fd-36aa-4b79-9013-d3a3c45119a4"
+		"relations": [
+			{
+				"__type": "Transition",
+				"__id": "Transition_57a98aa0-8d81-4463-a9df-aa357ca5d83a",
+				"visibility": "PUBLIC",
+				"kind": "EXTERNAL",
+				"source": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "InitialState_d5bffe19-aa75-45de-8ddd-dfa49c7c3c83"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "State_c225c646-19d1-4e07-be4b-a637ff022fde"
+				},
+				"routingPoints": []
+			},
+			{
+				"__type": "Transition",
+				"__id": "Transition_dbce7524-be83-4a4a-a89e-99be63141a3b",
+				"effect": "g5",
+				"visibility": "PUBLIC",
+				"kind": "EXTERNAL",
+				"source": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "InitialState_51f6a2a2-21cf-4fd2-9228-ef649157bfc6"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "State_f3608fc1-dd4d-4da8-bbe1-dfd7175633b2"
+				},
+				"routingPoints": []
+			},
+			{
+				"__type": "Transition",
+				"__id": "Transition_8dacb48d-def1-44e6-81a3-5a0e234ac6fa",
+				"trigger": "h7",
+				"visibility": "PUBLIC",
+				"kind": "EXTERNAL",
+				"source": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "State_f3608fc1-dd4d-4da8-bbe1-dfd7175633b2"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "State_4e5e5739-63a3-4620-b8c6-c4efca02d310"
+				},
+				"routingPoints": [
+					{
+						"__type": "Point",
+						"x": 589,
+						"y": 448.04
+					}
+				]
+			},
+			{
+				"__type": "Transition",
+				"__id": "Transition_faa2487e-cc49-4a41-bd1d-33e68179d7bb",
+				"trigger": "gt3",
+				"effect": "hz",
+				"visibility": "PUBLIC",
+				"kind": "EXTERNAL",
+				"source": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "State_4e5e5739-63a3-4620-b8c6-c4efca02d310"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "State_f3608fc1-dd4d-4da8-bbe1-dfd7175633b2"
+				},
+				"routingPoints": [
+					{
+						"__type": "Point",
+						"x": 571,
+						"y": 351.04
+					}
+				]
+			},
+			{
+				"__type": "Transition",
+				"__id": "Transition_7df6d45f-f3ea-4fd7-8774-2bfb6fdb43f1",
+				"trigger": "b2",
+				"guard": "xu",
+				"visibility": "PUBLIC",
+				"kind": "EXTERNAL",
+				"source": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "State_4e5e5739-63a3-4620-b8c6-c4efca02d310"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "FinalState_1b3e6af6-fb01-4319-aa76-69b2dea51fac"
+				},
+				"routingPoints": []
+			},
+			{
+				"__type": "Transition",
+				"__id": "Transition_c0444506-8d11-4b2d-842b-53d4c193d17f",
+				"trigger": "f2",
+				"visibility": "PUBLIC",
+				"kind": "EXTERNAL",
+				"source": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "State_4e5e5739-63a3-4620-b8c6-c4efca02d310"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "State_150be5ac-c54b-4047-9a0f-1731b0b6b6b3"
+				},
+				"routingPoints": []
+			},
+			{
+				"__type": "Transition",
+				"__id": "Transition_9f1c3893-d7d7-4eff-ac61-7f339f34cfd0",
+				"trigger": "z1",
+				"visibility": "PUBLIC",
+				"kind": "EXTERNAL",
+				"source": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "State_c225c646-19d1-4e07-be4b-a637ff022fde"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "State_150be5ac-c54b-4047-9a0f-1731b0b6b6b3"
+				},
+				"routingPoints": []
+			},
+			{
+				"__type": "Transition",
+				"__id": "Transition_75229d79-585f-49f7-8c03-4ffeae865839",
+				"visibility": "PUBLIC",
+				"kind": "EXTERNAL",
+				"source": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "State_c225c646-19d1-4e07-be4b-a637ff022fde"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "State_150be5ac-c54b-4047-9a0f-1731b0b6b6b3"
+				},
+				"routingPoints": []
+			},
+			{
+				"__type": "Transition",
+				"__id": "Transition_7a355230-35f2-46bd-9a8a-fdb2bf486ad1",
+				"trigger": "k1",
+				"guard": "m3",
+				"visibility": "PUBLIC",
+				"kind": "EXTERNAL",
+				"source": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "State_ebdfe5b2-1a63-42df-8437-f3496488e22d"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "State_150be5ac-c54b-4047-9a0f-1731b0b6b6b3"
+				},
+				"routingPoints": []
+			},
+			{
+				"__type": "Transition",
+				"__id": "Transition_edd941c4-3df8-4787-909c-4dc5efbf0820",
+				"visibility": "PUBLIC",
+				"kind": "EXTERNAL",
+				"source": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "InitialState_33e37a62-3004-443e-9dbe-aa70e7041979"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "State_ebdfe5b2-1a63-42df-8437-f3496488e22d"
+				},
+				"routingPoints": []
+			},
+			{
+				"__type": "Transition",
+				"__id": "Transition_8cd8fa49-3243-48f2-b32b-9d0ce83df552",
+				"trigger": "f7",
+				"guard": "c5",
+				"effect": "k9",
+				"visibility": "PUBLIC",
+				"kind": "EXTERNAL",
+				"source": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "State_ebdfe5b2-1a63-42df-8437-f3496488e22d"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "FinalState_57adf1ff-c2d6-445c-aff4-973a006e8969"
+				},
+				"routingPoints": []
+			},
+			{
+				"__type": "Transition",
+				"__id": "Transition_40af7e62-5e35-4042-bdea-988d1a1322b6",
+				"trigger": "ju5",
+				"visibility": "PUBLIC",
+				"kind": "EXTERNAL",
+				"source": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "State_ebdfe5b2-1a63-42df-8437-f3496488e22d"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "State_4d7d1036-30b4-41de-8b05-4a61166eab59"
+				},
+				"routingPoints": []
+			},
+			{
+				"__type": "Transition",
+				"__id": "Transition_e7bfd2d0-73dc-418c-a51e-121a726183e6",
+				"trigger": "b3",
+				"guard": "a4",
+				"visibility": "PUBLIC",
+				"kind": "EXTERNAL",
+				"source": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "State_150be5ac-c54b-4047-9a0f-1731b0b6b6b3"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "State_4d7d1036-30b4-41de-8b05-4a61166eab59"
+				},
+				"routingPoints": []
+			},
+			{
+				"__type": "Transition",
+				"__id": "Transition_e39d258e-09e0-4e7b-a3a7-0279add1db3e",
+				"trigger": "e1",
+				"visibility": "PUBLIC",
+				"kind": "EXTERNAL",
+				"source": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "State_4d7d1036-30b4-41de-8b05-4a61166eab59"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "FinalState_2a58faed-4533-4b56-ab70-c957ac40f940"
+				},
+				"routingPoints": []
 			}
-		},
-		{
-			"__type": "Position",
-			"__id": "pos_Region_af67d9fd-36aa-4b79-9013-d3a3c45119a4",
-			"x": 600,
-			"y": 150,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Region_af67d9fd-36aa-4b79-9013-d3a3c45119a4"
-			}
-		},
-		{
-			"__type": "Size",
-			"__id": "size_Choice_ba8b2673-9854-492e-b63d-722cd02bc7f7",
-			"height": 30,
-			"width": 80,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Choice_ba8b2673-9854-492e-b63d-722cd02bc7f7"
-			}
-		},
-		{
-			"__type": "Position",
-			"__id": "pos_Choice_ba8b2673-9854-492e-b63d-722cd02bc7f7",
-			"x": 900,
-			"y": 250,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Choice_ba8b2673-9854-492e-b63d-722cd02bc7f7"
-			}
-		}
-	]
+		]
+	}
 }

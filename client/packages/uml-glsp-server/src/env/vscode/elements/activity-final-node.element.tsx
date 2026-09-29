@@ -6,33 +6,20 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
-import { GLabelElement, GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { ActivityFinalNode } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { GModelElement } from '@eclipse-glsp/server';
-import type { BaseElementProps, ElementContext } from './core/element-context.js';
-
-export interface GActivityFinalNodeNodeElementProps extends BaseElementProps {
-    node: ActivityFinalNode;
-}
-
-export function GActivityFinalNodeNodeElement(props: GActivityFinalNodeNodeElementProps): GModelElement {
-    return (
-        <GNodeElement
-            id={props.node.__id}
-            type={props.type}
-            position={props.position}
-            size={props.size}
-            cssClasses={['uml-node']}
-            layout='vbox'
-        >
-            <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={props.node.name ?? 'ActivityFinalNode'} />
-        </GNodeElement>
-    );
-}
+import { GCircleNodeElement } from './core/circle-node.js';
+import type { ElementContext } from './core/element-context.js';
 
 export function createActivityFinalNodeElement(ctx: ElementContext<ActivityFinalNode>): GModelElement {
     const position = ctx.modelIndex.findPosition(ctx.node.__id);
     const size = ctx.modelIndex.findSize(ctx.node.__id);
-    return <GActivityFinalNodeNodeElement node={ctx.node} position={position} size={size} type={ctx.elementType} />;
+    return (
+        <GCircleNodeElement
+            id={ctx.node.__id}
+            position={position}
+            size={size}
+            type={ctx.elementType}
+        />
+    );
 }

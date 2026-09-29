@@ -20,10 +20,12 @@ import {
     type ElementProperties,
     type ElementProperty
 } from '@borkdominik-biguml/big-property-palette';
+import { isValidMultiplicity, sanitizeMultiplicity } from '@borkdominik-biguml/uml-glsp-server';
 import { type Action } from '@eclipse-glsp/protocol';
 import { groupBy } from 'lodash';
 import { useCallback, useContext, useEffect, useState, type ChangeEvent, type ReactElement } from 'react';
 import { PropertyPaletteReferenceItem } from './property-palette-reference-item.component.js';
+import { TypeCombobox } from './type-combobox.component.js';
 
 export function PropertyPalette(): ReactElement {
     const { clientId, dispatchNotification, listenAction, dispatchAction } = useContext(VSCodeContext);
@@ -36,15 +38,20 @@ export function PropertyPalette(): ReactElement {
             if (action.palette === undefined) {
                 setProperties(undefined);
             } else {
+                // Fields are sorted by label; list sections keep the order the definition declares them
+                // in, so a class shows its properties before its operations.
+                const { references, other } = extractReferences(action.palette.items);
                 const sortedProperties: ElementProperties = {
                     ...action.palette,
-                    items: action.palette.items.sort((itemA, itemB) => {
-                        if ('label' in itemA && 'label' in itemB) {
-                            return (itemA.label as string).localeCompare(itemB.label as string);
-                        }
-
-                        return 0;
-                    })
+                    items: [
+                        ...other.sort((itemA, itemB) => {
+                            if ('label' in itemA && 'label' in itemB) {
+                                return (itemA.label as string).localeCompare(itemB.label as string);
+                            }
+                            return 0;
+                        }),
+                        ...references
+                    ]
                 };
                 setProperties(sortedProperties);
             }
@@ -191,14 +198,49 @@ export function PropertyPalette(): ReactElement {
         const { references: referenceItems, other: gridItems } = extractReferences(filteredItems);
 
         const gridTemplates = gridItems.map((item: any) => {
-            if (ElementTextProperty.is(item)) {
+            if (ElementTextProperty.is(item) && item.suggestions) {
+                return (
+                    <div key={`${item.elementId}-${item.propertyId}`}>
+                        <div className='grid-label'>{item.label}</div>
+                        <div className='grid-value grid-flex'>
+                            <TypeCombobox
+                                value={item.text ?? ''}
+                                suggestions={item.suggestions}
+                                onCommit={value => onPropertyChange(item, value)}
+                            />
+                        </div>
+                    </div>
+                );
+            } else if (ElementTextProperty.is(item)) {
+                const isMultiplicity = item.format === 'multiplicity';
                 return (
                     <div key={`${item.elementId}-${item.propertyId}`}>
                         <div className='grid-label'>{item.label}</div>
                         <div className='grid-value grid-flex'>
                             <BTextfield
-                                value={item.text}
-                                onBlur={(e: any) => onPropertyChange(item, (e.target as HTMLInputElement).value)}
+                                value={item.text ?? ''}
+                                onInput={
+                                    isMultiplicity
+                                        ? (e: any) => {
+                                              const input = e.target as HTMLInputElement;
+                                              const sanitized = sanitizeMultiplicity(input.value);
+                                              if (sanitized !== input.value) {
+                                                  input.value = sanitized;
+                                              }
+                                          }
+                                        : undefined
+                                }
+                                onBlur={(e: any) => {
+                                    const input = e.target as HTMLInputElement;
+                                    // A multiplicity left half-typed (`1.`, `1..`, `5..2`) is not committed;
+                                    // the field goes back to the value the model still holds. An empty one
+                                    // clears it, leaving the multiplicity unspecified.
+                                    if (isMultiplicity && input.value !== '' && !isValidMultiplicity(input.value)) {
+                                        input.value = item.text ?? '';
+                                        return;
+                                    }
+                                    onPropertyChange(item, input.value);
+                                }}
                             />
                         </div>
                     </div>
@@ -219,7 +261,10 @@ export function PropertyPalette(): ReactElement {
                         <div className='grid-value grid-flex'>
                             <BSingleSelect
                                 disabled={item.disabled}
-                                value={item.choice}
+                                // An unset choice is the empty value (`automatic` for a connection point). Left
+                                // `undefined`, the select shows its first option only until it is re-rendered,
+                                // and blank after that.
+                                value={item.choice ?? ''}
                                 onChange={(e: any) => onPropertyChange(item, (e.target as HTMLSelectElement).value)}
                             >
                                 {item.choices.map(choice => (

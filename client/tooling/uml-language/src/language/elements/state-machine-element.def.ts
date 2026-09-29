@@ -20,6 +20,7 @@ import type { Region } from './region-element.def.js';
     icon: 'uml-state-machine-icon'
 })
 @Glsp.defaults
+@Glsp.defaultSize({ width: 800, height: 600 })
 export class StateMachine extends Node {
     name: string;
     visibility?: Visibility;

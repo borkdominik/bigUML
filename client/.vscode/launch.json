@@ -11,8 +11,7 @@
       "runtimeExecutable": "${execPath}",
       "args": [
         "${workspaceFolder}/workspace",
-        "--extensionDevelopmentPath=${workspaceFolder}/application/vscode",
-        "--disable-extensions"
+        "--extensionDevelopmentPath=${workspaceFolder}/application/vscode"
       ],
       "sourceMaps": true,
       "smartStep": true,
@@ -28,7 +27,7 @@
       "name": "(Attach) LSP Server",
       "type": "node",
       "request": "attach",
-      "address": "localhost",
+      "address": "127.0.0.1",
       "port": 6009,
       "restart": true,
       "protocol": "inspector",

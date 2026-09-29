@@ -8,6 +8,7 @@
  *********************************************************************************/
 
 import { Glsp } from '@borkdominik-biguml/uml-glsp-server/generator';
+import { Language } from '@borkdominik-biguml/uml-language-tooling';
 import 'reflect-metadata';
 import { Node, type Visibility } from '../core/element.def.js';
 
@@ -19,7 +20,14 @@ import { Node, type Visibility } from '../core/element.def.js';
     icon: 'uml-actor-icon'
 })
 @Glsp.defaults
+// A stick figure with no box around it: nothing for a resize handle to take hold of.
+@Glsp.shape({ resizable: false })
 export class Actor extends Node {
     name: string;
     visibility?: Visibility;
+    /**
+     * The property string of the actor - what UML writes in braces above its name, `{abstract}`. Stored
+     * without the braces, as the property string of an association end is.
+     */
+    @Language.text modifiers?: string;
 }

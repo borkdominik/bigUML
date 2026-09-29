@@ -22,6 +22,8 @@ export type Concurrency = 'SEQUENTIAL' | 'GUARDED' | 'CONCURRENT';
     icon: 'uml-operation-icon'
 })
 @Glsp.defaults
+// An operation is a row of the classifier that declares it, even though it stores bounds of its own.
+@Glsp.owned
 export class Operation extends Node {
     name: string;
     isAbstract?: boolean;

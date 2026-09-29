@@ -8,7 +8,7 @@
  *********************************************************************************/
 
 import { Glsp } from '@borkdominik-biguml/uml-glsp-server/generator';
-import { ArrayMaxSize, Matches, MinLength, ValidateIf } from 'class-validator';
+import { MinLength } from 'class-validator';
 import 'reflect-metadata';
 import { Node, type Visibility } from '../core/element.def.js';
 import type { Operation } from './operation-element.def.js';
@@ -23,16 +23,9 @@ import type { Property } from './property-element.def.js';
 })
 @Glsp.defaults
 export class Class extends Node {
-    @Matches(/^[A-Z]/, {
-        message: 'First letter of class name must be uppercase.'
-    })
-    @MinLength(5, { message: 'Class name must be at least 5 characters long' })
+    @MinLength(1, { message: 'Class name must be at least 1 characters long' })
     name: string;
     isAbstract: boolean = false;
-    @ValidateIf(o => o.isActive === true)
-    @ArrayMaxSize(3, {
-        message: 'Active classes must declare at most 3 properties.'
-    })
     properties?: Array<Property>;
     operations?: Array<Operation>;
     isActive?: boolean;

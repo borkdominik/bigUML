@@ -23,6 +23,9 @@ export namespace DeploymentDiagramNodeTypes {
     export const PROPERTY = representationTypeId('Deployment', DefaultTypes.NODE, 'Property');
     export const OPERATION = representationTypeId('Deployment', DefaultTypes.NODE, 'Operation');
     export const PARAMETER = representationTypeId('Deployment', DefaultTypes.NODE, 'Parameter');
+    export const NOTE = representationTypeId('Deployment', DefaultTypes.NODE, 'Note');
+    export const TEXT_LABEL = representationTypeId('Deployment', DefaultTypes.NODE, 'TextLabel');
+    export const EDGE_ANCHOR = representationTypeId('Deployment', DefaultTypes.NODE, 'EdgeAnchor');
 }
 
 export namespace DeploymentDiagramEdgeTypes {
@@ -31,6 +34,7 @@ export namespace DeploymentDiagramEdgeTypes {
     export const MANIFESTATION = representationTypeId('Deployment', DefaultTypes.EDGE, 'Manifestation');
     export const DEPLOYMENT = representationTypeId('Deployment', DefaultTypes.EDGE, 'Deployment');
     export const GENERALIZATION = representationTypeId('Deployment', DefaultTypes.EDGE, 'Generalization');
+    export const GENERIC_EDGE = representationTypeId('Deployment', DefaultTypes.EDGE, 'GenericEdge');
 }
 
 export namespace DeploymentDiagramModelTypes {
@@ -45,6 +49,9 @@ export namespace DeploymentDiagramModelTypes {
     export const PROPERTY = DeploymentDiagramNodeTypes.PROPERTY;
     export const OPERATION = DeploymentDiagramNodeTypes.OPERATION;
     export const PARAMETER = DeploymentDiagramNodeTypes.PARAMETER;
+    export const NOTE = DeploymentDiagramNodeTypes.NOTE;
+    export const TEXT_LABEL = DeploymentDiagramNodeTypes.TEXT_LABEL;
+    export const EDGE_ANCHOR = DeploymentDiagramNodeTypes.EDGE_ANCHOR;
 
     // re-export edges
     export const COMMUNICATION_PATH = DeploymentDiagramEdgeTypes.COMMUNICATION_PATH;
@@ -52,6 +59,7 @@ export namespace DeploymentDiagramModelTypes {
     export const MANIFESTATION = DeploymentDiagramEdgeTypes.MANIFESTATION;
     export const DEPLOYMENT = DeploymentDiagramEdgeTypes.DEPLOYMENT;
     export const GENERALIZATION = DeploymentDiagramEdgeTypes.GENERALIZATION;
+    export const GENERIC_EDGE = DeploymentDiagramEdgeTypes.GENERIC_EDGE;
 }
 
 export namespace DeploymentAstTypes {
@@ -66,11 +74,15 @@ export namespace DeploymentAstTypes {
         Property: DeploymentDiagramModelTypes.PROPERTY,
         Operation: DeploymentDiagramModelTypes.OPERATION,
         Parameter: DeploymentDiagramModelTypes.PARAMETER,
+        Note: DeploymentDiagramModelTypes.NOTE,
+        TextLabel: DeploymentDiagramModelTypes.TEXT_LABEL,
+        EdgeAnchor: DeploymentDiagramModelTypes.EDGE_ANCHOR,
         CommunicationPath: DeploymentDiagramModelTypes.COMMUNICATION_PATH,
         Dependency: DeploymentDiagramModelTypes.DEPENDENCY,
         Manifestation: DeploymentDiagramModelTypes.MANIFESTATION,
         Deployment: DeploymentDiagramModelTypes.DEPLOYMENT,
-        Generalization: DeploymentDiagramModelTypes.GENERALIZATION
+        Generalization: DeploymentDiagramModelTypes.GENERALIZATION,
+        GenericEdge: DeploymentDiagramModelTypes.GENERIC_EDGE
     };
 
     export function convertToAst(elementId: string): string {

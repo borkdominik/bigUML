@@ -19,6 +19,12 @@ import { injectable } from 'inversify';
 import { type VNode } from 'snabbdom';
 import { type NamedElement } from '../../index.js';
 
+/**
+ * The shape UML draws for an accept event action: a box with a notch cut into the side the flow comes
+ * in on. Kept within the node's own bounds - the notch is cut out of the left edge rather than the
+ * whole outline being shifted left of the origin, which drew the shape clear of the node it belongs to
+ * and away from the handles and edge anchors that follow the bounds.
+ */
 @injectable()
 export class AcceptEventActionView extends RectangularNodeView {
     override render(element: NamedElement, context: RenderingContext, _args?: IViewArgs): VNode | undefined {
@@ -26,14 +32,16 @@ export class AcceptEventActionView extends RectangularNodeView {
             return undefined;
         }
 
-        const notchWidth = element.bounds.height / 2;
+        const width = Math.max(0, element.bounds.width);
+        const height = Math.max(0, element.bounds.height);
+        const notchWidth = Math.min(height / 2, width);
 
         const points = [
-            { x: notchWidth - notchWidth, y: element.bounds.height / 2 },
-            { x: 0 - notchWidth, y: 0 },
-            { x: element.bounds.width, y: 0 },
-            { x: element.bounds.width, y: element.bounds.height },
-            { x: 0 - notchWidth, y: element.bounds.height }
+            { x: 0, y: 0 },
+            { x: width, y: 0 },
+            { x: width, y: height },
+            { x: 0, y: height },
+            { x: notchWidth, y: height / 2 }
         ];
 
         return (

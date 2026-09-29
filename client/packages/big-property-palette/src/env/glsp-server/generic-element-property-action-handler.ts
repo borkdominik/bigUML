@@ -9,8 +9,9 @@
 import { UpdateElementPropertyAction } from '@borkdominik-biguml/big-property-palette';
 import { UpdateOperation } from '@borkdominik-biguml/uml-glsp-server';
 import type { DiagramModelState } from '@borkdominik-biguml/uml-glsp-server/vscode';
-import { ModelState, type ActionHandler, type MaybePromise, type Operation } from '@eclipse-glsp/server';
+import { ChangeRoutingPointsOperation, ModelState, type ActionHandler, type MaybePromise, type Operation } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
+import { applyBendPointEdit, isBendPointProperty, parseBendPointEdit } from './bend-points.js';
 
 @injectable()
 export class GenericUpdateElementPropertyActionHandler implements ActionHandler {
@@ -29,6 +30,25 @@ export class GenericUpdateElementPropertyActionHandler implements ActionHandler 
             return [];
         }
 
+        if (isBendPointProperty(action.propertyId)) {
+            return this.bendPointOperations(action);
+        }
+
         return [UpdateOperation.create(action.elementId, action.propertyId, action.value)];
+    }
+
+    /**
+     * A bend point edited in the palette, sent on as the operation a drag on the canvas sends. Never
+     * passed through as a property update: a bend point is layout, not a property of the edge, and an
+     * edit that cannot be applied is dropped rather than written into the model under its id.
+     */
+    protected bendPointOperations(action: UpdateElementPropertyAction): Operation[] {
+        const edit = parseBendPointEdit(action.propertyId, action.value);
+        const points = this.modelState.getRoutingPoints(action.elementId) ?? [];
+        const newRoutingPoints = edit ? applyBendPointEdit(points, edit) : undefined;
+        if (!newRoutingPoints) {
+            return [];
+        }
+        return [ChangeRoutingPointsOperation.create([{ elementId: action.elementId, newRoutingPoints }])];
     }
 }

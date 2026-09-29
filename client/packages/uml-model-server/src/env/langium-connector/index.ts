@@ -6,12 +6,11 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+export * from './client-id.js';
+export * from './document/index.js';
 export * from './launch.js';
 export * from './model-module.js';
 export * from './model-server.js';
 export * from './model-service.js';
-export * from './open-text-document-manager.js';
-export * from './openable-text-documents.js';
 export * from './patch/index.js';
-export * from './serializer.js';
 export * from './util/index.js';

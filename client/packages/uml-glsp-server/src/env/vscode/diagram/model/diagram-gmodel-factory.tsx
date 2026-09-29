@@ -7,8 +7,8 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
+import { EDGE_CENTER_TYPE, edgeCenterId } from '@borkdominik-biguml/uml-glsp-server';
 import {
-    isAbstractClass,
     isAbstraction,
     isAcceptEventAction,
     isActivity,
@@ -27,15 +27,20 @@ import {
     isDecisionNode,
     isDeepHistory,
     isDependency,
+    isEdgeAnchor,
+    isGenericEdge,
     isDeployment,
     isDeploymentModel,
     isDeploymentNode,
     isDeploymentPackage,
     isDeploymentSpecification,
     isDevice,
+    isEdge,
     isElementImport,
+    isEntryPoint,
     isEnumeration,
     isExecutionEnvironment,
+    isExitPoint,
     isExtend,
     isFinalState,
     isFlowFinalNode,
@@ -57,7 +62,9 @@ import {
     isLiteralSpecification,
     isManifestation,
     isMergeNode,
+    isNaryAssociation,
     isMessage,
+    isNote,
     isOpaqueAction,
     isOutputPin,
     isPackage,
@@ -73,14 +80,16 @@ import {
     isStateMachine,
     isSubject,
     isSubstitution,
+    isTerminate,
+    isTextLabel,
     isTransition,
     isUsage,
-    isUseCase,
-    type Class
+    isUseCase
 } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { GEdge, GGraph, GModelElement, GModelFactory } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
-import { GGraphElement } from '../../../jsx/index.js';
+import { type AstNode, AstUtils } from 'langium';
+import { GGraphElement, GPortElement } from '../../../jsx/index.js';
 import { createAbstractionRelation } from '../../elements/abstraction-relation.element.js';
 import { createAcceptEventActionElement } from '../../elements/accept-event-action.element.js';
 import { createActivityFinalNodeElement } from '../../elements/activity-final-node.element.js';
@@ -98,8 +107,10 @@ import { createControlFlowRelation } from '../../elements/control-flow.element.j
 import type { ElementContext } from '../../elements/core/element-context.js';
 import { createDataTypeElement } from '../../elements/data-type.element.js';
 import { createDecisionNodeElement } from '../../elements/decision-node.element.js';
+import { createNaryAssociationElement } from '../../elements/nary-association.element.js';
 import { createDeepHistoryElement } from '../../elements/deep-history.element.js';
 import { createDependencyRelation } from '../../elements/dependency-relation.element.js';
+import { createGenericEdgeRelation } from '../../elements/generic-edge.element.js';
 import { createDeploymentModelElement } from '../../elements/deployment-model.element.js';
 import { createDeploymentNodeElement } from '../../elements/deployment-node.element.js';
 import { createDeploymentPackageElement } from '../../elements/deployment-package.element.js';
@@ -107,8 +118,10 @@ import { createDeploymentRelation } from '../../elements/deployment-relation.ele
 import { createDeploymentSpecificationElement } from '../../elements/deployment-specification.element.js';
 import { createDeviceElement } from '../../elements/device.element.js';
 import { createElementImportRelation } from '../../elements/element-import.element.js';
+import { createEntryPointElement } from '../../elements/entry-point.element.js';
 import { createEnumerationElement } from '../../elements/enumeration.element.js';
 import { createExecutionEnvironmentElement } from '../../elements/execution-environment.element.js';
+import { createExitPointElement } from '../../elements/exit-point.element.js';
 import { createExtendRelation } from '../../elements/extend-relation.element.js';
 import { createFinalStateElement } from '../../elements/final-state.element.js';
 import { createFlowFinalNodeElement } from '../../elements/flow-final-node.element.js';
@@ -131,6 +144,7 @@ import { createLiteralSpecificationElement } from '../../elements/literal-specif
 import { createManifestationRelation } from '../../elements/manifestation.element.js';
 import { createMergeNodeElement } from '../../elements/merge-node.element.js';
 import { createMessageRelation } from '../../elements/message.element.js';
+import { createNoteElement } from '../../elements/note.element.js';
 import { createOpaqueActionElement } from '../../elements/opaque-action.element.js';
 import { createOutputPinElement } from '../../elements/output-pin.element.js';
 import { createPackageImportRelation } from '../../elements/package-import-relation.element.js';
@@ -146,13 +160,25 @@ import { createStateMachineElement } from '../../elements/state-machine.element.
 import { createStateElement } from '../../elements/state.element.js';
 import { createSubjectElement } from '../../elements/subject.element.js';
 import { createSubstitutionRelation } from '../../elements/substitution-relation.element.js';
+import { createTerminateElement } from '../../elements/terminate.element.js';
+import { createTextLabelElement } from '../../elements/text-label.element.js';
 import { createTransitionRelation } from '../../elements/transition.element.js';
 import { createUsageRelation } from '../../elements/usage-relation.element.js';
 import { createUseCaseElement } from '../../elements/use-case.element.js';
-import { DiagramModelState } from '../../features/index.js';
 import { DiagramLanguageMetadata } from '../../features/model/diagram-language-metadata.js';
 import { DiagramModelIndex } from '../../features/model/diagram-model-index.js';
+import { DiagramModelState } from '../../features/model/diagram-model-state.js';
 
+/** How big the centre dot of an edge is, and so how near it the pointer has to come to take it. */
+const EDGE_CENTER_EXTENT = 10;
+
+/**
+ * Builds the graph from the semantic model.
+ *
+ * The graph holds what the diagram holds: its own entities as the nodes on the canvas, each drawing
+ * what it contains inside itself - a package its classes, a region its states - and every edge of the
+ * model, wherever it is kept, drawn at the top so it can run between nodes at any depth.
+ */
 @injectable()
 export class UmlDiagramGModelFactory implements GModelFactory {
     @inject(DiagramModelState)
@@ -174,16 +200,24 @@ export class UmlDiagramGModelFactory implements GModelFactory {
     protected createGraph(): GGraph | undefined {
         const diagram = this.modelState.semanticRoot.diagram;
 
-        const nodes = diagram.entities.map(e => this.createNodeElement(e)).filter(Boolean) as GModelElement[];
-        const edges = diagram.relations
-            .filter((r: any) => r.source?.ref && r.target?.ref)
-            .map(e => this.createEdgeElement(e))
+        // Every edge of the diagram is an edge of the graph, wherever the model keeps it - on the
+        // diagram's own list, or on a container that owns it, the way a region owns its transitions. The
+        // edges run between nodes drawn anywhere, inside containers or out, so they are drawn at the top.
+        const collectedEdges: AstNode[] = AstUtils.streamAllContents(diagram).filter(isEdge).toArray();
+
+        const nodes = diagram.entities.map(node => this.createNodeElement(node)).filter(Boolean) as GModelElement[];
+        const edges = collectedEdges
+            .filter(edge => (edge as { source?: { ref?: unknown } }).source?.ref && (edge as { target?: { ref?: unknown } }).target?.ref)
+            .map(edge => this.createEdgeElement(edge))
             .filter(Boolean) as GEdge[];
+        // After the edges, so that the dots are drawn over the lines they sit on.
+        const centerPorts = edges.map(edge => this.createCenterPort(edge));
 
         return (
             <GGraphElement id={this.modelState.semanticUri}>
                 {nodes}
                 {edges}
+                {centerPorts}
             </GGraphElement>
         ) as GGraph;
     }
@@ -193,13 +227,12 @@ export class UmlDiagramGModelFactory implements GModelFactory {
             modelIndex: this.modelIndex,
             node,
             diagramType: this.modelState.diagramType!,
-            elementType: this.metadata.convertToElementType((node as any).$type)
+            elementType: this.metadata.convertToElementType((node as { $type: string }).$type),
+            renderNode: child => this.createNodeElement(child)
         };
     }
 
     protected createNodeElement(element: unknown): GModelElement | undefined {
-        // AbstractClass must come before Class (AbstractClass extends Class)
-        if (isAbstractClass(element)) return createClassElement(this.buildCtx(element as Class));
         if (isClass(element)) return createClassElement(this.buildCtx(element));
         if (isInterface(element)) return createInterfaceElement(this.buildCtx(element));
         if (isDataType(element)) return createDataTypeElement(this.buildCtx(element));
@@ -209,6 +242,7 @@ export class UmlDiagramGModelFactory implements GModelFactory {
         if (isPackage(element)) return createPackageElement(this.buildCtx(element));
         if (isLiteralSpecification(element)) return createLiteralSpecificationElement(this.buildCtx(element));
         if (isParameter(element)) return createParameterElement(this.buildCtx(element));
+        if (isNaryAssociation(element)) return createNaryAssociationElement(this.buildCtx(element));
         // Activity diagram nodes
         if (isActivity(element)) return createActivityElement(this.buildCtx(element));
         if (isActivityPartition(element)) return createActivityPartitionElement(this.buildCtx(element));
@@ -252,10 +286,54 @@ export class UmlDiagramGModelFactory implements GModelFactory {
         if (isFork(element)) return createForkElement(this.buildCtx(element));
         if (isDeepHistory(element)) return createDeepHistoryElement(this.buildCtx(element));
         if (isShallowHistory(element)) return createShallowHistoryElement(this.buildCtx(element));
+        if (isExitPoint(element)) return createExitPointElement(this.buildCtx(element));
+        if (isEntryPoint(element)) return createEntryPointElement(this.buildCtx(element));
+        if (isTerminate(element)) return createTerminateElement(this.buildCtx(element));
+        // Every diagram. A note belongs to none of the groups above because it belongs to all of them.
+        if (isNote(element)) return createNoteElement(this.buildCtx(element));
+        if (isTextLabel(element)) return createTextLabelElement(this.buildCtx(element));
         return undefined;
     }
 
     protected createEdgeElement(edge: unknown): GEdge | undefined {
+        const gEdge = this.buildEdgeElement(edge);
+        if (gEdge) {
+            gEdge.routingPoints = this.modelState.getRoutingPoints(gEdge.id) ?? [];
+            // An end on an `EdgeAnchor` is drawn to the centre dot of the edge the anchor is on; the anchor
+            // itself is not drawn. Done here for every kind of relation at once rather than in each of them.
+            gEdge.sourceId = this.attachedEndId(gEdge.sourceId);
+            gEdge.targetId = this.attachedEndId(gEdge.targetId);
+        }
+        return gEdge;
+    }
+
+    /** The id an edge end is drawn to: the centre dot of an edge where the end is an `EdgeAnchor` on it. */
+    protected attachedEndId(endId: string): string {
+        const end = this.modelState.index.findIdElement(endId);
+        return isEdgeAnchor(end) && end.edge?.ref ? edgeCenterId(end.edge.ref.__id) : endId;
+    }
+
+    /**
+     * The dot every edge offers at its centre, for another edge to be drawn to. Placed by the client, which
+     * is the only one that knows where the edge runs (see `GEdgeCenterPort`).
+     *
+     * A child of the graph rather than of its edge, found from the edge through its id: an edge is not a
+     * frame anything can be positioned in. GLSP translates a point out of an edge by the box around its
+     * bend points, which for an edge without any is not a number - an edge drawn to a dot inside one ended
+     * up with a route of `NaN`s, and was not drawn at all.
+     */
+    protected createCenterPort(gEdge: GEdge): GModelElement {
+        return (
+            <GPortElement
+                id={edgeCenterId(gEdge.id)}
+                type={EDGE_CENTER_TYPE}
+                size={{ width: EDGE_CENTER_EXTENT, height: EDGE_CENTER_EXTENT }}
+                cssClasses={['uml-connection-point', 'uml-edge-center']}
+            />
+        );
+    }
+
+    protected buildEdgeElement(edge: unknown): GEdge | undefined {
         if (isAbstraction(edge)) return createAbstractionRelation(this.buildCtx(edge));
         if (isAssociation(edge)) return createAssociationRelation(this.buildCtx(edge));
         if (isDependency(edge)) return createDependencyRelation(this.buildCtx(edge));
@@ -276,6 +354,8 @@ export class UmlDiagramGModelFactory implements GModelFactory {
         if (isDeployment(edge)) return createDeploymentRelation(this.buildCtx(edge));
         if (isTransition(edge)) return createTransitionRelation(this.buildCtx(edge));
         if (isInformationFlow(edge)) return createInformationFlowRelation(this.buildCtx(edge));
+        // Every diagram, as a note is.
+        if (isGenericEdge(edge)) return createGenericEdgeRelation(this.buildCtx(edge));
         return undefined;
     }
 }

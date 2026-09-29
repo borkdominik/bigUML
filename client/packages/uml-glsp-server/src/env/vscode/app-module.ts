@@ -60,7 +60,7 @@ class BigUmlGlspLogger extends Logger {
     private getLogger(): BigLogger {
         if (!this.bigLogger) {
             const name = this.caller ?? 'glsp-server';
-            this.bigLogger = createBigLogger(name, { logLevel: LogLevel.Debug });
+            this.bigLogger = createBigLogger(name, { logLevel: resolveLogLevel(name) });
         }
         return this.bigLogger;
     }

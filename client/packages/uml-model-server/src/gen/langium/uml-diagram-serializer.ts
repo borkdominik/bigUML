@@ -9,18 +9,28 @@ import {
     isDiagram,
     UseCaseDiagram,
     isUseCaseDiagram,
-    UseCase,
-    isUseCase,
-    Size,
-    isSize,
-    Position,
-    isPosition,
-    Subject,
-    isSubject,
-    Include,
-    isInclude,
+    EdgeAnchor,
+    isEdgeAnchor,
+    Bounds,
+    isBounds,
+    Point,
+    isPoint,
+    GenericEdge,
+    isGenericEdge,
+    Transition,
+    isTransition,
     Relation,
     isRelation,
+    UseCase,
+    isUseCase,
+    Subject,
+    isSubject,
+    TextLabel,
+    isTextLabel,
+    Note,
+    isNote,
+    Include,
+    isInclude,
     Generalization,
     isGeneralization,
     Extend,
@@ -29,28 +39,30 @@ import {
     isAssociation,
     Property,
     isProperty,
-    DataType,
-    isDataType,
     PrimitiveType,
     isPrimitiveType,
+    Interface,
+    isInterface,
     Operation,
     isOperation,
     Parameter,
     isParameter,
-    Interface,
-    isInterface,
     Enumeration,
     isEnumeration,
     EnumerationLiteral,
     isEnumerationLiteral,
+    DataType,
+    isDataType,
     Class,
     isClass,
     Actor,
     isActor,
     StateMachineDiagram,
     isStateMachineDiagram,
-    Transition,
-    isTransition,
+    Terminate,
+    isTerminate,
+    StatePart,
+    isStatePart,
     StateMachine,
     isStateMachine,
     Region,
@@ -67,6 +79,10 @@ import {
     isFork,
     FinalState,
     isFinalState,
+    ExitPoint,
+    isExitPoint,
+    EntryPoint,
+    isEntryPoint,
     DeepHistory,
     isDeepHistory,
     Choice,
@@ -131,12 +147,12 @@ import {
     isLiteralSpecification,
     Realization,
     isRealization,
+    NaryAssociation,
+    isNaryAssociation,
     InterfaceRealization,
     isInterfaceRealization,
     InstanceSpecification,
     isInstanceSpecification,
-    AbstractClass,
-    isAbstractClass,
     ActivityDiagram,
     isActivityDiagram,
     SendSignalAction,
@@ -165,14 +181,14 @@ import {
     isCentralBufferNode,
     ActivityPartition,
     isActivityPartition,
-    ActivityParameterNode,
-    isActivityParameterNode,
     ActivityFinalNode,
     isActivityFinalNode,
-    Activity,
-    isActivity,
     AcceptEventAction,
     isAcceptEventAction,
+    ActivityParameterNode,
+    isActivityParameterNode,
+    Activity,
+    isActivity,
     DiagramType,
     isDiagramType,
     UseCaseDiagramElements,
@@ -183,24 +199,32 @@ import {
     isUseCaseDiagramEdges,
     Visibility,
     isVisibility,
+    EdgeMarker,
+    isEdgeMarker,
+    EdgeLineStyle,
+    isEdgeLineStyle,
+    TransitionKind,
+    isTransitionKind,
+    ConnectionPoint,
+    isConnectionPoint,
     AggregationType,
     isAggregationType,
-    DataTypeReference,
-    isDataTypeReference,
+    Classifier,
+    isClassifier,
     Concurrency,
     isConcurrency,
     ParameterDirection,
     isParameterDirection,
     EffectType,
     isEffectType,
+    DataTypeReference,
+    isDataTypeReference,
     StateMachineDiagramElements,
     isStateMachineDiagramElements,
     StateMachineDiagramNodes,
     isStateMachineDiagramNodes,
     StateMachineDiagramEdges,
     isStateMachineDiagramEdges,
-    TransitionKind,
-    isTransitionKind,
     PackageDiagramElements,
     isPackageDiagramElements,
     PackageDiagramNodes,
@@ -239,6 +263,10 @@ import {
     isActivityDiagramNodes,
     ActivityDiagramEdges,
     isActivityDiagramEdges,
+    ActivityNode,
+    isActivityNode,
+    Orientation,
+    isOrientation,
     Element,
     isElement,
     ElementWithSizeAndPosition,
@@ -249,12 +277,12 @@ import {
     isEdge,
     Unbounded,
     isUnbounded,
-    MetaInfo,
-    isMetaInfo,
     UnionType_0,
     isUnionType_0,
     UnionType_1,
-    isUnionType_1
+    isUnionType_1,
+    UnionType_2,
+    isUnionType_2
 } from '../langium/language/ast.js';
 import { UmlDiagramServices } from '../../src/langium/uml-diagram-module.js';
 import { AstNode } from 'langium';
@@ -266,7 +294,6 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         if (isDiagram(root)) {
             str.push('"diagram": ' + this.serializeDiagramType(root.diagram));
-            str.push('"metaInfos": [\n' + root.metaInfos.map(element => '' + this.serializeMetaInfo(element)).join(',\n') + '\n]');
         }
         str = str.filter(element => !!element);
         const json = JSON.parse('{\n' + str.join(',\n') + '\n}');
@@ -277,10 +304,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "UseCaseDiagram"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.diagramType !== undefined && element.diagramType !== null) {
-            str.push('"diagramType": ' + '"' + element.diagramType + '"');
+            str.push('"diagramType": ' + JSON.stringify(element.diagramType));
         }
         if (element.entities !== undefined && element.entities !== null) {
             str.push('"entities": [' + element.entities.map(property => this.serializeUseCaseDiagramNodes(property)).join(',') + ']');
@@ -291,116 +318,170 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         return '{' + str.join(',\n') + '}';
     }
 
-    serializeUseCase(element: UseCase): string {
+    serializeEdgeAnchor(element: EdgeAnchor): string {
         let str: Array<string> = [];
-        str.push('"__type": "UseCase"');
+        str.push('"__type": "EdgeAnchor"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
-        if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
-        }
-        if (element.visibility !== undefined && element.visibility !== null) {
-            str.push('"visibility": ' + this.serializeVisibility(element.visibility));
-        }
-        return '{' + str.join(',\n') + '}';
-    }
-
-    serializeSize(element: Size): string {
-        let str: Array<string> = [];
-        str.push('"__type": "Size"');
-        if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
-        }
-        if (element.height !== undefined && element.height !== null) {
-            str.push('"height": ' + element.height + '');
-        }
-        if (element.width !== undefined && element.width !== null) {
-            str.push('"width": ' + element.width + '');
-        }
-        if (element.element !== undefined && element.element !== null) {
+        if (element.edge !== undefined && element.edge !== null) {
             str.push(
-                '"element": ' +
+                '"edge": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "ElementWithSizeAndPosition", "__value": "' +
-                    (element.element.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Edge", "__value": ' +
+                    JSON.stringify(element.edge.ref?.__id ?? (element.edge.$refText || 'undefined')) +
+                    '}'
             );
         }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
+        }
         return '{' + str.join(',\n') + '}';
     }
 
-    serializePosition(element: Position): string {
+    serializeBounds(element: Bounds): string {
         let str: Array<string> = [];
-        str.push('"__type": "Position"');
-        if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
-        }
+        str.push('"__type": "Bounds"');
         if (element.x !== undefined && element.x !== null) {
             str.push('"x": ' + element.x + '');
         }
         if (element.y !== undefined && element.y !== null) {
             str.push('"y": ' + element.y + '');
         }
-        if (element.element !== undefined && element.element !== null) {
-            str.push(
-                '"element": ' +
-                    '{' +
-                    ' "__type": "Reference", "__refType": "ElementWithSizeAndPosition", "__value": "' +
-                    (element.element.ref?.__id ?? 'undefined') +
-                    '"}'
-            );
+        if (element.width !== undefined && element.width !== null) {
+            str.push('"width": ' + element.width + '');
+        }
+        if (element.height !== undefined && element.height !== null) {
+            str.push('"height": ' + element.height + '');
         }
         return '{' + str.join(',\n') + '}';
     }
 
-    serializeSubject(element: Subject): string {
+    serializePoint(element: Point): string {
         let str: Array<string> = [];
-        str.push('"__type": "Subject"');
-        if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+        str.push('"__type": "Point"');
+        if (element.x !== undefined && element.x !== null) {
+            str.push('"x": ' + element.x + '');
         }
-        if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
-        }
-        if (element.visibility !== undefined && element.visibility !== null) {
-            str.push('"visibility": ' + this.serializeVisibility(element.visibility));
-        }
-        if (element.useCases !== undefined && element.useCases !== null) {
-            str.push('"useCases": [' + element.useCases.map(property => this.serializeUseCase(property)).join(',') + ']');
+        if (element.y !== undefined && element.y !== null) {
+            str.push('"y": ' + element.y + '');
         }
         return '{' + str.join(',\n') + '}';
     }
 
-    serializeInclude(element: Include): string {
+    serializeGenericEdge(element: GenericEdge): string {
         let str: Array<string> = [];
-        str.push('"__type": "Include"');
+        str.push('"__type": "GenericEdge"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.source !== undefined && element.source !== null) {
             str.push(
                 '"source": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.source.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.source.ref?.__id ?? (element.source.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.target !== undefined && element.target !== null) {
             str.push(
                 '"target": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.target.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.target.ref?.__id ?? (element.target.$refText || 'undefined')) +
+                    '}'
             );
+        }
+        if (element.name !== undefined && element.name !== null) {
+            str.push('"name": ' + JSON.stringify(element.name));
+        }
+        if (element.sourceMarker !== undefined && element.sourceMarker !== null) {
+            str.push('"sourceMarker": ' + this.serializeEdgeMarker(element.sourceMarker));
+        }
+        if (element.targetMarker !== undefined && element.targetMarker !== null) {
+            str.push('"targetMarker": ' + this.serializeEdgeMarker(element.targetMarker));
+        }
+        if (element.lineStyle !== undefined && element.lineStyle !== null) {
+            str.push('"lineStyle": ' + this.serializeEdgeLineStyle(element.lineStyle));
+        }
+        if (element.sourceMultiplicity !== undefined && element.sourceMultiplicity !== null) {
+            str.push('"sourceMultiplicity": ' + JSON.stringify(element.sourceMultiplicity));
+        }
+        if (element.targetMultiplicity !== undefined && element.targetMultiplicity !== null) {
+            str.push('"targetMultiplicity": ' + JSON.stringify(element.targetMultiplicity));
+        }
+        if (element.sourcePoint !== undefined && element.sourcePoint !== null) {
+            str.push('"sourcePoint": ' + this.serializeConnectionPoint(element.sourcePoint));
+        }
+        if (element.targetPoint !== undefined && element.targetPoint !== null) {
+            str.push('"targetPoint": ' + this.serializeConnectionPoint(element.targetPoint));
+        }
+        if (element.routingPoints !== undefined && element.routingPoints !== null) {
+            str.push('"routingPoints": [' + element.routingPoints.map(property => this.serializePoint(property)).join(',') + ']');
+        }
+        return '{' + str.join(',\n') + '}';
+    }
+
+    serializeTransition(element: Transition): string {
+        let str: Array<string> = [];
+        str.push('"__type": "Transition"');
+        if (element.__id !== undefined && element.__id !== null) {
+            str.push('"__id": ' + JSON.stringify(element.__id));
+        }
+        if (element.name !== undefined && element.name !== null) {
+            str.push('"name": ' + JSON.stringify(element.name));
+        }
+        if (element.trigger !== undefined && element.trigger !== null) {
+            str.push('"trigger": ' + JSON.stringify(element.trigger));
+        }
+        if (element.guard !== undefined && element.guard !== null) {
+            str.push('"guard": ' + JSON.stringify(element.guard));
+        }
+        if (element.effect !== undefined && element.effect !== null) {
+            str.push('"effect": ' + JSON.stringify(element.effect));
+        }
+        if (element.visibility !== undefined && element.visibility !== null) {
+            str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.kind !== undefined && element.kind !== null) {
+            str.push('"kind": ' + this.serializeTransitionKind(element.kind));
+        }
+        if (element.source !== undefined && element.source !== null) {
+            str.push(
+                '"source": ' +
+                    '{' +
+                    ' "__type": "Reference", "__refType": "UnionType_0", "__value": ' +
+                    JSON.stringify(element.source.ref?.__id ?? (element.source.$refText || 'undefined')) +
+                    '}'
+            );
+        }
+        if (element.target !== undefined && element.target !== null) {
+            str.push(
+                '"target": ' +
+                    '{' +
+                    ' "__type": "Reference", "__refType": "UnionType_0", "__value": ' +
+                    JSON.stringify(element.target.ref?.__id ?? (element.target.$refText || 'undefined')) +
+                    '}'
+            );
+        }
+        if (element.sourcePoint !== undefined && element.sourcePoint !== null) {
+            str.push('"sourcePoint": ' + this.serializeConnectionPoint(element.sourcePoint));
+        }
+        if (element.targetPoint !== undefined && element.targetPoint !== null) {
+            str.push('"targetPoint": ' + this.serializeConnectionPoint(element.targetPoint));
+        }
+        if (element.routingPoints !== undefined && element.routingPoints !== null) {
+            str.push('"routingPoints": [' + element.routingPoints.map(property => this.serializePoint(property)).join(',') + ']');
         }
         return '{' + str.join(',\n') + '}';
     }
 
     serializeRelation(element: Relation): string {
         let str: Array<string> = [];
+        if (isGenericEdge(element)) {
+            return this.serializeGenericEdge(element);
+        }
         if (isInclude(element)) {
             return this.serializeInclude(element);
         }
@@ -451,25 +532,127 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         }
         str.push('"__type": "Relation"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.source !== undefined && element.source !== null) {
             str.push(
                 '"source": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.source.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.source.ref?.__id ?? (element.source.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.target !== undefined && element.target !== null) {
             str.push(
                 '"target": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.target.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.target.ref?.__id ?? (element.target.$refText || 'undefined')) +
+                    '}'
             );
+        }
+        if (element.routingPoints !== undefined && element.routingPoints !== null) {
+            str.push('"routingPoints": [' + element.routingPoints.map(property => this.serializePoint(property)).join(',') + ']');
+        }
+        return '{' + str.join(',\n') + '}';
+    }
+
+    serializeUseCase(element: UseCase): string {
+        let str: Array<string> = [];
+        str.push('"__type": "UseCase"');
+        if (element.__id !== undefined && element.__id !== null) {
+            str.push('"__id": ' + JSON.stringify(element.__id));
+        }
+        if (element.name !== undefined && element.name !== null) {
+            str.push('"name": ' + JSON.stringify(element.name));
+        }
+        if (element.visibility !== undefined && element.visibility !== null) {
+            str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
+        }
+        return '{' + str.join(',\n') + '}';
+    }
+
+    serializeSubject(element: Subject): string {
+        let str: Array<string> = [];
+        str.push('"__type": "Subject"');
+        if (element.__id !== undefined && element.__id !== null) {
+            str.push('"__id": ' + JSON.stringify(element.__id));
+        }
+        if (element.name !== undefined && element.name !== null) {
+            str.push('"name": ' + JSON.stringify(element.name));
+        }
+        if (element.visibility !== undefined && element.visibility !== null) {
+            str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.useCases !== undefined && element.useCases !== null) {
+            str.push('"useCases": [' + element.useCases.map(property => this.serializeUseCase(property)).join(',') + ']');
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
+        }
+        return '{' + str.join(',\n') + '}';
+    }
+
+    serializeTextLabel(element: TextLabel): string {
+        let str: Array<string> = [];
+        str.push('"__type": "TextLabel"');
+        if (element.__id !== undefined && element.__id !== null) {
+            str.push('"__id": ' + JSON.stringify(element.__id));
+        }
+        if (element.body !== undefined && element.body !== null) {
+            str.push('"body": ' + JSON.stringify(element.body));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
+        }
+        return '{' + str.join(',\n') + '}';
+    }
+
+    serializeNote(element: Note): string {
+        let str: Array<string> = [];
+        str.push('"__type": "Note"');
+        if (element.__id !== undefined && element.__id !== null) {
+            str.push('"__id": ' + JSON.stringify(element.__id));
+        }
+        if (element.body !== undefined && element.body !== null) {
+            str.push('"body": ' + JSON.stringify(element.body));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
+        }
+        return '{' + str.join(',\n') + '}';
+    }
+
+    serializeInclude(element: Include): string {
+        let str: Array<string> = [];
+        str.push('"__type": "Include"');
+        if (element.__id !== undefined && element.__id !== null) {
+            str.push('"__id": ' + JSON.stringify(element.__id));
+        }
+        if (element.source !== undefined && element.source !== null) {
+            str.push(
+                '"source": ' +
+                    '{' +
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.source.ref?.__id ?? (element.source.$refText || 'undefined')) +
+                    '}'
+            );
+        }
+        if (element.target !== undefined && element.target !== null) {
+            str.push(
+                '"target": ' +
+                    '{' +
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.target.ref?.__id ?? (element.target.$refText || 'undefined')) +
+                    '}'
+            );
+        }
+        if (element.routingPoints !== undefined && element.routingPoints !== null) {
+            str.push('"routingPoints": [' + element.routingPoints.map(property => this.serializePoint(property)).join(',') + ']');
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -478,28 +661,31 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Generalization"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.source !== undefined && element.source !== null) {
             str.push(
                 '"source": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.source.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.source.ref?.__id ?? (element.source.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.target !== undefined && element.target !== null) {
             str.push(
                 '"target": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.target.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.target.ref?.__id ?? (element.target.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.isSubstitutable !== undefined && element.isSubstitutable !== null) {
             str.push('"isSubstitutable": ' + element.isSubstitutable + '');
+        }
+        if (element.routingPoints !== undefined && element.routingPoints !== null) {
+            str.push('"routingPoints": [' + element.routingPoints.map(property => this.serializePoint(property)).join(',') + ']');
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -508,25 +694,28 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Extend"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.source !== undefined && element.source !== null) {
             str.push(
                 '"source": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.source.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.source.ref?.__id ?? (element.source.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.target !== undefined && element.target !== null) {
             str.push(
                 '"target": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.target.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.target.ref?.__id ?? (element.target.$refText || 'undefined')) +
+                    '}'
             );
+        }
+        if (element.routingPoints !== undefined && element.routingPoints !== null) {
+            str.push('"routingPoints": [' + element.routingPoints.map(property => this.serializePoint(property)).join(',') + ']');
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -535,40 +724,46 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Association"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.source !== undefined && element.source !== null) {
             str.push(
                 '"source": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.source.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.source.ref?.__id ?? (element.source.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.target !== undefined && element.target !== null) {
             str.push(
                 '"target": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.target.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.target.ref?.__id ?? (element.target.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.sourceMultiplicity !== undefined && element.sourceMultiplicity !== null) {
-            str.push('"sourceMultiplicity": ' + '"' + element.sourceMultiplicity + '"');
+            str.push('"sourceMultiplicity": ' + JSON.stringify(element.sourceMultiplicity));
         }
         if (element.targetMultiplicity !== undefined && element.targetMultiplicity !== null) {
-            str.push('"targetMultiplicity": ' + '"' + element.targetMultiplicity + '"');
+            str.push('"targetMultiplicity": ' + JSON.stringify(element.targetMultiplicity));
         }
         if (element.sourceName !== undefined && element.sourceName !== null) {
-            str.push('"sourceName": ' + '"' + element.sourceName + '"');
+            str.push('"sourceName": ' + JSON.stringify(element.sourceName));
         }
         if (element.targetName !== undefined && element.targetName !== null) {
-            str.push('"targetName": ' + '"' + element.targetName + '"');
+            str.push('"targetName": ' + JSON.stringify(element.targetName));
+        }
+        if (element.sourceModifiers !== undefined && element.sourceModifiers !== null) {
+            str.push('"sourceModifiers": ' + JSON.stringify(element.sourceModifiers));
+        }
+        if (element.targetModifiers !== undefined && element.targetModifiers !== null) {
+            str.push('"targetModifiers": ' + JSON.stringify(element.targetModifiers));
         }
         if (element.sourceAggregation !== undefined && element.sourceAggregation !== null) {
             str.push('"sourceAggregation": ' + this.serializeAggregationType(element.sourceAggregation));
@@ -579,6 +774,15 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
         }
+        if (element.sourcePoint !== undefined && element.sourcePoint !== null) {
+            str.push('"sourcePoint": ' + this.serializeConnectionPoint(element.sourcePoint));
+        }
+        if (element.targetPoint !== undefined && element.targetPoint !== null) {
+            str.push('"targetPoint": ' + this.serializeConnectionPoint(element.targetPoint));
+        }
+        if (element.routingPoints !== undefined && element.routingPoints !== null) {
+            str.push('"routingPoints": [' + element.routingPoints.map(property => this.serializePoint(property)).join(',') + ']');
+        }
         return '{' + str.join(',\n') + '}';
     }
 
@@ -586,10 +790,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Property"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.isDerived !== undefined && element.isDerived !== null) {
             str.push('"isDerived": ' + element.isDerived + '');
@@ -616,15 +820,18 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
         }
         if (element.multiplicity !== undefined && element.multiplicity !== null) {
-            str.push('"multiplicity": ' + '"' + element.multiplicity + '"');
+            str.push('"multiplicity": ' + JSON.stringify(element.multiplicity));
         }
         if (element.propertyType !== undefined && element.propertyType !== null) {
+            str.push('"propertyType": ' + JSON.stringify(element.propertyType));
+        }
+        if (element.propertyTypeRef !== undefined && element.propertyTypeRef !== null) {
             str.push(
-                '"propertyType": ' +
+                '"propertyTypeRef": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "DataTypeReference", "__value": "' +
-                    (element.propertyType.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Classifier", "__value": ' +
+                    JSON.stringify(element.propertyTypeRef.ref?.__id ?? (element.propertyTypeRef.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.aggregation !== undefined && element.aggregation !== null) {
@@ -633,14 +840,29 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         return '{' + str.join(',\n') + '}';
     }
 
-    serializeDataType(element: DataType): string {
+    serializePrimitiveType(element: PrimitiveType): string {
         let str: Array<string> = [];
-        str.push('"__type": "DataType"');
+        str.push('"__type": "PrimitiveType"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
+        }
+        return '{' + str.join(',\n') + '}';
+    }
+
+    serializeInterface(element: Interface): string {
+        let str: Array<string> = [];
+        str.push('"__type": "Interface"');
+        if (element.__id !== undefined && element.__id !== null) {
+            str.push('"__id": ' + JSON.stringify(element.__id));
+        }
+        if (element.name !== undefined && element.name !== null) {
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.properties !== undefined && element.properties !== null) {
             str.push('"properties": [' + element.properties.map(property => this.serializeProperty(property)).join(',') + ']');
@@ -648,23 +870,8 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (element.operations !== undefined && element.operations !== null) {
             str.push('"operations": [' + element.operations.map(property => this.serializeOperation(property)).join(',') + ']');
         }
-        if (element.isAbstract !== undefined && element.isAbstract !== null) {
-            str.push('"isAbstract": ' + element.isAbstract + '');
-        }
-        if (element.visibility !== undefined && element.visibility !== null) {
-            str.push('"visibility": ' + this.serializeVisibility(element.visibility));
-        }
-        return '{' + str.join(',\n') + '}';
-    }
-
-    serializePrimitiveType(element: PrimitiveType): string {
-        let str: Array<string> = [];
-        str.push('"__type": "PrimitiveType"');
-        if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
-        }
-        if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -673,10 +880,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Operation"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.isAbstract !== undefined && element.isAbstract !== null) {
             str.push('"isAbstract": ' + element.isAbstract + '');
@@ -696,6 +903,9 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (element.parameters !== undefined && element.parameters !== null) {
             str.push('"parameters": [' + element.parameters.map(property => this.serializeParameter(property)).join(',') + ']');
         }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
+        }
         return '{' + str.join(',\n') + '}';
     }
 
@@ -703,10 +913,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Parameter"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.isException !== undefined && element.isException !== null) {
             str.push('"isException": ' + element.isException + '');
@@ -730,34 +940,19 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
         }
         if (element.parameterType !== undefined && element.parameterType !== null) {
+            str.push('"parameterType": ' + JSON.stringify(element.parameterType));
+        }
+        if (element.parameterTypeRef !== undefined && element.parameterTypeRef !== null) {
             str.push(
-                '"parameterType": ' +
+                '"parameterTypeRef": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "DataTypeReference", "__value": "' +
-                    (element.parameterType.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Classifier", "__value": ' +
+                    JSON.stringify(element.parameterTypeRef.ref?.__id ?? (element.parameterTypeRef.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.multiplicity !== undefined && element.multiplicity !== null) {
-            str.push('"multiplicity": ' + '"' + element.multiplicity + '"');
-        }
-        return '{' + str.join(',\n') + '}';
-    }
-
-    serializeInterface(element: Interface): string {
-        let str: Array<string> = [];
-        str.push('"__type": "Interface"');
-        if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
-        }
-        if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
-        }
-        if (element.properties !== undefined && element.properties !== null) {
-            str.push('"properties": [' + element.properties.map(property => this.serializeProperty(property)).join(',') + ']');
-        }
-        if (element.operations !== undefined && element.operations !== null) {
-            str.push('"operations": [' + element.operations.map(property => this.serializeOperation(property)).join(',') + ']');
+            str.push('"multiplicity": ' + JSON.stringify(element.multiplicity));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -766,10 +961,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Enumeration"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.isAbstract !== undefined && element.isAbstract !== null) {
             str.push('"isAbstract": ' + element.isAbstract + '');
@@ -780,6 +975,9 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (element.values !== undefined && element.values !== null) {
             str.push('"values": [' + element.values.map(property => this.serializeEnumerationLiteral(property)).join(',') + ']');
         }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
+        }
         return '{' + str.join(',\n') + '}';
     }
 
@@ -787,13 +985,13 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "EnumerationLiteral"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.value !== undefined && element.value !== null) {
-            str.push('"value": ' + '"' + element.value + '"');
+            str.push('"value": ' + JSON.stringify(element.value));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
@@ -801,17 +999,41 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         return '{' + str.join(',\n') + '}';
     }
 
-    serializeClass(element: Class): string {
+    serializeDataType(element: DataType): string {
         let str: Array<string> = [];
-        if (isAbstractClass(element)) {
-            return this.serializeAbstractClass(element);
-        }
-        str.push('"__type": "Class"');
+        str.push('"__type": "DataType"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
+        }
+        if (element.properties !== undefined && element.properties !== null) {
+            str.push('"properties": [' + element.properties.map(property => this.serializeProperty(property)).join(',') + ']');
+        }
+        if (element.operations !== undefined && element.operations !== null) {
+            str.push('"operations": [' + element.operations.map(property => this.serializeOperation(property)).join(',') + ']');
+        }
+        if (element.isAbstract !== undefined && element.isAbstract !== null) {
+            str.push('"isAbstract": ' + element.isAbstract + '');
+        }
+        if (element.visibility !== undefined && element.visibility !== null) {
+            str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
+        }
+        return '{' + str.join(',\n') + '}';
+    }
+
+    serializeClass(element: Class): string {
+        let str: Array<string> = [];
+        str.push('"__type": "Class"');
+        if (element.__id !== undefined && element.__id !== null) {
+            str.push('"__id": ' + JSON.stringify(element.__id));
+        }
+        if (element.name !== undefined && element.name !== null) {
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.isAbstract !== undefined && element.isAbstract !== null) {
             str.push('"isAbstract": ' + element.isAbstract + '');
@@ -828,6 +1050,9 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
         }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
+        }
         return '{' + str.join(',\n') + '}';
     }
 
@@ -835,13 +1060,19 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Actor"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.modifiers !== undefined && element.modifiers !== null) {
+            str.push('"modifiers": ' + JSON.stringify(element.modifiers));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -850,10 +1081,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "StateMachineDiagram"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.diagramType !== undefined && element.diagramType !== null) {
-            str.push('"diagramType": ' + '"' + element.diagramType + '"');
+            str.push('"diagramType": ' + JSON.stringify(element.diagramType));
         }
         if (element.entities !== undefined && element.entities !== null) {
             str.push('"entities": [' + element.entities.map(property => this.serializeStateMachineDiagramNodes(property)).join(',') + ']');
@@ -866,38 +1097,41 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         return '{' + str.join(',\n') + '}';
     }
 
-    serializeTransition(element: Transition): string {
+    serializeTerminate(element: Terminate): string {
         let str: Array<string> = [];
-        str.push('"__type": "Transition"');
+        str.push('"__type": "Terminate"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
         }
-        if (element.kind !== undefined && element.kind !== null) {
-            str.push('"kind": ' + this.serializeTransitionKind(element.kind));
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
-        if (element.source !== undefined && element.source !== null) {
-            str.push(
-                '"source": ' +
-                    '{' +
-                    ' "__type": "Reference", "__refType": "UnionType_0", "__value": "' +
-                    (element.source.ref?.__id ?? 'undefined') +
-                    '"}'
-            );
+        return '{' + str.join(',\n') + '}';
+    }
+
+    serializeStatePart(element: StatePart): string {
+        let str: Array<string> = [];
+        str.push('"__type": "StatePart"');
+        if (element.__id !== undefined && element.__id !== null) {
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
-        if (element.target !== undefined && element.target !== null) {
-            str.push(
-                '"target": ' +
-                    '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.target.ref?.__id ?? 'undefined') +
-                    '"}'
-            );
+        if (element.name !== undefined && element.name !== null) {
+            str.push('"name": ' + JSON.stringify(element.name));
+        }
+        if (element.trigger !== undefined && element.trigger !== null) {
+            str.push('"trigger": ' + JSON.stringify(element.trigger));
+        }
+        if (element.guard !== undefined && element.guard !== null) {
+            str.push('"guard": ' + JSON.stringify(element.guard));
+        }
+        if (element.effect !== undefined && element.effect !== null) {
+            str.push('"effect": ' + JSON.stringify(element.effect));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -906,16 +1140,19 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "StateMachine"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
         }
         if (element.regions !== undefined && element.regions !== null) {
             str.push('"regions": [' + element.regions.map(property => this.serializeRegion(property)).join(',') + ']');
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -924,10 +1161,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Region"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
@@ -938,6 +1175,9 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (element.transitions !== undefined && element.transitions !== null) {
             str.push('"transitions": [' + element.transitions.map(property => this.serializeTransition(property)).join(',') + ']');
         }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
+        }
         return '{' + str.join(',\n') + '}';
     }
 
@@ -945,16 +1185,28 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "State"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
+        }
+        if (element.parts !== undefined && element.parts !== null) {
+            str.push('"parts": [' + element.parts.map(property => this.serializeStatePart(property)).join(',') + ']');
+        }
+        if (element.partsHeight !== undefined && element.partsHeight !== null) {
+            str.push('"partsHeight": ' + element.partsHeight + '');
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
         }
         if (element.regions !== undefined && element.regions !== null) {
             str.push('"regions": [' + element.regions.map(property => this.serializeRegion(property)).join(',') + ']');
+        }
+        if (element.regionHeight !== undefined && element.regionHeight !== null) {
+            str.push('"regionHeight": ' + element.regionHeight + '');
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -963,13 +1215,16 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "ShallowHistory"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -978,13 +1233,16 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Join"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -993,13 +1251,16 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "InitialState"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1008,13 +1269,16 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Fork"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1023,13 +1287,52 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "FinalState"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
+        }
+        return '{' + str.join(',\n') + '}';
+    }
+
+    serializeExitPoint(element: ExitPoint): string {
+        let str: Array<string> = [];
+        str.push('"__type": "ExitPoint"');
+        if (element.__id !== undefined && element.__id !== null) {
+            str.push('"__id": ' + JSON.stringify(element.__id));
+        }
+        if (element.name !== undefined && element.name !== null) {
+            str.push('"name": ' + JSON.stringify(element.name));
+        }
+        if (element.visibility !== undefined && element.visibility !== null) {
+            str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
+        }
+        return '{' + str.join(',\n') + '}';
+    }
+
+    serializeEntryPoint(element: EntryPoint): string {
+        let str: Array<string> = [];
+        str.push('"__type": "EntryPoint"');
+        if (element.__id !== undefined && element.__id !== null) {
+            str.push('"__id": ' + JSON.stringify(element.__id));
+        }
+        if (element.name !== undefined && element.name !== null) {
+            str.push('"name": ' + JSON.stringify(element.name));
+        }
+        if (element.visibility !== undefined && element.visibility !== null) {
+            str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1038,13 +1341,16 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "DeepHistory"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1053,13 +1359,16 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Choice"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1068,10 +1377,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "PackageDiagram"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.diagramType !== undefined && element.diagramType !== null) {
-            str.push('"diagramType": ' + '"' + element.diagramType + '"');
+            str.push('"diagramType": ' + JSON.stringify(element.diagramType));
         }
         if (element.entities !== undefined && element.entities !== null) {
             str.push('"entities": [' + element.entities.map(property => this.serializePackageDiagramNodes(property)).join(',') + ']');
@@ -1086,31 +1395,34 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Usage"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.source !== undefined && element.source !== null) {
             str.push(
                 '"source": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.source.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.source.ref?.__id ?? (element.source.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.target !== undefined && element.target !== null) {
             str.push(
                 '"target": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.target.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.target.ref?.__id ?? (element.target.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.routingPoints !== undefined && element.routingPoints !== null) {
+            str.push('"routingPoints": [' + element.routingPoints.map(property => this.serializePoint(property)).join(',') + ']');
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1119,25 +1431,28 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "PackageMerge"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.source !== undefined && element.source !== null) {
             str.push(
                 '"source": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.source.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.source.ref?.__id ?? (element.source.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.target !== undefined && element.target !== null) {
             str.push(
                 '"target": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.target.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.target.ref?.__id ?? (element.target.$refText || 'undefined')) +
+                    '}'
             );
+        }
+        if (element.routingPoints !== undefined && element.routingPoints !== null) {
+            str.push('"routingPoints": [' + element.routingPoints.map(property => this.serializePoint(property)).join(',') + ']');
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1146,28 +1461,31 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "PackageImport"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.source !== undefined && element.source !== null) {
             str.push(
                 '"source": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.source.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.source.ref?.__id ?? (element.source.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.target !== undefined && element.target !== null) {
             str.push(
                 '"target": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.target.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.target.ref?.__id ?? (element.target.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.routingPoints !== undefined && element.routingPoints !== null) {
+            str.push('"routingPoints": [' + element.routingPoints.map(property => this.serializePoint(property)).join(',') + ']');
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1176,19 +1494,22 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Package"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.uri !== undefined && element.uri !== null) {
-            str.push('"uri": ' + '"' + element.uri + '"');
+            str.push('"uri": ' + JSON.stringify(element.uri));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
         }
         if (element.entities !== undefined && element.entities !== null) {
             str.push('"entities": [' + element.entities.map(property => this.serializeNode(property)).join(',') + ']');
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1197,31 +1518,34 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "ElementImport"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.source !== undefined && element.source !== null) {
             str.push(
                 '"source": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.source.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.source.ref?.__id ?? (element.source.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.target !== undefined && element.target !== null) {
             str.push(
                 '"target": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.target.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.target.ref?.__id ?? (element.target.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.alias !== undefined && element.alias !== null) {
-            str.push('"alias": ' + '"' + element.alias + '"');
+            str.push('"alias": ' + JSON.stringify(element.alias));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.routingPoints !== undefined && element.routingPoints !== null) {
+            str.push('"routingPoints": [' + element.routingPoints.map(property => this.serializePoint(property)).join(',') + ']');
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1230,31 +1554,34 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Dependency"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.source !== undefined && element.source !== null) {
             str.push(
                 '"source": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.source.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.source.ref?.__id ?? (element.source.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.target !== undefined && element.target !== null) {
             str.push(
                 '"target": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.target.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.target.ref?.__id ?? (element.target.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.routingPoints !== undefined && element.routingPoints !== null) {
+            str.push('"routingPoints": [' + element.routingPoints.map(property => this.serializePoint(property)).join(',') + ']');
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1263,31 +1590,34 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Abstraction"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.source !== undefined && element.source !== null) {
             str.push(
                 '"source": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.source.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.source.ref?.__id ?? (element.source.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.target !== undefined && element.target !== null) {
             str.push(
                 '"target": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.target.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.target.ref?.__id ?? (element.target.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.routingPoints !== undefined && element.routingPoints !== null) {
+            str.push('"routingPoints": [' + element.routingPoints.map(property => this.serializePoint(property)).join(',') + ']');
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1296,10 +1626,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "InformationFlowDiagram"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.diagramType !== undefined && element.diagramType !== null) {
-            str.push('"diagramType": ' + '"' + element.diagramType + '"');
+            str.push('"diagramType": ' + JSON.stringify(element.diagramType));
         }
         if (element.entities !== undefined && element.entities !== null) {
             str.push(
@@ -1318,10 +1648,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "InformationFlow"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
@@ -1330,19 +1660,22 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
             str.push(
                 '"source": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "UnionType_1", "__value": "' +
-                    (element.source.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "UnionType_1", "__value": ' +
+                    JSON.stringify(element.source.ref?.__id ?? (element.source.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.target !== undefined && element.target !== null) {
             str.push(
                 '"target": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Actor", "__value": "' +
-                    (element.target.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "UnionType_1", "__value": ' +
+                    JSON.stringify(element.target.ref?.__id ?? (element.target.$refText || 'undefined')) +
+                    '}'
             );
+        }
+        if (element.routingPoints !== undefined && element.routingPoints !== null) {
+            str.push('"routingPoints": [' + element.routingPoints.map(property => this.serializePoint(property)).join(',') + ']');
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1351,10 +1684,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "DeploymentDiagram"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.diagramType !== undefined && element.diagramType !== null) {
-            str.push('"diagramType": ' + '"' + element.diagramType + '"');
+            str.push('"diagramType": ' + JSON.stringify(element.diagramType));
         }
         if (element.entities !== undefined && element.entities !== null) {
             str.push('"entities": [' + element.entities.map(property => this.serializeDeploymentDiagramNodes(property)).join(',') + ']');
@@ -1369,31 +1702,34 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Manifestation"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.source !== undefined && element.source !== null) {
             str.push(
                 '"source": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.source.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.source.ref?.__id ?? (element.source.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.target !== undefined && element.target !== null) {
             str.push(
                 '"target": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.target.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.target.ref?.__id ?? (element.target.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.routingPoints !== undefined && element.routingPoints !== null) {
+            str.push('"routingPoints": [' + element.routingPoints.map(property => this.serializePoint(property)).join(',') + ']');
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1402,10 +1738,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "ExecutionEnvironment"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
@@ -1427,6 +1763,9 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
                     ']'
             );
         }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
+        }
         return '{' + str.join(',\n') + '}';
     }
 
@@ -1434,10 +1773,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "DeploymentSpecification"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
@@ -1448,6 +1787,9 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (element.operations !== undefined && element.operations !== null) {
             str.push('"operations": [' + element.operations.map(property => this.serializeOperation(property)).join(',') + ']');
         }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
+        }
         return '{' + str.join(',\n') + '}';
     }
 
@@ -1455,10 +1797,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Artifact"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
@@ -1472,6 +1814,9 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (element.nestedArtifacts !== undefined && element.nestedArtifacts !== null) {
             str.push('"nestedArtifacts": [' + element.nestedArtifacts.map(property => this.serializeArtifact(property)).join(',') + ']');
         }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
+        }
         return '{' + str.join(',\n') + '}';
     }
 
@@ -1479,10 +1824,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Device"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
@@ -1504,6 +1849,9 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
                     ']'
             );
         }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
+        }
         return '{' + str.join(',\n') + '}';
     }
 
@@ -1511,10 +1859,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "DeploymentNode"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
@@ -1542,6 +1890,9 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
                     ']'
             );
         }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
+        }
         return '{' + str.join(',\n') + '}';
     }
 
@@ -1549,19 +1900,22 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "DeploymentPackage"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.uri !== undefined && element.uri !== null) {
-            str.push('"uri": ' + '"' + element.uri + '"');
+            str.push('"uri": ' + JSON.stringify(element.uri));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
         }
         if (element.entities !== undefined && element.entities !== null) {
             str.push('"entities": [' + element.entities.map(property => this.serializeNode(property)).join(',') + ']');
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1570,19 +1924,22 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "DeploymentModel"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.uri !== undefined && element.uri !== null) {
-            str.push('"uri": ' + '"' + element.uri + '"');
+            str.push('"uri": ' + JSON.stringify(element.uri));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
         }
         if (element.entities !== undefined && element.entities !== null) {
             str.push('"entities": [' + element.entities.map(property => this.serializeNode(property)).join(',') + ']');
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1591,31 +1948,34 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Deployment"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.source !== undefined && element.source !== null) {
             str.push(
                 '"source": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.source.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.source.ref?.__id ?? (element.source.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.target !== undefined && element.target !== null) {
             str.push(
                 '"target": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.target.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.target.ref?.__id ?? (element.target.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.routingPoints !== undefined && element.routingPoints !== null) {
+            str.push('"routingPoints": [' + element.routingPoints.map(property => this.serializePoint(property)).join(',') + ']');
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1624,31 +1984,34 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "CommunicationPath"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.source !== undefined && element.source !== null) {
             str.push(
                 '"source": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.source.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.source.ref?.__id ?? (element.source.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.target !== undefined && element.target !== null) {
             str.push(
                 '"target": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.target.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.target.ref?.__id ?? (element.target.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.routingPoints !== undefined && element.routingPoints !== null) {
+            str.push('"routingPoints": [' + element.routingPoints.map(property => this.serializePoint(property)).join(',') + ']');
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1657,10 +2020,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "CommunicationDiagram"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.diagramType !== undefined && element.diagramType !== null) {
-            str.push('"diagramType": ' + '"' + element.diagramType + '"');
+            str.push('"diagramType": ' + JSON.stringify(element.diagramType));
         }
         if (element.entities !== undefined && element.entities !== null) {
             str.push('"entities": [' + element.entities.map(property => this.serializeCommunicationDiagramNodes(property)).join(',') + ']');
@@ -1677,10 +2040,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Message"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
@@ -1689,19 +2052,22 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
             str.push(
                 '"source": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Lifeline", "__value": "' +
-                    (element.source.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Lifeline", "__value": ' +
+                    JSON.stringify(element.source.ref?.__id ?? (element.source.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.target !== undefined && element.target !== null) {
             str.push(
                 '"target": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Lifeline", "__value": "' +
-                    (element.target.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Lifeline", "__value": ' +
+                    JSON.stringify(element.target.ref?.__id ?? (element.target.$refText || 'undefined')) +
+                    '}'
             );
+        }
+        if (element.routingPoints !== undefined && element.routingPoints !== null) {
+            str.push('"routingPoints": [' + element.routingPoints.map(property => this.serializePoint(property)).join(',') + ']');
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1710,13 +2076,16 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Lifeline"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1725,10 +2094,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Interaction"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
@@ -1739,6 +2108,9 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (element.messages !== undefined && element.messages !== null) {
             str.push('"messages": [' + element.messages.map(property => this.serializeMessage(property)).join(',') + ']');
         }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
+        }
         return '{' + str.join(',\n') + '}';
     }
 
@@ -1746,10 +2118,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "ClassDiagram"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.diagramType !== undefined && element.diagramType !== null) {
-            str.push('"diagramType": ' + '"' + element.diagramType + '"');
+            str.push('"diagramType": ' + JSON.stringify(element.diagramType));
         }
         if (element.entities !== undefined && element.entities !== null) {
             str.push('"entities": [' + element.entities.map(property => this.serializeClassDiagramNodes(property)).join(',') + ']');
@@ -1764,31 +2136,34 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Substitution"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.source !== undefined && element.source !== null) {
             str.push(
                 '"source": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.source.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.source.ref?.__id ?? (element.source.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.target !== undefined && element.target !== null) {
             str.push(
                 '"target": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.target.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.target.ref?.__id ?? (element.target.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.routingPoints !== undefined && element.routingPoints !== null) {
+            str.push('"routingPoints": [' + element.routingPoints.map(property => this.serializePoint(property)).join(',') + ']');
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1797,18 +2172,18 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Slot"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.definingFeature !== undefined && element.definingFeature !== null) {
             str.push(
                 '"definingFeature": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "SlotDefiningFeature", "__value": "' +
-                    (element.definingFeature.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "SlotDefiningFeature", "__value": ' +
+                    JSON.stringify(element.definingFeature.ref?.__id ?? (element.definingFeature.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.values !== undefined && element.values !== null) {
@@ -1821,13 +2196,13 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "LiteralSpecification"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.value !== undefined && element.value !== null) {
-            str.push('"value": ' + '"' + element.value + '"');
+            str.push('"value": ' + JSON.stringify(element.value));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1836,31 +2211,52 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "Realization"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.source !== undefined && element.source !== null) {
             str.push(
                 '"source": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.source.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.source.ref?.__id ?? (element.source.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.target !== undefined && element.target !== null) {
             str.push(
                 '"target": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.target.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.target.ref?.__id ?? (element.target.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.routingPoints !== undefined && element.routingPoints !== null) {
+            str.push('"routingPoints": [' + element.routingPoints.map(property => this.serializePoint(property)).join(',') + ']');
+        }
+        return '{' + str.join(',\n') + '}';
+    }
+
+    serializeNaryAssociation(element: NaryAssociation): string {
+        let str: Array<string> = [];
+        str.push('"__type": "NaryAssociation"');
+        if (element.__id !== undefined && element.__id !== null) {
+            str.push('"__id": ' + JSON.stringify(element.__id));
+        }
+        if (element.name !== undefined && element.name !== null) {
+            str.push('"name": ' + JSON.stringify(element.name));
+        }
+        if (element.visibility !== undefined && element.visibility !== null) {
+            str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1869,31 +2265,34 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "InterfaceRealization"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.source !== undefined && element.source !== null) {
             str.push(
                 '"source": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.source.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.source.ref?.__id ?? (element.source.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.target !== undefined && element.target !== null) {
             str.push(
                 '"target": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.target.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "Node", "__value": ' +
+                    JSON.stringify(element.target.ref?.__id ?? (element.target.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.routingPoints !== undefined && element.routingPoints !== null) {
+            str.push('"routingPoints": [' + element.routingPoints.map(property => this.serializePoint(property)).join(',') + ']');
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1902,10 +2301,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "InstanceSpecification"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
@@ -1913,35 +2312,8 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (element.slots !== undefined && element.slots !== null) {
             str.push('"slots": [' + element.slots.map(property => this.serializeSlot(property)).join(',') + ']');
         }
-        return '{' + str.join(',\n') + '}';
-    }
-
-    serializeAbstractClass(element: AbstractClass): string {
-        let str: Array<string> = [];
-        str.push('"__type": "AbstractClass"');
-        if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
-        }
-        if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
-        }
-        if (element.isAbstract !== undefined && element.isAbstract !== null) {
-            str.push('"isAbstract": ' + element.isAbstract + '');
-        }
-        if (element.properties !== undefined && element.properties !== null) {
-            str.push('"properties": [' + element.properties.map(property => this.serializeProperty(property)).join(',') + ']');
-        }
-        if (element.operations !== undefined && element.operations !== null) {
-            str.push('"operations": [' + element.operations.map(property => this.serializeOperation(property)).join(',') + ']');
-        }
-        if (element.isActive !== undefined && element.isActive !== null) {
-            str.push('"isActive": ' + element.isActive + '');
-        }
-        if (element.visibility !== undefined && element.visibility !== null) {
-            str.push('"visibility": ' + this.serializeVisibility(element.visibility));
-        }
-        if (element.label !== undefined && element.label !== null) {
-            str.push('"label": ' + '"' + element.label + '"');
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1950,10 +2322,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "ActivityDiagram"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.diagramType !== undefined && element.diagramType !== null) {
-            str.push('"diagramType": ' + '"' + element.diagramType + '"');
+            str.push('"diagramType": ' + JSON.stringify(element.diagramType));
         }
         if (element.entities !== undefined && element.entities !== null) {
             str.push('"entities": [' + element.entities.map(property => this.serializeActivityDiagramNodes(property)).join(',') + ']');
@@ -1968,13 +2340,16 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "SendSignalAction"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -1983,10 +2358,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "OutputPin"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
@@ -1998,10 +2373,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "OpaqueAction"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
@@ -2012,6 +2387,9 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (element.outputPins !== undefined && element.outputPins !== null) {
             str.push('"outputPins": [' + element.outputPins.map(property => this.serializeOutputPin(property)).join(',') + ']');
         }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
+        }
         return '{' + str.join(',\n') + '}';
     }
 
@@ -2019,10 +2397,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "InputPin"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
@@ -2034,13 +2412,16 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "MergeNode"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -2049,13 +2430,16 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "JoinNode"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -2064,13 +2448,16 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "InitialNode"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -2079,13 +2466,16 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "ForkNode"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -2094,13 +2484,16 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "FlowFinalNode"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -2109,13 +2502,16 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "DecisionNode"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -2124,16 +2520,16 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "ControlFlow"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
         }
         if (element.guard !== undefined && element.guard !== null) {
-            str.push('"guard": ' + '"' + element.guard + '"');
+            str.push('"guard": ' + JSON.stringify(element.guard));
         }
         if (element.weight !== undefined && element.weight !== null) {
             str.push('"weight": ' + element.weight + '');
@@ -2142,19 +2538,28 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
             str.push(
                 '"source": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.source.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "UnionType_0", "__value": ' +
+                    JSON.stringify(element.source.ref?.__id ?? (element.source.$refText || 'undefined')) +
+                    '}'
             );
         }
         if (element.target !== undefined && element.target !== null) {
             str.push(
                 '"target": ' +
                     '{' +
-                    ' "__type": "Reference", "__refType": "Node", "__value": "' +
-                    (element.target.ref?.__id ?? 'undefined') +
-                    '"}'
+                    ' "__type": "Reference", "__refType": "UnionType_0", "__value": ' +
+                    JSON.stringify(element.target.ref?.__id ?? (element.target.$refText || 'undefined')) +
+                    '}'
             );
+        }
+        if (element.sourcePoint !== undefined && element.sourcePoint !== null) {
+            str.push('"sourcePoint": ' + this.serializeConnectionPoint(element.sourcePoint));
+        }
+        if (element.targetPoint !== undefined && element.targetPoint !== null) {
+            str.push('"targetPoint": ' + this.serializeConnectionPoint(element.targetPoint));
+        }
+        if (element.routingPoints !== undefined && element.routingPoints !== null) {
+            str.push('"routingPoints": [' + element.routingPoints.map(property => this.serializePoint(property)).join(',') + ']');
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -2163,13 +2568,16 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "CentralBufferNode"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -2178,13 +2586,16 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "ActivityPartition"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.orientation !== undefined && element.orientation !== null) {
+            str.push('"orientation": ' + this.serializeOrientation(element.orientation));
         }
         if (element.subpartitions !== undefined && element.subpartitions !== null) {
             str.push(
@@ -2192,22 +2603,10 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
             );
         }
         if (element.nodes !== undefined && element.nodes !== null) {
-            str.push('"nodes": [' + element.nodes.map(property => this.serializeNode(property)).join(',') + ']');
+            str.push('"nodes": [' + element.nodes.map(property => this.serializeActivityNode(property)).join(',') + ']');
         }
-        return '{' + str.join(',\n') + '}';
-    }
-
-    serializeActivityParameterNode(element: ActivityParameterNode): string {
-        let str: Array<string> = [];
-        str.push('"__type": "ActivityParameterNode"');
-        if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
-        }
-        if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
-        }
-        if (element.visibility !== undefined && element.visibility !== null) {
-            str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -2216,37 +2615,16 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "ActivityFinalNode"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
         }
-        return '{' + str.join(',\n') + '}';
-    }
-
-    serializeActivity(element: Activity): string {
-        let str: Array<string> = [];
-        str.push('"__type": "Activity"');
-        if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
-        }
-        if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
-        }
-        if (element.visibility !== undefined && element.visibility !== null) {
-            str.push('"visibility": ' + this.serializeVisibility(element.visibility));
-        }
-        if (element.partitions !== undefined && element.partitions !== null) {
-            str.push('"partitions": [' + element.partitions.map(property => this.serializeActivityPartition(property)).join(',') + ']');
-        }
-        if (element.nodes !== undefined && element.nodes !== null) {
-            str.push('"nodes": [' + element.nodes.map(property => this.serializeNode(property)).join(',') + ']');
-        }
-        if (element.edges !== undefined && element.edges !== null) {
-            str.push('"edges": [' + element.edges.map(property => this.serializeControlFlow(property)).join(',') + ']');
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -2255,13 +2633,58 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         str.push('"__type": "AcceptEventAction"');
         if (element.__id !== undefined && element.__id !== null) {
-            str.push('"__id": ' + '"' + element.__id + '"');
+            str.push('"__id": ' + JSON.stringify(element.__id));
         }
         if (element.name !== undefined && element.name !== null) {
-            str.push('"name": ' + '"' + element.name + '"');
+            str.push('"name": ' + JSON.stringify(element.name));
         }
         if (element.visibility !== undefined && element.visibility !== null) {
             str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
+        }
+        return '{' + str.join(',\n') + '}';
+    }
+
+    serializeActivityParameterNode(element: ActivityParameterNode): string {
+        let str: Array<string> = [];
+        str.push('"__type": "ActivityParameterNode"');
+        if (element.__id !== undefined && element.__id !== null) {
+            str.push('"__id": ' + JSON.stringify(element.__id));
+        }
+        if (element.name !== undefined && element.name !== null) {
+            str.push('"name": ' + JSON.stringify(element.name));
+        }
+        if (element.visibility !== undefined && element.visibility !== null) {
+            str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
+        }
+        return '{' + str.join(',\n') + '}';
+    }
+
+    serializeActivity(element: Activity): string {
+        let str: Array<string> = [];
+        str.push('"__type": "Activity"');
+        if (element.__id !== undefined && element.__id !== null) {
+            str.push('"__id": ' + JSON.stringify(element.__id));
+        }
+        if (element.name !== undefined && element.name !== null) {
+            str.push('"name": ' + JSON.stringify(element.name));
+        }
+        if (element.visibility !== undefined && element.visibility !== null) {
+            str.push('"visibility": ' + this.serializeVisibility(element.visibility));
+        }
+        if (element.parameters !== undefined && element.parameters !== null) {
+            str.push('"parameters": [' + element.parameters.map(property => this.serializeProperty(property)).join(',') + ']');
+        }
+        if (element.nodes !== undefined && element.nodes !== null) {
+            str.push('"nodes": [' + element.nodes.map(property => this.serializeUnionType_2(property)).join(',') + ']');
+        }
+        if (element.bounds !== undefined && element.bounds !== null) {
+            str.push('"bounds": ' + this.serializeBounds(element.bounds));
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -2270,9 +2693,6 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         let str: Array<string> = [];
         if (element.diagram !== undefined && element.diagram !== null) {
             str.push('"diagram": ' + this.serializeDiagramType(element.diagram));
-        }
-        if (element.metaInfos !== undefined && element.metaInfos !== null) {
-            str.push('"metaInfos": [' + element.metaInfos.map(property => this.serializeMetaInfo(property)).join(',') + ']');
         }
         return '{' + str.join(',\n') + '}';
     }
@@ -2323,6 +2743,15 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (isSubject(element)) {
             return this.serializeSubject(element);
         }
+        if (isNote(element)) {
+            return this.serializeNote(element);
+        }
+        if (isTextLabel(element)) {
+            return this.serializeTextLabel(element);
+        }
+        if (isEdgeAnchor(element)) {
+            return this.serializeEdgeAnchor(element);
+        }
     }
 
     serializeUseCaseDiagramEdges(element: UseCaseDiagramEdges): any {
@@ -2338,14 +2767,63 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (isGeneralization(element)) {
             return this.serializeGeneralization(element);
         }
+        if (isGenericEdge(element)) {
+            return this.serializeGenericEdge(element);
+        }
     }
 
     serializeVisibility(element: Visibility): any {
-        return '"' + element + '"';
+        return JSON.stringify(element);
+    }
+
+    serializeEdgeMarker(element: EdgeMarker): any {
+        return JSON.stringify(element);
+    }
+
+    serializeEdgeLineStyle(element: EdgeLineStyle): any {
+        return JSON.stringify(element);
+    }
+
+    serializeTransitionKind(element: TransitionKind): any {
+        return JSON.stringify(element);
+    }
+
+    serializeConnectionPoint(element: ConnectionPoint): any {
+        return JSON.stringify(element);
     }
 
     serializeAggregationType(element: AggregationType): any {
-        return '"' + element + '"';
+        return JSON.stringify(element);
+    }
+
+    serializeClassifier(element: Classifier): any {
+        if (isClass(element)) {
+            return this.serializeClass(element);
+        }
+        if (isInterface(element)) {
+            return this.serializeInterface(element);
+        }
+        if (isDataType(element)) {
+            return this.serializeDataType(element);
+        }
+        if (isPrimitiveType(element)) {
+            return this.serializePrimitiveType(element);
+        }
+        if (isEnumeration(element)) {
+            return this.serializeEnumeration(element);
+        }
+    }
+
+    serializeConcurrency(element: Concurrency): any {
+        return JSON.stringify(element);
+    }
+
+    serializeParameterDirection(element: ParameterDirection): any {
+        return JSON.stringify(element);
+    }
+
+    serializeEffectType(element: EffectType): any {
+        return JSON.stringify(element);
     }
 
     serializeDataTypeReference(element: DataTypeReference): any {
@@ -2366,18 +2844,6 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         }
     }
 
-    serializeConcurrency(element: Concurrency): any {
-        return '"' + element + '"';
-    }
-
-    serializeParameterDirection(element: ParameterDirection): any {
-        return '"' + element + '"';
-    }
-
-    serializeEffectType(element: EffectType): any {
-        return '"' + element + '"';
-    }
-
     serializeStateMachineDiagramElements(element: StateMachineDiagramElements): any {
         if (isStateMachineDiagramNodes(element)) {
             return this.serializeStateMachineDiagramNodes(element);
@@ -2396,6 +2862,9 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         }
         if (isState(element)) {
             return this.serializeState(element);
+        }
+        if (isStatePart(element)) {
+            return this.serializeStatePart(element);
         }
         if (isFinalState(element)) {
             return this.serializeFinalState(element);
@@ -2418,16 +2887,33 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (isShallowHistory(element)) {
             return this.serializeShallowHistory(element);
         }
+        if (isExitPoint(element)) {
+            return this.serializeExitPoint(element);
+        }
+        if (isEntryPoint(element)) {
+            return this.serializeEntryPoint(element);
+        }
+        if (isTerminate(element)) {
+            return this.serializeTerminate(element);
+        }
+        if (isNote(element)) {
+            return this.serializeNote(element);
+        }
+        if (isTextLabel(element)) {
+            return this.serializeTextLabel(element);
+        }
+        if (isEdgeAnchor(element)) {
+            return this.serializeEdgeAnchor(element);
+        }
     }
 
     serializeStateMachineDiagramEdges(element: StateMachineDiagramEdges): any {
         if (isTransition(element)) {
             return this.serializeTransition(element);
         }
-    }
-
-    serializeTransitionKind(element: TransitionKind): any {
-        return '"' + element + '"';
+        if (isGenericEdge(element)) {
+            return this.serializeGenericEdge(element);
+        }
     }
 
     serializePackageDiagramElements(element: PackageDiagramElements): any {
@@ -2455,6 +2941,15 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (isParameter(element)) {
             return this.serializeParameter(element);
         }
+        if (isNote(element)) {
+            return this.serializeNote(element);
+        }
+        if (isTextLabel(element)) {
+            return this.serializeTextLabel(element);
+        }
+        if (isEdgeAnchor(element)) {
+            return this.serializeEdgeAnchor(element);
+        }
     }
 
     serializePackageDiagramEdges(element: PackageDiagramEdges): any {
@@ -2475,6 +2970,9 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         }
         if (isUsage(element)) {
             return this.serializeUsage(element);
+        }
+        if (isGenericEdge(element)) {
+            return this.serializeGenericEdge(element);
         }
     }
 
@@ -2503,11 +3001,23 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (isParameter(element)) {
             return this.serializeParameter(element);
         }
+        if (isNote(element)) {
+            return this.serializeNote(element);
+        }
+        if (isTextLabel(element)) {
+            return this.serializeTextLabel(element);
+        }
+        if (isEdgeAnchor(element)) {
+            return this.serializeEdgeAnchor(element);
+        }
     }
 
     serializeInformationFlowDiagramEdges(element: InformationFlowDiagramEdges): any {
         if (isInformationFlow(element)) {
             return this.serializeInformationFlow(element);
+        }
+        if (isGenericEdge(element)) {
+            return this.serializeGenericEdge(element);
         }
     }
 
@@ -2551,6 +3061,15 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (isParameter(element)) {
             return this.serializeParameter(element);
         }
+        if (isNote(element)) {
+            return this.serializeNote(element);
+        }
+        if (isTextLabel(element)) {
+            return this.serializeTextLabel(element);
+        }
+        if (isEdgeAnchor(element)) {
+            return this.serializeEdgeAnchor(element);
+        }
     }
 
     serializeDeploymentDiagramEdges(element: DeploymentDiagramEdges): any {
@@ -2568,6 +3087,9 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         }
         if (isGeneralization(element)) {
             return this.serializeGeneralization(element);
+        }
+        if (isGenericEdge(element)) {
+            return this.serializeGenericEdge(element);
         }
     }
 
@@ -2587,11 +3109,23 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (isLifeline(element)) {
             return this.serializeLifeline(element);
         }
+        if (isNote(element)) {
+            return this.serializeNote(element);
+        }
+        if (isTextLabel(element)) {
+            return this.serializeTextLabel(element);
+        }
+        if (isEdgeAnchor(element)) {
+            return this.serializeEdgeAnchor(element);
+        }
     }
 
     serializeCommunicationDiagramEdges(element: CommunicationDiagramEdges): any {
         if (isMessage(element)) {
             return this.serializeMessage(element);
+        }
+        if (isGenericEdge(element)) {
+            return this.serializeGenericEdge(element);
         }
     }
 
@@ -2613,9 +3147,6 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         }
         if (isClass(element)) {
             return this.serializeClass(element);
-        }
-        if (isAbstractClass(element)) {
-            return this.serializeAbstractClass(element);
         }
         if (isInterface(element)) {
             return this.serializeInterface(element);
@@ -2646,6 +3177,18 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         }
         if (isLiteralSpecification(element)) {
             return this.serializeLiteralSpecification(element);
+        }
+        if (isNaryAssociation(element)) {
+            return this.serializeNaryAssociation(element);
+        }
+        if (isNote(element)) {
+            return this.serializeNote(element);
+        }
+        if (isTextLabel(element)) {
+            return this.serializeTextLabel(element);
+        }
+        if (isEdgeAnchor(element)) {
+            return this.serializeEdgeAnchor(element);
         }
     }
 
@@ -2682,6 +3225,9 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         }
         if (isUsage(element)) {
             return this.serializeUsage(element);
+        }
+        if (isGenericEdge(element)) {
+            return this.serializeGenericEdge(element);
         }
     }
 
@@ -2755,12 +3301,67 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (isOutputPin(element)) {
             return this.serializeOutputPin(element);
         }
+        if (isProperty(element)) {
+            return this.serializeProperty(element);
+        }
+        if (isNote(element)) {
+            return this.serializeNote(element);
+        }
+        if (isTextLabel(element)) {
+            return this.serializeTextLabel(element);
+        }
+        if (isEdgeAnchor(element)) {
+            return this.serializeEdgeAnchor(element);
+        }
     }
 
     serializeActivityDiagramEdges(element: ActivityDiagramEdges): any {
         if (isControlFlow(element)) {
             return this.serializeControlFlow(element);
         }
+        if (isGenericEdge(element)) {
+            return this.serializeGenericEdge(element);
+        }
+    }
+
+    serializeActivityNode(element: ActivityNode): any {
+        if (isOpaqueAction(element)) {
+            return this.serializeOpaqueAction(element);
+        }
+        if (isAcceptEventAction(element)) {
+            return this.serializeAcceptEventAction(element);
+        }
+        if (isSendSignalAction(element)) {
+            return this.serializeSendSignalAction(element);
+        }
+        if (isInitialNode(element)) {
+            return this.serializeInitialNode(element);
+        }
+        if (isDecisionNode(element)) {
+            return this.serializeDecisionNode(element);
+        }
+        if (isMergeNode(element)) {
+            return this.serializeMergeNode(element);
+        }
+        if (isJoinNode(element)) {
+            return this.serializeJoinNode(element);
+        }
+        if (isForkNode(element)) {
+            return this.serializeForkNode(element);
+        }
+        if (isActivityFinalNode(element)) {
+            return this.serializeActivityFinalNode(element);
+        }
+        if (isFlowFinalNode(element)) {
+            return this.serializeFlowFinalNode(element);
+        }
+        if (isCentralBufferNode(element)) {
+            return this.serializeCentralBufferNode(element);
+        }
+    }
+
+    serializeOrientation(element: Orientation): any {
+        return JSON.stringify(element);
     }
 
     serializeElement(element: Element): any {
@@ -2782,32 +3383,44 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeNode(element: Node): any {
+        if (isEdgeAnchor(element)) {
+            return this.serializeEdgeAnchor(element);
+        }
         if (isUseCase(element)) {
             return this.serializeUseCase(element);
         }
         if (isSubject(element)) {
             return this.serializeSubject(element);
         }
-        if (isDataType(element)) {
-            return this.serializeDataType(element);
+        if (isTextLabel(element)) {
+            return this.serializeTextLabel(element);
+        }
+        if (isNote(element)) {
+            return this.serializeNote(element);
         }
         if (isPrimitiveType(element)) {
             return this.serializePrimitiveType(element);
         }
-        if (isOperation(element)) {
-            return this.serializeOperation(element);
-        }
         if (isInterface(element)) {
             return this.serializeInterface(element);
         }
+        if (isOperation(element)) {
+            return this.serializeOperation(element);
+        }
         if (isEnumeration(element)) {
             return this.serializeEnumeration(element);
+        }
+        if (isDataType(element)) {
+            return this.serializeDataType(element);
         }
         if (isClass(element)) {
             return this.serializeClass(element);
         }
         if (isActor(element)) {
             return this.serializeActor(element);
+        }
+        if (isTerminate(element)) {
+            return this.serializeTerminate(element);
         }
         if (isStateMachine(element)) {
             return this.serializeStateMachine(element);
@@ -2832,6 +3445,12 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         }
         if (isFinalState(element)) {
             return this.serializeFinalState(element);
+        }
+        if (isExitPoint(element)) {
+            return this.serializeExitPoint(element);
+        }
+        if (isEntryPoint(element)) {
+            return this.serializeEntryPoint(element);
         }
         if (isDeepHistory(element)) {
             return this.serializeDeepHistory(element);
@@ -2869,20 +3488,17 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (isInteraction(element)) {
             return this.serializeInteraction(element);
         }
+        if (isNaryAssociation(element)) {
+            return this.serializeNaryAssociation(element);
+        }
         if (isInstanceSpecification(element)) {
             return this.serializeInstanceSpecification(element);
         }
         if (isSendSignalAction(element)) {
             return this.serializeSendSignalAction(element);
         }
-        if (isOutputPin(element)) {
-            return this.serializeOutputPin(element);
-        }
         if (isOpaqueAction(element)) {
             return this.serializeOpaqueAction(element);
-        }
-        if (isInputPin(element)) {
-            return this.serializeInputPin(element);
         }
         if (isMergeNode(element)) {
             return this.serializeMergeNode(element);
@@ -2908,17 +3524,17 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (isActivityPartition(element)) {
             return this.serializeActivityPartition(element);
         }
-        if (isActivityParameterNode(element)) {
-            return this.serializeActivityParameterNode(element);
-        }
         if (isActivityFinalNode(element)) {
             return this.serializeActivityFinalNode(element);
         }
-        if (isActivity(element)) {
-            return this.serializeActivity(element);
-        }
         if (isAcceptEventAction(element)) {
             return this.serializeAcceptEventAction(element);
+        }
+        if (isActivityParameterNode(element)) {
+            return this.serializeActivityParameterNode(element);
+        }
+        if (isActivity(element)) {
+            return this.serializeActivity(element);
         }
     }
 
@@ -2950,20 +3566,20 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         if (isEnumerationLiteral(element)) {
             return this.serializeEnumerationLiteral(element);
         }
+        if (isStatePart(element)) {
+            return this.serializeStatePart(element);
+        }
         if (isSlot(element)) {
             return this.serializeSlot(element);
         }
         if (isLiteralSpecification(element)) {
             return this.serializeLiteralSpecification(element);
         }
-    }
-
-    serializeMetaInfo(element: MetaInfo): any {
-        if (isSize(element)) {
-            return this.serializeSize(element);
+        if (isOutputPin(element)) {
+            return this.serializeOutputPin(element);
         }
-        if (isPosition(element)) {
-            return this.serializePosition(element);
+        if (isInputPin(element)) {
+            return this.serializeInputPin(element);
         }
     }
 
@@ -2982,6 +3598,18 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
         }
         if (isClass(element)) {
             return this.serializeClass(element);
+        }
+    }
+
+    serializeUnionType_2(element: UnionType_2): any {
+        if (isActivityNode(element)) {
+            return this.serializeActivityNode(element);
+        }
+        if (isActivityPartition(element)) {
+            return this.serializeActivityPartition(element);
+        }
+        if (isActivityParameterNode(element)) {
+            return this.serializeActivityParameterNode(element);
         }
     }
 

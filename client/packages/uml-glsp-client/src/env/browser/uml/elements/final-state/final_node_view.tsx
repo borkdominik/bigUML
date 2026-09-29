@@ -22,7 +22,7 @@ export class FinalNodeView extends CircularNodeView {
         const finalNode: any = (
             <g class-node={true} class-selected={node.selected} class-mouseover={node.hoverFeedback}>
                 <circle r={radius} cx={radius} cy={radius} />
-                <circle fill='#4E81B4' r={radius / 1.5} cx={radius} cy={radius} />
+                <circle fill='white' r={radius / 1.5} cx={radius} cy={radius} />
             </g>
         );
         return finalNode;

@@ -7,14 +7,14 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { RequestClassPropertyPaletteActionHandler } from '@borkdominik-biguml/big-property-palette/gen/glsp-server';
 import { DiagramFeatureModule } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import type { ActionHandlerConstructor, InstanceMultiBinding } from '@eclipse-glsp/server';
 import { GenericUpdateElementPropertyActionHandler } from './generic-element-property-action-handler.js';
+import { RequestPropertyPaletteActionHandler } from './request-property-palette-action-handler.js';
 
 class PropertyPaletteDiagramFeatureModule extends DiagramFeatureModule {
     override configureActionHandlers(binding: InstanceMultiBinding<ActionHandlerConstructor>): void {
-        binding.add(RequestClassPropertyPaletteActionHandler);
+        binding.add(RequestPropertyPaletteActionHandler);
         binding.add(GenericUpdateElementPropertyActionHandler);
     }
 }

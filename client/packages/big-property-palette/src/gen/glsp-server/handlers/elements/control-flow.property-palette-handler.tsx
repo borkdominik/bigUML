@@ -40,8 +40,22 @@ export namespace ControlFlowPropertyPaletteHandler {
                     <TextProperty
                         elementId={context.semanticElement.__id}
                         propertyId='weight'
-                        text={String(context.semanticElement.weight)!}
+                        text={context.semanticElement.weight !== undefined ? String(context.semanticElement.weight) : ''}
                         label='Weight'
+                    />
+                    <ChoiceProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='sourcePoint'
+                        choices={PropertyPaletteChoices.CONNECTION_POINT}
+                        choice={context.semanticElement.sourcePoint!}
+                        label='Source Point'
+                    />
+                    <ChoiceProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='targetPoint'
+                        choices={PropertyPaletteChoices.CONNECTION_POINT}
+                        choice={context.semanticElement.targetPoint!}
+                        label='Target Point'
                     />
                 </PropertyPalette>
             )

@@ -6,33 +6,24 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
-import { GLabelElement, GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { ForkNode } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { GModelElement } from '@eclipse-glsp/server';
-import type { BaseElementProps, ElementContext } from './core/element-context.js';
-
-export interface GForkNodeNodeElementProps extends BaseElementProps {
-    node: ForkNode;
-}
-
-export function GForkNodeNodeElement(props: GForkNodeNodeElementProps): GModelElement {
-    return (
-        <GNodeElement
-            id={props.node.__id}
-            type={props.type}
-            position={props.position}
-            size={props.size}
-            cssClasses={['uml-node']}
-            layout='vbox'
-        >
-            <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={props.node.name ?? 'ForkNode'} />
-        </GNodeElement>
-    );
-}
+import type { ElementContext } from './core/element-context.js';
+import { GForkJoinNodeElement } from './core/fork-join-node.js';
 
 export function createForkNodeElement(ctx: ElementContext<ForkNode>): GModelElement {
     const position = ctx.modelIndex.findPosition(ctx.node.__id);
     const size = ctx.modelIndex.findSize(ctx.node.__id);
-    return <GForkNodeNodeElement node={ctx.node} position={position} size={size} type={ctx.elementType} />;
+    return (
+        <GForkJoinNodeElement
+            id={ctx.node.__id}
+            name={ctx.node.name}
+            position={position}
+            size={size}
+            type={ctx.elementType}
+            // The same points the state machine's fork offers. A control flow can record which one it
+            // was pinned to, the way a transition does - see `ControlFlow.sourcePoint`.
+            connectionPoints
+        />
+    );
 }

@@ -31,6 +31,12 @@ export namespace ActorPropertyPaletteHandler {
                         choice={context.semanticElement.visibility!}
                         label='Visibility'
                     />
+                    <TextProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='modifiers'
+                        text={context.semanticElement.modifiers!}
+                        label='Modifiers'
+                    />
                 </PropertyPalette>
             )
         ];

@@ -48,19 +48,31 @@ export namespace AssociationPropertyPaletteHandler {
                         text={context.semanticElement.targetName!}
                         label='Target Name'
                     />
+                    <TextProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='sourceModifiers'
+                        text={context.semanticElement.sourceModifiers!}
+                        label='Source Modifiers'
+                    />
+                    <TextProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='targetModifiers'
+                        text={context.semanticElement.targetModifiers!}
+                        label='Target Modifiers'
+                    />
                     <ChoiceProperty
                         elementId={context.semanticElement.__id}
                         propertyId='sourceAggregation'
                         choices={PropertyPaletteChoices.AGGREGATION}
                         choice={context.semanticElement.sourceAggregation!}
-                        label='Aggregation Type'
+                        label='Source Aggregation'
                     />
                     <ChoiceProperty
                         elementId={context.semanticElement.__id}
                         propertyId='targetAggregation'
                         choices={PropertyPaletteChoices.AGGREGATION}
                         choice={context.semanticElement.targetAggregation!}
-                        label='Aggregation Type'
+                        label='Target Aggregation'
                     />
                     <ChoiceProperty
                         elementId={context.semanticElement.__id}
@@ -68,6 +80,20 @@ export namespace AssociationPropertyPaletteHandler {
                         choices={PropertyPaletteChoices.VISIBILITY}
                         choice={context.semanticElement.visibility!}
                         label='Visibility'
+                    />
+                    <ChoiceProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='sourcePoint'
+                        choices={PropertyPaletteChoices.CONNECTION_POINT}
+                        choice={context.semanticElement.sourcePoint!}
+                        label='Source Point'
+                    />
+                    <ChoiceProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='targetPoint'
+                        choices={PropertyPaletteChoices.CONNECTION_POINT}
+                        choice={context.semanticElement.targetPoint!}
+                        label='Target Point'
                     />
                 </PropertyPalette>
             )

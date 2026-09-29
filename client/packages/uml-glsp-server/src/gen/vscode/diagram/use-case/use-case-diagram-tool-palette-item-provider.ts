@@ -22,6 +22,36 @@ export class UseCaseDiagramToolPaletteItemProvider extends ToolPaletteItemProvid
     override getItems(_args?: Args): MaybePromise<PaletteItem[]> {
         return [
             {
+                id: 'uml.annotation',
+                sortString: 'A',
+                label: 'Annotation',
+                icon: 'symbol-property',
+                children: [
+                    {
+                        id: 'generic-edge',
+                        sortString: 'A',
+                        label: 'Generic Edge',
+                        icon: 'uml-connector-icon',
+                        actions: [TriggerEdgeCreationAction.create(UseCaseDiagramEdgeTypes.GENERIC_EDGE)]
+                    },
+                    {
+                        id: 'text-label',
+                        sortString: 'A',
+                        label: 'Label',
+                        icon: 'uml-string-expression-icon',
+                        actions: [TriggerNodeCreationAction.create(UseCaseDiagramNodeTypes.TEXT_LABEL)]
+                    },
+                    {
+                        id: 'note',
+                        sortString: 'A',
+                        label: 'Note',
+                        icon: 'uml-comment-icon',
+                        actions: [TriggerNodeCreationAction.create(UseCaseDiagramNodeTypes.NOTE)]
+                    }
+                ],
+                actions: []
+            },
+            {
                 id: 'uml.container',
                 sortString: 'A',
                 label: 'Container',

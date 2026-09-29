@@ -7,6 +7,11 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
+html,
+body {
+    overflow-x: hidden;
+}
+
 .body {
     display: flex;
     flex-direction: column;
@@ -16,14 +21,21 @@
     margin-top: 6px;
 }
 
+header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
 #navigate-back {
-    position: absolute;
-    left: 0;
-    top: 18px;
+    flex-shrink: 0;
+    --vscode-button-border: var(--vscode-button-secondaryBackground, #313131);
 }
 
 #search {
     margin-bottom: 6px;
+    width: 100%;
+    max-width: 100%;
 }
 
 .grid {
@@ -41,15 +53,26 @@
 
 .grid-label {
     grid-column-start: label-start;
+    overflow-wrap: break-word;
 }
 
 .grid-value {
     grid-column-start: value-start;
+    min-width: 0;
 }
 
 .grid-flex {
     display: flex;
     flex-direction: column;
+    min-width: 0;
+}
+
+.grid-flex > vscode-textfield,
+.grid-flex > vscode-single-select {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
 }
 
 .dropdown-option {
@@ -89,13 +112,37 @@ h4.secondary-title {
 
 .reference-header > .reference-header-actions {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
 }
 
-.reference-body > .reference-body-actions {
+/*
+ * The menu of things a section can be added to hangs off the button that opens it, which is what the
+ * relative position is for: the menu itself is positioned absolutely, and would otherwise be laid out
+ * against the panel rather than under the button.
+ */
+.reference-header-actions > .reference-create {
+    position: relative;
     display: flex;
-    flex-direction: row;
+}
+
+.reference-create > .reference-create-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 10;
+}
+
+.reference-header-actions vscode-button,
+.reference-item-actions vscode-button {
+    --vscode-button-background: var(--vscode-settings-dropdownBackground, #313131);
+    --vscode-button-hoverBackground: var(--vscode-settings-dropdownListBorder, #454545);
+    --vscode-button-foreground: var(--vscode-settings-dropdownForeground, #cccccc);
+    --vscode-button-border: var(--vscode-settings-dropdownBorder, #3c3c3c);
+    --vscode-button-secondaryBackground: var(--vscode-settings-dropdownBackground, #313131);
+    --vscode-button-secondaryHoverBackground: var(--vscode-settings-dropdownListBorder, #454545);
+    --vscode-button-secondaryForeground: var(--vscode-settings-dropdownForeground, #cccccc);
 }
 
 .sortable-drag {
@@ -113,6 +160,7 @@ h4.secondary-title {
 .reference-item-body > .reference-item-name {
     flex: 1;
     margin-right: 6px;
+    min-width: 0;
 }
 
 .reference-item-body > .reference-item-label {
@@ -124,6 +172,33 @@ h4.secondary-title {
     flex-direction: column;
 }
 
+.reference-item-body > .reference-item-fields {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    margin-right: 6px;
+    min-width: 0;
+}
+
+.reference-item-fields > vscode-textfield {
+    flex: 1;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+/* A multiplicity is a few characters at most (`0..*`), so it does not take an equal share of the row. */
+.reference-item-fields > vscode-textfield.multiplicity-field {
+    flex: 0 0 4.5em;
+}
+
+.reference-item-name > vscode-textfield {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
 .reference-item-body {
     display: flex;
     flex-direction: row;
@@ -133,6 +208,7 @@ h4.secondary-title {
 .reference-item-body > .reference-item-actions {
     display: flex;
     flex-direction: row;
+    gap: 4px;
 }
 
 .reference-item-body .action-delete {
@@ -150,4 +226,74 @@ h4.secondary-title {
 .autocomplete {
     margin-bottom: 6px;
     width: 100%;
+}
+
+/*
+ * The type of a property or a parameter - see `TypeCombobox`. A plain input drawn the way the palette's
+ * `vscode-textfield`s are, with the types listed under it. The list is placed against the window
+ * (`fixed`, at the field's position) so that the palette's scrolling body does not cut it off.
+ */
+.type-combobox {
+    min-width: 0;
+}
+
+.reference-item-fields > .type-combobox {
+    flex: 1;
+}
+
+.type-combobox-input {
+    width: 100%;
+    box-sizing: border-box;
+    height: 26px;
+    padding: 3px 4px;
+    border: 1px solid var(--vscode-settings-textInputBorder, var(--vscode-settings-textInputBackground, #3c3c3c));
+    border-radius: 4px;
+    outline: none;
+    background-color: var(--vscode-settings-textInputBackground, #313131);
+    color: var(--vscode-settings-textInputForeground, #cccccc);
+    font-family: var(--vscode-font-family);
+    font-size: var(--vscode-font-size, 13px);
+    font-weight: var(--vscode-font-weight, normal);
+    line-height: 18px;
+}
+
+.type-combobox-input:focus {
+    border-color: var(--vscode-focusBorder, #0078d4);
+}
+
+.type-combobox-input::placeholder {
+    color: var(--vscode-input-placeholderForeground, #989898);
+}
+
+.type-combobox-list {
+    position: fixed;
+    z-index: 100;
+    box-sizing: border-box;
+    overflow-y: auto;
+    margin: 0;
+    padding: 2px 0;
+    list-style: none;
+    background: var(--vscode-dropdown-background, #313131);
+    border: 1px solid var(--vscode-dropdown-border, var(--vscode-focusBorder, #0078d4));
+    border-radius: 4px;
+    color: var(--vscode-dropdown-foreground, #cccccc);
+    font-family: var(--vscode-font-family);
+    font-size: var(--vscode-font-size, 13px);
+}
+
+.type-combobox-list > li {
+    padding: 2px 6px;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.type-combobox-list > li.selected {
+    font-weight: bold;
+}
+
+.type-combobox-list > li.active {
+    background: var(--vscode-list-activeSelectionBackground, #04395e);
+    color: var(--vscode-list-activeSelectionForeground, #ffffff);
 }

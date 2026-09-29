@@ -7,3 +7,4 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 export * from './state-machine.element.js';
+export * from './state_machine_node_view.js';

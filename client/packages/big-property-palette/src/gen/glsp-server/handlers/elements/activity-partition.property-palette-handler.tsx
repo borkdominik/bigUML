@@ -33,6 +33,13 @@ export namespace ActivityPartitionPropertyPaletteHandler {
                         choice={context.semanticElement.visibility!}
                         label='Visibility'
                     />
+                    <ChoiceProperty
+                        elementId={context.semanticElement.__id}
+                        propertyId='orientation'
+                        choices={PropertyPaletteChoices.ORIENTATION}
+                        choice={context.semanticElement.orientation!}
+                        label='Orientation'
+                    />
                     <ReferenceProperty
                         elementId={context.semanticElement.__id}
                         propertyId='subpartitions'
@@ -62,7 +69,7 @@ export namespace ActivityPartitionPropertyPaletteHandler {
                             .filter((e: any) => !!e && !!e.__id)
                             .map((e: any) => ({
                                 elementId: e.__id,
-                                label: e.name ?? '(unnamed node)',
+                                label: e.name ?? '(unnamed activity_node)',
                                 name: e.name ?? '',
                                 deleteActions: [DeleteElementOperation.create([e.__id])]
                             }))}

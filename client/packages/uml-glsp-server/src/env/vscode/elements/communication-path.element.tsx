@@ -9,6 +9,7 @@
 import { GEdgeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { CommunicationPath } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { GEdge } from '@eclipse-glsp/server';
+import { EdgeNameLabel } from './core/index.js';
 import type { ElementContext } from './core/element-context.js';
 
 export function createCommunicationPathRelation(ctx: ElementContext<CommunicationPath>): GEdge {
@@ -19,6 +20,8 @@ export function createCommunicationPathRelation(ctx: ElementContext<Communicatio
             sourceId={ctx.node.source!.ref!.__id}
             targetId={ctx.node.target!.ref!.__id}
             cssClasses={['uml-edge']}
-        />
+        >
+            <EdgeNameLabel id={ctx.node.__id} name={ctx.node.name} />
+        </GEdgeElement>
     ) as GEdge;
 }

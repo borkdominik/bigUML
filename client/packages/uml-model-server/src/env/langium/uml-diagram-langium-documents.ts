@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { Cancellation, DefaultLangiumDocuments, type LangiumDocument } from 'langium';
+import { type Cancellation, DefaultLangiumDocuments, type LangiumDocument } from 'langium';
 import { type URI } from 'vscode-uri';
 
 type CancellationToken = Cancellation.CancellationToken;

@@ -6,12 +6,16 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
-import { GEdgeElement, GLabelElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
+import { GEdgeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { InformationFlow } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { GEdge } from '@eclipse-glsp/server';
+import { EdgeNameLabel, EdgeStereotypeLabel } from './core/index.js';
 import type { ElementContext } from './core/element-context.js';
 
+/**
+ * An information flow is drawn as a dependency is - a dashed line with an open arrow head at the
+ * target - carrying the name of what is conveyed above the line and the `flow` stereotype below it.
+ */
 export function createInformationFlowRelation(ctx: ElementContext<InformationFlow>): GEdge {
     return (
         <GEdgeElement
@@ -19,9 +23,11 @@ export function createInformationFlowRelation(ctx: ElementContext<InformationFlo
             type={ctx.elementType}
             sourceId={ctx.node.source!.ref!.__id}
             targetId={ctx.node.target!.ref!.__id}
-            cssClasses={['uml-edge']}
+            cssClasses={['uml-edge', 'uml-edge-dashed', 'marker-tent-end']}
+            args={{ edgePadding: 10 }}
         >
-            {ctx.node.name && <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={ctx.node.name} />}
+            <EdgeStereotypeLabel id={ctx.node.__id} stereotype='flow' />
+            <EdgeNameLabel id={ctx.node.__id} name={ctx.node.name} />
         </GEdgeElement>
     ) as GEdge;
 }

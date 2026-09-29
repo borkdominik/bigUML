@@ -9,7 +9,6 @@
 
 import { Language } from '@borkdominik-biguml/uml-language-tooling';
 import 'reflect-metadata';
-import type { MetaInfo } from './core/element.def.js';
 import type { ActivityDiagram } from './diagram/activity-diagram.def.js';
 import type { ClassDiagram } from './diagram/class-diagram.def.js';
 import type { CommunicationDiagram } from './diagram/communication-diagram.def.js';
@@ -34,5 +33,4 @@ export type DiagramType =
 @Language.root
 export class Diagram {
     diagram: DiagramType;
-    metaInfos?: Array<MetaInfo>;
 }

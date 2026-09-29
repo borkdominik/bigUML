@@ -8,8 +8,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { type AstNode, type AstNodeDescription, AstUtils, DefaultScopeComputation, type LangiumDocument, type MultiMap } from 'langium';
-import { CancellationToken } from 'vscode-jsonrpc';
+import { type AstNode, type AstNodeDescription, AstUtils, type Cancellation, DefaultScopeComputation, type LangiumDocument, type MultiMap } from 'langium';
 import { type UmlDiagramServices } from './uml-diagram-module.js';
 import { type QualifiedNameProvider } from './uml-diagram-naming.js';
 import { type UmlDiagramPackageManager, UNKNOWN_PROJECT_ID, UNKNOWN_PROJECT_REFERENCE } from './uml-diagram-package-manager.js';
@@ -69,14 +68,18 @@ export class UmlDiagramScopeComputation extends DefaultScopeComputation {
         this.packageManager = services.shared.workspace.PackageManager;
     }
 
-    // overridden because we use 'streamAllContents' as children retrieval instead of 'streamContents'
+    /**
+     * Exports every element of a document, however deeply it is nested - not only the root's direct
+     * children, which is all Langium exports by default. Diagram elements live below `diagram.entities`,
+     * often nested in other elements, and are referenced from edges anywhere in the diagram, so without
+     * this few of them could be linked.
+     */
     override async collectExportedSymbolsForNode(
         parentNode: AstNode,
         document: LangiumDocument<AstNode>,
         children: (root: AstNode) => Iterable<AstNode> = AstUtils.streamAllContents,
-        cancelToken: CancellationToken = CancellationToken.None
+        cancelToken?: Cancellation.CancellationToken
     ): Promise<AstNodeDescription[]> {
-        // const docRoot = document.parseResult.value;
         return super.collectExportedSymbolsForNode(parentNode, document, children, cancelToken);
     }
 
@@ -88,7 +91,7 @@ export class UmlDiagramScopeComputation extends DefaultScopeComputation {
 
         // Export nodes twice: Once for external usage with the fully-qualified name and once for package-local usage.
         // To avoid duplicates in the UI but still allow access to the node through both names we filter the
-        // external usage descriptions in the CrossModelCompletionProvider if package-local usage is also available
+        // external usage descriptions in the UmlDiagramCompletionProvider if package-local usage is also available
 
         let description: AstNodeDescription | undefined;
         if (packageQualifiedName) {

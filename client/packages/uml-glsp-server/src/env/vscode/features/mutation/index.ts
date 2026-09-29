@@ -6,4 +6,6 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+export * from './extension/index.js';
 export * from './handler/index.js';
+export * from './model-patch.js';

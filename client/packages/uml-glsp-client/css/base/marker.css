@@ -38,6 +38,14 @@
     marker-end: var(--svg-def-marker-diamond-empty);
 }
 
+.marker-cross-start {
+    marker-start: var(--svg-def-marker-cross);
+}
+
+.marker-cross-end {
+    marker-end: var(--svg-def-marker-cross);
+}
+
 .marker-circle-start {
     marker-start: url('#marker-circle');
 }

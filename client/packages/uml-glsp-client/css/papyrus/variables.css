@@ -80,6 +80,7 @@
     --uml-decision-node-icon: url("../../resources/papyrus/obj16/DecisionNode.gif");
     --uml-delete-16x16-icon: url("../../resources/papyrus/obj16/Delete_16x16.gif");
     --uml-dependency-icon: url("../../resources/papyrus/obj16/Dependency.gif");
+    --uml-connector-icon: url("../../resources/papyrus/obj16/Connector.gif");
     --uml-deployment-icon: url("../../resources/papyrus/obj16/Deployment.gif");
     --uml-deployment-specification-icon: url("../../resources/papyrus/obj16/DeploymentSpecification.gif");
     --uml-destroy-link-action-icon: url("../../resources/papyrus/obj16/DestroyLinkAction.gif");

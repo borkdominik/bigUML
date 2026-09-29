@@ -18,6 +18,7 @@ import {
 } from '../builder/grammar-transformer.js';
 
 export function renderLangiumText(grammar: LangiumGrammar, _languageId: string = 'grammar', languageName: string = 'NewGrammar') {
+    enumKeys = collectEnumKeys(grammar);
     const text = [`grammar ${languageName.replace(/ /g, '')}\n\n`];
     text.push(`import '../../env/langium/terminals'\n\n`);
     text.push(getJsonRule(grammar.entryRule, grammar, true) + '\n');
@@ -87,6 +88,8 @@ function getProperty(property: Definition, rules: LangiumGrammar): string {
     if (property.multiplicity === Multiplicity.ONE_TO_ONE) {
         if (property.crossReference) {
             text.push(...getReference(property));
+        } else if (property.type!.typeName === 'string') {
+            text.push(stringValue(property.name, '='));
         } else if (isString(rules, property.type!)) {
             text.push(`'"'`);
             text.push(property.name);
@@ -121,22 +124,14 @@ function getProperty(property: Definition, rules: LangiumGrammar): string {
             text.push(...getReference(property));
             text.push(')*');
         } else {
-            text.push('(');
-            text.push(isString(rules, property.type!) ? `'"'` : '');
-            text.push(property.name);
-            text.push('+=');
-            text.push(getLangiumType(property.type!.typeName));
-            text.push(isString(rules, property.type!) ? `'"'` : '');
-            text.push(')');
-
-            text.push('(');
-            text.push(" ',' ");
-            text.push(isString(rules, property.type!) ? `'"'` : '');
-            text.push(property.name);
-            text.push('+=');
-            text.push(getLangiumType(property.type!.typeName));
-            text.push(isString(rules, property.type!) ? `'"'` : '');
-            text.push(')*');
+            const item = (): string =>
+                property.type!.typeName === 'string'
+                    ? stringValue(property.name, '+=')
+                    : isString(rules, property.type!)
+                      ? `'"' ${property.name} += ${getLangiumType(property.type!.typeName)} '"'`
+                      : `${property.name} += ${getLangiumType(property.type!.typeName)}`;
+            text.push(`( ${item()} )`);
+            text.push(`( ',' ${item()} )*`);
         }
         text.push(')' + (property.multiplicity === Multiplicity.ZERO_TO_N ? '?' : ''));
         text.push("']'");
@@ -158,14 +153,58 @@ function getReference(property: Definition): string[] {
     text.push(`'"__value"'`);
     text.push(`':'`);
     text.push(
-        `'"'${property.name}${property.multiplicity === Multiplicity.ONE_TO_ONE ? '=' : '+='}[${property.type!.typeName}:LANGIUM_ID]'"'`
+        `${property.name}${property.multiplicity === Multiplicity.ONE_TO_ONE ? '=' : '+='}[${property.type!.typeName}:STRING]`
     );
     text.push(`'}'`);
     return text;
 }
 
+/**
+ * The rule a property's value is read with. A string of any kind - a name, free text, an id - is one
+ * JSON string (`STRING`), read and written the way JSON reads and writes it, so it can hold anything.
+ */
 function getLangiumType(type: string) {
-    return type === 'string' ? 'LANGIUM_ID' : type === 'number' ? 'LANGIUM_INT' : type === 'boolean' ? 'LANGIUM_BOOL' : type;
+    return type === 'string' ? 'STRING' : type === 'number' ? 'LANGIUM_INT' : type === 'boolean' ? 'LANGIUM_BOOL' : type;
+}
+
+/**
+ * The keys that hold an enum value somewhere in the grammar, with the rules of those enums. An enum value
+ * is written as the quoted keyword it is (`"visibility": "PUBLIC"`), which keeps its type in the AST; the
+ * lexer hands such a value over as that keyword rather than as a `STRING` (see `UmlDiagramTokenBuilder`).
+ */
+let enumKeys = new Map<string, Set<string>>();
+
+function collectEnumKeys(grammar: LangiumGrammar): Map<string, Set<string>> {
+    const keys = new Map<string, Set<string>>();
+    for (const rule of [grammar.entryRule, ...grammar.parserRules]) {
+        for (const property of rule.definitions) {
+            const type = property.type;
+            if (!type || property.crossReference || type.typeName === 'string' || !isString(grammar, type)) {
+                continue;
+            }
+            if (type.type === 'constant') {
+                continue;
+            }
+            const rules = keys.get(property.name) ?? new Set<string>();
+            rules.add(type.typeName);
+            keys.set(property.name, rules);
+        }
+    }
+    return keys;
+}
+
+/**
+ * A string property's value. Where the same key holds an enum in another element - a parameter's
+ * `effect` is an `EffectType`, a transition's is free text - the lexer cannot tell the two apart and
+ * hands over a value that reads as one of those enum values as its keyword, so the keyword is taken here
+ * too.
+ */
+function stringValue(name: string, operator: '=' | '+='): string {
+    const enums = enumKeys.get(name);
+    if (!enums || enums.size === 0) {
+        return `${name} ${operator} STRING`;
+    }
+    return `( ${name} ${operator} STRING | ${[...enums].map(rule => `'"' ${name} ${operator} ${rule} '"'`).join(' | ')} )`;
 }
 
 /** Wrap a constant value as a Langium keyword (e.g., `"CLASS"`). */

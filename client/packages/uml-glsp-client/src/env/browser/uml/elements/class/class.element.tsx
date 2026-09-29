@@ -13,5 +13,6 @@ export class GClassNode extends NamedElement {
     isAbstract: boolean = false;
 }
 
+/** A class drawn as its compartments are laid out: the name at the size every other name is written at. */
 @injectable()
 export class GClassNodeView extends NamedElementView {}

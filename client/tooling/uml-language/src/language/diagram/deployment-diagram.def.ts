@@ -21,9 +21,13 @@ import type { Device } from '../elements/device-element.def.js';
 import type { ExecutionEnvironment } from '../elements/execution-environment-element.def.js';
 import type { Generalization } from '../elements/generalization-element.def.js';
 import type { Manifestation } from '../elements/manifestation-element.def.js';
+import type { Note } from '../elements/note-element.def.js';
+import type { TextLabel } from '../elements/text-label-element.def.js';
 import type { Operation } from '../elements/operation-element.def.js';
 import type { Parameter } from '../elements/parameter-element.def.js';
 import type { Property } from '../elements/property-element.def.js';
+import type { GenericEdge } from '../elements/generic-edge-element.def.js';
+import type { EdgeAnchor } from '../elements/edge-anchor-element.def.js';
 
 // @ts-nocheck
 
@@ -46,6 +50,9 @@ type DeploymentDiagramNodes =
     | DeploymentPackage
     | Property
     | Operation
-    | Parameter;
+    | Parameter
+    | Note
+    | TextLabel
+    | EdgeAnchor;
 
-type DeploymentDiagramEdges = CommunicationPath | Dependency | Manifestation | Deployment | Generalization;
+type DeploymentDiagramEdges = CommunicationPath | Dependency | Manifestation | Deployment | Generalization | GenericEdge;

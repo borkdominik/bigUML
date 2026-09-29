@@ -6,23 +6,28 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
+import { CommonModelTypes, EDGE_CENTER_TYPE } from '@borkdominik-biguml/uml-glsp-server';
 import { configureModelElement, FeatureModule, GCompartmentView, GLabel, GLabelView } from '@eclipse-glsp/client';
 import { GUmlCompartment } from '../views/uml-compartment.js';
+import { GConnectionPointPort, GConnectionPointPortView } from './views/connection-point.view.js';
+import { GEdgeCenterPort } from './views/edge-center-port.js';
 import { GCompartmentContainer } from './views/uml-compartment.js';
 import { GDivider, GDividerView } from './views/uml-divider.view.js';
 import { GIconCSS, GIconCSSView } from './views/uml-icon.view.js';
-import { GEditableLabel, GEditableLabelView } from './views/uml-label.view.js';
+import { GEditableLabel, GEditableLabelView, GOutsideNameLabel } from './views/uml-label.view.js';
 
 export const umlModule = new FeatureModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
 
     configureModelElement(context, CommonModelTypes.LABEL_NAME, GEditableLabel, GEditableLabelView);
     configureModelElement(context, CommonModelTypes.LABEL_EDGE_NAME, GEditableLabel, GEditableLabelView);
+    configureModelElement(context, CommonModelTypes.LABEL_OUTSIDE_NAME, GOutsideNameLabel, GEditableLabelView);
     configureModelElement(context, CommonModelTypes.LABEL_TEXT, GLabel, GLabelView);
     configureModelElement(context, CommonModelTypes.ICON_CSS, GIconCSS, GIconCSSView);
     configureModelElement(context, CommonModelTypes.DIVIDER, GDivider, GDividerView);
     configureModelElement(context, CommonModelTypes.COMP_HEADER, GUmlCompartment, GCompartmentView);
     configureModelElement(context, CommonModelTypes.COMP_ROOT_COMPONENT, GUmlCompartment, GCompartmentView);
     configureModelElement(context, CommonModelTypes.COMP_CONTAINER, GCompartmentContainer, GCompartmentView);
+    configureModelElement(context, CommonModelTypes.CONNECTION_POINT, GConnectionPointPort, GConnectionPointPortView);
+    configureModelElement(context, EDGE_CENTER_TYPE, GEdgeCenterPort, GConnectionPointPortView);
 });

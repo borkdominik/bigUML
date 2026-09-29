@@ -1,3 +1,10 @@
+<%
+/*
+ * UML visibility -> Java modifier. `PACKAGE` and `NONE` have no Java keyword, so they emit
+ * nothing; the model stores the values in upper case, Java needs them lower case.
+ */
+const javaVisibility = v => (!v || v === 'PACKAGE' || v === 'NONE') ? '' : String(v).toLowerCase() + ' ';
+%>
 <% it.packagedElement.forEach(function(element) { %>
 <% if (element.__type === 'Interface') { %>
 public interface <%= element.name %> {
@@ -7,14 +14,14 @@ public interface <%= element.name %> {
     <% const returnParam = op.ownedParameter ? op.ownedParameter.find(p => p.direction === 'return') : undefined; %>
     <% const returnType = returnParam && returnParam.type ? returnParam.type.name : 'void'; %>
     <% const params = op.ownedParameter ? op.ownedParameter.filter(p => p.direction !== 'return') : []; %>
-    <% const visibility = (!op.visibility || op.visibility === 'package') ? '' : op.visibility + ' '; %>
+    <% const visibility = javaVisibility(op.visibility); %>
     <%= visibility %><%= returnType %> <%= op.name %>(<%= params.map(p => (p.type ? p.type.name : 'Object') + ' ' + p.name).join(', ') %>);
     <% }) %>
 <% } %>
 }
 
 <% } else if (element.__type === 'Class') { %>
-<% const classVisibility = (!element.visibility || element.visibility === 'package') ? '' : element.visibility + ' '; %>
+<% const classVisibility = javaVisibility(element.visibility); %>
 <% const abstractMod = element.isAbstract ? 'abstract ' : ''; %>
 <% const extendsPart = element.generalization && element.generalization.length > 0 ? ' extends ' + element.generalization[0].general.name : ''; %>
 <% const implementsPart = element.interfaceRealization && element.interfaceRealization.length > 0 ? ' implements ' + element.interfaceRealization.map(i => i.contract.name).join(', ') : ''; %>
@@ -22,7 +29,7 @@ public interface <%= element.name %> {
 <% if (element.ownedAttribute) { %>
     <% element.ownedAttribute.forEach(function(attr) { %>
 
-    <% const attrVisibility = (!attr.visibility || attr.visibility === 'package') ? '' : attr.visibility + ' '; %>
+    <% const attrVisibility = javaVisibility(attr.visibility); %>
     <%= attrVisibility %><%= attr.type ? attr.type.name : 'Object' %> <%= attr.name %>;
     <% }) %>
 <% } %>
@@ -32,7 +39,7 @@ public interface <%= element.name %> {
     <% const returnParam = op.ownedParameter ? op.ownedParameter.find(p => p.direction === 'return') : undefined; %>
     <% const returnType = returnParam && returnParam.type ? returnParam.type.name : 'void'; %>
     <% const params = op.ownedParameter ? op.ownedParameter.filter(p => p.direction !== 'return') : []; %>
-    <% const opVisibility = (!op.visibility || op.visibility === 'package') ? '' : op.visibility + ' '; %>
+    <% const opVisibility = javaVisibility(op.visibility); %>
     <%= opVisibility %><%= returnType %> <%= op.name %>(<%= params.map(p => (p.type ? p.type.name : 'Object') + ' ' + p.name).join(', ') %>);
     <% }) %>
 <% } %>

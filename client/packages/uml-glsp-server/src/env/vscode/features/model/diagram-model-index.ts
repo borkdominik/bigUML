@@ -1,166 +1,109 @@
-/********************************************************************************
- * Copyright (c) 2022 EclipseSource and others.
+/**********************************************************************************
+ * Copyright (c) 2026 borkdominik and others.
  *
  * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v. 2.0 which is available at
- * http://www.eclipse.org/legal/epl-2.0.
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
  *
- * This Source Code may also be made available under the following Secondary
- * Licenses when the conditions for such availability set forth in the Eclipse
- * Public License v. 2.0 are satisfied: GNU General Public License, version 2
- * with the GNU Classpath Exception which is available at
- * https://www.gnu.org/software/classpath/license.html.
- *
- * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
- ********************************************************************************/
+ * SPDX-License-Identifier: MIT
+ **********************************************************************************/
+import { type IdAstNode, isIdAstNode } from '@borkdominik-biguml/uml-model-server';
+import { type Bounds, type Diagram, type Point as PointNode } from '@borkdominik-biguml/uml-model-server/grammar';
+import { UmlDiagramLSPServices } from '@borkdominik-biguml/uml-model-server/integration';
+import type { Dimension, Point } from '@eclipse-glsp/protocol';
 import { GModelIndex } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
-
-import { type IdAstNode, isIdAstNode } from '@borkdominik-biguml/uml-model-server';
-import {
-    type Class,
-    type DataType,
-    type Diagram,
-    type Enumeration,
-    type Interface,
-    type Position,
-    type PrimitiveType,
-    type Property,
-    type Relation,
-    type Size,
-    isClass,
-    isDataType,
-    isEnumeration,
-    isInterface,
-    isPosition,
-    isPrimitiveType,
-    isProperty,
-    isRelation,
-    isSize
-} from '@borkdominik-biguml/uml-model-server/grammar';
-import { UmlDiagramLSPServices } from '@borkdominik-biguml/uml-model-server/integration';
 import { type AstNode, AstUtils } from 'langium';
 
-type JSONValue = string | number | boolean | null | JSONObject | JSONArray;
-interface JSONObject {
-    [key: string]: JSONValue;
-}
-type JSONArray = JSONValue[];
-
 /**
- * Custom model index that not only indexes the GModel elements but also the semantic elements (AstNodes) they represent.
+ * Looks elements of the semantic model up by id, and answers where each is stored: as a JSON pointer
+ * into the document, which is what a patch is addressed by, and the layout it carries in `bounds`.
+ *
+ * Indexes the graph as well, as every `GModelIndex` does; the semantic side is rebuilt by
+ * `DiagramModelState` whenever the model changes.
  */
 @injectable()
 export class DiagramModelIndex extends GModelIndex {
-    @inject(UmlDiagramLSPServices) services: UmlDiagramLSPServices;
+    @inject(UmlDiagramLSPServices)
+    protected readonly services: UmlDiagramLSPServices;
 
     protected idToSemanticNode = new Map<string, AstNode>();
     protected idToPath = new Map<string, string>();
-    protected dataTypes = new Array<Enumeration | Class | DataType | Interface | PrimitiveType>();
-    protected definingFeatures = new Array<Class | Interface | Property>();
-    protected _root: Diagram | undefined;
 
     createId(node?: AstNode): string | undefined {
         return this.services.language.references.QualifiedNameProvider.getLocalName(node);
     }
 
-    get root() {
-        return this._root;
-    }
-
     indexSemanticRoot(root: Diagram): void {
-        this._root = root;
         this.idToSemanticNode.clear();
         this.idToPath.clear();
-        this.dataTypes.length = 0;
-        this.definingFeatures.length = 0;
-        AstUtils.streamAst(root).forEach(node => {
-            this.indexAstNode(node);
-            this.indexDataTypeNode(node);
-            this.indexDefiningFeatureNode(node);
-        });
-        this.collectIdToPath(JSON.parse(this.services.language.serializer.JsonSerializer.serialize(root)));
+        AstUtils.streamAst(root).forEach(node => this.indexAstNode(node));
     }
 
-    collectIdToPath(json: JSONValue, path: string = ''): void {
-        if (json && typeof json === 'object') {
-            if (Array.isArray(json)) {
-                json.forEach((element, index) => {
-                    this.collectIdToPath(element, path + '/' + index);
-                });
-            } else {
-                Object.keys(json).forEach(key => {
-                    if (key === '__id') {
-                        this.idToPath.set(json[key] as string, path);
-                    }
-                    if (key !== '$ref') {
-                        this.collectIdToPath(json[key], path + '/' + key);
-                    }
-                });
-            }
-        }
-    }
-
-    protected indexDataTypeNode(node: AstNode) {
-        if (isDataType(node) || isEnumeration(node) || isClass(node) || isInterface(node) || isPrimitiveType(node)) {
-            this.dataTypes.push(node);
-        }
-    }
-    protected indexDefiningFeatureNode(node: AstNode) {
-        if (isClass(node) || isInterface(node) || isProperty(node)) {
-            this.definingFeatures.push(node);
-        }
-    }
-    getAllDataTypes() {
-        return this.dataTypes;
-    }
-    getAllDefiningFeatures() {
-        return this.definingFeatures;
-    }
     protected indexAstNode(node: AstNode): void {
         const id = this.createId(node);
         if (id) {
             this.idToSemanticNode.set(id, node);
+            this.idToPath.set(id, pathOf(node));
         }
     }
 
-    addNodeToIndexWithDifferentId(idNode: AstNode, node: AstNode): void {
-        const id = this.createId(idNode);
-        if (id) {
-            this.idToSemanticNode.set(id, node);
-        }
+    /** The bounds stored on an element, where it has any. */
+    findBounds(elementId: string): Bounds | undefined {
+        return (this.findIdElement(elementId) as { bounds?: Bounds } | undefined)?.bounds;
     }
 
-    findClass(id: string): Class | undefined {
-        return this.findSemanticElement(id, isClass);
+    /** The JSON pointer of an element's `bounds`, whether or not it has any yet. */
+    findBoundsPath(elementId: string): string | undefined {
+        const path = this.findPath(elementId);
+        return path !== undefined ? `${path}/bounds` : undefined;
     }
-    findEnumeration(id: string): Enumeration | undefined {
-        return this.findSemanticElement(id, isEnumeration);
+
+    findPosition(elementId: string): Point | undefined {
+        const bounds = this.findBounds(elementId);
+        return bounds ? { x: bounds.x, y: bounds.y } : undefined;
     }
-    findEdge(id: string): Relation | undefined {
-        return this.findSemanticElement(id, isRelation);
+
+    findSize(elementId: string): Dimension | undefined {
+        const bounds = this.findBounds(elementId);
+        return bounds ? { width: bounds.width, height: bounds.height } : undefined;
     }
-    findSize(nodeId: string): Size | undefined {
-        return this.findSemanticElement(`size_${nodeId}`, isSize);
+
+    /** The bend points stored on an edge, where it has any. */
+    findRoutingPoints(edgeId: string): PointNode[] | undefined {
+        return (this.findIdElement(edgeId) as { routingPoints?: PointNode[] } | undefined)?.routingPoints;
     }
-    findSizePath(nodeId: string): string | undefined {
-        return this.findPath(`size_${nodeId}`);
-    }
-    findPosition(nodeId: string): Position | undefined {
-        return this.findSemanticElement(`pos_${nodeId}`, isPosition);
-    }
-    findPositionPath(nodeId: string): string | undefined {
-        return this.findPath(`pos_${nodeId}`);
-    }
+
+    /** The JSON pointer of the element with this id, as a patch addresses it. */
     findPath(id: string): string | undefined {
         return this.idToPath.get(id);
     }
+
+    /**
+     * An id that names no semantic element is an ordinary answer, not a mistake: the graph root, a
+     * compartment, a label all have ids of their own and none of them is an element of the model.
+     */
     findIdElement(id: string): IdAstNode | undefined {
         const semanticNode = this.idToSemanticNode.get(id);
-        return isIdAstNode(semanticNode!) ? semanticNode : undefined;
+        return isIdAstNode(semanticNode) ? semanticNode : undefined;
     }
+
     findSemanticElement<T extends AstNode>(id: string, guard: (item: unknown) => item is T): T | undefined {
         const semanticNode = this.idToSemanticNode.get(id);
         return guard(semanticNode) ? semanticNode : undefined;
     }
+}
+
+/**
+ * The JSON pointer of a node in its document: the containment properties and array indices down from
+ * the root, which is how the serializer lays the document out.
+ */
+function pathOf(node: AstNode): string {
+    const segments: string[] = [];
+    for (let current: AstNode | undefined = node; current?.$container; current = current.$container) {
+        if (current.$containerIndex !== undefined) {
+            segments.unshift(String(current.$containerIndex));
+        }
+        segments.unshift(current.$containerProperty!);
+    }
+    return segments.length > 0 ? `/${segments.join('/')}` : '';
 }

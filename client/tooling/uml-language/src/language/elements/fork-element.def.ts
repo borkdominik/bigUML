@@ -19,6 +19,8 @@ import { Node, type Visibility } from '../core/element.def.js';
     icon: 'uml-pseudostate-fork-icon'
 })
 @Glsp.defaults
+// A bar rather than a box; standing it up is a resize.
+@Glsp.defaultSize({ width: 120, height: 10 })
 export class Fork extends Node {
     name?: string;
     visibility?: Visibility;

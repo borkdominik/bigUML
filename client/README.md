@@ -50,7 +50,8 @@ You can create a new `.uml` file in two ways:
 ## Scripts
 
 Key scripts defined in the root `package.json`:
-
+5
+5
 | Script                  | Description                                                                |
 | ----------------------- | -------------------------------------------------------------------------- |
 | `npm run build`         | Clean build of all packages via Lerna (slower, full rebuild)               |
@@ -94,3 +95,4 @@ The project ships with pre-built Copilot skills (`.github/skills/`) that automat
 | **new-vscode-command**  | Add a VSCode command with DI-based registration and `package.json` declaration                 |
 | **new-webview**         | Add a webview (sidebar, panel, or custom editor) with React entry point and messaging          |
 | **skill-creator**       | Create new skills or improve existing ones                                                     |
+0000

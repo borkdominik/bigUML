@@ -10,24 +10,34 @@ import { Language } from '@borkdominik-biguml/uml-language-tooling';
 
 export abstract class Element {}
 
-export abstract class ElementWithSizeAndPosition extends Element {}
-
-export abstract class Node extends ElementWithSizeAndPosition {}
-
-export abstract class Edge extends Element {}
-
-export abstract class Unbounded extends Element {}
-
-export abstract class MetaInfo {
-    @Language.reference element: ElementWithSizeAndPosition;
-}
-export class Size extends MetaInfo {
-    height: number;
+/** Where a node is drawn and how large, in diagram coordinates. */
+@Language.value
+export class Bounds {
+    x: number;
+    y: number;
     width: number;
+    height: number;
 }
-export class Position extends MetaInfo {
+
+/** One bend point of an edge. */
+@Language.value
+export class Point {
     x: number;
     y: number;
 }
 
-export type Visibility = 'PUBLIC' | 'PRIVATE' | 'PROTECTED' | 'PACKAGE';
+export abstract class ElementWithSizeAndPosition extends Element {
+    bounds?: Bounds;
+}
+
+export abstract class Node extends ElementWithSizeAndPosition {}
+
+export abstract class Edge extends Element {
+    /** The bend points of the edge, from the source end on. */
+    routingPoints?: Array<Point>;
+}
+
+export abstract class Unbounded extends Element {}
+
+/** `NONE` leaves the visibility unspecified — no symbol is rendered for the element. */
+export type Visibility = 'PUBLIC' | 'PRIVATE' | 'PROTECTED' | 'PACKAGE' | 'NONE';

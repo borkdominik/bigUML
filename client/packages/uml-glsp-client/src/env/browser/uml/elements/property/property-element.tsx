@@ -11,8 +11,8 @@ import { NamedElement, NamedElementView } from '../named-element/index.js';
 
 export class GPropertyNode extends NamedElement {
     propertyType?: string;
-    visibility: string = 'PUBLIC';
-    multiplicity: string = '1';
+    visibility: string = 'NONE';
+    multiplicity?: string;
 }
 
 @injectable()

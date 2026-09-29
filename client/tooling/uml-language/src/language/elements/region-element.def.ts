@@ -20,6 +20,7 @@ import type { Transition } from './transition-element.def.js';
     icon: 'uml-region-icon'
 })
 @Glsp.defaults
+@Glsp.defaultSize({ width: 600, height: 240 })
 export class Region extends Node {
     name?: string;
     visibility?: Visibility;

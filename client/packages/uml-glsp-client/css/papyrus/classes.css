@@ -237,6 +237,9 @@
 .uml-dependency-icon {
     background-image: var(--uml-dependency-icon);
 }
+.uml-connector-icon {
+    background-image: var(--uml-connector-icon);
+}
 .uml-deployment-icon {
     background-image: var(--uml-deployment-icon);
 }

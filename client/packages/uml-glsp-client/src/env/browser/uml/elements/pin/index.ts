@@ -6,5 +6,4 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-export * from './pin-node-view.js';
 export * from './pin.element.js';

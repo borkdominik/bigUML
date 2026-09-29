@@ -14,6 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
+    DIAGRAM_CLIENT,
     type DiagramSerializer,
     type ModelService,
     type QualifiedNameProvider,
@@ -22,6 +23,7 @@ import {
 import { type Diagram } from '@borkdominik-biguml/uml-model-server/grammar';
 import { UmlDiagramLSPServices } from '@borkdominik-biguml/uml-model-server/integration';
 import { ActionDispatcher, DefaultModelState, Emitter, type JsonModelState, MessageAction, type SeverityLevel } from '@eclipse-glsp/server';
+import { type Point } from '@eclipse-glsp/protocol';
 import { inject, injectable } from 'inversify';
 import { URI } from 'vscode-uri';
 import { DiagramModelIndex } from './diagram-model-index.js';
@@ -101,7 +103,7 @@ export class DiagramModelState extends DefaultModelState implements JsonModelSta
 
     async updateSemanticRoot(content?: string, doNotUpdateSemanticRoot?: boolean): Promise<void> {
         if (!doNotUpdateSemanticRoot) {
-            this._semanticRoot = await this.modelService.update(this.semanticUri, content ?? this.semanticRoot, 'glsp');
+            this._semanticRoot = await this.modelService.update(this.semanticUri, content ?? this.semanticRoot, DIAGRAM_CLIENT);
         }
 
         this.index.indexSemanticRoot(this.semanticRoot);
@@ -109,7 +111,7 @@ export class DiagramModelState extends DefaultModelState implements JsonModelSta
 
     async sendModelPatch(patch: string): Promise<void> {
         try {
-            this._semanticRoot = await this.modelService.patch(this.semanticUri, patch, 'glsp');
+            this._semanticRoot = await this.modelService.patch(this.semanticUri, patch, DIAGRAM_CLIENT);
             this.index.indexSemanticRoot(this.semanticRoot);
         } catch (ex: unknown) {
             console.error('Error applying model patch:', ex);
@@ -125,7 +127,7 @@ export class DiagramModelState extends DefaultModelState implements JsonModelSta
 
     async updateSourceModel(sourceModel: DiagramSourceModel, doNotUpdateSemanticRoot?: boolean): Promise<void> {
         if (!doNotUpdateSemanticRoot) {
-            this._semanticRoot = await this.modelService.update<Diagram>(this.semanticUri, sourceModel.text ?? this.semanticRoot, 'glsp');
+            this._semanticRoot = await this.modelService.update<Diagram>(this.semanticUri, sourceModel.text ?? this.semanticRoot, DIAGRAM_CLIENT);
         }
 
         this.index.indexSemanticRoot(this.semanticRoot);
@@ -147,5 +149,14 @@ export class DiagramModelState extends DefaultModelState implements JsonModelSta
     async redo() {
         this._semanticRoot = await this.modelService.redo(this.semanticUri);
         this.index.indexSemanticRoot(this.semanticRoot);
+    }
+
+    /**
+     * The bend points of an edge, read from its `routingPoints` - written there by
+     * `GenericChangeRoutingPointsOperationHandler`, so they are saved with the file and undone with the
+     * rest of the model.
+     */
+    getRoutingPoints(edgeId: string): Point[] | undefined {
+        return this.index.findRoutingPoints(edgeId)?.map(point => ({ x: point.x, y: point.y }));
     }
 }

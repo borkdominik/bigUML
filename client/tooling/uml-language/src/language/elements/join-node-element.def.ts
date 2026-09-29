@@ -19,6 +19,7 @@ import { Node, type Visibility } from '../core/element.def.js';
     icon: 'uml-join-node-icon'
 })
 @Glsp.defaults
+@Glsp.defaultSize({ width: 120, height: 10 })
 export class JoinNode extends Node {
     name?: string;
     visibility?: Visibility;

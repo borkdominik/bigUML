@@ -28,10 +28,17 @@ export class UseCaseView extends ShapeView {
         const lineStart = (rX * 2 - lineLength) / 2;
         const linePath = 'M ' + lineStart + ',48  L ' + (lineStart + lineLength) + ',48';
 
+        // The vbox layout used for the name label always top-anchors its content and has no
+        // vertical-centering option, so it is re-centered here based on its own computed bounds.
+        const label: any = node.children[0];
+        const labelBounds = label?.bounds;
+        const dx = labelBounds ? rX - (labelBounds.x + labelBounds.width / 2) : 0;
+        const dy = labelBounds ? rY - (labelBounds.y + labelBounds.height / 2) : 0;
+
         const useCaseNode: any = (
             <g class-node={true} class-selected={node.selected} class-mouseover={node.hoverFeedback}>
                 <ellipse cx={rX} cy={rY} rx={rX} ry={rY} />
-                {context.renderChildren(node)}
+                <g transform={`translate(${dx}, ${dy})`}>{context.renderChildren(node)}</g>
                 {node.children[1] && node.children[1].children.length > 0 ? <path class-uml-comp-separator={true} d={linePath}></path> : ''}
             </g>
         );

@@ -29,10 +29,15 @@ export namespace ActivityDiagramNodeTypes {
     export const ACTIVITY_PARAMETER_NODE = representationTypeId('Activity', DefaultTypes.NODE, 'ActivityParameterNode');
     export const INPUT_PIN = representationTypeId('Activity', DefaultTypes.NODE, 'InputPin');
     export const OUTPUT_PIN = representationTypeId('Activity', DefaultTypes.NODE, 'OutputPin');
+    export const PROPERTY = representationTypeId('Activity', DefaultTypes.NODE, 'Property');
+    export const NOTE = representationTypeId('Activity', DefaultTypes.NODE, 'Note');
+    export const TEXT_LABEL = representationTypeId('Activity', DefaultTypes.NODE, 'TextLabel');
+    export const EDGE_ANCHOR = representationTypeId('Activity', DefaultTypes.NODE, 'EdgeAnchor');
 }
 
 export namespace ActivityDiagramEdgeTypes {
     export const CONTROL_FLOW = representationTypeId('Activity', DefaultTypes.EDGE, 'ControlFlow');
+    export const GENERIC_EDGE = representationTypeId('Activity', DefaultTypes.EDGE, 'GenericEdge');
 }
 
 export namespace ActivityDiagramModelTypes {
@@ -53,9 +58,14 @@ export namespace ActivityDiagramModelTypes {
     export const ACTIVITY_PARAMETER_NODE = ActivityDiagramNodeTypes.ACTIVITY_PARAMETER_NODE;
     export const INPUT_PIN = ActivityDiagramNodeTypes.INPUT_PIN;
     export const OUTPUT_PIN = ActivityDiagramNodeTypes.OUTPUT_PIN;
+    export const PROPERTY = ActivityDiagramNodeTypes.PROPERTY;
+    export const NOTE = ActivityDiagramNodeTypes.NOTE;
+    export const TEXT_LABEL = ActivityDiagramNodeTypes.TEXT_LABEL;
+    export const EDGE_ANCHOR = ActivityDiagramNodeTypes.EDGE_ANCHOR;
 
     // re-export edges
     export const CONTROL_FLOW = ActivityDiagramEdgeTypes.CONTROL_FLOW;
+    export const GENERIC_EDGE = ActivityDiagramEdgeTypes.GENERIC_EDGE;
 }
 
 export namespace ActivityAstTypes {
@@ -76,7 +86,12 @@ export namespace ActivityAstTypes {
         ActivityParameterNode: ActivityDiagramModelTypes.ACTIVITY_PARAMETER_NODE,
         InputPin: ActivityDiagramModelTypes.INPUT_PIN,
         OutputPin: ActivityDiagramModelTypes.OUTPUT_PIN,
-        ControlFlow: ActivityDiagramModelTypes.CONTROL_FLOW
+        Property: ActivityDiagramModelTypes.PROPERTY,
+        Note: ActivityDiagramModelTypes.NOTE,
+        TextLabel: ActivityDiagramModelTypes.TEXT_LABEL,
+        EdgeAnchor: ActivityDiagramModelTypes.EDGE_ANCHOR,
+        ControlFlow: ActivityDiagramModelTypes.CONTROL_FLOW,
+        GenericEdge: ActivityDiagramModelTypes.GENERIC_EDGE
     };
 
     export function convertToAst(elementId: string): string {

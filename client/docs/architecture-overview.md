@@ -136,6 +136,7 @@ The language definition file (`def.ts`) declares UML elements as TypeScript clas
 - **`@withDefaults`** - All properties receive default values for new element creation
 - **`@path`** - Declares a containment relationship (parent → children)
 - **`@crossReference`** - Declares a reference to another element
+- **`@Language.value`** - Marks a value object nested inside an element, such as its `bounds` or an edge's `routingPoints`: no `__id`, not a diagram element, not containment
 - **`@astType('...')`** - Maps a semantic type to its AST representation (e.g., `Aggregation` → `Association`)
 - **`@dynamicProperty('...')`** - Enables runtime choice list population from the model state
 - ...

@@ -7,6 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 export * from './generic-change-bounds-operation-handler.js';
+export * from './generic-change-routing-points-operation-handler.js';
 export * from './generic-create-edge-operation-handler.js';
 export * from './generic-create-node-operation-handler.js';
 export * from './generic-delete-operation-handler.js';

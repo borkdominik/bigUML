@@ -7,20 +7,13 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import {
-    BButton,
-    BCheckbox,
-    BContextMenu,
-    BContextMenuItem,
-    BOption,
-    BTextfield,
-    classNames,
-    VSCodeContext
-} from '@borkdominik-biguml/big-components';
+import { BButton, BCheckbox, BContextMenu, BOption, BTextfield, classNames, VSCodeContext } from '@borkdominik-biguml/big-components';
 import { UpdateElementPropertyAction, type ElementReferenceProperty } from '@borkdominik-biguml/big-property-palette';
-import { CompoundOperation } from '@eclipse-glsp/protocol';
+import { isValidMultiplicity, sanitizeMultiplicity } from '@borkdominik-biguml/uml-glsp-server';
+import { CompoundOperation, DeleteElementOperation } from '@eclipse-glsp/protocol';
 import { useCallback, useContext, useEffect, useRef, useState, type ChangeEvent, type ReactElement } from 'react';
 import Sortable from 'sortablejs';
+import { TypeCombobox } from './type-combobox.component.js';
 
 export interface PropertyDeleteEventDetail {
     references: ElementReferenceProperty.Reference[];
@@ -51,6 +44,7 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
     const [item, setItem] = useState<ElementReferenceProperty | undefined>(undefined);
     const itemsElementRef = useRef<HTMLDivElement | null>(null);
     const [_sortable, setSortable] = useState<Sortable | undefined>(undefined);
+    const [isCreateMenuOpen, setCreateMenuOpen] = useState(false);
 
     useEffect(() => {
         setItem(props.item);
@@ -76,13 +70,13 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
         [dispatchAction]
     );
 
-    const onNameChange = useCallback(
-        (item: ElementReferenceProperty.Reference, name: string) => {
+    const onFieldChange = useCallback(
+        (item: ElementReferenceProperty.Reference, propertyId: string, value: string) => {
             dispatchAction(
                 UpdateElementPropertyAction.create({
                     elementId: item.elementId,
-                    propertyId: 'name',
-                    value: name
+                    propertyId,
+                    value
                 })
             );
         },
@@ -91,14 +85,45 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
 
     const onCreate = useCallback(
         (create: ElementReferenceProperty.CreateReference) => {
+            setCreateMenuOpen(false);
             dispatchAction(create.action);
         },
         [dispatchAction]
     );
 
+    // The menu takes itself down again on the next click anywhere outside it. Closing it here as well
+    // keeps the button in step with it: left thinking the menu was still open, the button would want a
+    // click to close a menu that had already gone before it would open one again.
+    useEffect(() => {
+        if (!isCreateMenuOpen) {
+            return;
+        }
+
+        const close = (): void => setCreateMenuOpen(false);
+        // Listened for a frame late, so that the click opening the menu is not the one closing it.
+        const frame = requestAnimationFrame(() => document.addEventListener('click', close, { once: true }));
+
+        return () => {
+            cancelAnimationFrame(frame);
+            document.removeEventListener('click', close);
+        };
+    }, [isCreateMenuOpen]);
+
     const onDelete = useCallback(
         (references: ElementReferenceProperty.Reference[]) => {
-            dispatchAction(CompoundOperation.create(references.flatMap(r => r.deleteActions) as any));
+            const actions = references.flatMap(r => r.deleteActions);
+            // Merge every DeleteElementOperation into one so the server removes all targeted
+            // elements from a single, consistently-indexed patch instead of N patches whose
+            // array indices go stale as soon as an earlier one in the batch is applied.
+            const elementIds = actions.filter(DeleteElementOperation.is).flatMap(action => action.elementIds);
+            const otherActions = actions.filter(action => !DeleteElementOperation.is(action));
+            const mergedActions = elementIds.length > 0 ? [DeleteElementOperation.create(elementIds), ...otherActions] : otherActions;
+
+            if (mergedActions.length === 0) {
+                return;
+            }
+
+            dispatchAction(mergedActions.length === 1 ? mergedActions[0] : CompoundOperation.create(mergedActions as any));
         },
         [dispatchAction]
     );
@@ -190,19 +215,68 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
     );
 
     const renderItem = useCallback(
-        (item: ElementReferenceProperty, ref: ElementReferenceProperty.Reference) => {
+        (item: ElementReferenceProperty, ref: ElementReferenceProperty.Reference, index: number) => {
             return (
-                <div className='reference-item' data-id={ref.elementId} key={ref.elementId}>
+                // Keyed by position as well: rows need not stand for elements of their own - the bend
+                // points of an edge all carry the edge's id.
+                <div className='reference-item' data-id={ref.elementId} key={`${ref.elementId}-${index}`}>
                     <div className='reference-item-body'>
                         {item.isOrderable && <div className='handle codicon codicon-gripper'></div>}
-                        {ref.name === undefined ? (
+                        {ref.fields && ref.fields.length > 0 ? (
+                            // The fields the referenced type declares, side by side, each written back on its own.
+                            <div className='reference-item-fields'>
+                                {ref.fields.map(field => {
+                                    // Held to the same rules as the palette's own multiplicity field: what
+                                    // cannot be part of one is dropped as it is typed, and one left half-typed
+                                    // goes back to the stored value instead of being written.
+                                    const isMultiplicity = field.format === 'multiplicity';
+                                    if (field.suggestions) {
+                                        return (
+                                            <TypeCombobox
+                                                key={field.propertyId}
+                                                value={field.value}
+                                                suggestions={field.suggestions}
+                                                title={field.label}
+                                                onCommit={value => onFieldChange(ref, field.propertyId, value)}
+                                            />
+                                        );
+                                    }
+                                    return (
+                                        <BTextfield
+                                            key={field.propertyId}
+                                            className={classNames({ 'multiplicity-field': isMultiplicity })}
+                                            value={field.value}
+                                            placeholder={field.label}
+                                            title={field.label}
+                                            onInput={(e: any) => {
+                                                const input = e.target as HTMLInputElement;
+                                                if (isMultiplicity) {
+                                                    const sanitized = sanitizeMultiplicity(input.value);
+                                                    if (sanitized !== input.value) {
+                                                        input.value = sanitized;
+                                                    }
+                                                }
+                                            }}
+                                            onBlur={(e: any) => {
+                                                const input = e.target as HTMLInputElement;
+                                                if (isMultiplicity && input.value !== '' && !isValidMultiplicity(input.value)) {
+                                                    input.value = field.value;
+                                                    return;
+                                                }
+                                                onFieldChange(ref, field.propertyId, input.value);
+                                            }}
+                                        />
+                                    );
+                                })}
+                            </div>
+                        ) : ref.name === undefined ? (
                             <div className='reference-item-label'>{ref.label}</div>
                         ) : (
                             <div className='reference-item-name'>
                                 <BTextfield
                                     value={ref.name}
                                     onInput={() => {}}
-                                    onBlur={(e: any) => onNameChange(ref, (e.target as HTMLInputElement).value)}
+                                    onBlur={(e: any) => onFieldChange(ref, 'name', (e.target as HTMLInputElement).value)}
                                 />
                             </div>
                         )}
@@ -210,7 +284,9 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
                             {ref.deleteActions.length > 0 && (
                                 <BButton secondary icon='trash' className='action-delete' title='Delete' onClick={() => onDelete([ref])} />
                             )}
-                            <BButton secondary icon='chevron-right' title='Navigate' onClick={() => onNavigate(ref)} />
+                            {item.isNavigable && (
+                                <BButton secondary icon='chevron-right' title='Navigate' onClick={() => onNavigate(ref)} />
+                            )}
                         </div>
                     </div>
                     {ref.hint !== undefined && (
@@ -219,27 +295,56 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
                 </div>
             );
         },
-        [onDelete, onNavigate, onNameChange]
+        [onDelete, onNavigate, onFieldChange]
     );
 
     const renderHeader = useCallback(
         (item: ElementReferenceProperty) => {
+            // Added from the section's own header, beside the button that clears it: the list below is
+            // what is being added to, and on a long one an action underneath it is scrolled away from
+            // the heading that says what it would add. The autocomplete field is its own way in, so a
+            // section offering one is left with it alone.
+            const creates = item.isAutocomplete ? [] : item.creates;
+            const deletable = item.references.filter(r => r.deleteActions.length > 0);
+
+            if (creates.length === 0 && deletable.length === 0) {
+                return (
+                    <div className='reference-header'>
+                        <h4 className='reference-header-title'>{item.label}</h4>
+                    </div>
+                );
+            }
+
             return (
                 <div className='reference-header'>
                     <h4 className='reference-header-title'>{item.label}</h4>
-                    {item.references.some(r => r.deleteActions.length > 0) && (
-                        <div className='reference-header-actions'>
-                            <BButton
-                                secondary
-                                icon='trash'
-                                onClick={() => onDelete(item.references.filter(r => r.deleteActions.length > 0))}
-                            />
-                        </div>
-                    )}
+                    <div className='reference-header-actions'>
+                        {deletable.length > 0 && <BButton secondary icon='trash' title='Delete all' onClick={() => onDelete(deletable)} />}
+                        {creates.length > 0 && (
+                            <div className='reference-create'>
+                                <BButton
+                                    secondary
+                                    icon='add'
+                                    title={creates.length === 1 ? creates[0].label : 'Add'}
+                                    onClick={() => (creates.length === 1 ? onCreate(creates[0]) : setCreateMenuOpen(open => !open))}
+                                />
+                                {/* Where there is more than one thing to add - a message can join a link
+                                    running either way, say - the choice is offered rather than guessed at. */}
+                                {isCreateMenuOpen && creates.length > 1 && (
+                                    <BContextMenu
+                                        className='reference-create-menu'
+                                        show
+                                        data={creates.map((create, index) => ({ label: create.label, value: `${index}` }))}
+                                        onVscContextMenuSelect={event => onCreate(creates[Number(event.detail.value)])}
+                                    />
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </div>
             );
         },
-        [onDelete]
+        [isCreateMenuOpen, onCreate, onDelete]
     );
 
     const renderBody = useCallback(
@@ -247,26 +352,11 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
             return (
                 <div className='reference-body'>
                     {item.isAutocomplete && renderAutocomplete(item)}
-                    <div ref={itemsElementRef}>{item.references.map(ref => renderItem(item, ref))}</div>
-                    {item.creates.length > 0 && !item.isAutocomplete && (
-                        <div className='reference-body-actions'>
-                            {item.creates.length === 1 ? (
-                                <BButton onClick={() => onCreate(item.creates[0])}>Add</BButton>
-                            ) : (
-                                <BContextMenu>
-                                    {item.creates.map(c => (
-                                        <BContextMenuItem key={c.label} onClick={() => onCreate(c)}>
-                                            {c.label}
-                                        </BContextMenuItem>
-                                    ))}
-                                </BContextMenu>
-                            )}
-                        </div>
-                    )}
+                    <div ref={itemsElementRef}>{item.references.map((ref, index) => renderItem(item, ref, index))}</div>
                 </div>
             );
         },
-        [renderAutocomplete, renderItem, onCreate]
+        [renderAutocomplete, renderItem]
     );
 
     if (!props.item) {

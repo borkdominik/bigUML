@@ -5,95 +5,185 @@
 		"diagramType": "ACTIVITY",
 		"entities": [
 			{
-				"__type": "AcceptEventAction",
-				"__id": "AcceptEventAction_afc81366-d3e2-4c0b-868d-ddeee80508c4",
-				"name": "NewAcceptEventAction1",
-				"visibility": "PUBLIC"
+				"__type": "ActivityPartition",
+				"__id": "ActivityPartition_cf6d52ba-6eb3-4f5c-9e23-82afd0e2d1ac",
+				"name": "NewActivityPartition1",
+				"visibility": "NONE",
+				"orientation": "HORIZONTAL",
+				"subpartitions": [
+					{
+						"__type": "ActivityPartition",
+						"__id": "ActivityPartition_e53af743-348d-4702-a5c4-3f95b37f1abb",
+						"name": "NewActivityPartition2",
+						"subpartitions": [],
+						"nodes": [
+							{
+								"__type": "CentralBufferNode",
+								"__id": "CentralBufferNode_d3c00a4c-288e-4417-b127-91a853a01f64",
+								"name": "NewCentralBufferNode1",
+								"visibility": "NONE",
+								"bounds": {
+									"__type": "Bounds",
+									"x": 385.56,
+									"y": 150,
+									"width": 360.99,
+									"height": 130.9
+								}
+							}
+						]
+					},
+					{
+						"__type": "ActivityPartition",
+						"__id": "ActivityPartition_9d2520c8-b1d0-4ca9-83bc-4d739f645401",
+						"name": "NewActivityPartition3",
+						"subpartitions": [],
+						"nodes": []
+					},
+					{
+						"__type": "ActivityPartition",
+						"__id": "ActivityPartition_c936fa0c-6ff6-49d8-8652-563edb08166d",
+						"name": "NewActivityPartition4",
+						"visibility": "NONE",
+						"orientation": "HORIZONTAL",
+						"subpartitions": [
+							{
+								"__type": "ActivityPartition",
+								"__id": "ActivityPartition_b707550b-6d96-4264-8c77-5dbc817f12b7",
+								"name": "NewActivityPartition5",
+								"subpartitions": [],
+								"nodes": []
+							},
+							{
+								"__type": "ActivityPartition",
+								"__id": "ActivityPartition_e8131201-80a2-4120-b3c2-4c4c61526fa9",
+								"name": "NewActivityPartition6",
+								"subpartitions": [],
+								"nodes": []
+							}
+						],
+						"nodes": [],
+						"bounds": {
+							"__type": "Bounds",
+							"x": 0,
+							"y": 0,
+							"width": 600,
+							"height": 300
+						}
+					}
+				],
+				"nodes": [],
+				"bounds": {
+					"__type": "Bounds",
+					"x": 177,
+					"y": 163,
+					"width": 953,
+					"height": 1003
+				}
 			},
 			{
 				"__type": "Activity",
-				"__id": "Activity_0ba82120-a0a1-4a23-83fb-a7b9878fdc69",
+				"__id": "Activity_8f745d22-eed8-4220-b49b-2df878593c39",
 				"name": "NewActivity1",
-				"visibility": "PUBLIC",
-				"partitions": [],
-				"nodes": [],
-				"edges": []
+				"visibility": "NONE",
+				"parameters": [
+					{
+						"__type": "Property",
+						"__id": "Property_a576802c-4b1b-4f00-a677-09cc8fe443d7",
+						"name": "NewProperty1",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isNavigable": false,
+						"isUnique": false,
+						"visibility": "NONE"
+					}
+				],
+				"nodes": [
+					{
+						"__type": "FlowFinalNode",
+						"__id": "FlowFinalNode_2024c27e-0d4f-4706-96ad-f3bd9f79d608",
+						"name": "NewFlowFinalNode1",
+						"visibility": "NONE",
+						"bounds": {
+							"__type": "Bounds",
+							"x": 70,
+							"y": 230,
+							"width": 30,
+							"height": 30
+						}
+					},
+					{
+						"__type": "DecisionNode",
+						"__id": "DecisionNode_445a31f6-ede2-4baf-ac54-62187b078a31",
+						"name": "NewDecisionNode1",
+						"visibility": "NONE",
+						"bounds": {
+							"__type": "Bounds",
+							"x": 253.94,
+							"y": 170.68,
+							"width": 40,
+							"height": 40
+						}
+					},
+					{
+						"__type": "FlowFinalNode",
+						"__id": "FlowFinalNode_d27276d9-8287-4bf0-8774-92c18fbd057f",
+						"name": "NewFlowFinalNode2",
+						"visibility": "NONE",
+						"bounds": {
+							"__type": "Bounds",
+							"x": 410,
+							"y": 100,
+							"width": 30,
+							"height": 30
+						}
+					}
+				],
+				"bounds": {
+					"__type": "Bounds",
+					"x": 1460,
+					"y": 300,
+					"width": 600,
+					"height": 400
+				}
 			},
 			{
-				"__type": "ActivityFinalNode",
-				"__id": "ActivityFinalNode_fb6db018-ebff-49f9-a10f-864eb03de661",
-				"name": "NewActivityFinalNode1",
-				"visibility": "PUBLIC"
+				"__type": "CentralBufferNode",
+				"__id": "CentralBufferNode_78884f02-9d93-4901-a8ca-c93cb83aeb11",
+				"name": "NewCentralBufferNode2",
+				"visibility": "NONE",
+				"bounds": {
+					"__type": "Bounds",
+					"x": 500.87,
+					"y": -21.9,
+					"width": 540.7,
+					"height": 130.9
+				}
 			}
 		],
-		"relations": []
-	},
-	"metaInfos": [
-		{
-			"__type": "Size",
-			"__id": "size_AcceptEventAction_afc81366-d3e2-4c0b-868d-ddeee80508c4",
-			"height": 30,
-			"width": 80,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "AcceptEventAction_afc81366-d3e2-4c0b-868d-ddeee80508c4"
+		"relations": [
+			{
+				"__type": "ControlFlow",
+				"__id": "ControlFlow_97d4f9ad-1633-4926-9a0e-7013130abcc2",
+				"name": "asd",
+				"visibility": "NONE",
+				"guard": "asd",
+				"weight": 0,
+				"source": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "FlowFinalNode_2024c27e-0d4f-4706-96ad-f3bd9f79d608"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "UnionType_0",
+					"__value": "DecisionNode_445a31f6-ede2-4baf-ac54-62187b078a31"
+				},
+				"targetPoint": "WEST",
+				"routingPoints": []
 			}
-		},
-		{
-			"__type": "Position",
-			"__id": "pos_AcceptEventAction_afc81366-d3e2-4c0b-868d-ddeee80508c4",
-			"x": 660,
-			"y": 200,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "AcceptEventAction_afc81366-d3e2-4c0b-868d-ddeee80508c4"
-			}
-		},
-		{
-			"__type": "Size",
-			"__id": "size_Activity_0ba82120-a0a1-4a23-83fb-a7b9878fdc69",
-			"height": 24.16666603088379,
-			"width": 84.38801574707031,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Activity_0ba82120-a0a1-4a23-83fb-a7b9878fdc69"
-			}
-		},
-		{
-			"__type": "Position",
-			"__id": "pos_Activity_0ba82120-a0a1-4a23-83fb-a7b9878fdc69",
-			"x": 679,
-			"y": 293,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Activity_0ba82120-a0a1-4a23-83fb-a7b9878fdc69"
-			}
-		},
-		{
-			"__type": "Size",
-			"__id": "size_ActivityFinalNode_fb6db018-ebff-49f9-a10f-864eb03de661",
-			"height": 24.16666603088379,
-			"width": 143.61978149414062,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "ActivityFinalNode_fb6db018-ebff-49f9-a10f-864eb03de661"
-			}
-		},
-		{
-			"__type": "Position",
-			"__id": "pos_ActivityFinalNode_fb6db018-ebff-49f9-a10f-864eb03de661",
-			"x": 509,
-			"y": 218,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "ActivityFinalNode_fb6db018-ebff-49f9-a10f-864eb03de661"
-			}
-		}
-	]
+		]
+	}
 }

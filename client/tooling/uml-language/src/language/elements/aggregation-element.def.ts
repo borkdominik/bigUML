@@ -22,5 +22,5 @@ import { Association } from './association-element.def.js';
 @Glsp.defaults
 @Glsp.alias('Association')
 export class Aggregation extends Association {
-    override sourceAggregation?: AggregationType = 'SHARED';
+    override targetAggregation?: AggregationType = 'SHARED';
 }

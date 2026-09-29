@@ -6,42 +6,27 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+import { DIAGRAM_REGISTRY } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
 import {
-    ActivityDiagramLanguageMetadata,
-    ActivityDiagramToolPaletteItemProvider,
-    ClassDiagramLanguageMetadata,
-    ClassDiagramToolPaletteItemProvider,
-    CommunicationDiagramLanguageMetadata,
-    CommunicationDiagramToolPaletteItemProvider,
-    DeploymentDiagramLanguageMetadata,
-    DeploymentDiagramToolPaletteItemProvider,
-    InformationFlowDiagramLanguageMetadata,
-    InformationFlowDiagramToolPaletteItemProvider,
-    PackageDiagramLanguageMetadata,
-    PackageDiagramToolPaletteItemProvider,
-    StateMachineDiagramLanguageMetadata,
-    StateMachineDiagramToolPaletteItemProvider,
-    UseCaseDiagramLanguageMetadata,
-    UseCaseDiagramToolPaletteItemProvider
-} from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
-import {
-    type ActionHandlerConstructor,
     type BindingTarget,
-    type ContextActionsProvider,
-    type ContextEditValidator,
     type DiagramConfiguration,
     type GModelFactory,
-    type InstanceMultiBinding,
     type LabelEditValidator,
-    type MultiBinding,
-    type OperationHandlerConstructor,
     type PopupModelFactory,
     type ToolPaletteItemProvider
 } from '@eclipse-glsp/server';
 import { injectable, type interfaces } from 'inversify';
+import { BehaviorLabelExtension } from '../extensions/behavior-label.extension.js';
+import { CompositeStateExtension } from '../extensions/composite-state.extension.js';
+import { OrientationTurnExtension } from '../extensions/orientation-turn.extension.js';
+import { PackageMergeEdgeExtension } from '../extensions/package-merge-edge.extension.js';
+import { TypedElementExtension } from '../extensions/typed-element.extension.js';
 import { DefaultDiagramLanguageMetadata } from '../features/model/default-diagram-language-metadata.js';
 import { DiagramLanguageMetadata } from '../features/model/diagram-language-metadata.js';
+import { UmlLabelEditValidator } from '../features/labeledit/uml-label-edit-validator.js';
+import { DiagramServices } from '../features/model/diagram-services.js';
 import { BigDiagramModule } from '../features/module/module.js';
+import { MutationExtension } from '../features/mutation/extension/mutation-extension.js';
 import { UmlDiagramConfiguration } from './diagram-configuration.js';
 import { UmlDiagramGModelFactory } from './model/diagram-gmodel-factory.js';
 import { UmlDiagramToolPaletteItemProvider } from './provider/diagram-tool-palette-item-provider.js';
@@ -57,27 +42,43 @@ export class UmlDiagramModule extends BigDiagramModule {
         rebind: interfaces.Rebind
     ): void {
         super.configure(bind, unbind, isBound, rebind);
-        // Bind each concrete metadata class by its own type (used by the factory)
-        bind(ActivityDiagramLanguageMetadata).toSelf().inSingletonScope();
-        bind(ClassDiagramLanguageMetadata).toSelf().inSingletonScope();
-        bind(CommunicationDiagramLanguageMetadata).toSelf().inSingletonScope();
-        bind(DeploymentDiagramLanguageMetadata).toSelf().inSingletonScope();
-        bind(InformationFlowDiagramLanguageMetadata).toSelf().inSingletonScope();
-        bind(PackageDiagramLanguageMetadata).toSelf().inSingletonScope();
-        bind(StateMachineDiagramLanguageMetadata).toSelf().inSingletonScope();
-        bind(UseCaseDiagramLanguageMetadata).toSelf().inSingletonScope();
-        // Proxy that delegates to the correct metadata based on the active diagram type
+        this.bindDiagramServices(bind);
+        this.bindMutationExtensions(bind);
+    }
+
+    /** One set of services per diagram of the language, and the facade that picks the loaded one. */
+    protected bindDiagramServices(bind: interfaces.Bind): void {
+        for (const diagram of DIAGRAM_REGISTRY) {
+            bind(diagram.toolPaletteItemProvider).toSelf().inSingletonScope();
+            bind(DiagramServices)
+                .toDynamicValue(context => ({
+                    diagramType: diagram.diagramType,
+                    // What the registry says about the diagram's types is all its metadata is.
+                    languageMetadata: {
+                        nodeTypeIds: diagram.nodeTypeIds,
+                        edgeTypeIds: diagram.edgeTypeIds,
+                        convertToAst: diagram.convertToAst,
+                        convertToElementType: diagram.convertToElementType
+                    },
+                    toolPaletteItemProvider: context.container.get(diagram.toolPaletteItemProvider)
+                }))
+                .inSingletonScope();
+        }
         bind(DefaultDiagramLanguageMetadata).toSelf().inSingletonScope();
         bind(DiagramLanguageMetadata).toService(DefaultDiagramLanguageMetadata);
-        // Tool palette providers
-        bind(ActivityDiagramToolPaletteItemProvider).toSelf().inSingletonScope();
-        bind(ClassDiagramToolPaletteItemProvider).toSelf().inSingletonScope();
-        bind(CommunicationDiagramToolPaletteItemProvider).toSelf().inSingletonScope();
-        bind(DeploymentDiagramToolPaletteItemProvider).toSelf().inSingletonScope();
-        bind(InformationFlowDiagramToolPaletteItemProvider).toSelf().inSingletonScope();
-        bind(PackageDiagramToolPaletteItemProvider).toSelf().inSingletonScope();
-        bind(StateMachineDiagramToolPaletteItemProvider).toSelf().inSingletonScope();
-        bind(UseCaseDiagramToolPaletteItemProvider).toSelf().inSingletonScope();
+    }
+
+    /** What one element does differently from the generic handling - see `MutationExtension`. */
+    protected bindMutationExtensions(bind: interfaces.Bind): void {
+        for (const extension of [
+            CompositeStateExtension,
+            OrientationTurnExtension,
+            BehaviorLabelExtension,
+            PackageMergeEdgeExtension,
+            TypedElementExtension
+        ]) {
+            bind(MutationExtension).to(extension).inSingletonScope();
+        }
     }
 
     protected bindDiagramConfiguration(): BindingTarget<DiagramConfiguration> {
@@ -93,26 +94,10 @@ export class UmlDiagramModule extends BigDiagramModule {
     }
 
     protected override bindLabelEditValidator(): BindingTarget<LabelEditValidator> | undefined {
-        return undefined;
+        return UmlLabelEditValidator;
     }
 
     protected override bindPopupModelFactory(): BindingTarget<PopupModelFactory> | undefined {
         return undefined;
-    }
-
-    protected override configureContextActionProviders(binding: MultiBinding<ContextActionsProvider>): void {
-        super.configureContextActionProviders(binding);
-    }
-
-    protected override configureContextEditValidators(binding: MultiBinding<ContextEditValidator>): void {
-        super.configureContextEditValidators(binding);
-    }
-
-    protected override configureOperationHandlers(binding: InstanceMultiBinding<OperationHandlerConstructor>): void {
-        super.configureOperationHandlers(binding);
-    }
-
-    protected override configureActionHandlers(binding: InstanceMultiBinding<ActionHandlerConstructor>): void {
-        super.configureActionHandlers(binding);
     }
 }

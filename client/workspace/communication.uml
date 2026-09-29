@@ -6,109 +6,64 @@
 		"entities": [
 			{
 				"__type": "Interaction",
-				"__id": "Interaction_251321f0-d6a8-4762-a1d4-8b28cc29f41a",
+				"__id": "Interaction_0a46db4c-9c89-45d4-bc82-2648dfb8de96",
 				"name": "NewInteraction1",
-				"visibility": "PUBLIC",
-				"lifelines": [],
-				"messages": []
-			},
-			{
-				"__type": "Lifeline",
-				"__id": "Lifeline_cd72c531-16cf-4a6d-b80b-3c7447532619",
-				"name": "NewLifeline1",
-				"visibility": "PUBLIC"
-			},
-			{
-				"__type": "Lifeline",
-				"__id": "Lifeline_b0d55547-4de3-4935-a616-db5fc9a132c2",
-				"name": "NewLifeline2",
-				"visibility": "PUBLIC"
+				"visibility": "NONE",
+				"lifelines": [
+					{
+						"__type": "Lifeline",
+						"__id": "Lifeline_243563f7-db81-473d-aba4-dd9ba533ed18",
+						"name": "NewLifeline1",
+						"visibility": "NONE",
+						"bounds": {
+							"__type": "Bounds",
+							"x": 235,
+							"y": 169,
+							"width": 90.4140625,
+							"height": 30.16666603088379
+						}
+					},
+					{
+						"__type": "Lifeline",
+						"__id": "Lifeline_04cb0343-2038-4465-bc30-a4da06050d23",
+						"name": "NewLifeline2",
+						"visibility": "NONE",
+						"bounds": {
+							"__type": "Bounds",
+							"x": 530,
+							"y": 210,
+							"width": 80,
+							"height": 30
+						}
+					}
+				],
+				"messages": [],
+				"bounds": {
+					"__type": "Bounds",
+					"x": 481,
+					"y": 0,
+					"width": 652.4140625,
+					"height": 495.1666660308838
+				}
 			}
 		],
 		"relations": [
 			{
 				"__type": "Message",
-				"__id": "Message_6a47f28b-567e-4f36-bac4-35f74d7e06c9",
-				"visibility": "PUBLIC",
+				"__id": "Message_7a202ee4-39f8-4682-91f2-795794e13ce9",
+				"visibility": "NONE",
 				"source": {
 					"__type": "Reference",
 					"__refType": "Lifeline",
-					"__value": "Lifeline_b0d55547-4de3-4935-a616-db5fc9a132c2"
+					"__value": "Lifeline_243563f7-db81-473d-aba4-dd9ba533ed18"
 				},
 				"target": {
 					"__type": "Reference",
 					"__refType": "Lifeline",
-					"__value": "Lifeline_cd72c531-16cf-4a6d-b80b-3c7447532619"
-				}
+					"__value": "Lifeline_04cb0343-2038-4465-bc30-a4da06050d23"
+				},
+				"routingPoints": []
 			}
 		]
-	},
-	"metaInfos": [
-		{
-			"__type": "Size",
-			"__id": "size_Interaction_251321f0-d6a8-4762-a1d4-8b28cc29f41a",
-			"height": 30,
-			"width": 80,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Interaction_251321f0-d6a8-4762-a1d4-8b28cc29f41a"
-			}
-		},
-		{
-			"__type": "Position",
-			"__id": "pos_Interaction_251321f0-d6a8-4762-a1d4-8b28cc29f41a",
-			"x": 500,
-			"y": 130,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Interaction_251321f0-d6a8-4762-a1d4-8b28cc29f41a"
-			}
-		},
-		{
-			"__type": "Size",
-			"__id": "size_Lifeline_cd72c531-16cf-4a6d-b80b-3c7447532619",
-			"height": 30,
-			"width": 80,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Lifeline_cd72c531-16cf-4a6d-b80b-3c7447532619"
-			}
-		},
-		{
-			"__type": "Position",
-			"__id": "pos_Lifeline_cd72c531-16cf-4a6d-b80b-3c7447532619",
-			"x": 790,
-			"y": 200,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Lifeline_cd72c531-16cf-4a6d-b80b-3c7447532619"
-			}
-		},
-		{
-			"__type": "Size",
-			"__id": "size_Lifeline_b0d55547-4de3-4935-a616-db5fc9a132c2",
-			"height": 30,
-			"width": 80,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Lifeline_b0d55547-4de3-4935-a616-db5fc9a132c2"
-			}
-		},
-		{
-			"__type": "Position",
-			"__id": "pos_Lifeline_b0d55547-4de3-4935-a616-db5fc9a132c2",
-			"x": 700,
-			"y": 310,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "Lifeline_b0d55547-4de3-4935-a616-db5fc9a132c2"
-			}
-		}
-	]
+	}
 }

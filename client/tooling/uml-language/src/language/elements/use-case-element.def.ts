@@ -19,6 +19,8 @@ import { Node, type Visibility } from '../core/element.def.js';
     icon: 'uml-use-case-icon'
 })
 @Glsp.defaults
+@Glsp.defaultSize({ width: 140, height: 85 })
+@Glsp.shape({ resizable: false })
 export class UseCase extends Node {
     name: string;
     visibility?: Visibility;

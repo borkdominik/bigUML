@@ -28,7 +28,7 @@ export type DataTypeReference = DataType | Enumeration | Class | Interface | Pri
 })
 @Glsp.defaults
 export class DataType extends Node {
-    @MinLength(5)
+    @MinLength(1)
     name: string;
     properties?: Array<Property>;
     operations?: Array<Operation>;

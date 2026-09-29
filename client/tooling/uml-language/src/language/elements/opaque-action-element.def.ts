@@ -21,6 +21,8 @@ import type { OutputPin } from './output-pin-element.def.js';
     icon: 'uml-opaque-action-icon'
 })
 @Glsp.defaults
+// A box holding its name, where a name that runs to a second line is the normal case.
+@Glsp.defaultSize({ width: 80, height: 60 })
 export class OpaqueAction extends Node {
     name: string;
     visibility?: Visibility;

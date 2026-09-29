@@ -19,6 +19,7 @@ import { Node, type Visibility } from '../core/element.def.js';
     icon: 'uml-send-signal-action-icon'
 })
 @Glsp.defaults
+@Glsp.defaultSize({ width: 140, height: 60 })
 export class SendSignalAction extends Node {
     name: string;
     visibility?: Visibility;

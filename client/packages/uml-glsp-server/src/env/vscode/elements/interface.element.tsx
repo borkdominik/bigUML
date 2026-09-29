@@ -19,7 +19,8 @@ import { GPropertyNodeElement } from './property.element.js';
 
 export class GInterfaceNode extends GNode {
     override type = ClassDiagramNodeTypes.INTERFACE;
-    override layout = 'vbox';
+    // Kept in the middle of the box at whatever height it is dragged to, as for a class - see `GClassNode`.
+    override layout = 'uml-centered-vbox';
     name: string = 'UNDEFINED CLASS NAME';
     isAbstract: boolean = false;
 }
@@ -50,7 +51,7 @@ export function GInterfaceNodeElement(props: GInterfaceNodeElementProps): GModel
         interfaceNode.layoutOptions = { prefWidth: size.width, prefHeight: size.height };
     }
 
-    const header = <CompartmentHeader id={id} name={node.name} />;
+    const header = <CompartmentHeader id={id} name={node.name} stereotype='interface' stereotypeCssClasses={['uml-font-italic']} />;
     header.parent = interfaceNode;
     interfaceNode.children.push(header);
 
@@ -68,7 +69,7 @@ export function createInterfaceElement(ctx: ElementContext<Interface>): GModelEl
 
     const propertiesSection =
         ctx.node.properties?.length > 0 ? (
-            <SectionCompartment id={ctx.node.__id + '_count_context_1'} dividerText='Attributes'>
+            <SectionCompartment id={ctx.node.__id + '_count_context_1'} divider>
                 {ctx.node.properties.map(p => (
                     <GPropertyNodeElement node={p} />
                 ))}
@@ -77,7 +78,7 @@ export function createInterfaceElement(ctx: ElementContext<Interface>): GModelEl
 
     const operationsSection =
         ctx.node.operations?.length > 0 ? (
-            <SectionCompartment id={ctx.node.__id + '_count_context_3'} dividerText='Methods'>
+            <SectionCompartment id={ctx.node.__id + '_count_context_3'} divider>
                 {ctx.node.operations.map(o => (
                     <GOperationNodeElement node={o} />
                 ))}

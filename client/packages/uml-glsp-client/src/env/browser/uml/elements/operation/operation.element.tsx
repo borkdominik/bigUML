@@ -11,7 +11,7 @@ import { NamedElement, NamedElementView } from '../named-element/index.js';
 
 export class GOperationNode extends NamedElement {
     returnType: string = '';
-    visibility: string = 'PUBLIC';
+    visibility: string = 'NONE';
     parameterList: Array<{ key: string; type: string }> = [];
 }
 

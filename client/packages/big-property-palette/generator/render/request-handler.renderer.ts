@@ -12,7 +12,7 @@ import { Eta } from 'eta';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { getDynamicPropertyTypes, getNodeDecls } from '../utils/declaration.utils.js';
+import { type DynamicProperty, getDynamicProperties, getDynamicPropertyTypes, getNodeDecls } from '../utils/declaration.utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -43,11 +43,27 @@ export function renderRequestHandler(outputPath: string, declarations: Declarati
         const members = resolveTypeAliasMembers(alias, declarations);
         const nodes = allEntities.filter(e => members.includes(e.name!));
 
-        const guardNames = nodes
-            .map(d => `is${d.name}`)
+        // The choices of a dynamic property are the elements of the model its declared type admits, so
+        // the guards of those types are imported alongside the guards the dispatch needs.
+        const dynamicProperties = new Map<string, DynamicProperty>();
+        for (const node of nodes) {
+            for (const dynamic of getDynamicProperties(node, declarations)) {
+                const known = dynamicProperties.get(dynamic.typeName);
+                dynamicProperties.set(dynamic.typeName, {
+                    typeName: dynamic.typeName,
+                    memberTypes: Array.from(new Set([...(known?.memberTypes ?? []), ...dynamic.memberTypes]))
+                });
+            }
+        }
+        const dynamicGuards = [...dynamicProperties.values()].flatMap(dynamic => dynamic.memberTypes.map(type => `is${type}`));
+
+        const guardNames = Array.from(new Set([...nodes.map(d => `is${d.name}`), ...dynamicGuards]))
             .sort()
             .join(', ');
-        const astImport = `import { ${guardNames} } from '@borkdominik-biguml/uml-model-server/grammar';`;
+        const astImport = [
+            `import { ${guardNames} } from '@borkdominik-biguml/uml-model-server/grammar';`,
+            ...(dynamicProperties.size > 0 ? [`import { referenceChoices } from '@borkdominik-biguml/big-property-palette/glsp-server';`] : [])
+        ].join('\n');
 
         const handlerImports = nodes
             .map(d => d.name!)
@@ -55,21 +71,10 @@ export function renderRequestHandler(outputPath: string, declarations: Declarati
             .map(n => `import { ${n}PropertyPaletteHandler } from './elements/${toKebab(n)}.property-palette-handler.js';`)
             .join('\n');
 
-        const allDyn = Array.from(new Set(nodes.flatMap(d => getDynamicPropertyTypes(d))));
-
-        const dynamicBuilders = allDyn
-            .map(typeName => {
-                const varName = `${lcFirst(typeName)}Choices`;
-                const indexCall = `getAll${typeName}s`;
-                return [
-                    `            const ${varName} = (this.modelState.index.${indexCall}?.() ?? [])`,
-                    `                .filter((item: any) => !!item && !!item.__id && !!item.name)`,
-                    `                .map((item: any) => ({`,
-                    `                    label: item.name,`,
-                    `                    value: item.__id + '_refValue',`,
-                    `                    secondaryText: item.$type`,
-                    `                }));`
-                ].join('\n');
+        const dynamicBuilders = [...dynamicProperties.values()]
+            .map(dynamic => {
+                const guards = dynamic.memberTypes.map(type => `is${type}`).sort().join(', ');
+                return `            const ${lcFirst(dynamic.typeName)}Choices = referenceChoices(this.modelState.semanticRoot, [${guards}]);`;
             })
             .join('\n');
 

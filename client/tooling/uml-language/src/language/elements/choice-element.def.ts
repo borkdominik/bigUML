@@ -19,6 +19,7 @@ import { Node, type Visibility } from '../core/element.def.js';
     icon: 'uml-pseudostate-choice-icon'
 })
 @Glsp.defaults
+@Glsp.defaultSize({ width: 40, height: 40 })
 export class Choice extends Node {
     name?: string;
     visibility?: Visibility;

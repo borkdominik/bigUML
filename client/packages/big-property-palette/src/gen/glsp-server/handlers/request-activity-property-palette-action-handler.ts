@@ -19,15 +19,20 @@ import {
     isCentralBufferNode,
     isControlFlow,
     isDecisionNode,
+    isEdgeAnchor,
     isFlowFinalNode,
     isForkNode,
+    isGenericEdge,
     isInitialNode,
     isInputPin,
     isJoinNode,
     isMergeNode,
+    isNote,
     isOpaqueAction,
     isOutputPin,
-    isSendSignalAction
+    isProperty,
+    isSendSignalAction,
+    isTextLabel
 } from '@borkdominik-biguml/uml-model-server/grammar';
 import { DiagramModelState, DiagramLanguageMetadata } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import type { DiagramLanguageMetadata as DiagramLanguageMetadataType } from '@borkdominik-biguml/uml-glsp-server/vscode';
@@ -39,15 +44,20 @@ import { ActivityPartitionPropertyPaletteHandler } from './elements/activity-par
 import { CentralBufferNodePropertyPaletteHandler } from './elements/central-buffer-node.property-palette-handler.js';
 import { ControlFlowPropertyPaletteHandler } from './elements/control-flow.property-palette-handler.js';
 import { DecisionNodePropertyPaletteHandler } from './elements/decision-node.property-palette-handler.js';
+import { EdgeAnchorPropertyPaletteHandler } from './elements/edge-anchor.property-palette-handler.js';
 import { FlowFinalNodePropertyPaletteHandler } from './elements/flow-final-node.property-palette-handler.js';
 import { ForkNodePropertyPaletteHandler } from './elements/fork-node.property-palette-handler.js';
+import { GenericEdgePropertyPaletteHandler } from './elements/generic-edge.property-palette-handler.js';
 import { InitialNodePropertyPaletteHandler } from './elements/initial-node.property-palette-handler.js';
 import { InputPinPropertyPaletteHandler } from './elements/input-pin.property-palette-handler.js';
 import { JoinNodePropertyPaletteHandler } from './elements/join-node.property-palette-handler.js';
 import { MergeNodePropertyPaletteHandler } from './elements/merge-node.property-palette-handler.js';
+import { NotePropertyPaletteHandler } from './elements/note.property-palette-handler.js';
 import { OpaqueActionPropertyPaletteHandler } from './elements/opaque-action.property-palette-handler.js';
 import { OutputPinPropertyPaletteHandler } from './elements/output-pin.property-palette-handler.js';
+import { PropertyPropertyPaletteHandler } from './elements/property.property-palette-handler.js';
 import { SendSignalActionPropertyPaletteHandler } from './elements/send-signal-action.property-palette-handler.js';
+import { TextLabelPropertyPaletteHandler } from './elements/text-label.property-palette-handler.js';
 @injectable()
 export class RequestActivityPropertyPaletteActionHandler implements ActionHandler {
     actionKinds = [RequestPropertyPaletteAction.KIND];
@@ -79,7 +89,17 @@ export class RequestActivityPropertyPaletteActionHandler implements ActionHandle
 
             const context = { semanticElement, languageMetadata: this.languageMetadata };
 
-            if (isSendSignalAction(semanticElement)) {
+            if (isEdgeAnchor(semanticElement)) {
+                return EdgeAnchorPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isGenericEdge(semanticElement)) {
+                return GenericEdgePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isTextLabel(semanticElement)) {
+                return TextLabelPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isNote(semanticElement)) {
+                return NotePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isProperty(semanticElement)) {
+                return PropertyPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isSendSignalAction(semanticElement)) {
                 return SendSignalActionPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isOutputPin(semanticElement)) {
                 return OutputPinPropertyPaletteHandler.getPropertyPalette(context);
@@ -105,14 +125,14 @@ export class RequestActivityPropertyPaletteActionHandler implements ActionHandle
                 return CentralBufferNodePropertyPaletteHandler.getPropertyPalette(context);
             } else if (isActivityPartition(semanticElement)) {
                 return ActivityPartitionPropertyPaletteHandler.getPropertyPalette(context);
-            } else if (isActivityParameterNode(semanticElement)) {
-                return ActivityParameterNodePropertyPaletteHandler.getPropertyPalette(context);
             } else if (isActivityFinalNode(semanticElement)) {
                 return ActivityFinalNodePropertyPaletteHandler.getPropertyPalette(context);
-            } else if (isActivity(semanticElement)) {
-                return ActivityPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isAcceptEventAction(semanticElement)) {
                 return AcceptEventActionPropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isActivityParameterNode(semanticElement)) {
+                return ActivityParameterNodePropertyPaletteHandler.getPropertyPalette(context);
+            } else if (isActivity(semanticElement)) {
+                return ActivityPropertyPaletteHandler.getPropertyPalette(context);
             }
 
             return [SetPropertyPaletteAction.create()];

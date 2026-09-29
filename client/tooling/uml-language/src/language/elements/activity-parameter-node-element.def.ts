@@ -19,6 +19,7 @@ import { Node, type Visibility } from '../core/element.def.js';
     icon: 'uml-activity-parameter-node-icon'
 })
 @Glsp.defaults
+@Glsp.defaultSize({ width: 120, height: 50 })
 export class ActivityParameterNode extends Node {
     name: string;
     visibility?: Visibility;

@@ -6,9 +6,8 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-/** @jsxRuntime classic */
-/** @jsx svg */
-import { GCompartment, RectangularNodeView, type RenderingContext, svg } from '@eclipse-glsp/client';
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-client/jsx */
+import { GCompartment, RectangularNodeView, type RenderingContext } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { injectable } from 'inversify';
 import { type VNode } from 'snabbdom';

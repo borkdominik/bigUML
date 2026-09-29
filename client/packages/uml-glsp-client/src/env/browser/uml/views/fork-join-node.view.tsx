@@ -6,9 +6,8 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-/** @jsxRuntime classic */
-/** @jsx svg */
-import { type GNode, RectangularNodeView, type RenderingContext, svg } from '@eclipse-glsp/client';
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-client/jsx */
+import { type GNode, RectangularNodeView, type RenderingContext } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { type VNode } from 'snabbdom';
 import { hitAreaBox } from './hit-area.js';

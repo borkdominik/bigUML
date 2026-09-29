@@ -6,8 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-/** @jsxRuntime classic */
-/** @jsx svg */
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-client/jsx */
 import { OUTSIDE_LABEL_ARG } from '@borkdominik-biguml/uml-glsp-server';
 import {
     type ArgsAware,
@@ -15,8 +14,7 @@ import {
     type GModelElement,
     GLabel,
     type GParentElement,
-    layoutableChildFeature,
-    svg
+    layoutableChildFeature
 } from '@eclipse-glsp/client';
 import { type VNode } from 'snabbdom';
 

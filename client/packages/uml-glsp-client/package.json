@@ -28,7 +28,9 @@
   "type": "module",
   "exports": {
     ".": "./src/env/common/index.ts",
-    "./vscode": "./src/env/vscode/index.ts"
+    "./vscode": "./src/env/vscode/index.ts",
+    "./jsx/jsx-runtime": "./src/env/browser/jsx/jsx-runtime.ts",
+    "./jsx/jsx-dev-runtime": "./src/env/browser/jsx/jsx-dev-runtime.ts"
   },
   "dependencies": {
     "@borkdominik-biguml/big-advancedsearch": "workspace:*",

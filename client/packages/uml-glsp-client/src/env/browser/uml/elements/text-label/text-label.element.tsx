@@ -6,9 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-/** @jsxRuntime classic */
-/** @jsx svg */
-import { svg } from '@eclipse-glsp/client';
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-client/jsx */
 import { injectable } from 'inversify';
 import { type VNode } from 'snabbdom';
 import { NamedElement, NamedElementView } from '../named-element/index.js';

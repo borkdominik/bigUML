@@ -6,8 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-/** @jsxRuntime classic */
-/** @jsx svg */
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-client/jsx */
 import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import {
     type BoundsAware,
@@ -15,8 +14,7 @@ import {
     type GNode,
     isBoundsAware,
     RectangularNodeView,
-    type RenderingContext,
-    svg
+    type RenderingContext
 } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { type VNode } from 'snabbdom';

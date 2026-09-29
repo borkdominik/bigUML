@@ -3,7 +3,7 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    /* sprotty views opt into the classic runtime via `@jsxRuntime classic` + `@jsx svg` pragmas */
+    /* sprotty views select their runtime via `@jsxImportSource @borkdominik-biguml/uml-glsp-client/jsx` */
     "jsx": "react-jsx"
   }
 }

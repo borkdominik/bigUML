@@ -13,9 +13,8 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-/** @jsxRuntime classic */
-/** @jsx svg */
-import { type IViewArgs, RectangularNodeView, type RenderingContext, svg } from '@eclipse-glsp/client';
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-client/jsx */
+import { type IViewArgs, RectangularNodeView, type RenderingContext } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { type VNode } from 'snabbdom';
 import { type NamedElement } from '../../index.js';

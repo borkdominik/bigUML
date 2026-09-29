@@ -6,9 +6,8 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-/** @jsxRuntime classic */
-/** @jsx svg */
-import { EdgeRouterRegistry, getSubType, GLabelView, type Point, type RenderingContext, setAttr, svg } from '@eclipse-glsp/client';
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-client/jsx */
+import { EdgeRouterRegistry, getSubType, GLabelView, type Point, type RenderingContext, setAttr } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 import { type VNode } from 'snabbdom';
 import { messageArrowGeometry } from './message-arrow-placement.js';

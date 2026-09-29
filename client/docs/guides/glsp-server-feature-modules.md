@@ -163,9 +163,9 @@ The `package.json` exports map makes each environment independently importable:
 ```json
 {
     "exports": {
-        ".": { "default": "./build/env/common/index.js" },
-        "./glsp-server": { "default": "./build/env/glsp-server/index.js" },
-        "./vscode": { "default": "./build/env/vscode/index.js" }
+        ".": "./src/env/common/index.ts",
+        "./glsp-server": "./src/env/glsp-server/index.ts",
+        "./vscode": "./src/env/vscode/index.ts"
     }
 }
 ```

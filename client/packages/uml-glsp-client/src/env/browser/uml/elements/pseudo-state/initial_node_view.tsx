@@ -8,6 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
+/** @jsxRuntime classic */
 /** @jsx svg */
 import { type CircularNode, CircularNodeView, type RenderingContext, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';

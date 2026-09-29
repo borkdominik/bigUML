@@ -50,7 +50,7 @@ export class ClassDiagram {
     relations?: Array<ClassDiagramEdges>;
 }
 
-type ClassDiagramElements = ClassDiagramNodes | ClassDiagramEdges;
+export type ClassDiagramElements = ClassDiagramNodes | ClassDiagramEdges;
 
 type ClassDiagramNodes =
     | Enumeration

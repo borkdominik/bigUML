@@ -16,18 +16,45 @@ jobs:
     name: Build Client
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: ./client
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          package_json_file: client/package.json
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "24.14.0"
-          cache: "npm"
-          cache-dependency-path: client/package-lock.json
+          node-version-file: client/.nvmrc
+          cache: pnpm
+          cache-dependency-path: client/pnpm-lock.yaml
 
-      - name: Run full setup
-        working-directory: ./client
-        run: npm run setup
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Generated code is up to date
+        run: |
+          pnpm generate
+          git diff --exit-code -- packages/*/src/gen
+
+      - name: Format
+        run: pnpm format:check
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Test
+        run: pnpm test
+
+      - name: Build
+        run: pnpm build

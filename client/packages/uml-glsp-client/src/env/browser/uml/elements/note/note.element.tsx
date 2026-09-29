@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+/** @jsxRuntime classic */
 /** @jsx svg */
 import { NOTE_FOLD_SIZE } from '@borkdominik-biguml/uml-glsp-server';
 import { svg } from '@eclipse-glsp/client';

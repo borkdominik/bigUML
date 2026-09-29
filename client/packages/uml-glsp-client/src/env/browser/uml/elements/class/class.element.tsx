@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+/** @jsxRuntime classic */
 import { injectable } from 'inversify';
 import { NamedElement, NamedElementView } from '../named-element/index.js';
 

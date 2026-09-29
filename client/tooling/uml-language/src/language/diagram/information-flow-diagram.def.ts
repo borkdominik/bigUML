@@ -29,7 +29,7 @@ export class InformationFlowDiagram {
     relations?: Array<InformationFlowDiagramEdges>;
 }
 
-type InformationFlowDiagramElements = InformationFlowDiagramNodes | InformationFlowDiagramEdges;
+export type InformationFlowDiagramElements = InformationFlowDiagramNodes | InformationFlowDiagramEdges;
 
 type InformationFlowDiagramNodes = Actor | Class | Property | Operation | Parameter | Note | TextLabel | EdgeAnchor;
 

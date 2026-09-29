@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+/** @jsxRuntime classic */
 /** @jsx svg */
 import {
     type Args,
@@ -58,7 +59,7 @@ export class GIconView implements IView {
         let image;
         if (element.iconImageName) {
             // eslint-disable-next-line @typescript-eslint/no-require-imports
-            image = require('../../resources/images/' + element.iconImageName);
+            image = require('../../../../../resources/images/' + element.iconImageName);
         }
 
         const iconView: any = (

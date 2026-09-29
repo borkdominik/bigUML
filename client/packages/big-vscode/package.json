@@ -1,13 +1,10 @@
 {
   "name": "@borkdominik-biguml/big-vscode",
   "version": "0.6.4",
+  "private": true,
   "description": "BIG VSCode integration",
   "homepage": "https://github.com/borkdominik/bigUML",
   "bugs": "https://github.com/borkdominik/bigUML/issues",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/borkdominik/bigUML.git"
-  },
   "license": "MIT",
   "author": {
     "name": "Business Informatics Group (TU Wien)"
@@ -24,42 +21,26 @@
       "url": "https://me.big.tuwien.ac.at/"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/borkdominik/bigUML.git"
+  },
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./build/env/common/index.d.ts",
-      "default": "./build/env/common/index.js"
-    },
-    "./glsp-client": {
-      "types": "./build/env/glsp-client/index.d.ts",
-      "default": "./build/env/glsp-client/index.js"
-    },
-    "./vscode": {
-      "types": "./build/env/vscode/index.d.ts",
-      "default": "./build/env/vscode/index.js"
-    }
-  },
-  "scripts": {
-    "build": "npm run clean && npm run compile",
-    "clean": "rimraf build dist node_modules/.tmp",
-    "compile": "tsc -b",
-    "lint": "eslint -c ./eslint.config.js",
-    "lint:ci": "npm run lint -o eslint.xml -f checkstyle",
-    "lint:fix": "eslint --fix -c ./eslint.config.js",
-    "watch": "concurrently --kill-others \"npm run watch:compile\"",
-    "watch:compile": "npm run compile -- --watch --preserveWatchOutput"
+    ".": "./src/env/common/index.ts",
+    "./vscode": "./src/env/vscode/index.ts"
   },
   "dependencies": {
-    "@borkdominik-biguml/big-common": "*",
-    "@borkdominik-biguml/uml-glsp-server": "*",
-    "@borkdominik-biguml/uml-model-server": "*",
-    "@eclipse-glsp/vscode-integration": "*",
-    "@eclipse-glsp/vscode-integration-webview": "*",
+    "@borkdominik-biguml/big-common": "workspace:*",
+    "@borkdominik-biguml/uml-glsp-server": "workspace:*",
+    "@borkdominik-biguml/uml-model-server": "workspace:*",
+    "@eclipse-glsp/protocol": "catalog:",
+    "@eclipse-glsp/vscode-integration": "catalog:",
     "@types/vscode": "^1.63.0",
-    "@vscode/codicons": "^0.0.25",
-    "reflect-metadata": "^0.2.2",
-    "vscode-messenger": "^0.4.5",
-    "vscode-messenger-common": "^0.4.5"
+    "reflect-metadata": "catalog:",
+    "sprotty": "catalog:",
+    "vscode-messenger": "catalog:",
+    "vscode-messenger-common": "catalog:"
   },
   "peerDependencies": {
     "inversify": "^6.2.1"

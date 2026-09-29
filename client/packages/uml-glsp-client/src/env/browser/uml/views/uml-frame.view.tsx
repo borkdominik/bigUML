@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+/** @jsxRuntime classic */
 /** @jsx svg */
 import { GCompartment, RectangularNodeView, type RenderingContext, svg } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';

@@ -8,7 +8,7 @@
  *********************************************************************************/
 import endent from 'endent';
 import fs from 'fs';
-import glob from 'glob';
+import { glob } from 'glob';
 import path from 'path';
 
 const settings = {
@@ -34,86 +34,84 @@ function createCSSVar(varName: string, filePath: string): string {
 console.log('Active settings', settings);
 console.log('');
 
-glob(settings.input, (err, res) => {
-    console.log('Start Processing.');
+glob(settings.input).then(
+    res => {
+        console.log('Start Processing.');
 
-    if (err) {
-        console.error('Error', err);
-        return;
-    }
+        const variables: string[] = [];
+        const classes: string[] = [];
+        const files = res.filter(r => fs.lstatSync(r).isFile()).sort();
+        console.log(`Detected ${res.length - files.length} folders and ${files.length} files.`);
 
-    const variables: string[] = [];
-    const classes: string[] = [];
-    const files = res.filter(r => fs.lstatSync(r).isFile()).sort();
-    console.log(`Detected ${res.length - files.length} folders and ${files.length} files.`);
+        const uniqueMap: { [key: string]: string } = {};
 
-    const uniqueMap: { [key: string]: string } = {};
+        files.forEach(filePath => {
+            const file = filePath.split(/[/]+/).pop()!;
+            const fileName = file.split('.')[0];
 
-    files.forEach(filePath => {
-        const file = filePath.split(/[/]+/).pop()!;
-        const fileName = file.split('.')[0];
+            if (uniqueMap[fileName] === undefined) {
+                uniqueMap[fileName] = filePath;
+            } else {
+                console.warn('[Duplicate] Ignored:', filePath);
+            }
+        });
 
-        if (uniqueMap[fileName] === undefined) {
-            uniqueMap[fileName] = filePath;
-        } else {
-            console.warn('[Duplicate] Ignored:', filePath);
+        let progress = 0;
+        const uniqueFiles = Object.values(uniqueMap);
+
+        if (uniqueFiles.length !== files.length) {
+            console.log();
+            console.log(`\t => Unique files: ${uniqueFiles.length}`);
         }
-    });
 
-    let progress = 0;
-    const uniqueFiles = Object.values(uniqueMap);
-
-    if (uniqueFiles.length !== files.length) {
         console.log();
-        console.log(`\t => Unique files: ${uniqueFiles.length}`);
-    }
+        uniqueFiles.forEach(filePath => {
+            const file = filePath.split(/[/]+/).pop()!;
+            const fileName = file.split('.')[0];
+            const className = `uml-${fileName
+                .replace(/_/g, '-')
+                .split(/(?=[A-Z])/)
+                .join('-')
+                .toLowerCase()}-icon`;
+            const varName = `--${className}`;
 
-    console.log();
-    uniqueFiles.forEach(filePath => {
-        const file = filePath.split(/[/]+/).pop()!;
-        const fileName = file.split('.')[0];
-        const className = `uml-${fileName
-            .replace(/_/g, '-')
-            .split(/(?=[A-Z])/)
-            .join('-')
-            .toLowerCase()}-icon`;
-        const varName = `--${className}`;
+            variables.push(createCSSVar(varName, filePath));
+            classes.push(createCSSIcon(className, varName));
+            progress++;
 
-        variables.push(createCSSVar(varName, filePath));
-        classes.push(createCSSIcon(className, varName));
-        progress++;
+            if (progress % 10 === 0) {
+                console.log(`[${progress}/${uniqueFiles.length}] Files processed...`);
+            }
+        });
 
-        if (progress % 10 === 0) {
-            console.log(`[${progress}/${uniqueFiles.length}] Files processed...`);
-        }
-    });
+        console.log();
 
-    console.log();
+        fs.mkdirSync(settings.output.folder, { recursive: true });
 
-    fs.mkdirSync(settings.output.folder, { recursive: true });
-
-    const variablesData = endent`/* THIS FILE IS GENERATED */
+        const variablesData = endent`/* THIS FILE IS GENERATED */
 
         :root {
             ${variables.join('\n')}
         }
     `;
 
-    const classesData = endent`/* THIS FILE IS GENERATED */
+        const classesData = endent`/* THIS FILE IS GENERATED */
     
         ${classes.join('\n')}
     `;
 
-    const variablesFile = fullPath(settings.output, 'variablesFile');
-    fs.writeFileSync(variablesFile, variablesData);
-    console.log(`File ${variablesFile} created.`);
+        const variablesFile = fullPath(settings.output, 'variablesFile');
+        fs.writeFileSync(variablesFile, variablesData);
+        console.log(`File ${variablesFile} created.`);
 
-    const classesFile = fullPath(settings.output, 'classesFile');
-    fs.writeFileSync(`${settings.output.folder}/${settings.output.classesFile}`, classesData);
-    console.log(`File ${classesFile} created.`);
+        const classesFile = fullPath(settings.output, 'classesFile');
+        fs.writeFileSync(`${settings.output.folder}/${settings.output.classesFile}`, classesData);
+        console.log(`File ${classesFile} created.`);
 
-    console.log('Finished.');
-});
+        console.log('Finished.');
+    },
+    err => console.error('Error', err)
+);
 
 function fullPath(output: (typeof settings)['output'], property: keyof Pick<typeof output, 'classesFile' | 'variablesFile'>): string {
     return `${output.folder}/${output[property]}`;

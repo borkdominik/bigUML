@@ -1,13 +1,10 @@
 {
   "name": "@borkdominik-biguml/uml-language",
   "version": "0.6.4",
+  "private": true,
   "description": "UML-Hello World",
   "homepage": "https://github.com/borkdominik/bigUML",
   "bugs": "https://github.com/borkdominik/bigUML/issues",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/borkdominik/bigUML.git"
-  },
   "license": "MIT",
   "author": {
     "name": "Business Informatics Group (TU Wien)"
@@ -24,31 +21,22 @@
       "url": "https://me.big.tuwien.ac.at/"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/borkdominik/bigUML.git"
+  },
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./build/env/language/index.d.ts",
-      "default": "./build/env/language/index.js"
-    },
     "./definition": "./src/language/def.ts"
   },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "npm run clean && npm run compile",
-    "clean": "rimraf build dist node_modules/.tmp",
-    "compile": "tsc -b",
-    "lint": "eslint -c ./eslint.config.js",
-    "lint:fix": "npm run lint -- --fix",
-    "tsc": "tsc",
-    "watch": "concurrently --kill-others \"npm run watch:compile\"",
-    "watch:compile": "npm run compile -- --watch --preserveWatchOutput"
+  "dependencies": {
+    "@borkdominik-biguml/uml-model-server": "workspace:*",
+    "reflect-metadata": "catalog:"
   },
   "devDependencies": {
-    "@borkdominik-biguml/big-property-palette": "*",
-    "@borkdominik-biguml/uml-glsp-server": "*",
-    "@borkdominik-biguml/uml-language-tooling": "*",
-    "class-validator": "^0.14.3"
+    "@borkdominik-biguml/big-property-palette": "workspace:*",
+    "@borkdominik-biguml/uml-glsp-server": "workspace:*",
+    "@borkdominik-biguml/uml-language-tooling": "workspace:*",
+    "class-validator": "catalog:"
   }
 }

@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+/** @jsxRuntime classic */
 /** @jsx svg */
 import { GLSPProjectionView, type GViewportRootElement, type IViewArgs, type RenderingContext, svg } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';

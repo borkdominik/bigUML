@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+/** @jsxRuntime classic */
 /** @jsx svg */
 import { EdgeRouterRegistry, getSubType, GLabelView, type Point, type RenderingContext, setAttr, svg } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';

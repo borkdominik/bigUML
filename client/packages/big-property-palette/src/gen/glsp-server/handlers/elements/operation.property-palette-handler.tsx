@@ -1,4 +1,5 @@
 // AUTO-GENERATED – DO NOT EDIT
+/** @jsxImportSource @borkdominik-biguml/big-property-palette/jsx */
 
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
 import { CreateNodeOperation, DeleteElementOperation } from '@eclipse-glsp/server';

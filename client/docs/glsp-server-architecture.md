@@ -16,7 +16,7 @@ The `uml-glsp-server` package is the server-side GLSP implementation for bigUML.
 - **Generic operation handlers** - A set of operation handlers (`GenericCreateNodeOperationHandler`, `GenericCreateEdgeOperationHandler`, `GenericDeleteOperationHandler`, `GenericUpdateOperationHandler`, `GenericChangeBoundsOperationHandler`, `GenericLabelEditOperationHandler`) that use generated metadata (creation paths, default values, model types) to handle all UML element types without per-element handler classes.
 - **`DiagramFeatureModule`** - Extension point that feature packages (property palette, outline, advanced search) use to register additional action and operation handlers on the GLSP server.
 - **JSX component system** - A custom JSX runtime (`jsx-runtime.ts`) that produces `GModelElement` trees. Element files (`.element.tsx`) use JSX to declaratively construct GModel nodes with compartments, labels, and layout options.
-- **Generated code (`src/gen/`)** - Model type constants, creation path mappings, default values, tool palette items, and language metadata - all generated from the language definition (`def.ts`) via `npm run language:generate`.
+- **Generated code (`src/gen/`)** - Model type constants, creation path mappings, default values, tool palette items, and language metadata - all generated from the language definition (`def.ts`) via `pnpm language:generate`.
 
 ## GLSP Core Concepts
 

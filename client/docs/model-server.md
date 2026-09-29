@@ -319,7 +319,7 @@ The `contribution.ts` entry point orchestrates the generation:
 4. Generates validation element DTOs from decorator annotations on the language definition classes.
 5. Langium CLI then processes the `.langium` grammar to produce `ast.ts` (typed AST interfaces), `grammar.ts` (parser configuration), and `module.ts` (generated service module).
 
-The generation is triggered by `npm run generate`, which runs both `language:generate` (the custom pipeline) and `langium:generate` (the Langium CLI).
+The generation is triggered by `pnpm generate`, which runs both `language:generate` (the custom pipeline) and `langium:generate` (the Langium CLI).
 
 ## Key Files
 

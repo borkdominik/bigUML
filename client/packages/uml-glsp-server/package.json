@@ -1,13 +1,10 @@
 {
   "name": "@borkdominik-biguml/uml-glsp-server",
   "version": "0.6.4",
+  "private": true,
   "description": "UML-Hello World",
   "homepage": "https://github.com/borkdominik/bigUML",
   "bugs": "https://github.com/borkdominik/bigUML/issues",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/borkdominik/bigUML.git"
-  },
   "license": "MIT",
   "author": {
     "name": "Business Informatics Group (TU Wien)"
@@ -24,62 +21,39 @@
       "url": "https://me.big.tuwien.ac.at/"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/borkdominik/bigUML.git"
+  },
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./build/env/common/index.d.ts",
-      "default": "./build/env/common/index.js"
-    },
-    "./vscode": {
-      "types": "./build/env/vscode/index.d.ts",
-      "default": "./build/env/vscode/index.js"
-    },
-    "./jsx": {
-      "types": "./build/env/jsx/index.d.ts",
-      "default": "./build/env/jsx/index.js"
-    },
-    "./jsx/jsx-runtime": {
-      "types": "./build/env/jsx/jsx-runtime.d.ts",
-      "default": "./build/env/jsx/jsx-runtime.js"
-    },
+    ".": "./src/env/common/index.ts",
+    "./vscode": "./src/env/vscode/index.ts",
+    "./jsx": "./src/env/jsx/index.ts",
+    "./jsx/jsx-runtime": "./src/env/jsx/jsx-runtime.ts",
+    "./jsx/jsx-dev-runtime": "./src/env/jsx/jsx-dev-runtime.ts",
     "./generator": "./generator/index.ts",
-    "./gen/common": {
-      "types": "./build/gen/common/index.d.ts",
-      "default": "./build/gen/common/index.js"
-    },
-    "./gen/vscode": {
-      "types": "./build/gen/vscode/index.d.ts",
-      "default": "./build/gen/vscode/index.js"
-    }
+    "./gen/common": "./src/gen/common/index.ts",
+    "./gen/vscode": "./src/gen/vscode/index.ts"
   },
-  "files": [
-    "dist"
-  ],
   "scripts": {
-    "build": "npm run clean && npm run compile",
-    "clean": "rimraf build dist node_modules/.tmp",
-    "compile": "tsc -b",
-    "generate": "rimraf src/gen && npm run language:generate",
-    "language:generate": "uml-language-tooling extension generate -d @borkdominik-biguml/uml-language/definition -g ./generator/index.ts",
-    "lint": "eslint -c ./eslint.config.js",
-    "lint:fix": "npm run lint -- --fix",
-    "tsc": "tsc",
-    "watch": "concurrently --kill-others \"npm run watch:compile\"",
-    "watch:compile": "npm run compile -- --watch --preserveWatchOutput"
+    "generate": "rimraf src/gen && pnpm run language:generate",
+    "language:generate": "uml-language-tooling extension generate -d ../../tooling/uml-language/src/language/def.ts -g ./generator/index.ts"
   },
   "dependencies": {
-    "@borkdominik-biguml/big-common": "*",
-    "@borkdominik-biguml/uml-language-tooling": "*",
-    "@borkdominik-biguml/uml-model-server": "*",
-    "@eclipse-glsp/client": "*",
-    "@eclipse-glsp/layout-elk": "*",
-    "@eclipse-glsp/protocol": "*",
-    "@eclipse-glsp/server": "*",
-    "eta": "^3.5.0",
-    "fast-json-patch": "^3.1.1",
-    "uuid": "^10.0.0"
+    "@borkdominik-biguml/big-common": "workspace:*",
+    "@borkdominik-biguml/uml-language-tooling": "workspace:*",
+    "@borkdominik-biguml/uml-model-server": "workspace:*",
+    "@eclipse-glsp/layout-elk": "catalog:",
+    "@eclipse-glsp/protocol": "catalog:",
+    "@eclipse-glsp/server": "catalog:",
+    "eta": "catalog:",
+    "fast-json-patch": "catalog:",
+    "langium": "catalog:",
+    "reflect-metadata": "catalog:",
+    "uuid": "catalog:",
+    "vscode-uri": "catalog:"
   },
-  "devDependencies": {},
   "peerDependencies": {
     "inversify": "^6.2.1"
   }

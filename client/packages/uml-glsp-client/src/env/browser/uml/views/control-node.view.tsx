@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+/** @jsxRuntime classic */
 /** @jsx svg */
 import { type GNode, RectangularNodeView, type RenderingContext, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';

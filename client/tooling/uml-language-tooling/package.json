@@ -1,13 +1,10 @@
 {
   "name": "@borkdominik-biguml/uml-language-tooling",
   "version": "0.6.4",
+  "private": true,
   "description": "UML-Hello World",
   "homepage": "https://github.com/borkdominik/bigUML",
   "bugs": "https://github.com/borkdominik/bigUML/issues",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/borkdominik/bigUML.git"
-  },
   "license": "MIT",
   "author": {
     "name": "Business Informatics Group (TU Wien)"
@@ -24,38 +21,24 @@
       "url": "https://me.big.tuwien.ac.at/"
     }
   ],
-  "type": "module",
-  "exports": {
-    ".": {
-      "types": "./build/index.d.ts",
-      "default": "./build/index.js"
-    },
-    "./values": {
-      "types": "./build/values/index.d.ts",
-      "default": "./build/values/index.js"
-    }
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/borkdominik/bigUML.git"
   },
   "bin": {
     "uml-language-tooling": "bin/index.ts"
   },
-  "files": [
-    "build"
-  ],
-  "scripts": {
-    "build": "npm run clean && npm run compile",
-    "clean": "rimraf build dist node_modules/.tmp",
-    "compile": "tsc -b",
-    "lint": "eslint -c ./eslint.config.js",
-    "lint:fix": "npm run lint -- --fix",
-    "tsc": "tsc",
-    "watch": "concurrently --kill-others \"npm run watch:compile\"",
-    "watch:compile": "npm run compile -- --watch --preserveWatchOutput"
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./values": "./src/values/index.ts"
   },
   "dependencies": {
-    "class-transformer": "^0.5.1",
-    "eta": "^3.5.0",
+    "chalk": "~4.1.2",
+    "eta": "catalog:",
+    "oxfmt": "^0.70.0",
     "ts-morph": "^27.0.2",
-    "typescript-graph": "^0.3.0"
+    "tsx": "catalog:"
   },
   "devDependencies": {
     "@types/yargs": "^17.0.35",

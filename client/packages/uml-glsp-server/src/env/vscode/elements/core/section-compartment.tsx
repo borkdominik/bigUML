@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-server/jsx */
 
 import type { GlspNode } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import { GCompartmentElement } from '@borkdominik-biguml/uml-glsp-server/jsx';

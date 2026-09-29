@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+/** @jsxRuntime classic */
 /** @jsx svg */
 import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import {

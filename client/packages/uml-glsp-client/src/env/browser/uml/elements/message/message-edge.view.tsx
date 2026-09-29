@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+/** @jsxRuntime classic */
 /** @jsx svg */
 import { angleOfPoint, type GEdge, type Point, PolylineEdgeView, type RenderingContext, svg, toDegrees } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';

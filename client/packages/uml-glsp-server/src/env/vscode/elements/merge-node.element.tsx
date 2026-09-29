@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-server/jsx */
 import type { MergeNode } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { GModelElement } from '@eclipse-glsp/server';
 import { GDiamondNodeElement } from './core/diamond-node.js';

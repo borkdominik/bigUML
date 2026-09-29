@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-server/jsx */
 import type { ActivityFinalNode } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { GModelElement } from '@eclipse-glsp/server';
 import { GCircleNodeElement } from './core/circle-node.js';

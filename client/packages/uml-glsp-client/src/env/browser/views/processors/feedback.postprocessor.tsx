@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+/** @jsxRuntime classic */
 /** @jsx svg */
 import { type GModelElement, hasArgs, isBoundsAware, isHoverable, isSelectable, type IVNodePostprocessor, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';

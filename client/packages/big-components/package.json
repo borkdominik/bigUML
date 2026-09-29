@@ -1,13 +1,10 @@
 {
   "name": "@borkdominik-biguml/big-components",
   "version": "0.6.4",
+  "private": true,
   "description": "big-components",
   "homepage": "https://github.com/borkdominik/bigUML",
   "bugs": "https://github.com/borkdominik/bigUML/issues",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/borkdominik/bigUML.git"
-  },
   "license": "MIT",
   "author": {
     "name": "Business Informatics Group (TU Wien)"
@@ -24,39 +21,27 @@
       "url": "https://me.big.tuwien.ac.at/"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/borkdominik/bigUML.git"
+  },
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./build/env/browser/index.d.ts",
-      "default": "./build/env/browser/index.js"
-    }
-  },
-  "files": [
-    "build"
-  ],
-  "scripts": {
-    "build": "npm run clean && npm run compile",
-    "clean": "rimraf build dist node_modules/.tmp",
-    "compile": "tsc -b",
-    "lint": "eslint -c ./eslint.config.js",
-    "lint:fix": "npm run lint -- --fix",
-    "tsc": "tsc",
-    "watch": "concurrently --kill-others \"npm run watch:compile\"",
-    "watch:compile": "npm run compile -- --watch --preserveWatchOutput"
+    ".": "./src/env/browser/index.ts"
   },
   "dependencies": {
-    "@borkdominik-biguml/big-vscode": "*",
-    "@eclipse-glsp/protocol": "*",
+    "@borkdominik-biguml/big-vscode": "workspace:*",
+    "@eclipse-glsp/protocol": "catalog:",
     "@vscode-elements/react-elements": "^2.4.0",
-    "lodash": "^4.17.21",
-    "vscode-messenger-common": "^0.4.5",
-    "vscode-messenger-webview": "^0.4.5"
+    "lodash": "catalog:",
+    "vscode-messenger-common": "catalog:",
+    "vscode-messenger-webview": "catalog:"
   },
   "devDependencies": {
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
   },
   "peerDependencies": {
     "react": "^18.0.0",

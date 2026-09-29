@@ -30,7 +30,7 @@ export class UseCaseDiagram {
     relations?: Array<UseCaseDiagramEdges>;
 }
 
-type UseCaseDiagramElements = UseCaseDiagramNodes | UseCaseDiagramEdges;
+export type UseCaseDiagramElements = UseCaseDiagramNodes | UseCaseDiagramEdges;
 
 type UseCaseDiagramNodes = UseCase | Actor | Subject | Note | TextLabel | EdgeAnchor;
 

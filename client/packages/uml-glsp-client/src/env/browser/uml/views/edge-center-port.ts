@@ -71,7 +71,10 @@ function polylineMiddle(route: Point[]): Point | undefined {
     for (let index = 0; index < lengths.length; index++) {
         if (remaining <= lengths[index] && lengths[index] > 0) {
             const t = remaining / lengths[index];
-            return { x: route[index].x + (route[index + 1].x - route[index].x) * t, y: route[index].y + (route[index + 1].y - route[index].y) * t };
+            return {
+                x: route[index].x + (route[index + 1].x - route[index].x) * t,
+                y: route[index].y + (route[index + 1].y - route[index].y) * t
+            };
         }
         remaining -= lengths[index];
     }

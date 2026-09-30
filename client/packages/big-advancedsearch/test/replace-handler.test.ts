@@ -50,7 +50,7 @@ function createHandler(options?: {
 function responseOf(actions: any[]): ReplaceActionResponse {
     const response = actions.find(a => ReplaceActionResponse.is(a));
     expect(response).toBeDefined();
-    return response;
+    return response!;
 }
 
 function request(overrides: Partial<Parameters<typeof RequestReplaceAction.create>[0]>): RequestReplaceAction {

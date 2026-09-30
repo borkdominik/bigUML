@@ -19,7 +19,6 @@ import {
     parseBehaviorLabel
 } from '../notation/behavior-label.js';
 
-
 interface BehaviorLabelElement extends BehaviorLabelParts {
     name?: string;
 }

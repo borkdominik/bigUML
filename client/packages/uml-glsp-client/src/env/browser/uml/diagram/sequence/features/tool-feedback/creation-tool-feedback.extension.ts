@@ -118,7 +118,7 @@ export class SDFeedbackPositionedEdgeEnd extends GDanglingAnchor {
     constructor(
         readonly sourcePosition: Point,
         readonly elementTypeId: string,
-        public feedbackEdge: GRoutableElement | undefined = undefined,
+        public feedbackEdge?: GRoutableElement,
         override readonly type: string = SDFeedbackPositionedEdgeEnd.TYPE
     ) {
         super();
@@ -205,7 +205,7 @@ export class SDFeedbackPositionedEdgeStart extends GDanglingAnchor {
     constructor(
         readonly sourcePoistion: Point,
         readonly elementTypeId: string,
-        public feedbackEdge: GRoutableElement | undefined = undefined,
+        public feedbackEdge?: GRoutableElement,
         override readonly type: string = FeedbackEdgeEnd.TYPE
     ) {
         super();

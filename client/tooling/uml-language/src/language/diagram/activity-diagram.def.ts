@@ -41,7 +41,7 @@ export class ActivityDiagram {
     relations?: Array<ActivityDiagramEdges>;
 }
 
-type ActivityDiagramElements = ActivityDiagramNodes | ActivityDiagramEdges;
+export type ActivityDiagramElements = ActivityDiagramNodes | ActivityDiagramEdges;
 
 type ActivityDiagramNodes =
     | Activity

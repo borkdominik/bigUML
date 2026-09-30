@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-server/jsx */
 import { ActivityDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { Activity } from '@borkdominik-biguml/uml-model-server/grammar';
@@ -37,7 +38,6 @@ const MIN_ACTIVITY_SIZE: Dimension = { width: 300, height: 200 };
 
 /** Inset of the name from the frame border. */
 const FRAME_PADDING = 8;
-
 
 /**
  * Stored `bounds` can carry no usable dimensions - a zero width or height, say -
@@ -92,11 +92,7 @@ export function GActivityNodeElement(props: GActivityNodeElementProps): GModelEl
                 sitting inside it. The tag also carries the `_name_label` id a rename is written back
                 through. Bold and larger than a node's own name, because this one titles everything drawn
                 inside the frame. */}
-            <FrameNameTag
-                id={props.node.__id}
-                name={props.node.name}
-                nameCssClasses={['uml-font-bold', 'uml-font-frame-title']}
-            />
+            <FrameNameTag id={props.node.__id} name={props.node.name} nameCssClasses={['uml-font-bold', 'uml-font-frame-title']} />
             {/* Stacked straight under the name by the vbox above, which is where UML lists them. The class
                 diagram's own property row, built by the same function, so a parameter reads and is edited
                 here exactly as a class's property is - only the node type is the activity's. Rows of their

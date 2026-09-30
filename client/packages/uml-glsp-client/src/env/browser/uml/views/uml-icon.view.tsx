@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-/** @jsx svg */
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-client/jsx */
 import {
     type Args,
     type ArgsAware,
@@ -23,8 +23,7 @@ import {
     layoutContainerFeature,
     type RenderingContext,
     type Selectable,
-    selectFeature,
-    svg
+    selectFeature
 } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { type VNode } from 'snabbdom';
@@ -58,7 +57,7 @@ export class GIconView implements IView {
         let image;
         if (element.iconImageName) {
             // eslint-disable-next-line @typescript-eslint/no-require-imports
-            image = require('../../resources/images/' + element.iconImageName);
+            image = require('../../../../../resources/images/' + element.iconImageName);
         }
 
         const iconView: any = (

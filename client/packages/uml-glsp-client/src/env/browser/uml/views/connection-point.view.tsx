@@ -6,8 +6,8 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-/** @jsx svg */
-import { GPort, type RenderingContext, ShapeView, svg } from '@eclipse-glsp/client';
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-client/jsx */
+import { GPort, type RenderingContext, ShapeView } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { type VNode } from 'snabbdom';
 import { UML_CENTER_ANCHOR_KIND } from '../../features/routing/uml-center-anchor.js';

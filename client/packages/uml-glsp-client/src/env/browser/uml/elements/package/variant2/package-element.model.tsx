@@ -16,4 +16,4 @@
 
 import { GLabeledNode } from '../../../views/uml-label.view.js';
 
-export class PackageElement extends GLabeledNode { }
+export class PackageElement extends GLabeledNode {}

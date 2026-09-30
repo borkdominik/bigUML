@@ -16,6 +16,3 @@ export interface TimelineImportExportPayload {
 export const TimelineImportExportNotification = {
     method: 'timeline/importExport'
 };
-
-
-

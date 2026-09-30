@@ -6,8 +6,8 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-/** @jsx svg */
-import { type BoundsAware, GCompartment, type GParentElement, hasArgs, svg } from '@eclipse-glsp/client';
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-client/jsx */
+import { type BoundsAware, GCompartment, type GParentElement, hasArgs } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { type VNode } from 'snabbdom';
 

@@ -102,7 +102,7 @@ export function RevisionManagement(): ReactElement {
                         cursor: 'pointer'
                     }}
                 >
-                    <span className="codicon codicon-add" aria-hidden="true" />
+                    <span className='codicon codicon-add' aria-hidden='true' />
                     Create New Timeline Entry
                 </button>
             </div>
@@ -113,22 +113,24 @@ export function RevisionManagement(): ReactElement {
                     const bounds = snapshot.bounds ?? { x: 0, y: 0, width: 800, height: 600 };
 
                     return (
-                        <li
-                            key={snapshot.id}
-                            style={{ marginBottom: '0.5rem', position: 'relative' }}
-                        >
+                        <li key={snapshot.id} style={{ marginBottom: '0.5rem', position: 'relative' }}>
                             <div
                                 style={{
-                                    width: '8px', height: '8px', backgroundColor: 'transparent',
-                                    border: '1px solid var(--vscode-editor-foreground)', borderRadius: '50%',
-                                    position: 'absolute', top: '4px', left: '-14px'
+                                    width: '8px',
+                                    height: '8px',
+                                    backgroundColor: 'transparent',
+                                    border: '1px solid var(--vscode-editor-foreground)',
+                                    borderRadius: '50%',
+                                    position: 'absolute',
+                                    top: '4px',
+                                    left: '-14px'
                                 }}
                             />
 
                             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.25rem' }}>
                                 {isEditing ? (
                                     <input
-                                        type="text"
+                                        type='text'
                                         value={editingMessage}
                                         onChange={e => setEditingMessage(e.target.value)}
                                         onKeyDown={e => {
@@ -137,17 +139,25 @@ export function RevisionManagement(): ReactElement {
                                             }
                                         }}
                                         style={{
-                                            fontSize: '0.85rem', fontWeight: 500, lineHeight: 1.2,
-                                            flex: 1, color: 'var(--vscode-editor-foreground)',
+                                            fontSize: '0.85rem',
+                                            fontWeight: 500,
+                                            lineHeight: 1.2,
+                                            flex: 1,
+                                            color: 'var(--vscode-editor-foreground)',
                                             background: 'var(--vscode-input-background)',
-                                            border: '1px solid var(--vscode-panel-border)', borderRadius: '2px', padding: '2px 4px'
+                                            border: '1px solid var(--vscode-panel-border)',
+                                            borderRadius: '2px',
+                                            padding: '2px 4px'
                                         }}
                                     />
                                 ) : (
                                     <div
                                         style={{
-                                            fontSize: '0.85rem', fontWeight: 500, lineHeight: 1.2,
-                                            flex: 1, cursor: 'pointer'
+                                            fontSize: '0.85rem',
+                                            fontWeight: 500,
+                                            lineHeight: 1.2,
+                                            flex: 1,
+                                            cursor: 'pointer'
                                         }}
                                         onClick={() => setExpandedId(isExpanded ? null : snapshot.id)}
                                     >
@@ -161,22 +171,32 @@ export function RevisionManagement(): ReactElement {
                                             <button
                                                 onClick={() => submitEdit(snapshot.id)}
                                                 style={{
-                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                                    cursor: 'pointer', background: 'none', border: 'none', padding: 0,
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    cursor: 'pointer',
+                                                    background: 'none',
+                                                    border: 'none',
+                                                    padding: 0,
                                                     color: 'var(--vscode-editor-foreground)'
                                                 }}
                                             >
-                                                <span title="Save" className="codicon codicon-save" aria-hidden="true" />
+                                                <span title='Save' className='codicon codicon-save' aria-hidden='true' />
                                             </button>
                                             <button
                                                 onClick={cancelEdit}
                                                 style={{
-                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                                    cursor: 'pointer', background: 'none', border: 'none', padding: 0,
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    cursor: 'pointer',
+                                                    background: 'none',
+                                                    border: 'none',
+                                                    padding: 0,
                                                     color: 'var(--vscode-editor-foreground)'
                                                 }}
                                             >
-                                                <span title="Cancel edit" className="codicon codicon-close" aria-hidden="true" />
+                                                <span title='Cancel edit' className='codicon codicon-close' aria-hidden='true' />
                                             </button>
                                         </>
                                     ) : (
@@ -184,22 +204,35 @@ export function RevisionManagement(): ReactElement {
                                             <button
                                                 onClick={() => startEditing(snapshot)}
                                                 style={{
-                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                                    cursor: 'pointer', background: 'none', border: 'none', padding: 0,
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    cursor: 'pointer',
+                                                    background: 'none',
+                                                    border: 'none',
+                                                    padding: 0,
                                                     color: 'var(--vscode-editor-foreground)'
                                                 }}
                                             >
-                                                <span title="Edit entry name" className="codicon codicon-edit" aria-hidden="true" />
+                                                <span title='Edit entry name' className='codicon codicon-edit' aria-hidden='true' />
                                             </button>
                                             <button
-                                                onClick={() => { setDeleting(snapshot); setShowDeleteModal(true); }}
+                                                onClick={() => {
+                                                    setDeleting(snapshot);
+                                                    setShowDeleteModal(true);
+                                                }}
                                                 style={{
-                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                                    cursor: 'pointer', background: 'none', border: 'none', padding: 0,
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    cursor: 'pointer',
+                                                    background: 'none',
+                                                    border: 'none',
+                                                    padding: 0,
                                                     color: 'var(--vscode-editor-foreground)'
                                                 }}
                                             >
-                                                <span title="Delete entry" className="codicon codicon-trash" aria-hidden="true" />
+                                                <span title='Delete entry' className='codicon codicon-trash' aria-hidden='true' />
                                             </button>
                                         </div>
                                     )}
@@ -222,8 +255,12 @@ export function RevisionManagement(): ReactElement {
                                     </div>
 
                                     <div style={buttonRowStyle}>
-                                        <button onClick={() => handleRestore(snapshot)} style={exportButtonStyle}>Restore</button>
-                                        <button onClick={() => handleExportSnapshot()} style={exportButtonStyle}>Export Snapshot</button>
+                                        <button onClick={() => handleRestore(snapshot)} style={exportButtonStyle}>
+                                            Restore
+                                        </button>
+                                        <button onClick={() => handleExportSnapshot()} style={exportButtonStyle}>
+                                            Export Snapshot
+                                        </button>
                                     </div>
                                 </div>
                             )}
@@ -242,10 +279,10 @@ export function RevisionManagement(): ReactElement {
                                 const importedSnapshots = JSON.parse(reader.result as string) as Snapshot[];
                                 dispatchAction(RequestImportSnapshotAction.create(importedSnapshots));
                             } catch (error) {
-                                console.error("Error parsing JSON:", error);
+                                console.error('Error parsing JSON:', error);
                             }
                         };
-                        reader.onerror = () => console.error("File reading error:", reader.error);
+                        reader.onerror = () => console.error('File reading error:', reader.error);
                         reader.readAsText(file);
                     }}
                 />
@@ -255,9 +292,7 @@ export function RevisionManagement(): ReactElement {
                     timeline={timeline}
                     onClose={() => setShowExportModal(false)}
                     onExport={({ type, count }) => {
-                        const toExport = type === 'all'
-                            ? timeline
-                            : timeline.slice(-Math.max(1, count ?? 1));
+                        const toExport = type === 'all' ? timeline : timeline.slice(-Math.max(1, count ?? 1));
                         const blob = new Blob([JSON.stringify(toExport, null, 2)], { type: 'application/json' });
                         const url = URL.createObjectURL(blob);
                         const anchor = document.createElement('a');
@@ -271,7 +306,10 @@ export function RevisionManagement(): ReactElement {
 
             {showRestoreModal && selectedSnapshot && (
                 <ConfirmRestoreModal
-                    onCancel={() => { setShowRestoreModal(false); setSelectedSnapshot(null); }}
+                    onCancel={() => {
+                        setShowRestoreModal(false);
+                        setSelectedSnapshot(null);
+                    }}
                     onConfirm={() => {
                         dispatchAction(RequestRestoreSnapshotAction.create(selectedSnapshot.id));
                         setShowRestoreModal(false);
@@ -283,7 +321,10 @@ export function RevisionManagement(): ReactElement {
             {showDeleteModal && deleting && (
                 <ConfirmDeleteModal
                     name={deleting.message}
-                    onCancel={() => { setShowDeleteModal(false); setDeleting(null); }}
+                    onCancel={() => {
+                        setShowDeleteModal(false);
+                        setDeleting(null);
+                    }}
                     onConfirm={() => {
                         dispatchAction(RequestDeleteSnapshotAction.create(deleting?.id, deleting?.message));
                         setShowDeleteModal(false);
@@ -296,13 +337,26 @@ export function RevisionManagement(): ReactElement {
 }
 
 const buttonRowStyle: React.CSSProperties = {
-    display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center',
-    gap: '0.4rem', borderTop: '1px solid var(--vscode-panel-border)', paddingTop: '0.75rem', marginTop: '1rem'
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    gap: '0.4rem',
+    borderTop: '1px solid var(--vscode-panel-border)',
+    paddingTop: '0.75rem',
+    marginTop: '1rem'
 };
 
 const buttonBaseStyle: React.CSSProperties = {
-    fontSize: '13px', padding: '0.35rem 1.1rem', borderRadius: '3px', cursor: 'pointer',
-    minWidth: '100px', flexGrow: 1, textAlign: 'center', whiteSpace: 'nowrap', lineHeight: '1.4'
+    fontSize: '13px',
+    padding: '0.35rem 1.1rem',
+    borderRadius: '3px',
+    cursor: 'pointer',
+    minWidth: '100px',
+    flexGrow: 1,
+    textAlign: 'center',
+    whiteSpace: 'nowrap',
+    lineHeight: '1.4'
 };
 
 const exportButtonStyle: React.CSSProperties = {

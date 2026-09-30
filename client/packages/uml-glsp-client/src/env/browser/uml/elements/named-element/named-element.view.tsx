@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-/** @jsx svg */
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-client/jsx */
 import {
     type ArgsAware,
     containerFeature,
@@ -17,8 +17,7 @@ import {
     layoutableChildFeature,
     nameFeature,
     RectangularNodeView,
-    type RenderingContext,
-    svg
+    type RenderingContext
 } from '@eclipse-glsp/client';
 import { type Args } from '@eclipse-glsp/protocol';
 import { injectable } from 'inversify';
@@ -95,15 +94,12 @@ export class NamedElementView extends RectangularNodeView {
             return undefined;
         }
 
-        // TODO: Remove after switching to builder based approach for all gmodels
         return (
             <g class-selected={element.selected} class-mouseover={element.hoverFeedback}>
                 {element.args['border'] === true || element.args['build_by'] === undefined
                     ? this.renderBackground(element)
                     : this.renderMemberHighlight(element)}
-
                 {renderCompartmentSeparators(element)}
-
                 {this.renderContent(element, context)}
             </g>
         ) as any;

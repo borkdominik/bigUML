@@ -16,7 +16,7 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { parseDefinitionFile } from '../src/parser/definition.parser.js';
 import { transformDeclarations } from '../src/parser/transformer.js';
-import { format } from '../src/processors/prettier.js';
+import { format } from '../src/processors/format.js';
 import type { GeneratorContext, GeneratorResult } from '../src/types/index.js';
 import { checkDeclarationValidity } from '../src/validators/index.js';
 
@@ -52,7 +52,7 @@ function resolvePath(inputPath: string): string {
     return fileURLToPath(import.meta.resolve(inputPath));
 }
 
-yargs(hideBin(process.argv))
+void yargs(hideBin(process.argv))
     .command(
         'extension',
         'Extension-related commands',
@@ -140,7 +140,7 @@ async function generateExtensionFiles(context: GeneratorContext, generatorPath: 
     const additionalIndexPaths = result.additionalIndexPaths ?? [];
 
     for (const { path: filePath, content } of results) {
-        const formatted = await format(content);
+        const formatted = await format(filePath, content);
         fs.mkdirSync(path.dirname(filePath), { recursive: true });
         fs.writeFileSync(filePath, formatted, 'utf8');
         console.log(`Generated: ${filePath}`);
@@ -149,7 +149,7 @@ async function generateExtensionFiles(context: GeneratorContext, generatorPath: 
     // Generate per-env index.ts barrel files
     const indexFiles = generateEnvIndexFiles(context.outputPath, results, additionalIndexPaths);
     for (const { path: filePath, content } of indexFiles) {
-        const formatted = await format(content);
+        const formatted = await format(filePath, content);
         fs.mkdirSync(path.dirname(filePath), { recursive: true });
         fs.writeFileSync(filePath, formatted, 'utf8');
         console.log(`Generated: ${filePath}`);

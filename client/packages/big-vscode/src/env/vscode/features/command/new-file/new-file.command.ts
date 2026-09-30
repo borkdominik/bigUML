@@ -25,6 +25,6 @@ export class NewFileCommand implements VSCodeCommand {
             uri = args[0];
         }
 
-        this.creator.create(uri);
+        void this.creator.create(uri);
     }
 }

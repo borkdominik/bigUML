@@ -53,7 +53,9 @@ export class ModelServer implements Disposable {
             connection.onRequest(PatchModel, async (uri, patch, client) => {
                 await this.modelService.patch(uri, patch, client);
             }),
-            connection.onRequest(ReferenceModel, async (uri, reference) => toSerializable(await this.modelService.getCrossReferences(uri, reference)))
+            connection.onRequest(ReferenceModel, async (uri, reference) =>
+                toSerializable(await this.modelService.getCrossReferences(uri, reference))
+            )
         );
     }
 

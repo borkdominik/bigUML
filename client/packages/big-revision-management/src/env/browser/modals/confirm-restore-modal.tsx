@@ -20,10 +20,18 @@ export function ConfirmRestoreModal({ onConfirm, onCancel }: ConfirmRestoreModal
             <div style={modalStyle}>
                 <h3 style={titleStyle}>Restore Model State</h3>
                 <hr style={dividerStyle} />
-                <p style={textStyle}>Are you sure you want to restore this version?<br />Current changes will be lost.</p>
+                <p style={textStyle}>
+                    Are you sure you want to restore this version?
+                    <br />
+                    Current changes will be lost.
+                </p>
                 <div style={buttonRowStyle}>
-                    <button onClick={onCancel} style={cancelButtonStyle}>Cancel</button>
-                    <button onClick={onConfirm} style={exportButtonStyle}>Restore</button>
+                    <button onClick={onCancel} style={cancelButtonStyle}>
+                        Cancel
+                    </button>
+                    <button onClick={onConfirm} style={exportButtonStyle}>
+                        Restore
+                    </button>
                 </div>
             </div>
         </div>

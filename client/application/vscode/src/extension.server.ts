@@ -34,7 +34,7 @@ function launchLanguageClient(context: vscode.ExtensionContext): LanguageClient 
 
     // Start the client. This will also launch the server
     const languageClient = new LanguageClient('uml-diagram', 'uml-diagram', serverOptions, clientOptions);
-    languageClient.start();
+    void languageClient.start();
     return languageClient;
 }
 

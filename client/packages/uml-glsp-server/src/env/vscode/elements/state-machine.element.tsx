@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-server/jsx */
 import { GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { StateMachine } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { Dimension } from '@eclipse-glsp/protocol';
@@ -91,6 +92,12 @@ export function createStateMachineElement(ctx: ElementContext<StateMachine>): GM
     const size = ctx.modelIndex.findSize(ctx.node.__id);
     const freeformChildren = renderContents(ctx, ctx.node.regions);
     return (
-        <GStateMachineNodeElement node={ctx.node} position={position} size={size} type={ctx.elementType} freeformChildren={freeformChildren} />
+        <GStateMachineNodeElement
+            node={ctx.node}
+            position={position}
+            size={size}
+            type={ctx.elementType}
+            freeformChildren={freeformChildren}
+        />
     );
 }

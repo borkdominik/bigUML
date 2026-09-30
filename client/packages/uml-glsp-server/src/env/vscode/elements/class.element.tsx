@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-server/jsx */
 import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { normalizeChildren, type GlspNode } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { Class } from '@borkdominik-biguml/uml-model-server/grammar';

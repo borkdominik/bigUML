@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import type { ClassDiagram } from '../../../../../uml-model-server/build/gen/langium/language/ast.js';
+import type { ClassDiagram } from '@borkdominik-biguml/uml-model-server/gen/langium';
 import type { SearchResult } from '../../common/searchresult.js';
 import type { SearchCriteria } from './search-ast.js';
 

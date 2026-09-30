@@ -6,10 +6,10 @@ applyTo: '**/*.ts,**/*.tsx'
 
 # TypeScript coding standards
 
-- Use `import type { ... }` for type-only imports (`@typescript-eslint/consistent-type-imports`).
+- Use `import type { ... }` for type-only imports (oxlint `typescript/consistent-type-imports`).
 - Use `import` for value imports.
 - Always use `export * from` syntax for re-exports in barrel index files.
-- Include file extensions in all relative imports, e.g., `import { Foo } from './foo.js'` (`n/file-extension-in-import`).
+- Include file extensions in all relative imports, e.g., `import { Foo } from './foo.js'` (the TypeScript configuration requires them).
 - Every source file must start with the copyright header:
 
 ```typescript
@@ -48,7 +48,7 @@ Never import across environment boundaries (e.g., never import `vscode` in `glsp
 ## Generated code
 
 - Files in `src/gen/` are machine-generated from `tooling/uml-language/src/language/def.ts`. Never edit them manually.
-- Regenerate with `npm run generate`.
+- Regenerate with `pnpm generate`.
 - Each package with generated code has a `generator/` directory containing `contribution.ts` and Eta templates.
 
 ## Documentation

@@ -1,0 +1,92 @@
+packages:
+  - application/*
+  - packages/*
+  - tooling/*
+
+allowBuilds:
+  '@vscode/vsce-sign': true
+  esbuild: true
+  # Native credential store of vsce; not needed (publish uses VSCE_PAT)
+  keytar: false
+  # Its postinstall would install git hooks automatically; opt in with `pnpm hooks:install` instead
+  lefthook: false
+
+# Shared versions. Reference them with "catalog:" in package.json.
+catalog:
+  '@eclipse-glsp/client': 2.5.0
+  '@eclipse-glsp/layout-elk': 2.5.0
+  '@eclipse-glsp/protocol': 2.5.0
+  '@eclipse-glsp/server': 2.5.0
+  '@eclipse-glsp/sprotty': 2.5.0
+  '@eclipse-glsp/vscode-integration': 2.5.0
+  '@eclipse-glsp/vscode-integration-webview': 2.5.0
+  '@types/lodash': ^4.17.20
+  '@types/node': ^24.0.0
+  '@types/react': ^18.3.28
+  '@types/react-dom': ^18.3.7
+  '@types/sortablejs': ^1.15.0
+  # Must match `engines.vscode`; application/vscode uses the version literally because vsce cannot read `catalog:`
+  '@types/vscode': ^1.63.0
+  '@types/yargs': ^17.0.35
+  '@vscode-elements/react-elements': ^2.4.0
+  '@vscode/codicons': ^0.0.36
+  '@vscode/vsce': ^3.6.2
+  balloon-css: ^0.5.0
+  chalk: ~4.1.2
+  chevrotain: ~12.0.0
+  class-validator: ^0.14.3
+  concurrently: ^9.1.2
+  endent: ^2.1.0
+  esbuild: ^0.28.0
+  eta: ^3.5.0
+  fast-json-patch: ^3.1.1
+  glob: ^11.0.1
+  inversify: ^6.2.2
+  knip: ^6.38.0
+  langium: ~4.2.4
+  langium-cli: ~4.2.1
+  lefthook: ^2.1.14
+  lodash: ^4.18.1
+  minimatch: ^10.2.4
+  nodemon: ^3.1.14
+  oxfmt: ^0.70.0
+  oxlint: ^1.85.0
+  oxlint-tsgolint: ^7.0.2003
+  react: ^18.3.1
+  react-dom: ^18.3.1
+  reflect-metadata: ^0.2.2
+  rimraf: ^6.0.1
+  # Must match the version used by sprotty / @eclipse-glsp/client
+  snabbdom: ~3.5.1
+  sortablejs: ^1.15.0
+  sprotty: 1.4.0
+  ts-morph: ^27.0.2
+  tsx: ^4.21.0
+  type-fest: ^5.0.0
+  typescript: ^7.0.2
+  uuid: ^11.1.0
+  vitest: ^4.1.11
+  vscode-languageclient: 9.0.1
+  vscode-languageserver: 9.0.1
+  # ~ ranges: keep in line with langium / vscode-languageclient, otherwise the bundles contain two copies
+  vscode-jsonrpc: 8.2.0
+  vscode-languageserver-protocol: ~3.17.5
+  vscode-languageserver-textdocument: ^1.0.11
+  vscode-languageserver-types: ~3.17.5
+  vscode-messenger: ^0.4.5
+  vscode-messenger-common: ^0.4.5
+  vscode-messenger-webview: ^0.4.5
+  vscode-uri: ~3.1.0
+  yargs: ^18.0.0
+
+overrides:
+  # GLSP pins lodash 4.17.21 exactly; without this every bundle ships two lodash copies
+  lodash: ^4.18.1
+  # @eclipse-glsp/protocol depends on uuid 10 (only `v4()` is used)
+  uuid: ^11.1.0
+  '@eclipse-glsp/client': 2.5.0
+  '@eclipse-glsp/layout-elk': 2.5.0
+  '@eclipse-glsp/protocol': 2.5.0
+  '@eclipse-glsp/server': 2.5.0
+  '@eclipse-glsp/vscode-integration': 2.5.0
+  '@eclipse-glsp/vscode-integration-webview': 2.5.0

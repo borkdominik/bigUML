@@ -113,7 +113,7 @@ export function Minimap(): ReactElement {
 
         if (y < 0) {
             height = canvasHeight + y;
-            y = Math.max(y, 2)
+            y = Math.max(y, 2);
         }
         if (y + height > minimapHeight) {
             height = minimapHeight - y;
@@ -121,7 +121,6 @@ export function Minimap(): ReactElement {
         if (y > minimapHeight) {
             y = minimapHeight;
         }
-
 
         return { x, y, width: Math.max(width, 2), height: Math.max(height, 2) };
     };

@@ -13,4 +13,3 @@ export * from './destructionOccurrence.js';
 export * from './interaction.js';
 export * from './interactionOperand.js';
 export * from './lifeline.js';
-

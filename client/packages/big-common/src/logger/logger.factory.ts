@@ -9,7 +9,7 @@
 
 import { minimatch } from 'minimatch';
 
-import { LogLevel } from './log-level.js';
+import { type LogLevel } from './log-level.js';
 import { LOGGER_CONFIG } from './logger.config.js';
 import { Logger } from './logger.js';
 
@@ -31,7 +31,7 @@ export function resolveLogLevel(name: string): LogLevel {
             return level;
         }
     }
-    return LogLevel.Info;
+    return LOGGER_CONFIG.defaultLevel;
 }
 
 /**

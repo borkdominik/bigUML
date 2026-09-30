@@ -66,7 +66,10 @@ const CHEATSHEET = [
         entries: [
             { syntax: 'Class > Attribute', description: 'Classes that have attributes' },
             { syntax: 'Class > Method', description: 'Classes that have methods' },
-            { syntax: 'Class > Method > Parameter', description: 'Classes with methods that have parameters. A class that has a method that has a parameter' },
+            {
+                syntax: 'Class > Method > Parameter',
+                description: 'Classes with methods that have parameters. A class that has a method that has a parameter'
+            },
             { syntax: 'Class[name="Foo"] > Attribute[isDerived=true]', description: 'Foo with derived attributes' }
         ]
     },
@@ -300,7 +303,9 @@ function computeNewValue(
     if (typeof oldValue !== 'string' || find === '') {
         return oldValue;
     }
-    return exact ? applyExactReplacement(oldValue, find, replaceWith, caseSensitive) : applyReplacement(oldValue, find, replaceWith, caseSensitive);
+    return exact
+        ? applyExactReplacement(oldValue, find, replaceWith, caseSensitive)
+        : applyReplacement(oldValue, find, replaceWith, caseSensitive);
 }
 
 type PropertyInputType = 'text' | 'select';
@@ -667,9 +672,9 @@ export function AdvancedSearch(): ReactElement {
                     const detail =
                         erroredRows.length > 0
                             ? `${erroredRows.length} error${erroredRows.length !== 1 ? 's' : ''}: ${erroredRows
-                                .slice(0, 3)
-                                .map(r => r.error ?? 'unknown')
-                                .join('; ')}`
+                                  .slice(0, 3)
+                                  .map(r => r.error ?? 'unknown')
+                                  .join('; ')}`
                             : undefined;
                     setReplaceStatus({
                         ok: true,
@@ -707,7 +712,8 @@ export function AdvancedSearch(): ReactElement {
         <div className='advanced-search'>
             <div className='advanced-search__controls'>
                 <div className='advanced-search__search-row'>
-                    <button disabled={!hasResults}
+                    <button
+                        disabled={!hasResults}
                         type='button'
                         className={`advanced-search__toggle ${hasResults ? '' : 'disable-btn'} ${replaceOpen ? 'advanced-search__toggle--open' : ''}`}
                         title={replaceOpen ? 'Hide replace' : 'Show replace'}
@@ -746,7 +752,9 @@ export function AdvancedSearch(): ReactElement {
                             </BSingleSelect>
 
                             {selectedProperty === 'name' ? (
-                                <span className={`advanced-search__find-chip ${findPattern === '' ? 'advanced-search__find-chip--empty' : ''}`}>
+                                <span
+                                    className={`advanced-search__find-chip ${findPattern === '' ? 'advanced-search__find-chip--empty' : ''}`}
+                                >
                                     {findPattern === '' ? 'name filter' : findPattern}
                                 </span>
                             ) : selectedPropertyConfig.inputType === 'select' ? (
@@ -819,8 +827,8 @@ export function AdvancedSearch(): ReactElement {
                                             ? 'Add a name filter (e.g. Class[name~"User"]) to enable replace'
                                             : `Pick a ${propertyLabel(selectedProperty).toLowerCase()} value to find`
                                         : willChangeCount === 0
-                                            ? 'No included row would change'
-                                            : `Replace ${willChangeCount} element${willChangeCount !== 1 ? 's' : ''}`
+                                          ? 'No included row would change'
+                                          : `Replace ${willChangeCount} element${willChangeCount !== 1 ? 's' : ''}`
                                 }
                             >
                                 Replace All
@@ -880,7 +888,9 @@ export function AdvancedSearch(): ReactElement {
                             <span className='codicon codicon-close' />
                         </button>
                     </div>
-                    <p className='cheatsheet__intro'>Use structured queries to find elements by type, properties, and relationships. The search is case-insensitive.</p>
+                    <p className='cheatsheet__intro'>
+                        Use structured queries to find elements by type, properties, and relationships. The search is case-insensitive.
+                    </p>
                     {CHEATSHEET.map(section => (
                         <div key={section.category} className='cheatsheet__section'>
                             <div className='cheatsheet__category'>{section.category}</div>
@@ -966,7 +976,9 @@ export function AdvancedSearch(): ReactElement {
                                                     <span>{item.name}</span>
                                                     <span className='result-item__prop-preview'>
                                                         {' · '}
-                                                        <span className='result-item__prop-label'>{propertyLabel(selectedProperty)}:</span>{' '}
+                                                        <span className='result-item__prop-label'>
+                                                            {propertyLabel(selectedProperty)}:
+                                                        </span>{' '}
                                                         {preview?.current === undefined ? (
                                                             <span className='result-item__prop-missing'>—</span>
                                                         ) : willChange ? (
@@ -984,19 +996,21 @@ export function AdvancedSearch(): ReactElement {
                                         </span>
                                         {replaceOpen && outcome && (
                                             <span
-                                                className={`result-item__outcome result-item__outcome--${!outcome.success ? 'error' : outcome.changed ? 'changed' : 'noop'
-                                                    }`}
+                                                className={`result-item__outcome result-item__outcome--${
+                                                    !outcome.success ? 'error' : outcome.changed ? 'changed' : 'noop'
+                                                }`}
                                                 title={
                                                     !outcome.success
-                                                        ? outcome.error ?? 'Replace failed'
+                                                        ? (outcome.error ?? 'Replace failed')
                                                         : outcome.changed
-                                                            ? `Replaced: ${outcome.oldValue} → ${outcome.newValue}`
-                                                            : 'No change'
+                                                          ? `Replaced: ${outcome.oldValue} → ${outcome.newValue}`
+                                                          : 'No change'
                                                 }
                                             >
                                                 <span
-                                                    className={`codicon codicon-${!outcome.success ? 'error' : outcome.changed ? 'check' : 'dash'
-                                                        }`}
+                                                    className={`codicon codicon-${
+                                                        !outcome.success ? 'error' : outcome.changed ? 'check' : 'dash'
+                                                    }`}
                                                 />
                                             </span>
                                         )}
@@ -1010,12 +1024,12 @@ export function AdvancedSearch(): ReactElement {
                                                             ? 'Add a name filter (e.g. Class[name~"User"]) to enable replace'
                                                             : `Pick a ${propertyLabel(selectedProperty).toLowerCase()} value to find`
                                                         : willChange
-                                                            ? `Replace this element: ${preview?.current ?? item.name} → ${preview?.newValue}`
-                                                            : preview?.invalid
-                                                                ? 'Replacement would clear the value'
-                                                                : preview?.current === undefined
-                                                                    ? `This element has no ${propertyLabel(selectedProperty).toLowerCase()} property`
-                                                                    : 'No change in this element'
+                                                          ? `Replace this element: ${preview?.current ?? item.name} → ${preview?.newValue}`
+                                                          : preview?.invalid
+                                                            ? 'Replacement would clear the value'
+                                                            : preview?.current === undefined
+                                                              ? `This element has no ${propertyLabel(selectedProperty).toLowerCase()} property`
+                                                              : 'No change in this element'
                                                 }
                                                 disabled={findPattern === '' || !willChange}
                                                 onClick={e => {
@@ -1042,11 +1056,7 @@ export function AdvancedSearch(): ReactElement {
                             <span className='codicon codicon-warning' />
                             <span>
                                 &ldquo;{query}&rdquo; isn&rsquo;t a valid query.{' '}
-                                <button
-                                    type='button'
-                                    className='advanced-search__empty-help'
-                                    onClick={() => setShowCheatsheet(true)}
-                                >
+                                <button type='button' className='advanced-search__empty-help' onClick={() => setShowCheatsheet(true)}>
                                     See syntax help
                                 </button>
                             </span>

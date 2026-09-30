@@ -51,7 +51,7 @@ export class RevisionManagementService {
         const configPersist = config.get<boolean>('timeline.persistent');
 
         if (configPersist === false) {
-            this.clearVSCodeStorage();
+            void this.clearVSCodeStorage();
         }
 
         const umlWatcher = vscode.workspace.createFileSystemWatcher('**/*.uml');

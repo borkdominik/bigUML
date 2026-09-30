@@ -7,7 +7,15 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { type Declaration, Decorator, isValueProperty, lcFirst, type Property, toConstant, toHuman } from '@borkdominik-biguml/uml-language-tooling';
+import {
+    type Declaration,
+    Decorator,
+    isValueProperty,
+    lcFirst,
+    type Property,
+    toConstant,
+    toHuman
+} from '@borkdominik-biguml/uml-language-tooling';
 import { isAbstractType, isEdgeType, isInDiagramTypes, optionConstant } from '../utils/declaration.utils.js';
 
 export interface PropertyDescriptor {
@@ -50,7 +58,6 @@ export function buildPropertyDescriptor(prop: Property, declarations: Declaratio
 
     if (mult === '*') {
         const typeName = first?.typeName ?? 'Element';
-        const modelConst = toConstant(typeName);
         const label = toHuman(typeName);
 
         let createsExpr: string | undefined;
@@ -132,6 +139,8 @@ function inlineFieldsExpr(typeName: string, declarations: Declaration[]): string
     if (propertyIds.length === 0) {
         return [];
     }
-    const fields = propertyIds.map(propertyId => `{ propertyId: '${propertyId}', label: '${toHuman(propertyId)}', value: e.${propertyId} ?? '' }`);
+    const fields = propertyIds.map(
+        propertyId => `{ propertyId: '${propertyId}', label: '${toHuman(propertyId)}', value: e.${propertyId} ?? '' }`
+    );
     return [`    fields: [${fields.join(', ')}],`];
 }

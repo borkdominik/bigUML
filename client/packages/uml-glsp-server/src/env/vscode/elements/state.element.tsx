@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-server/jsx */
 import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { GLabelElement, GNodeElement, type GlspNode } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { State } from '@borkdominik-biguml/uml-model-server/grammar';
@@ -101,12 +102,7 @@ export function createStateElement(ctx: ElementContext<State>): GModelElement {
     const bandHeight = regionBandHeight(ctx.node.regionHeight);
     const bandWidth = stateSize(size, ctx.node, bandHeight).width - 2 * STATE_PADDING;
     const regionBands = regions.map((region, index) => (
-        <GStateRegionCompartment
-            node={region}
-            divided={index > 0}
-            width={bandWidth}
-            substates={renderContents(ctx, region.subvertices)}
-        />
+        <GStateRegionCompartment node={region} divided={index > 0} width={bandWidth} substates={renderContents(ctx, region.subvertices)} />
     ));
 
     return (

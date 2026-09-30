@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-server/jsx */
 import { composeBehaviorLabel } from '../notation/behavior-label.js';
 import { GEdgeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { Transition } from '@borkdominik-biguml/uml-model-server/grammar';

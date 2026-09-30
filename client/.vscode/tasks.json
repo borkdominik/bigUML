@@ -4,48 +4,101 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Build all packages",
+      "label": "Build",
       "type": "shell",
       "group": {
         "kind": "build",
         "isDefault": true
       },
-      "command": "npm install",
+      "command": "pnpm build",
       "presentation": {
         "reveal": "always",
-        "panel": "new"
+        "panel": "shared"
       },
+      "problemMatcher": "$esbuild"
+    },
+    {
+      "label": "Watch (esbuild)",
+      "type": "shell",
+      "command": "pnpm -C application/vscode watch",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "silent",
+        "panel": "dedicated"
+      },
+      "problemMatcher": "$esbuild-watch"
+    },
+    {
+      "label": "Check (typecheck + lint daemon)",
+      "type": "shell",
+      "command": "pnpm check:watch",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "silent",
+        "panel": "dedicated"
+      },
+      "problemMatcher": [
+        {
+          "base": "$tsc",
+          "fileLocation": ["relative", "${workspaceFolder}"],
+          "background": {
+            "activesBegin": "^.*\\[nodemon\\] starting",
+            "beginsPattern": "^.*\\[nodemon\\] (starting|restarting)",
+            "endsPattern": "^.*\\[nodemon\\] (clean exit|app crashed)"
+          }
+        },
+        {
+          "owner": "oxlint",
+          "source": "oxlint",
+          "fileLocation": ["relative", "${workspaceFolder}"],
+          "pattern": {
+            "regexp": "^(.+?):(\\d+):(\\d+): (.+) \\[(Error|Warning)/(.+)\\]$",
+            "file": 1,
+            "line": 2,
+            "column": 3,
+            "message": 4,
+            "severity": 5,
+            "code": 6
+          },
+          "background": {
+            "activesBegin": "^.*\\[nodemon\\] starting",
+            "beginsPattern": "^.*\\[nodemon\\] (starting|restarting)",
+            "endsPattern": "^.*\\[nodemon\\] (clean exit|app crashed)"
+          }
+        }
+      ]
+    },
+    {
+      "label": "Generate (daemon)",
+      "type": "shell",
+      "command": "pnpm generate:watch",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "silent",
+        "panel": "dedicated"
+      },
+      "problemMatcher": {
+        "owner": "generate",
+        "pattern": { "regexp": "^(ERR_PNPM_\\S+)\\s+(.*)$", "code": 1, "message": 2 },
+        "background": {
+          "activesBegin": "^.*\\[nodemon\\] (starting|restarting)",
+          "beginsPattern": "^.*\\[nodemon\\] (starting|restarting)",
+          "endsPattern": "^.*\\[nodemon\\] (clean exit|app crashed|watching extensions)"
+        }
+      }
+    },
+    {
+      "label": "Dev",
+      "dependsOn": ["Watch (esbuild)", "Check (typecheck + lint daemon)", "Generate (daemon)"],
       "problemMatcher": []
     },
     {
-      "label": "Watch all packages",
+      "label": "Generate",
       "type": "shell",
-      "group": "build",
-      "command": "npm run watch",
+      "command": "pnpm generate",
       "presentation": {
         "reveal": "always",
-        "panel": "new"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "Build server",
-      "type": "shell",
-      "group": "build",
-      "command": "npm run build:server",
-      "presentation": {
-        "reveal": "always",
-        "panel": "new"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "Copy server",
-      "type": "shell",
-      "command": "npm copy:server",
-      "presentation": {
-        "reveal": "always",
-        "panel": "new"
+        "panel": "shared"
       },
       "problemMatcher": []
     }

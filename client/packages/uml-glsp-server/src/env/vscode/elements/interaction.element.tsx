@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-server/jsx */
 import { GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { Interaction } from '@borkdominik-biguml/uml-model-server/grammar';
 import { type Dimension } from '@eclipse-glsp/protocol';

@@ -19,12 +19,12 @@ bigUML uses a code generation pipeline to produce boilerplate handlers from a si
 
 ### Invocation
 
-The generation is triggered through an npm script defined in the package:
+The generation is triggered through a package script defined in the package:
 
 ```json
 {
-  "generate": "rimraf src/gen && npm run language:generate",
-  "language:generate": "uml-language-tooling extension generate -d @borkdominik-biguml/uml-language/definition -c ./generator/index.ts"
+  "generate": "rimraf src/gen && pnpm run language:generate",
+  "language:generate": "uml-language-tooling extension generate -d ../../tooling/uml-language/src/language/def.ts -g ./generator/index.ts"
 }
 ```
 
@@ -231,7 +231,7 @@ src/gen/
 ```bash
 # From the package directory
 cd packages/big-property-palette
-npm run generate
+pnpm generate
 ```
 
 This deletes `src/gen/`, runs the CLI, and writes fresh generated files.

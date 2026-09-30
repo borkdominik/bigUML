@@ -1,0 +1,86 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["eslint", "typescript", "unicorn", "oxc", "react", "import"],
+  "jsPlugins": ["./configs/oxlint/header-plugin.js"],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2022": true
+  },
+  "categories": {
+    "correctness": "error"
+  },
+  "rules": {
+    "biguml/header": "error",
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "sprotty",
+            "message": "The sprotty default exports are customized and reexported by GLSP. Please use '@eclipse-glsp/client' instead"
+          },
+          {
+            "name": "sprotty-protocol",
+            "message": "The sprotty-protocol default exports are customized and reexported by GLSP. Please use '@eclipse-glsp/client' instead"
+          }
+        ]
+      }
+    ],
+    "typescript/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports",
+        "fixStyle": "inline-type-imports"
+      }
+    ],
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "error",
+    "no-unused-vars": "off",
+    "typescript/no-explicit-any": "off",
+    "typescript/no-namespace": "off",
+    "typescript/no-empty-object-type": "off",
+    "react/set-state-in-effect": "warn",
+    "unicorn/no-empty-file": "warn",
+    "typescript/no-floating-promises": "error",
+    "typescript/no-misused-promises": [
+      "error",
+      {
+        "checksVoidReturn": {
+          "arguments": false
+        }
+      }
+    ],
+    "typescript/await-thenable": "error",
+    "typescript/no-base-to-string": "off",
+    "typescript/restrict-template-expressions": "off",
+    "typescript/no-misused-spread": "off",
+    "typescript/unbound-method": "off"
+  },
+  "overrides": [
+    {
+      "files": [
+        "packages/big-components/**",
+        "packages/uml-glsp-client/**",
+        "**/src/env/vscode/**"
+      ],
+      "rules": {
+        "react/rules-of-hooks": "off",
+        "react/exhaustive-deps": "off",
+        "react/jsx-key": "off",
+        "react/immutability": "off",
+        "react/set-state-in-effect": "off"
+      }
+    }
+  ],
+  "ignorePatterns": [
+    "**/src/gen/**",
+    "**/build/**",
+    "**/dist/**",
+    "application/vscode/webviews/**",
+    "release/**"
+  ],
+  "options": {
+    "typeAware": true
+  }
+}

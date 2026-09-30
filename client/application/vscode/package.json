@@ -83,7 +83,7 @@
   "devDependencies": {
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@types/vscode": "catalog:",
+    "@types/vscode": "^1.63.0",
     "@vscode/vsce": "catalog:",
     "esbuild": "catalog:",
     "tsx": "catalog:"

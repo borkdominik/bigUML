@@ -25,6 +25,7 @@ catalog:
   '@types/react': ^18.3.28
   '@types/react-dom': ^18.3.7
   '@types/sortablejs': ^1.15.0
+  # Must match `engines.vscode`; application/vscode uses the version literally because vsce cannot read `catalog:`
   '@types/vscode': ^1.63.0
   '@types/yargs': ^17.0.35
   '@vscode-elements/react-elements': ^2.4.0

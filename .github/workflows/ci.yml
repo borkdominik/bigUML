@@ -58,3 +58,34 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+      - name: Package VSIX
+        id: package
+        env:
+          # On pull requests github.sha is the merge commit; name the artifact after the pushed commit
+          SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          pnpm package
+          version=$(node -p "require('./application/vscode/package.json').version")
+          echo "name=umldiagram-${version}-${SHA::7}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload VSIX
+        id: upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.package.outputs.name }}
+          path: client/release/vsix/*.vsix
+          if-no-files-found: error
+
+      - name: Add VSIX to the summary
+        env:
+          NAME: ${{ steps.package.outputs.name }}
+          URL: ${{ steps.upload.outputs.artifact-url }}
+        run: |
+          {
+            echo "### VSIX"
+            echo
+            echo "[Download \`${NAME}\`](${URL}) (zip containing the \`.vsix\`)."
+            echo
+            echo "Install it with \`code --install-extension <file>.vsix\` or via *Extensions → … → Install from VSIX…*."
+          } >> "$GITHUB_STEP_SUMMARY"

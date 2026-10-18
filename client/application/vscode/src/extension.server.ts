@@ -10,6 +10,7 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
 import { LanguageClient, type LanguageClientOptions, type ServerOptions, TransportKind } from 'vscode-languageclient/node.js';
+import { GLSP_SERVER_READY_NOTIFICATION } from './glsp-server-ready.js';
 
 let client: LanguageClient | undefined;
 
@@ -27,7 +28,7 @@ export async function activateServer(context: vscode.ExtensionContext): Promise<
         return;
     }
     client = launchLanguageClient(context);
-    client.onNotification('biguml/glspServerReady', () => resolveGlspReady?.());
+    client.onNotification(GLSP_SERVER_READY_NOTIFICATION, () => resolveGlspReady?.());
 }
 
 // This function is called when the extension is deactivated.

@@ -28,8 +28,7 @@ import {
     type SourceModelStorage
 } from '@eclipse-glsp/server';
 import { inject, injectable, postConstruct } from 'inversify';
-import { AstUtils, type Reference, URI, isReference } from 'langium';
-import { readFile } from 'node:fs/promises';
+import { AstUtils, type Reference, isReference } from 'langium';
 import { DiagramModelState } from './diagram-model-state.js';
 
 @injectable()
@@ -47,11 +46,6 @@ export class DiagramModelStorage implements SourceModelStorage, ClientSessionLis
         // load semantic model from document in language model service
         const sourceUri = this.getSourceUri(action);
         const rootUri = sourceUri;
-        // AI tools and other external editors write the .uml file directly. Re-sync the in-memory model with
-        // the file on disk so (re)opening the diagram reflects those edits instead of serving a stale cached
-        // model. Best-effort: on any failure we fall through to the existing request below, preserving the
-        // original load behaviour.
-        await this.refreshModelFromDisk(rootUri);
         const root = await this.state.modelService.request(rootUri, isDiagram, DIAGRAM_CLIENT);
         if (!root) {
             throw new GLSPServerError('Expected BigUML Diagram Root');
@@ -60,16 +54,6 @@ export class DiagramModelStorage implements SourceModelStorage, ClientSessionLis
         this.state.modelService.onUpdate(this.state.semanticUri, this.state.clientId, async (newModel: Diagram) => {
             await this.state.replaceSemanticRoot(newModel);
         });
-    }
-
-    protected async refreshModelFromDisk(uri: string): Promise<void> {
-        try {
-            const text = await readFile(URI.parse(uri).fsPath, 'utf-8');
-            await this.state.modelService.open(uri, DIAGRAM_CLIENT);
-            await this.state.modelService.update(uri, text, DIAGRAM_CLIENT);
-        } catch (error) {
-            this.logger.warn(`Could not refresh diagram model from disk (${uri}): ${error}`);
-        }
     }
 
     async saveSourceModel(action: SaveModelAction): Promise<void> {

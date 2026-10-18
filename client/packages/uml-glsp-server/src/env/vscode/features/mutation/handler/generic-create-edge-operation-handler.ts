@@ -104,11 +104,6 @@ export class GenericCreateEdgeOperationHandler extends OperationHandler implemen
             }
         }
 
-        const customName = operation.args?.['name'] as string | undefined;
-        if (customName !== undefined) {
-            value.name = customName;
-        }
-
         // Written after the defaults, and removed rather than left unset, because the generated defaults
         // do not know what a connection point is: `getDefaultProperties` falls through to an empty array
         // for a property type it has no case for, and `sourcePoint: []` is nothing the grammar can read

@@ -11,6 +11,7 @@ import type { OnActivate, OnDispose } from '@borkdominik-biguml/big-vscode/vscod
 import { inject, injectable } from 'inversify';
 import * as vscode from 'vscode';
 import { UML_TOOL_NAMES } from '../common/index.js';
+import { isAiEnabled } from './ai-settings.js';
 import {
     CompleteInterviewStepTool,
     AddClassMemberTool,
@@ -50,7 +51,7 @@ export class AiToolRegistry implements OnActivate, OnDispose {
     ) {}
 
     onActivate(): void {
-        if (!vscode.lm?.registerTool) {
+        if (!isAiEnabled() || !vscode.lm?.registerTool) {
             return;
         }
 

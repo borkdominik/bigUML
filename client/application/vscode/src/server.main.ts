@@ -17,6 +17,7 @@ import { createUmlDiagramServices, startModelServer } from '@borkdominik-biguml/
 import { startLanguageServer } from 'langium/lsp';
 import { NodeFileSystem } from 'langium/node';
 import { createConnection, ProposedFeatures } from 'vscode-languageserver/node.js';
+import { GLSP_SERVER_READY_NOTIFICATION } from './glsp-server-ready.js';
 
 /**
  * This module will be spawned as a separate language server process by the 'extension.ts'.
@@ -41,22 +42,11 @@ const { shared, UmlDiagram } = createUmlDiagramServices({
 // Start the language server with the shared services
 startLanguageServer(shared);
 
-// The GLSP SocketServerLauncher prints this prefix to stdout when it is listening.
-// Intercept it here so we can notify the extension client the moment the port is open.
-const GLSP_STARTUP_PREFIX = '[GLSP-Server]:Startup completed. Accepting requests on port:';
-const originalWrite = process.stdout.write.bind(process.stdout);
-(process.stdout as any).write = function (chunk: any, ...rest: any[]): boolean {
-    const text = typeof chunk === 'string' ? chunk : chunk.toString('utf8');
-    if (text.includes(GLSP_STARTUP_PREFIX)) {
-        void connection.sendNotification('biguml/glspServerReady');
-        (process.stdout as any).write = originalWrite; // restore after first match
-    }
-    return originalWrite(chunk, ...rest);
-};
-
 shared.workspace.WorkspaceManager.onWorkspaceInitialized(() => {
     // Start the graphical language server with the shared services
-    startGLSPServer({ shared, language: UmlDiagram }, [propertyPaletteModule, outlineModule /* , advancedSearchGlspModule */]);
+    startGLSPServer({ shared, language: UmlDiagram }, [propertyPaletteModule, outlineModule /* , advancedSearchGlspModule */], {
+        onReady: () => void connection.sendNotification(GLSP_SERVER_READY_NOTIFICATION)
+    });
     // Start the JSON server with the shared services
     void startModelServer({ shared });
 });

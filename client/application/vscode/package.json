@@ -72,7 +72,6 @@
     "@borkdominik-biguml/uml-glsp-client": "workspace:*",
     "@borkdominik-biguml/uml-glsp-server": "workspace:*",
     "@borkdominik-biguml/uml-model-server": "workspace:*",
-    "@eclipse-glsp/protocol": "catalog:",
     "@vscode/codicons": "catalog:",
     "inversify": "catalog:",
     "langium": "catalog:",
@@ -85,7 +84,7 @@
   "devDependencies": {
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@types/vscode": "^1.93.0",
+    "@types/vscode": "^1.95.0",
     "@vscode/vsce": "catalog:",
     "esbuild": "catalog:",
     "tsx": "catalog:"
@@ -164,6 +163,11 @@
           "type": "boolean",
           "default": false,
           "description": "Persist timeline entries across restarts."
+        },
+        "bigUML.ai.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enables the @biguml chat participant and its language model tools. Requires a window reload to take effect."
         },
         "bigUML.ai.modelFamily": {
           "type": "string",
@@ -430,7 +434,8 @@
             "name": "explain",
             "description": "Explain UML concepts and design patterns"
           }
-        ]
+        ],
+        "when": "config.bigUML.ai.enabled"
       }
     ],
     "languageModelTools": [
@@ -450,7 +455,8 @@
           "required": [
             "message"
           ]
-        }
+        },
+        "when": "config.bigUML.ai.enabled"
       },
       {
         "name": "biguml-generate-class-diagram",
@@ -607,7 +613,8 @@
             "diagramType",
             "entities"
           ]
-        }
+        },
+        "when": "config.bigUML.ai.enabled"
       },
       {
         "name": "biguml-generate-deployment-diagram",
@@ -694,7 +701,8 @@
             "diagramType",
             "entities"
           ]
-        }
+        },
+        "when": "config.bigUML.ai.enabled"
       },
       {
         "name": "biguml-generate-activity-diagram",
@@ -797,7 +805,8 @@
             "diagramType",
             "entities"
           ]
-        }
+        },
+        "when": "config.bigUML.ai.enabled"
       },
       {
         "name": "biguml-propose-diagram",
@@ -990,7 +999,8 @@
             "diagramType",
             "entities"
           ]
-        }
+        },
+        "when": "config.bigUML.ai.enabled"
       },
       {
         "name": "biguml-confirm-generation",
@@ -1000,7 +1010,31 @@
         "inputSchema": {
           "type": "object",
           "properties": {}
-        }
+        },
+        "when": "config.bigUML.ai.enabled"
+      },
+      {
+        "name": "biguml-complete-interview-step",
+        "displayName": "Complete Interview Step",
+        "modelDescription": "Signals that the current interview step is complete so the interview can advance to the next step. Call this once the information for the current step has been gathered.",
+        "canBeReferencedInPrompt": false,
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "stepNumber": {
+              "type": "number",
+              "description": "The number of the interview step that is complete."
+            },
+            "summary": {
+              "type": "string",
+              "description": "Optional short summary of what was gathered in this step."
+            }
+          },
+          "required": [
+            "stepNumber"
+          ]
+        },
+        "when": "config.bigUML.ai.enabled"
       },
       {
         "name": "biguml-create-uml-file",
@@ -1028,7 +1062,8 @@
             "filePath",
             "diagramType"
           ]
-        }
+        },
+        "when": "config.bigUML.ai.enabled"
       },
       {
         "name": "biguml-read-uml-file",
@@ -1046,7 +1081,8 @@
           "required": [
             "filePath"
           ]
-        }
+        },
+        "when": "config.bigUML.ai.enabled"
       },
       {
         "name": "biguml-add-node",
@@ -1087,7 +1123,8 @@
             "elementType",
             "name"
           ]
-        }
+        },
+        "when": "config.bigUML.ai.enabled"
       },
       {
         "name": "biguml-add-class-member",
@@ -1142,7 +1179,8 @@
             "memberKind",
             "name"
           ]
-        }
+        },
+        "when": "config.bigUML.ai.enabled"
       },
       {
         "name": "biguml-remove-node",
@@ -1165,7 +1203,8 @@
             "filePath",
             "elementName"
           ]
-        }
+        },
+        "when": "config.bigUML.ai.enabled"
       },
       {
         "name": "biguml-add-relation",
@@ -1224,7 +1263,8 @@
             "sourceName",
             "targetName"
           ]
-        }
+        },
+        "when": "config.bigUML.ai.enabled"
       },
       {
         "name": "biguml-remove-relation",
@@ -1270,15 +1310,13 @@
             "sourceName",
             "targetName"
           ]
-        }
+        },
+        "when": "config.bigUML.ai.enabled"
       }
     ]
   },
   "activationEvents": [
     "onStartupFinished"
-  ],
-  "extensionDependencies": [
-    "github.copilot-chat"
   ],
   "icon": "./resources/logo.png",
   "galleryBanner": {
@@ -1286,6 +1324,6 @@
     "theme": "dark"
   },
   "engines": {
-    "vscode": "^1.93.0"
+    "vscode": "^1.95.0"
   }
 }

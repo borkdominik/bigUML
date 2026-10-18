@@ -7,6 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
+export * from './ai-settings.js';
 export * from './ai.module.js';
 export * from './ai-tool-registry.js';
 export * from './interview-agent.participant.js';

@@ -19,6 +19,7 @@ import type {
     ParsedCommand,
     ProposeDiagramInput
 } from '../common/tool-types.js';
+import { isAiEnabled } from './ai-settings.js';
 import { InterviewSessionManager, type InterviewStepPolicy, type StepAdvancementSignal } from './interview-session-manager.js';
 import { formatProposalSummary } from './proposal-summary.js';
 import { resolveWorkspacePath } from './tools/tool-utils.js';
@@ -84,17 +85,15 @@ function looksLikeStatusRequest(text: string): boolean {
 @injectable()
 export class InterviewAgentParticipant implements OnActivate, OnDispose {
     protected participant?: vscode.ChatParticipant;
-    protected outputChannel: vscode.OutputChannel;
+    protected outputChannel!: vscode.OutputChannel;
     protected readonly sessionManager = new InterviewSessionManager();
 
-    constructor() {
-        this.outputChannel = vscode.window.createOutputChannel('big-ai');
-    }
-
     onActivate(): void {
-        if (!vscode.chat?.createChatParticipant) {
+        if (!isAiEnabled() || !vscode.chat?.createChatParticipant) {
             return;
         }
+
+        this.outputChannel = vscode.window.createOutputChannel('big-ai');
 
         this.participant = vscode.chat.createChatParticipant(AI_PARTICIPANT_ID, this.handleRequest.bind(this));
 
@@ -1996,8 +1995,12 @@ If a message labeled \`[Auto-attached active UML diagram: <path>]\` appears, the
     }
 
     dispose(): void {
-        this.participant?.dispose();
+        if (!this.participant) {
+            return;
+        }
+        this.participant.dispose();
         this.participant = undefined;
         this.outputChannel.appendLine('[big-ai] Interview Agent participant disposed');
+        this.outputChannel.dispose();
     }
 }

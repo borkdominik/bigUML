@@ -271,6 +271,10 @@
         {
           "command": "bigUML.advancedsearch.disablePreviews",
           "when": "false"
+        },
+        {
+          "command": "bigUML.exportInstances",
+          "when": "false"
         }
       ],
       "view/title": [
@@ -366,7 +370,7 @@
           "name": "Instances",
           "type": "webview",
           "visibility": "collapsed",
-          "when": "bigUML.isRunning"
+          "when": "false"
         },
         {
           "id": "bigUML.panel.outline",
@@ -397,7 +401,7 @@
           "id": "bigUML.panel.object-to-class",
           "name": "Object to Class Preview",
           "type": "webview",
-          "when": "bigUML.isRunning"
+          "when": "false"
         }
       ]
     },

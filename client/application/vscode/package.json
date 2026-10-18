@@ -151,21 +151,6 @@
         "icon": "$(eye)"
       }
     ],
-    "configuration": {
-      "title": "bigUML",
-      "properties": {
-        "bigUML.timeline.onSave": {
-          "type": "boolean",
-          "default": false,
-          "description": "Create a new timeline entry on file save."
-        },
-        "bigUML.timeline.persistent": {
-          "type": "boolean",
-          "default": false,
-          "description": "Persist timeline entries across restarts."
-        }
-      }
-    },
     "customEditors": [
       {
         "viewType": "bigUML.diagramView",

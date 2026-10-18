@@ -1,8 +1,8 @@
 # big-revision-management — Development Notes
 
 Revision management (the Timeline view) is **disabled** (since "Improve UML language", #224). The package is not
-activated, and its view and commands are hidden. Its webview is still built by `application/vscode/esbuild.ts`,
-and its `bigUML.timeline.*` settings are still contributed.
+activated, its view and commands are hidden, and its `bigUML.timeline.*` settings are removed. Its webview is
+still built by `application/vscode/esbuild.ts`.
 
 ## Enable the feature
 
@@ -16,7 +16,28 @@ All paths are relative to `client/`.
      `"bigUML.isRunning"`.
    - `contributes.menus.commandPalette`: remove the `"when": "false"` entries of `timeline.import` and
      `timeline.export`.
-3. Run `pnpm typecheck`, `pnpm lint` and `pnpm build`, then launch the extension.
+3. **Settings** – `application/vscode/package.json`: restore the settings under `contributes`. If
+   `contributes.configuration` exists already, only add the two properties to it.
+
+   ```json
+   "configuration": {
+     "title": "bigUML",
+     "properties": {
+       "bigUML.timeline.onSave": {
+         "type": "boolean",
+         "default": false,
+         "description": "Create a new timeline entry on file save."
+       },
+       "bigUML.timeline.persistent": {
+         "type": "boolean",
+         "default": false,
+         "description": "Persist timeline entries across restarts."
+       }
+     }
+   }
+   ```
+
+4. Run `pnpm typecheck`, `pnpm lint` and `pnpm build`, then launch the extension.
 
 ## Notes
 

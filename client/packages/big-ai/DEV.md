@@ -13,7 +13,8 @@ All paths are relative to `client/`.
 2. **Show the contributions** in `application/vscode/package.json`: in `contributes.chatParticipants` and every
    entry of `contributes.languageModelTools`, replace `"when": "false"` with
    `"when": "config.bigUML.ai.enabled"`.
-3. **Restore the settings** in `application/vscode/package.json` under `contributes.configuration.properties`:
+3. **Restore the settings** in `application/vscode/package.json` under `contributes.configuration.properties`.
+   If `contributes.configuration` does not exist, add it as `{ "title": "bigUML", "properties": { ... } }`:
 
    ```json
    "bigUML.ai.enabled": {

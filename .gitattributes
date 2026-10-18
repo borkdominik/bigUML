@@ -1,0 +1,16 @@
+# Store text files with LF line endings and check them out with LF on every platform,
+# independent of the local core.autocrlf setting.
+* text=auto eol=lf
+
+# Binary files: no line-ending conversion and no textual diff.
+*.gif binary
+*.ico binary
+*.jpeg binary
+*.jpg binary
+*.png binary
+*.eot binary
+*.ttf binary
+*.woff binary
+*.woff2 binary
+*.vsix binary
+*.zip binary

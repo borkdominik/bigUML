@@ -17,6 +17,7 @@ import { createUmlDiagramServices, startModelServer } from '@borkdominik-biguml/
 import { startLanguageServer } from 'langium/lsp';
 import { NodeFileSystem } from 'langium/node';
 import { createConnection, ProposedFeatures } from 'vscode-languageserver/node.js';
+import { GLSP_SERVER_READY_NOTIFICATION } from './glsp-server-ready.js';
 
 /**
  * This module will be spawned as a separate language server process by the 'extension.ts'.
@@ -43,7 +44,9 @@ startLanguageServer(shared);
 
 shared.workspace.WorkspaceManager.onWorkspaceInitialized(() => {
     // Start the graphical language server with the shared services
-    startGLSPServer({ shared, language: UmlDiagram }, [propertyPaletteModule, outlineModule /* , advancedSearchGlspModule */]);
+    startGLSPServer({ shared, language: UmlDiagram }, [propertyPaletteModule, outlineModule /* , advancedSearchGlspModule */], {
+        onReady: () => void connection.sendNotification(GLSP_SERVER_READY_NOTIFICATION)
+    });
     // Start the JSON server with the shared services
     void startModelServer({ shared });
 });

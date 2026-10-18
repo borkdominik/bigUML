@@ -1,0 +1,43 @@
+{
+  "name": "@borkdominik-biguml/big-ai",
+  "version": "0.1.0",
+  "private": true,
+  "description": "bigUML AI Integration",
+  "homepage": "https://github.com/borkdominik/bigUML",
+  "bugs": "https://github.com/borkdominik/bigUML/issues",
+  "license": "MIT",
+  "author": {
+    "name": "Business Informatics Group (TU Wien)"
+  },
+  "contributors": [
+    {
+      "name": "Business Informatics Group (TU Wien)",
+      "email": "dominik.bork@tuwien.ac.at",
+      "url": "https://me.big.tuwien.ac.at/"
+    },
+    {
+      "name": "Haydar Metin",
+      "email": "dev@haydar.metin.at",
+      "url": "https://me.big.tuwien.ac.at/"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/borkdominik/bigUML.git"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./src/env/common/index.ts",
+    "./vscode": "./src/env/vscode/index.ts"
+  },
+  "dependencies": {
+    "@borkdominik-biguml/big-vscode": "workspace:*",
+    "@borkdominik-biguml/uml-model-server": "workspace:*",
+    "@types/vscode": "catalog:",
+    "langium": "catalog:",
+    "vscode-uri": "catalog:"
+  },
+  "peerDependencies": {
+    "inversify": "catalog:"
+  }
+}

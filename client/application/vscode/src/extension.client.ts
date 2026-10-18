@@ -13,6 +13,7 @@ import { TYPES, type GlspServer, type OnActivate } from '@borkdominik-biguml/big
 import { type Container } from 'inversify';
 import * as vscode from 'vscode';
 import { createContainer } from './extension.config.js';
+import { glspServerReady } from './extension.server.js';
 
 let diContainer: Container | undefined;
 
@@ -30,9 +31,12 @@ export async function activateClient(context: vscode.ExtensionContext): Promise<
 
         diContainer.getAll<OnActivate>(TYPES.OnActivate).forEach(service => service.onActivate?.());
 
-        setTimeout(() => {
+        // Wait for the server process to signal that the GLSP port is open.
+        // Fall back to 30 s in case no workspace is present or the signal never arrives.
+        const timeout = new Promise<void>(resolve => setTimeout(resolve, 30_000));
+        void Promise.race([glspServerReady, timeout]).then(() => {
             void diContainer!.get<GlspServer>(TYPES.GlspServer).start();
-        }, 2000);
+        });
 
         vscode.commands.executeCommand('setContext', `${VSCodeSettings.name}.isRunning`, true);
     } catch (error) {

@@ -62,6 +62,7 @@
   },
   "dependencies": {
     "@borkdominik-biguml/big-advancedsearch": "workspace:*",
+    "@borkdominik-biguml/big-ai": "workspace:*",
     "@borkdominik-biguml/big-code-generation": "workspace:*",
     "@borkdominik-biguml/big-minimap": "workspace:*",
     "@borkdominik-biguml/big-outline": "workspace:*",
@@ -83,7 +84,7 @@
   "devDependencies": {
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@types/vscode": "^1.63.0",
+    "@types/vscode": "^1.95.0",
     "@vscode/vsce": "catalog:",
     "esbuild": "catalog:",
     "tsx": "catalog:"
@@ -150,21 +151,6 @@
         "icon": "$(eye)"
       }
     ],
-    "configuration": {
-      "title": "bigUML",
-      "properties": {
-        "bigUML.timeline.onSave": {
-          "type": "boolean",
-          "default": false,
-          "description": "Create a new timeline entry on file save."
-        },
-        "bigUML.timeline.persistent": {
-          "type": "boolean",
-          "default": false,
-          "description": "Persist timeline entries across restarts."
-        }
-      }
-    },
     "customEditors": [
       {
         "viewType": "bigUML.diagramView",
@@ -230,13 +216,13 @@
         "key": "n",
         "mac": "n",
         "command": "bigUML.editor.enablePrimaryElementNavigator",
-        "when": "activeCustomEditorId == 'bigUML.diagramView' && bigUML.editorSelectedElementsAmount == 1"
+        "when": "activeCustomEditorId == 'bigUML.diagramView' && bigUML.editorSelectedElementsAmount == 1 && !inputFocus"
       },
       {
         "key": "alt+n",
         "mac": "alt+n",
         "command": "bigUML.editor.enableSecondaryElementNavigator",
-        "when": "activeCustomEditorId == 'bigUML.diagramView' && bigUML.editorSelectedElementsAmount == 1"
+        "when": "activeCustomEditorId == 'bigUML.diagramView' && bigUML.editorSelectedElementsAmount == 1 && !inputFocus"
       }
     ],
     "languages": [
@@ -397,7 +383,907 @@
           "title": "UML"
         }
       ]
-    }
+    },
+    "chatParticipants": [
+      {
+        "id": "biguml.interviewAgent",
+        "fullName": "bigUML Interview Agent",
+        "name": "biguml",
+        "description": "Interactively creates and modifies UML diagrams through structured interviews",
+        "isSticky": true,
+        "commands": [
+          {
+            "name": "interview",
+            "description": "Gather requirements and generate a UML diagram after confirmation"
+          },
+          {
+            "name": "modify",
+            "description": "Get specific improvement suggestions for the diagram"
+          },
+          {
+            "name": "explain",
+            "description": "Explain UML concepts and design patterns"
+          }
+        ],
+        "when": "false"
+      }
+    ],
+    "languageModelTools": [
+      {
+        "name": "biguml-dummy-tool",
+        "displayName": "bigUML Dummy Tool",
+        "modelDescription": "Dummy callable tool for validating the interview agent tool integration.",
+        "canBeReferencedInPrompt": false,
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "description": "Message passed to the dummy tool"
+            }
+          },
+          "required": [
+            "message"
+          ]
+        },
+        "when": "false"
+      },
+      {
+        "name": "biguml-generate-class-diagram",
+        "displayName": "Generate UML Class Diagram",
+        "modelDescription": "Generates a complete UML class diagram in deterministic order. Use this after /interview confirmation instead of calling create/add-node/add-member/add-relation separately.",
+        "canBeReferencedInPrompt": false,
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "filePath": {
+              "type": "string",
+              "description": "Workspace-relative path for the generated .uml file"
+            },
+            "diagramType": {
+              "type": "string",
+              "enum": [
+                "CLASS"
+              ],
+              "description": "The type of UML diagram to generate"
+            },
+            "entities": {
+              "type": "array",
+              "description": "All confirmed class diagram entities. Include properties and operations under their owning entity.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Entity name"
+                  },
+                  "elementType": {
+                    "type": "string",
+                    "enum": [
+                      "Class",
+                      "AbstractClass",
+                      "Interface",
+                      "Enumeration",
+                      "Package",
+                      "DataType",
+                      "PrimitiveType"
+                    ],
+                    "description": "UML element type"
+                  },
+                  "properties": {
+                    "type": "array",
+                    "description": "Confirmed attributes/properties for this entity",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "typeName": {
+                          "type": "string"
+                        },
+                        "multiplicity": {
+                          "type": "string"
+                        },
+                        "visibility": {
+                          "type": "string",
+                          "enum": [
+                            "PUBLIC",
+                            "PRIVATE",
+                            "PROTECTED",
+                            "PACKAGE"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ]
+                    }
+                  },
+                  "operations": {
+                    "type": "array",
+                    "description": "Confirmed operations/methods for this entity",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "visibility": {
+                          "type": "string",
+                          "enum": [
+                            "PUBLIC",
+                            "PRIVATE",
+                            "PROTECTED",
+                            "PACKAGE"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "name",
+                  "elementType"
+                ]
+              }
+            },
+            "relationships": {
+              "type": "array",
+              "description": "All confirmed relationships between generated entities. These are added after all entities and members.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "relationType": {
+                    "type": "string",
+                    "enum": [
+                      "Association",
+                      "Aggregation",
+                      "Composition",
+                      "Abstraction",
+                      "Dependency",
+                      "Generalization",
+                      "InterfaceRealization",
+                      "PackageImport",
+                      "PackageMerge",
+                      "Realization",
+                      "Substitution",
+                      "Usage"
+                    ]
+                  },
+                  "sourceName": {
+                    "type": "string"
+                  },
+                  "targetName": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "sourceMultiplicity": {
+                    "type": "string"
+                  },
+                  "targetMultiplicity": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "relationType",
+                  "sourceName",
+                  "targetName"
+                ]
+              }
+            }
+          },
+          "required": [
+            "filePath",
+            "diagramType",
+            "entities"
+          ]
+        },
+        "when": "false"
+      },
+      {
+        "name": "biguml-generate-deployment-diagram",
+        "displayName": "Generate UML Deployment Diagram",
+        "modelDescription": "Generates a complete UML deployment diagram in deterministic order. Use this after /interview confirmation instead of calling create/add-node/add-relation separately.",
+        "canBeReferencedInPrompt": false,
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "filePath": {
+              "type": "string",
+              "description": "Workspace-relative path for the generated .uml file"
+            },
+            "diagramType": {
+              "type": "string",
+              "enum": [
+                "DEPLOYMENT"
+              ],
+              "description": "The type of UML diagram to generate"
+            },
+            "entities": {
+              "type": "array",
+              "description": "All confirmed deployment diagram entities.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Entity name"
+                  },
+                  "elementType": {
+                    "type": "string",
+                    "enum": [
+                      "Artifact",
+                      "Device",
+                      "ExecutionEnvironment",
+                      "DeploymentNode",
+                      "DeploymentSpecification",
+                      "DeploymentPackage",
+                      "DeploymentModel"
+                    ],
+                    "description": "UML element type"
+                  }
+                },
+                "required": [
+                  "name",
+                  "elementType"
+                ]
+              }
+            },
+            "relationships": {
+              "type": "array",
+              "description": "All confirmed relationships between generated entities.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "relationType": {
+                    "type": "string",
+                    "enum": [
+                      "CommunicationPath",
+                      "Deployment",
+                      "Dependency",
+                      "Generalization",
+                      "Manifestation"
+                    ]
+                  },
+                  "sourceName": {
+                    "type": "string"
+                  },
+                  "targetName": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "relationType",
+                  "sourceName",
+                  "targetName"
+                ]
+              }
+            }
+          },
+          "required": [
+            "filePath",
+            "diagramType",
+            "entities"
+          ]
+        },
+        "when": "false"
+      },
+      {
+        "name": "biguml-generate-activity-diagram",
+        "displayName": "Generate UML Activity Diagram",
+        "modelDescription": "Generates a complete UML activity diagram in deterministic order. Use this after /interview confirmation instead of calling create/add-node/add-relation separately.",
+        "canBeReferencedInPrompt": false,
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "filePath": {
+              "type": "string",
+              "description": "Workspace-relative path for the generated .uml file"
+            },
+            "diagramType": {
+              "type": "string",
+              "enum": [
+                "ACTIVITY"
+              ],
+              "description": "The type of UML diagram to generate"
+            },
+            "entities": {
+              "type": "array",
+              "description": "All confirmed activity diagram nodes.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Node name"
+                  },
+                  "elementType": {
+                    "type": "string",
+                    "enum": [
+                      "Activity",
+                      "ActivityPartition",
+                      "OpaqueAction",
+                      "AcceptEventAction",
+                      "SendSignalAction",
+                      "InitialNode",
+                      "DecisionNode",
+                      "MergeNode",
+                      "JoinNode",
+                      "ForkNode",
+                      "ActivityFinalNode",
+                      "FlowFinalNode",
+                      "CentralBufferNode",
+                      "ActivityParameterNode",
+                      "InputPin",
+                      "OutputPin"
+                    ],
+                    "description": "UML activity element type"
+                  }
+                },
+                "required": [
+                  "name",
+                  "elementType"
+                ]
+              }
+            },
+            "relationships": {
+              "type": "array",
+              "description": "All confirmed control flows between activity nodes.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "relationType": {
+                    "type": "string",
+                    "enum": [
+                      "ControlFlow"
+                    ]
+                  },
+                  "sourceName": {
+                    "type": "string"
+                  },
+                  "targetName": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "guard": {
+                    "type": "string",
+                    "description": "Optional guard for decision outcomes"
+                  },
+                  "weight": {
+                    "type": "number",
+                    "description": "Optional non-negative integer flow weight"
+                  }
+                },
+                "required": [
+                  "relationType",
+                  "sourceName",
+                  "targetName"
+                ]
+              }
+            }
+          },
+          "required": [
+            "filePath",
+            "diagramType",
+            "entities"
+          ]
+        },
+        "when": "false"
+      },
+      {
+        "name": "biguml-propose-diagram",
+        "displayName": "Propose UML Diagram",
+        "modelDescription": "Presents the complete proposed diagram (class or deployment or activity) to the user for confirmation. Call this once every requirement (scope, entities, relationships, details, target .uml file) is known. The extension renders the summary from this input — do not write the summary yourself. This does not modify any file.",
+        "canBeReferencedInPrompt": false,
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "filePath": {
+              "type": "string",
+              "description": "Workspace-relative path for the proposed .uml file"
+            },
+            "diagramType": {
+              "type": "string",
+              "enum": [
+                "CLASS",
+                "DEPLOYMENT",
+                "ACTIVITY"
+              ],
+              "description": "The type of UML diagram to generate"
+            },
+            "entities": {
+              "type": "array",
+              "description": "All confirmed diagram entities. For CLASS diagrams use class element types and include properties/operations under their owning entity. For DEPLOYMENT diagrams use deployment node types. For ACTIVITY diagrams use activity node types.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Entity name"
+                  },
+                  "elementType": {
+                    "type": "string",
+                    "enum": [
+                      "Class",
+                      "AbstractClass",
+                      "Interface",
+                      "Enumeration",
+                      "Package",
+                      "DataType",
+                      "PrimitiveType",
+                      "Artifact",
+                      "Device",
+                      "ExecutionEnvironment",
+                      "DeploymentNode",
+                      "DeploymentSpecification",
+                      "DeploymentPackage",
+                      "DeploymentModel",
+                      "Activity",
+                      "ActivityPartition",
+                      "OpaqueAction",
+                      "AcceptEventAction",
+                      "SendSignalAction",
+                      "InitialNode",
+                      "DecisionNode",
+                      "MergeNode",
+                      "JoinNode",
+                      "ForkNode",
+                      "ActivityFinalNode",
+                      "FlowFinalNode",
+                      "CentralBufferNode",
+                      "ActivityParameterNode",
+                      "InputPin",
+                      "OutputPin"
+                    ],
+                    "description": "UML element type. CLASS diagrams: Class, AbstractClass, Interface, Enumeration, Package, DataType, PrimitiveType. DEPLOYMENT diagrams: Artifact, Device, ExecutionEnvironment, DeploymentNode, DeploymentSpecification, DeploymentPackage, DeploymentModel. ACTIVITY diagrams: Activity, ActivityPartition, OpaqueAction, AcceptEventAction, SendSignalAction, InitialNode, DecisionNode, MergeNode, JoinNode, ForkNode, ActivityFinalNode, FlowFinalNode, CentralBufferNode, ActivityParameterNode, InputPin, OutputPin."
+                  },
+                  "properties": {
+                    "type": "array",
+                    "description": "Confirmed attributes/properties for this entity",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "typeName": {
+                          "type": "string"
+                        },
+                        "multiplicity": {
+                          "type": "string"
+                        },
+                        "visibility": {
+                          "type": "string",
+                          "enum": [
+                            "PUBLIC",
+                            "PRIVATE",
+                            "PROTECTED",
+                            "PACKAGE"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ]
+                    }
+                  },
+                  "operations": {
+                    "type": "array",
+                    "description": "Confirmed operations/methods for this entity",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "visibility": {
+                          "type": "string",
+                          "enum": [
+                            "PUBLIC",
+                            "PRIVATE",
+                            "PROTECTED",
+                            "PACKAGE"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "name",
+                  "elementType"
+                ]
+              }
+            },
+            "relationships": {
+              "type": "array",
+              "description": "All confirmed relationships between proposed entities.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "relationType": {
+                    "type": "string",
+                    "enum": [
+                      "Association",
+                      "Aggregation",
+                      "Composition",
+                      "Abstraction",
+                      "Dependency",
+                      "Generalization",
+                      "InterfaceRealization",
+                      "PackageImport",
+                      "PackageMerge",
+                      "Realization",
+                      "Substitution",
+                      "Usage",
+                      "CommunicationPath",
+                      "Manifestation",
+                      "Deployment",
+                      "ControlFlow"
+                    ],
+                    "description": "Relationship type. CLASS diagrams use class relations (Association, Aggregation, Composition, Abstraction, Dependency, Generalization, InterfaceRealization, PackageImport, PackageMerge, Realization, Substitution, Usage). DEPLOYMENT diagrams use CommunicationPath, Manifestation, Deployment, Dependency, Generalization. ACTIVITY diagrams use ControlFlow."
+                  },
+                  "sourceName": {
+                    "type": "string"
+                  },
+                  "targetName": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "sourceMultiplicity": {
+                    "type": "string"
+                  },
+                  "targetMultiplicity": {
+                    "type": "string"
+                  },
+                  "guard": {
+                    "type": "string"
+                  },
+                  "weight": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "relationType",
+                  "sourceName",
+                  "targetName"
+                ]
+              }
+            }
+          },
+          "required": [
+            "filePath",
+            "diagramType",
+            "entities"
+          ]
+        },
+        "when": "false"
+      },
+      {
+        "name": "biguml-confirm-generation",
+        "displayName": "Confirm Diagram Generation",
+        "modelDescription": "Confirms the previously proposed diagram and triggers generation from the stored proposal. Call this only after a proposal has been shown and the user approves, in any wording. Takes no arguments.",
+        "canBeReferencedInPrompt": false,
+        "inputSchema": {
+          "type": "object",
+          "properties": {}
+        },
+        "when": "false"
+      },
+      {
+        "name": "biguml-complete-interview-step",
+        "displayName": "Complete Interview Step",
+        "modelDescription": "Signals that the current interview step is complete so the interview can advance to the next step. Call this once the information for the current step has been gathered.",
+        "canBeReferencedInPrompt": false,
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "stepNumber": {
+              "type": "number",
+              "description": "The number of the interview step that is complete."
+            },
+            "summary": {
+              "type": "string",
+              "description": "Optional short summary of what was gathered in this step."
+            }
+          },
+          "required": [
+            "stepNumber"
+          ]
+        },
+        "when": "false"
+      },
+      {
+        "name": "biguml-create-uml-file",
+        "displayName": "Create UML File",
+        "modelDescription": "Creates a new empty UML file at the specified path with a given diagram type. Use this when the user wants to start a new diagram.",
+        "canBeReferencedInPrompt": false,
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "filePath": {
+              "type": "string",
+              "description": "Workspace-relative path for the new .uml file"
+            },
+            "diagramType": {
+              "type": "string",
+              "enum": [
+                "CLASS",
+                "DEPLOYMENT",
+                "ACTIVITY"
+              ],
+              "description": "The type of UML diagram to create"
+            }
+          },
+          "required": [
+            "filePath",
+            "diagramType"
+          ]
+        },
+        "when": "false"
+      },
+      {
+        "name": "biguml-read-uml-file",
+        "displayName": "Read UML File",
+        "modelDescription": "Reads and returns the content of a .uml file as JSON. Use this to understand the current state of a diagram before making changes.",
+        "canBeReferencedInPrompt": false,
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "filePath": {
+              "type": "string",
+              "description": "Workspace-relative path of the .uml file to read"
+            }
+          },
+          "required": [
+            "filePath"
+          ]
+        },
+        "when": "false"
+      },
+      {
+        "name": "biguml-add-node",
+        "displayName": "Add UML Node",
+        "modelDescription": "Adds a new node (e.g., Class, Interface, Enumeration, Package) to an existing UML diagram. Provide the file path, element type, and name for the new element.",
+        "canBeReferencedInPrompt": false,
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "filePath": {
+              "type": "string",
+              "description": "Workspace-relative path of the .uml file"
+            },
+            "elementType": {
+              "type": "string",
+              "enum": [
+                "Class",
+                "AbstractClass",
+                "Interface",
+                "Enumeration",
+                "Package",
+                "DataType",
+                "PrimitiveType"
+              ],
+              "description": "UML element type to add"
+            },
+            "name": {
+              "type": "string",
+              "description": "Name of the new element"
+            },
+            "properties": {
+              "type": "object",
+              "description": "Optional additional properties for the element"
+            }
+          },
+          "required": [
+            "filePath",
+            "elementType",
+            "name"
+          ]
+        },
+        "when": "false"
+      },
+      {
+        "name": "biguml-add-class-member",
+        "displayName": "Add UML Class Member",
+        "modelDescription": "Adds an attribute/property or simple operation to an existing Class, AbstractClass, Interface, or DataType in a UML class diagram.",
+        "canBeReferencedInPrompt": false,
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "filePath": {
+              "type": "string",
+              "description": "Workspace-relative path of the .uml file"
+            },
+            "ownerName": {
+              "type": "string",
+              "description": "Name of the class-like element that receives the member"
+            },
+            "memberKind": {
+              "type": "string",
+              "enum": [
+                "Property",
+                "Operation"
+              ],
+              "description": "Whether to add an attribute/property or an operation"
+            },
+            "name": {
+              "type": "string",
+              "description": "Name of the property or operation"
+            },
+            "typeName": {
+              "type": "string",
+              "description": "Optional type name for a Property. Must match an existing Class, Interface, Enumeration, DataType, or PrimitiveType in the diagram."
+            },
+            "multiplicity": {
+              "type": "string",
+              "description": "Optional multiplicity for a Property, e.g. '1' or '0..*'"
+            },
+            "visibility": {
+              "type": "string",
+              "enum": [
+                "PUBLIC",
+                "PRIVATE",
+                "PROTECTED",
+                "PACKAGE"
+              ],
+              "description": "Optional UML visibility"
+            }
+          },
+          "required": [
+            "filePath",
+            "ownerName",
+            "memberKind",
+            "name"
+          ]
+        },
+        "when": "false"
+      },
+      {
+        "name": "biguml-remove-node",
+        "displayName": "Remove UML Node",
+        "modelDescription": "Removes a node from an existing UML diagram by its name.",
+        "canBeReferencedInPrompt": false,
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "filePath": {
+              "type": "string",
+              "description": "Workspace-relative path of the .uml file"
+            },
+            "elementName": {
+              "type": "string",
+              "description": "Name of the element to remove"
+            }
+          },
+          "required": [
+            "filePath",
+            "elementName"
+          ]
+        },
+        "when": "false"
+      },
+      {
+        "name": "biguml-add-relation",
+        "displayName": "Add UML Relation",
+        "modelDescription": "Adds a relationship between two existing elements in a UML diagram. Supported types: Association, Aggregation, Composition, Abstraction, Dependency, Generalization, InterfaceRealization, PackageImport, PackageMerge, Realization, Substitution, Usage.",
+        "canBeReferencedInPrompt": false,
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "filePath": {
+              "type": "string",
+              "description": "Workspace-relative path of the .uml file"
+            },
+            "relationType": {
+              "type": "string",
+              "enum": [
+                "Association",
+                "Aggregation",
+                "Composition",
+                "Abstraction",
+                "Dependency",
+                "Generalization",
+                "InterfaceRealization",
+                "PackageImport",
+                "PackageMerge",
+                "Realization",
+                "Substitution",
+                "Usage"
+              ],
+              "description": "The type of relationship to create"
+            },
+            "sourceName": {
+              "type": "string",
+              "description": "Name of the source element"
+            },
+            "targetName": {
+              "type": "string",
+              "description": "Name of the target element"
+            },
+            "name": {
+              "type": "string",
+              "description": "Optional name for the relation (supported by Association, Aggregation, Composition, Dependency, etc.)"
+            },
+            "sourceMultiplicity": {
+              "type": "string",
+              "description": "Optional source multiplicity (e.g. '1', '0..*') — for Association, Aggregation, Composition only"
+            },
+            "targetMultiplicity": {
+              "type": "string",
+              "description": "Optional target multiplicity (e.g. '1', '0..*') — for Association, Aggregation, Composition only"
+            }
+          },
+          "required": [
+            "filePath",
+            "relationType",
+            "sourceName",
+            "targetName"
+          ]
+        },
+        "when": "false"
+      },
+      {
+        "name": "biguml-remove-relation",
+        "displayName": "Remove UML Relation",
+        "modelDescription": "Removes a relationship between two elements in a UML diagram. Optionally filter by relation type when multiple relations exist between the same elements.",
+        "canBeReferencedInPrompt": false,
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "filePath": {
+              "type": "string",
+              "description": "Workspace-relative path of the .uml file"
+            },
+            "sourceName": {
+              "type": "string",
+              "description": "Name of the source element"
+            },
+            "targetName": {
+              "type": "string",
+              "description": "Name of the target element"
+            },
+            "relationType": {
+              "type": "string",
+              "enum": [
+                "Association",
+                "Aggregation",
+                "Composition",
+                "Abstraction",
+                "Dependency",
+                "Generalization",
+                "InterfaceRealization",
+                "PackageImport",
+                "PackageMerge",
+                "Realization",
+                "Substitution",
+                "Usage"
+              ],
+              "description": "Optional: filter by relation type when multiple relations exist between the same elements"
+            }
+          },
+          "required": [
+            "filePath",
+            "sourceName",
+            "targetName"
+          ]
+        },
+        "when": "false"
+      }
+    ]
   },
   "activationEvents": [
     "onStartupFinished"
@@ -408,6 +1294,6 @@
     "theme": "dark"
   },
   "engines": {
-    "vscode": "^1.63.0"
+    "vscode": "^1.95.0"
   }
 }

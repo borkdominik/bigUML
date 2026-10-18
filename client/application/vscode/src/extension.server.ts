@@ -10,8 +10,15 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
 import { LanguageClient, type LanguageClientOptions, type ServerOptions, TransportKind } from 'vscode-languageclient/node.js';
+import { GLSP_SERVER_READY_NOTIFICATION } from './glsp-server-ready.js';
 
 let client: LanguageClient | undefined;
+
+let resolveGlspReady: (() => void) | undefined;
+// Resolves when the server process signals that the GLSP port is open.
+export const glspServerReady = new Promise<void>(resolve => {
+    resolveGlspReady = resolve;
+});
 
 // This function is called when the extension is activated.
 export async function activateServer(context: vscode.ExtensionContext): Promise<void> {
@@ -21,6 +28,7 @@ export async function activateServer(context: vscode.ExtensionContext): Promise<
         return;
     }
     client = launchLanguageClient(context);
+    client.onNotification(GLSP_SERVER_READY_NOTIFICATION, () => resolveGlspReady?.());
 }
 
 // This function is called when the extension is deactivated.
@@ -61,7 +69,7 @@ function createServerOptions(context: vscode.ExtensionContext): ServerOptions {
 }
 
 function createClientOptions(context: vscode.ExtensionContext): LanguageClientOptions {
-    const diagramWatcher = vscode.workspace.createFileSystemWatcher('**/*.{uml|umld}');
+    const diagramWatcher = vscode.workspace.createFileSystemWatcher('**/*.{uml,umld}');
     context.subscriptions.push(diagramWatcher);
 
     // watch changes to package.json as it contains the dependencies between our systems

@@ -163,21 +163,6 @@
           "type": "boolean",
           "default": false,
           "description": "Persist timeline entries across restarts."
-        },
-        "bigUML.ai.enabled": {
-          "type": "boolean",
-          "default": true,
-          "description": "Enables the @biguml chat participant and its language model tools. Requires a window reload to take effect."
-        },
-        "bigUML.ai.modelFamily": {
-          "type": "string",
-          "default": "",
-          "description": "Preferred model family for the @biguml chat participant (e.g. 'gpt-4o', 'claude-3.5-sonnet'). Leave empty to use any available model from the vendor. Falls back to any available model if the requested family is not installed."
-        },
-        "bigUML.ai.modelVendor": {
-          "type": "string",
-          "default": "copilot",
-          "description": "Vendor for the language model used by the @biguml chat participant (e.g. 'copilot')."
         }
       }
     },
@@ -435,7 +420,7 @@
             "description": "Explain UML concepts and design patterns"
           }
         ],
-        "when": "config.bigUML.ai.enabled"
+        "when": "false"
       }
     ],
     "languageModelTools": [
@@ -456,7 +441,7 @@
             "message"
           ]
         },
-        "when": "config.bigUML.ai.enabled"
+        "when": "false"
       },
       {
         "name": "biguml-generate-class-diagram",
@@ -614,7 +599,7 @@
             "entities"
           ]
         },
-        "when": "config.bigUML.ai.enabled"
+        "when": "false"
       },
       {
         "name": "biguml-generate-deployment-diagram",
@@ -702,7 +687,7 @@
             "entities"
           ]
         },
-        "when": "config.bigUML.ai.enabled"
+        "when": "false"
       },
       {
         "name": "biguml-generate-activity-diagram",
@@ -806,7 +791,7 @@
             "entities"
           ]
         },
-        "when": "config.bigUML.ai.enabled"
+        "when": "false"
       },
       {
         "name": "biguml-propose-diagram",
@@ -1000,7 +985,7 @@
             "entities"
           ]
         },
-        "when": "config.bigUML.ai.enabled"
+        "when": "false"
       },
       {
         "name": "biguml-confirm-generation",
@@ -1011,7 +996,7 @@
           "type": "object",
           "properties": {}
         },
-        "when": "config.bigUML.ai.enabled"
+        "when": "false"
       },
       {
         "name": "biguml-complete-interview-step",
@@ -1034,7 +1019,7 @@
             "stepNumber"
           ]
         },
-        "when": "config.bigUML.ai.enabled"
+        "when": "false"
       },
       {
         "name": "biguml-create-uml-file",
@@ -1063,7 +1048,7 @@
             "diagramType"
           ]
         },
-        "when": "config.bigUML.ai.enabled"
+        "when": "false"
       },
       {
         "name": "biguml-read-uml-file",
@@ -1082,7 +1067,7 @@
             "filePath"
           ]
         },
-        "when": "config.bigUML.ai.enabled"
+        "when": "false"
       },
       {
         "name": "biguml-add-node",
@@ -1124,7 +1109,7 @@
             "name"
           ]
         },
-        "when": "config.bigUML.ai.enabled"
+        "when": "false"
       },
       {
         "name": "biguml-add-class-member",
@@ -1180,7 +1165,7 @@
             "name"
           ]
         },
-        "when": "config.bigUML.ai.enabled"
+        "when": "false"
       },
       {
         "name": "biguml-remove-node",
@@ -1204,7 +1189,7 @@
             "elementName"
           ]
         },
-        "when": "config.bigUML.ai.enabled"
+        "when": "false"
       },
       {
         "name": "biguml-add-relation",
@@ -1264,7 +1249,7 @@
             "targetName"
           ]
         },
-        "when": "config.bigUML.ai.enabled"
+        "when": "false"
       },
       {
         "name": "biguml-remove-relation",
@@ -1311,7 +1296,7 @@
             "targetName"
           ]
         },
-        "when": "config.bigUML.ai.enabled"
+        "when": "false"
       }
     ]
   },

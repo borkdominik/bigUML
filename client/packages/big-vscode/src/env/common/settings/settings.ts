@@ -26,6 +26,9 @@ export const VSCodeSettings = {
     minimap: {
         viewType: 'bigUML.panel.minimap'
     },
+    instanceExplorer: {
+        viewType: 'bigUML.panel.instance-explorer'
+    },
     revisionManagement: {
         viewType: 'bigUML.panel.revision-management'
     },
@@ -34,5 +37,8 @@ export const VSCodeSettings = {
     },
     advancedSearch: {
         viewType: 'bigUML.panel.advancedsearch'
+    },
+    objectToClass: {
+        viewType: 'bigUML.panel.object-to-class'
     }
 } as const;

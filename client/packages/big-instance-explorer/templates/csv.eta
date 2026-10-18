@@ -1,0 +1,12 @@
+type,name,<% 
+const allFeatures = [...new Set(it.instances.flatMap(inst => inst.slots.map(s => s.featureName)))];
+%><%= allFeatures.join(',') %>
+
+<% it.instances.forEach((inst, i) => { %>
+<%= inst.classifierName %>,<%= inst.name %><%
+allFeatures.forEach(feature => {
+    const slot = inst.slots.find(s => s.featureName === feature);
+%>,<%= slot ? slot.value : '' %><%
+});
+%>
+<% }) %>

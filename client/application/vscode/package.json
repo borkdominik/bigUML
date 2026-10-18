@@ -64,7 +64,9 @@
     "@borkdominik-biguml/big-advancedsearch": "workspace:*",
     "@borkdominik-biguml/big-ai": "workspace:*",
     "@borkdominik-biguml/big-code-generation": "workspace:*",
+    "@borkdominik-biguml/big-instance-explorer": "workspace:*",
     "@borkdominik-biguml/big-minimap": "workspace:*",
+    "@borkdominik-biguml/big-object-to-class": "workspace:*",
     "@borkdominik-biguml/big-outline": "workspace:*",
     "@borkdominik-biguml/big-property-palette": "workspace:*",
     "@borkdominik-biguml/big-revision-management": "workspace:*",
@@ -149,6 +151,12 @@
         "title": "Hide all previews",
         "category": "bigUML",
         "icon": "$(eye)"
+      },
+      {
+        "command": "bigUML.exportInstances",
+        "title": "Export Instances...",
+        "category": "bigUML",
+        "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
       }
     ],
     "customEditors": [
@@ -290,6 +298,11 @@
           "command": "bigUML.advancedsearch.disablePreviews",
           "when": "view == bigUML.panel.advancedsearch && bigUML.advancedsearch.previewsOn",
           "group": "navigation@2"
+        },
+        {
+          "command": "bigUML.exportInstances",
+          "when": "view == bigUML.panel.instance-explorer",
+          "group": "navigation"
         }
       ],
       "webview/context": [],
@@ -349,6 +362,13 @@
           "when": "bigUML.isRunning"
         },
         {
+          "id": "bigUML.panel.instance-explorer",
+          "name": "Instances",
+          "type": "webview",
+          "visibility": "collapsed",
+          "when": "bigUML.isRunning"
+        },
+        {
           "id": "bigUML.panel.outline",
           "name": "Diagram Outline",
           "type": "tree",
@@ -372,6 +392,12 @@
           "name": "Timeline",
           "type": "webview",
           "when": "false"
+        },
+        {
+          "id": "bigUML.panel.object-to-class",
+          "name": "Object to Class Preview",
+          "type": "webview",
+          "when": "bigUML.isRunning"
         }
       ]
     },

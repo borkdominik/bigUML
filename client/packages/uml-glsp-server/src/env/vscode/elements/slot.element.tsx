@@ -33,15 +33,17 @@ export function GSlotNodeElement(props: GSlotNodeElementProps): GModelElement {
     slotNode.cssClasses = [];
     slotNode.children = [];
 
-    const featureLabel = <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={node.definingFeature?.ref?.name ?? ''} />;
+    // UML object notation: `feature = value`, the values of a multi-valued slot separated by commas.
+    const featureLabel = <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={node.definingFeature?.ref?.name ?? node.name ?? ''} />;
     featureLabel.parent = slotNode;
     slotNode.children.push(featureLabel);
 
-    const valuesLabel = (
-        <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={`[${node.values?.map(value => value.value).join(',') ?? ''}]`} />
-    );
-    valuesLabel.parent = slotNode;
-    slotNode.children.push(valuesLabel);
+    const values = (node.values ?? []).map(value => value.value ?? value.name ?? '').filter(value => value.length > 0);
+    if (values.length > 0) {
+        const valuesLabel = <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={`= ${values.join(', ')}`} />;
+        valuesLabel.parent = slotNode;
+        slotNode.children.push(valuesLabel);
+    }
 
     return slotNode;
 }

@@ -52,6 +52,9 @@ const copyAssets: es.Plugin = {
             const codicons = path.dirname(require.resolve('@vscode/codicons/package.json'));
             fs.cpSync(path.join(codicons, 'dist'), path.join(appDir, 'webviews/assets'), { recursive: true });
             fs.cpSync(path.join(packagesDir, 'big-code-generation/templates'), path.join(appDir, 'templates'), { recursive: true });
+            fs.cpSync(path.join(packagesDir, 'big-instance-explorer/templates'), path.join(appDir, 'templates/instance-export'), {
+                recursive: true
+            });
         });
     }
 };
@@ -102,7 +105,9 @@ const webviews: Record<string, string> = {
     'glsp-client': 'uml-glsp-client/src/env/browser/webview/glsp.webview.ts',
     advancedsearch: 'big-advancedsearch/src/env/browser/webview/advancedsearch.webview.tsx',
     'code-generation': 'big-code-generation/src/env/browser/webview/code-generation.webview.tsx',
+    'instance-explorer': 'big-instance-explorer/src/env/browser/webview/instance-explorer.webview.tsx',
     minimap: 'big-minimap/src/env/browser/webview/minimap.webview.tsx',
+    'object-to-class': 'big-object-to-class/src/env/browser/webview/transformation-preview.webview.tsx',
     'property-palette': 'big-property-palette/src/env/browser/webview/property-palette.webview.tsx',
     'revision-management': 'big-revision-management/src/env/browser/webview/revision-management.webview.tsx'
 };

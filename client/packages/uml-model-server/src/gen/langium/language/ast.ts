@@ -72,6 +72,8 @@ export type UmlDiagramKeywordNames =
     | "\"InitialNode\""
     | "\"InitialState\""
     | "\"InputPin\""
+    | "\"InstanceClassifier\""
+    | "\"InstanceLink\""
     | "\"InstanceSpecification\""
     | "\"Interaction\""
     | "\"Interface\""
@@ -125,8 +127,10 @@ export type UmlDiagramKeywordNames =
     | "\"aggregation\""
     | "\"alias\""
     | "\"artifacts\""
+    | "\"association\""
     | "\"body\""
     | "\"bounds\""
+    | "\"classifier\""
     | "\"concurrency\""
     | "\"definingFeature\""
     | "\"deploymentSpecifications\""
@@ -706,7 +710,7 @@ export function isClassDiagram(item: unknown): item is ClassDiagram {
     return reflection.isInstance(item, ClassDiagram.$type);
 }
 
-export type ClassDiagramEdges = Abstraction | Association | Dependency | ElementImport | Generalization | GenericEdge | InterfaceRealization | PackageImport | PackageMerge | Realization | Substitution | Usage;
+export type ClassDiagramEdges = Abstraction | Association | Dependency | ElementImport | Generalization | GenericEdge | InstanceLink | InterfaceRealization | PackageImport | PackageMerge | Realization | Substitution | Usage;
 
 export const ClassDiagramEdges = {
     $type: 'ClassDiagramEdges'
@@ -1804,12 +1808,50 @@ export function isInputPin(item: unknown): item is InputPin {
     return reflection.isInstance(item, InputPin.$type);
 }
 
+export type InstanceClassifier = Class | DataType | Interface;
+
+export const InstanceClassifier = {
+    $type: 'InstanceClassifier'
+} as const;
+
+export function isInstanceClassifier(item: unknown): item is InstanceClassifier {
+    return reflection.isInstance(item, InstanceClassifier.$type);
+}
+
+export interface InstanceLink extends Relation {
+    readonly $container: ClassDiagram;
+    readonly $type: 'InstanceLink';
+    __id: string;
+    __unknown: Array<UnknownProperty>;
+    association?: langium.Reference<Association>;
+    name?: string;
+    routingPoints: Array<Point>;
+    source: langium.Reference<Node>;
+    target: langium.Reference<Node>;
+}
+
+export const InstanceLink = {
+    $type: 'InstanceLink',
+    __id: '__id',
+    __unknown: '__unknown',
+    association: 'association',
+    name: 'name',
+    routingPoints: 'routingPoints',
+    source: 'source',
+    target: 'target'
+} as const;
+
+export function isInstanceLink(item: unknown): item is InstanceLink {
+    return reflection.isInstance(item, InstanceLink.$type);
+}
+
 export interface InstanceSpecification extends langium.AstNode {
     readonly $container: ClassDiagram | DeploymentModel | DeploymentPackage | Package | Region;
     readonly $type: 'InstanceSpecification';
     __id: string;
     __unknown: Array<UnknownProperty>;
     bounds?: Bounds;
+    classifier?: langium.Reference<InstanceClassifier>;
     name: string;
     slots: Array<Slot>;
     visibility?: Visibility;
@@ -1820,6 +1862,7 @@ export const InstanceSpecification = {
     __id: '__id',
     __unknown: '__unknown',
     bounds: 'bounds',
+    classifier: 'classifier',
     name: 'name',
     slots: 'slots',
     visibility: 'visibility'
@@ -2477,7 +2520,7 @@ export function isParameterDirection(item: unknown): item is ParameterDirection 
 }
 
 export interface Point extends langium.AstNode {
-    readonly $container: Abstraction | Association | CommunicationPath | ControlFlow | Dependency | Deployment | ElementImport | Extend | Generalization | GenericEdge | Include | InformationFlow | InterfaceRealization | Manifestation | Message | PackageImport | PackageMerge | Realization | Relation | Substitution | Transition | Usage;
+    readonly $container: Abstraction | Association | CommunicationPath | ControlFlow | Dependency | Deployment | ElementImport | Extend | Generalization | GenericEdge | Include | InformationFlow | InstanceLink | InterfaceRealization | Manifestation | Message | PackageImport | PackageMerge | Realization | Relation | Substitution | Transition | Usage;
     readonly $type: 'Point';
     __unknown: Array<UnknownProperty>;
     x: number;
@@ -2615,7 +2658,7 @@ export function isRegion(item: unknown): item is Region {
 
 export interface Relation extends langium.AstNode {
     readonly $container: ActivityDiagram | ClassDiagram | CommunicationDiagram | DeploymentDiagram | InformationFlowDiagram | PackageDiagram | StateMachineDiagram | UseCaseDiagram;
-    readonly $type: 'Abstraction' | 'Association' | 'CommunicationPath' | 'Dependency' | 'Deployment' | 'ElementImport' | 'Extend' | 'Generalization' | 'GenericEdge' | 'Include' | 'InterfaceRealization' | 'Manifestation' | 'PackageImport' | 'PackageMerge' | 'Realization' | 'Relation' | 'Substitution' | 'Usage';
+    readonly $type: 'Abstraction' | 'Association' | 'CommunicationPath' | 'Dependency' | 'Deployment' | 'ElementImport' | 'Extend' | 'Generalization' | 'GenericEdge' | 'Include' | 'InstanceLink' | 'InterfaceRealization' | 'Manifestation' | 'PackageImport' | 'PackageMerge' | 'Realization' | 'Relation' | 'Substitution' | 'Usage';
     __id: string;
     __unknown: Array<UnknownProperty>;
     routingPoints: Array<Point>;
@@ -3031,7 +3074,7 @@ export function isUnionType_2(item: unknown): item is UnionType_2 {
 }
 
 export interface UnknownProperty extends langium.AstNode {
-    readonly $container: Abstraction | AcceptEventAction | Activity | ActivityDiagram | ActivityFinalNode | ActivityParameterNode | ActivityPartition | Actor | Artifact | Association | Bounds | CentralBufferNode | Choice | Class | ClassDiagram | CommunicationDiagram | CommunicationPath | ControlFlow | DataType | DecisionNode | DeepHistory | Dependency | Deployment | DeploymentDiagram | DeploymentModel | DeploymentNode | DeploymentPackage | DeploymentSpecification | Device | Diagram | EdgeAnchor | ElementImport | EntryPoint | Enumeration | EnumerationLiteral | ExecutionEnvironment | ExitPoint | Extend | FinalState | FlowFinalNode | Fork | ForkNode | Generalization | GenericEdge | Include | InformationFlow | InformationFlowDiagram | InitialNode | InitialState | InputPin | InstanceSpecification | Interaction | Interface | InterfaceRealization | Join | JoinNode | Lifeline | LiteralSpecification | Manifestation | MergeNode | Message | NaryAssociation | Note | OpaqueAction | Operation | OutputPin | Package | PackageDiagram | PackageImport | PackageMerge | Parameter | Point | PrimitiveType | Property | Realization | Region | Relation | SendSignalAction | ShallowHistory | Slot | State | StateMachine | StateMachineDiagram | StatePart | Subject | Substitution | Terminate | TextLabel | Transition | Usage | UseCase | UseCaseDiagram;
+    readonly $container: Abstraction | AcceptEventAction | Activity | ActivityDiagram | ActivityFinalNode | ActivityParameterNode | ActivityPartition | Actor | Artifact | Association | Bounds | CentralBufferNode | Choice | Class | ClassDiagram | CommunicationDiagram | CommunicationPath | ControlFlow | DataType | DecisionNode | DeepHistory | Dependency | Deployment | DeploymentDiagram | DeploymentModel | DeploymentNode | DeploymentPackage | DeploymentSpecification | Device | Diagram | EdgeAnchor | ElementImport | EntryPoint | Enumeration | EnumerationLiteral | ExecutionEnvironment | ExitPoint | Extend | FinalState | FlowFinalNode | Fork | ForkNode | Generalization | GenericEdge | Include | InformationFlow | InformationFlowDiagram | InitialNode | InitialState | InputPin | InstanceLink | InstanceSpecification | Interaction | Interface | InterfaceRealization | Join | JoinNode | Lifeline | LiteralSpecification | Manifestation | MergeNode | Message | NaryAssociation | Note | OpaqueAction | Operation | OutputPin | Package | PackageDiagram | PackageImport | PackageMerge | Parameter | Point | PrimitiveType | Property | Realization | Region | Relation | SendSignalAction | ShallowHistory | Slot | State | StateMachine | StateMachineDiagram | StatePart | Subject | Substitution | Terminate | TextLabel | Transition | Usage | UseCase | UseCaseDiagram;
     readonly $type: 'UnknownProperty';
     key: string;
     value: JsonValue;
@@ -3229,6 +3272,8 @@ export type UmlDiagramAstType = {
     InitialNode: InitialNode
     InitialState: InitialState
     InputPin: InputPin
+    InstanceClassifier: InstanceClassifier
+    InstanceLink: InstanceLink
     InstanceSpecification: InstanceSpecification
     Interaction: Interaction
     Interface: Interface
@@ -3726,7 +3771,7 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
                     name: Class.visibility
                 }
             },
-            superTypes: [ClassDiagramNodes.$type, Classifier.$type, DataTypeReference.$type, InformationFlowDiagramNodes.$type, Node.$type, PackageDiagramNodes.$type, SlotDefiningFeature.$type, UnionType_1.$type]
+            superTypes: [ClassDiagramNodes.$type, Classifier.$type, DataTypeReference.$type, InformationFlowDiagramNodes.$type, InstanceClassifier.$type, Node.$type, PackageDiagramNodes.$type, SlotDefiningFeature.$type, UnionType_1.$type]
         },
         ClassDiagram: {
             name: ClassDiagram.$type,
@@ -3924,7 +3969,7 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
                     name: DataType.visibility
                 }
             },
-            superTypes: [ClassDiagramNodes.$type, Classifier.$type, DataTypeReference.$type, Node.$type]
+            superTypes: [ClassDiagramNodes.$type, Classifier.$type, DataTypeReference.$type, InstanceClassifier.$type, Node.$type]
         },
         DataTypeReference: {
             name: DataTypeReference.$type,
@@ -4814,6 +4859,44 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
             },
             superTypes: [ActivityDiagramNodes.$type, Unbounded.$type]
         },
+        InstanceClassifier: {
+            name: InstanceClassifier.$type,
+            properties: {
+            },
+            superTypes: []
+        },
+        InstanceLink: {
+            name: InstanceLink.$type,
+            properties: {
+                __id: {
+                    name: InstanceLink.__id
+                },
+                __unknown: {
+                    name: InstanceLink.__unknown,
+                    defaultValue: []
+                },
+                association: {
+                    name: InstanceLink.association,
+                    referenceType: Association.$type
+                },
+                name: {
+                    name: InstanceLink.name
+                },
+                routingPoints: {
+                    name: InstanceLink.routingPoints,
+                    defaultValue: []
+                },
+                source: {
+                    name: InstanceLink.source,
+                    referenceType: Node.$type
+                },
+                target: {
+                    name: InstanceLink.target,
+                    referenceType: Node.$type
+                }
+            },
+            superTypes: [Relation.$type, ClassDiagramEdges.$type]
+        },
         InstanceSpecification: {
             name: InstanceSpecification.$type,
             properties: {
@@ -4826,6 +4909,10 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
                 },
                 bounds: {
                     name: InstanceSpecification.bounds
+                },
+                classifier: {
+                    name: InstanceSpecification.classifier,
+                    referenceType: InstanceClassifier.$type
                 },
                 name: {
                     name: InstanceSpecification.name
@@ -4895,7 +4982,7 @@ export class UmlDiagramAstReflection extends langium.AbstractAstReflection {
                     defaultValue: []
                 }
             },
-            superTypes: [ClassDiagramNodes.$type, Classifier.$type, DataTypeReference.$type, Node.$type, SlotDefiningFeature.$type]
+            superTypes: [ClassDiagramNodes.$type, Classifier.$type, DataTypeReference.$type, InstanceClassifier.$type, Node.$type, SlotDefiningFeature.$type]
         },
         InterfaceRealization: {
             name: InterfaceRealization.$type,

@@ -1,0 +1,15 @@
+{
+    "instances": [
+    <% it.instances.forEach((inst, i) => { %>
+        {
+            "type": "<%= inst.classifierName %>",
+            "name": "<%= inst.name %>",
+            "properties": {
+            <% inst.slots.forEach((slot, j) => { %>
+                "<%= slot.featureName %>": "<%= slot.value %>"<%= j < inst.slots.length - 1 ? ',' : '' %>
+            <% }) %>
+            }
+        }<%= i < it.instances.length - 1 ? ',' : '' %>
+    <% }) %>
+    ]
+}

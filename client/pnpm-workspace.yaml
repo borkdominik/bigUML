@@ -20,6 +20,7 @@ catalog:
   '@eclipse-glsp/sprotty': 2.5.0
   '@eclipse-glsp/vscode-integration': 2.5.0
   '@eclipse-glsp/vscode-integration-webview': 2.5.0
+  '@faker-js/faker': ^9.3.0
   '@types/lodash': ^4.17.20
   '@types/node': ^24.0.0
   '@types/react': ^18.3.28

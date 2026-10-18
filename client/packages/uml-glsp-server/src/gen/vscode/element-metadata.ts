@@ -2068,6 +2068,22 @@ export const elementMetadata: Record<string, ElementMetadata> = {
             }
         ]
     },
+    InstanceLink: {
+        astType: 'InstanceLink',
+        kind: 'edge',
+        noBounds: false,
+        owned: false,
+        floating: false,
+        shape: {
+            repositionable: true,
+            resizable: true,
+            deletable: true
+        },
+        contains: [],
+        optionalName: true,
+        unnamed: false,
+        defaults: []
+    },
     Composition: {
         astType: 'Association',
         kind: 'edge',

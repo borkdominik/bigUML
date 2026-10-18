@@ -20,6 +20,7 @@ import type { ElementImport } from '../elements/element-import-element.def.js';
 import type { Enumeration } from '../elements/enumeration-element.def.js';
 import type { EnumerationLiteral } from '../elements/enumeration-literal-element.def.js';
 import type { Generalization } from '../elements/generalization-element.def.js';
+import type { InstanceLink } from '../elements/instance-link-element.def.js';
 import type { InstanceSpecification } from '../elements/instance-specification-element.def.js';
 import type { Interface } from '../elements/interface-element.def.js';
 import type { InterfaceRealization } from '../elements/interface-realization-element.def.js';
@@ -80,6 +81,7 @@ type ClassDiagramEdges =
     | ElementImport
     | InterfaceRealization
     | Generalization
+    | InstanceLink
     | PackageImport
     | PackageMerge
     | Realization

@@ -1,0 +1,68 @@
+{
+  "name": "@borkdominik-biguml/big-instance-explorer",
+  "version": "0.6.4",
+  "private": true,
+  "description": "UML Model Instance Explorer",
+  "homepage": "https://github.com/borkdominik/bigUML",
+  "bugs": "https://github.com/borkdominik/bigUML/issues",
+  "license": "MIT",
+  "author": {
+    "name": "Business Informatics Group (TU Wien)"
+  },
+  "contributors": [
+    {
+      "name": "Business Informatics Group (TU Wien)",
+      "email": "dominik.bork@tuwien.ac.at",
+      "url": "https://me.big.tuwien.ac.at/"
+    },
+    {
+      "name": "Haydar Metin",
+      "email": "dev@haydar.metin.at",
+      "url": "https://me.big.tuwien.ac.at/"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/borkdominik/bigUML.git"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./src/env/common/index.ts",
+    "./glsp-client": "./src/env/glsp-client/index.ts",
+    "./glsp-server": "./src/env/glsp-server/index.ts",
+    "./vscode": "./src/env/vscode/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@borkdominik-biguml/big-components": "workspace:*",
+    "@borkdominik-biguml/big-vscode": "workspace:*",
+    "@borkdominik-biguml/uml-glsp-server": "workspace:*",
+    "@borkdominik-biguml/uml-model-server": "workspace:*",
+    "@eclipse-glsp/client": "catalog:",
+    "@eclipse-glsp/protocol": "catalog:",
+    "@eclipse-glsp/server": "catalog:",
+    "@eclipse-glsp/vscode-integration": "catalog:",
+    "@eclipse-glsp/vscode-integration-webview": "catalog:",
+    "@faker-js/faker": "catalog:",
+    "eta": "catalog:",
+    "langium": "catalog:",
+    "reflect-metadata": "catalog:",
+    "vscode-messenger-common": "catalog:",
+    "vscode-uri": "catalog:"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "vitest": "catalog:"
+  },
+  "peerDependencies": {
+    "inversify": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  }
+}

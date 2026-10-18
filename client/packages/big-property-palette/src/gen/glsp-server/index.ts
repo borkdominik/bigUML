@@ -51,6 +51,7 @@ export * from './handlers/elements/information-flow.property-palette-handler.js'
 export * from './handlers/elements/initial-node.property-palette-handler.js';
 export * from './handlers/elements/initial-state.property-palette-handler.js';
 export * from './handlers/elements/input-pin.property-palette-handler.js';
+export * from './handlers/elements/instance-link.property-palette-handler.js';
 export * from './handlers/elements/instance-specification.property-palette-handler.js';
 export * from './handlers/elements/interaction.property-palette-handler.js';
 export * from './handlers/elements/interface-realization.property-palette-handler.js';

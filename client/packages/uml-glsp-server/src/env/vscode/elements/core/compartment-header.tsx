@@ -12,6 +12,7 @@ import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { GCompartmentElement, GLabelElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import type { GModelElement } from '@eclipse-glsp/server';
+import { InlineCompartment } from './inline-compartment.js';
 
 export interface CompartmentHeaderProps {
     id: string;
@@ -25,15 +26,35 @@ export interface CompartmentHeaderProps {
      * why it is asked for per shape rather than done for every name.
      */
     wrapName?: boolean;
+    /** Underlines the name, as UML does for the name of an instance. */
+    underline?: boolean;
+    /**
+     * Text shown right after the name, e.g. `: Person` for an instance of a classifier. It is a label of
+     * its own, so that editing the name in place only ever edits the name.
+     */
+    nameSuffix?: string;
 }
 
 export function CompartmentHeader(props: CompartmentHeaderProps): GModelElement {
-    const { id, name, stereotype, stereotypeCssClasses, isAbstract, wrapName } = props;
+    const { id, name, stereotype, stereotypeCssClasses, isAbstract, wrapName, underline, nameSuffix } = props;
 
     const nameLabelCssClasses = ['uml-font-bold'];
     if (isAbstract) {
         nameLabelCssClasses.push('uml-font-italic');
     }
+    if (underline) {
+        nameLabelCssClasses.push('uml-text-underline');
+    }
+
+    const nameLabel = (
+        <GLabelElement
+            id={id + '_name_label'}
+            type={CommonModelTypes.LABEL_NAME}
+            text={name}
+            args={wrapName ? { highlight: true, wrapAtSpaces: true } : { highlight: true }}
+            cssClasses={nameLabelCssClasses}
+        />
+    );
 
     return (
         <GCompartmentElement
@@ -50,13 +71,19 @@ export function CompartmentHeader(props: CompartmentHeaderProps): GModelElement 
                     cssClasses={stereotypeCssClasses}
                 />
             )}
-            <GLabelElement
-                id={id + '_name_label'}
-                type={CommonModelTypes.LABEL_NAME}
-                text={name}
-                args={wrapName ? { highlight: true, wrapAtSpaces: true } : { highlight: true }}
-                cssClasses={nameLabelCssClasses}
-            />
+            {nameSuffix ? (
+                <InlineCompartment id={id + '_name_row'}>
+                    {nameLabel}
+                    <GLabelElement
+                        id={id + '_name_suffix_label'}
+                        type={CommonModelTypes.LABEL_TEXT}
+                        text={nameSuffix}
+                        cssClasses={nameLabelCssClasses.filter(cssClass => cssClass !== 'uml-font-italic')}
+                    />
+                </InlineCompartment>
+            ) : (
+                nameLabel
+            )}
         </GCompartmentElement>
     );
 }

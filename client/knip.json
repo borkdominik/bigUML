@@ -14,8 +14,14 @@
     "packages/big-code-generation": {
       "entry": ["src/env/browser/webview/code-generation.webview.tsx"]
     },
+    "packages/big-instance-explorer": {
+      "entry": ["src/env/browser/webview/instance-explorer.webview.tsx"]
+    },
     "packages/big-minimap": {
       "entry": ["src/env/browser/webview/minimap.webview.tsx"]
+    },
+    "packages/big-object-to-class": {
+      "entry": ["src/env/browser/webview/transformation-preview.webview.tsx"]
     },
     "packages/big-property-palette": {
       "entry": ["src/env/browser/webview/property-palette.webview.tsx"]

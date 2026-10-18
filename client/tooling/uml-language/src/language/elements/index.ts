@@ -51,6 +51,7 @@ export * from './information-flow-element.def.js';
 export * from './initial-node-element.def.js';
 export * from './initial-state-element.def.js';
 export * from './input-pin-element.def.js';
+export * from './instance-link-element.def.js';
 export * from './instance-specification-element.def.js';
 export * from './interaction-element.def.js';
 export * from './interface-element.def.js';

@@ -9,9 +9,11 @@
 
 // import { advancedSearchModule } from '@borkdominik-biguml/big-advancedsearch/glsp-client';
 // import { codeGenerationModule } from '@borkdominik-biguml/big-code-generation/glsp-client';
+import { instanceExplorerModule } from '@borkdominik-biguml/big-instance-explorer/glsp-client';
 import { minimapModule } from '@borkdominik-biguml/big-minimap/glsp-client';
 import { outlineModule } from '@borkdominik-biguml/big-outline/glsp-client';
 import { propertyPaletteModule } from '@borkdominik-biguml/big-property-palette/glsp-client';
+import { transformationModule } from '@borkdominik-biguml/big-object-to-class/glsp-client';
 import { SemanticModelResponseAction } from '@borkdominik-biguml/uml-glsp-server';
 import {
     type ContainerConfiguration,
@@ -44,7 +46,9 @@ class UmlStarter extends GLSPStarter {
             ...containerConfiguration,
             outlineModule,
             minimapModule,
-            propertyPaletteModule
+            instanceExplorerModule,
+            propertyPaletteModule,
+            transformationModule
             // codeGenerationModule,
             // advancedSearchModule
         );

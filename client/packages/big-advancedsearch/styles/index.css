@@ -32,7 +32,7 @@
 
 .advanced-search__search-row .advanced-search__text {
     flex: 1 1 auto;
-} 
+}
 
 .advanced-search__toggle {
     flex: 0 0 auto;
@@ -207,7 +207,9 @@
     color: var(--vscode-foreground, inherit);
     border-radius: 3px;
     opacity: 0;
-    transition: opacity 120ms ease, background 120ms ease;
+    transition:
+        opacity 120ms ease,
+        background 120ms ease;
 }
 
 .result-item:hover .result-item__action,
@@ -279,8 +281,12 @@
     animation: svg-loading-progress 1.4s ease-in-out infinite;
 }
 @keyframes svg-loading-progress {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(350%); }
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(350%);
+    }
 }
 
 /* Placeholder shown for results without an extractable preview (e.g. edges/relationships) */

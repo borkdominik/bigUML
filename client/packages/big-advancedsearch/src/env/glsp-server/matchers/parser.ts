@@ -73,7 +73,7 @@ export class ModelParser extends CstParser {
             { ALT: () => this.CONSUME(PackageKeyword) },
             { ALT: () => this.CONSUME(InstanceSpecificationKeyword) },
             { ALT: () => this.CONSUME(SlotKeyword) },
-            { ALT: () => this.CONSUME(ParameterKeyword) },
+            { ALT: () => this.CONSUME(ParameterKeyword) }
         ]);
     });
 

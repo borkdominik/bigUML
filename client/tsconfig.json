@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  /* Editor entry point. Also read by tsx (generators), hence the compilerOptions. */
+  "extends": "./configs/ts/tsconfig.node.json",
+  "files": [],
+  "references": [
+    { "path": "./configs/ts/node.project.json" },
+    { "path": "./configs/ts/browser.project.json" }
+  ]
+}

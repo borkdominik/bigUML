@@ -1,0 +1,46 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "workspaces": {
+    ".": {
+      "entry": ["configs/oxlint/*.js"],
+      "ignoreDependencies": ["tsx"]
+    },
+    "application/vscode": {
+      "entry": ["src/index.ts", "src/server.main.ts"]
+    },
+    "packages/big-advancedsearch": {
+      "entry": ["src/env/browser/webview/advancedsearch.webview.tsx"]
+    },
+    "packages/big-code-generation": {
+      "entry": ["src/env/browser/webview/code-generation.webview.tsx"]
+    },
+    "packages/big-minimap": {
+      "entry": ["src/env/browser/webview/minimap.webview.tsx"]
+    },
+    "packages/big-property-palette": {
+      "entry": ["src/env/browser/webview/property-palette.webview.tsx"]
+    },
+    "packages/big-revision-management": {
+      "entry": ["src/env/browser/webview/revision-management.webview.tsx"]
+    },
+    "packages/uml-glsp-client": {
+      "entry": ["src/env/browser/webview/glsp.webview.ts", "scripts/icons.ts"]
+    },
+    "packages/uml-model-server": {
+      "entry": ["generator/index.ts"]
+    },
+    "tooling/uml-language-tooling": {
+      "ignoreDependencies": ["tsx"]
+    }
+  },
+  "ignore": ["**/src/gen/**"],
+  "ignoreDependencies": ["vscode"],
+  "rules": {
+    "files": "warn",
+    "exports": "warn",
+    "types": "warn",
+    "namespaceMembers": "warn",
+    "enumMembers": "warn",
+    "duplicates": "off"
+  }
+}

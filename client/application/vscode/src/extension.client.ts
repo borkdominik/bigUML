@@ -31,7 +31,7 @@ export async function activateClient(context: vscode.ExtensionContext): Promise<
         diContainer.getAll<OnActivate>(TYPES.OnActivate).forEach(service => service.onActivate?.());
 
         setTimeout(() => {
-            diContainer!.get<GlspServer>(TYPES.GlspServer).start();
+            void diContainer!.get<GlspServer>(TYPES.GlspServer).start();
         }, 2000);
 
         vscode.commands.executeCommand('setContext', `${VSCodeSettings.name}.isRunning`, true);

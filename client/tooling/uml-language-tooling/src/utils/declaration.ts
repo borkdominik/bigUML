@@ -75,12 +75,7 @@ export function isValueProperty(property: Property, declarations: Declaration[])
  */
 export function getConcreteElements(declarations: Declaration[]): Declaration[] {
     return declarations.filter(
-        d =>
-            d.type === 'class' &&
-            !d.isAbstract &&
-            d.name !== 'Diagram' &&
-            !d.name!.endsWith('Diagram') &&
-            !isValueDeclaration(d)
+        d => d.type === 'class' && !d.isAbstract && d.name !== 'Diagram' && !d.name!.endsWith('Diagram') && !isValueDeclaration(d)
     );
 }
 

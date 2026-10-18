@@ -36,7 +36,9 @@ export function bendPointReferences(edgeId: string, points: Point[]): ElementRef
         ],
         // Removed by where it is rather than by its index, so that deleting all of them at once cannot
         // remove the wrong one after an earlier removal has shifted the rest along.
-        deleteActions: [UpdateElementPropertyAction.create({ elementId: edgeId, propertyId: DELETE_PROPERTY_ID, value: JSON.stringify(point) })]
+        deleteActions: [
+            UpdateElementPropertyAction.create({ elementId: edgeId, propertyId: DELETE_PROPERTY_ID, value: JSON.stringify(point) })
+        ]
     }));
 }
 

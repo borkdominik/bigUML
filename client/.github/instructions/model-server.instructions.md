@@ -37,7 +37,7 @@ This package provides the Langium language server and the JSON-RPC model server.
 - The Langium grammar (`src/gen/langium/uml-diagram.langium`) is generated from `def.ts`.
 - The serializer (`src/gen/langium/uml-diagram-serializer.ts`) is generated per element type.
 - Validation DTOs are generated from decorator annotations.
-- After editing `def.ts`, run `npm run generate` to regenerate all output including the Langium AST types.
+- After editing `def.ts`, run `pnpm generate` to regenerate all output including the Langium AST types.
 
 ## Documentation
 

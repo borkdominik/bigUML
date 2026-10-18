@@ -66,7 +66,9 @@ function containableTypeIds(meta: ElementMetadata): string[] {
     // From every diagram, not only the one the container's own type belongs to: a class, a package and
     // their rows are drawn with the class diagram's types wherever they stand, so a package in the
     // package diagram is a class diagram package - and has to take the package diagram's class.
-    return DIAGRAM_REGISTRY.flatMap(diagram => diagram.nodeTypeIds).filter(typeId => declared.has(astTypeOf(typeId)) && !isFloatingType(typeId));
+    return DIAGRAM_REGISTRY.flatMap(diagram => diagram.nodeTypeIds).filter(
+        typeId => declared.has(astTypeOf(typeId)) && !isFloatingType(typeId)
+    );
 }
 
 /** What a lane is, for what may be dropped on it: a partition, which holds the nodes of its lane. */

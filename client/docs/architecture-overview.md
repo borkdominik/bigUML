@@ -141,7 +141,7 @@ The language definition file (`def.ts`) declares UML elements as TypeScript clas
 - **`@dynamicProperty('...')`** - Enables runtime choice list population from the model state
 - ...
 
-Each package that consumes generated code runs `npm run language:generate`, which invokes the `uml-language-tooling` CLI pointing at the package's own `generator/` directory for templates.
+Each package that consumes generated code runs `pnpm language:generate`, which invokes the `uml-language-tooling` CLI pointing at the package's own `generator/` directory for templates.
 
 ## Package Architecture
 
@@ -313,8 +313,8 @@ packages/<name>/
 └── styles/               # CSS stylesheets (webview packages only)
 ```
 
-- **`src/env/`** - Hand-written source code, split by environment. Each subfolder compiles to a separate entry point in the `exports` map.
-- **`src/gen/`** - Machine-generated code produced by `npm run language:generate`. These files should not be edited manually - changes will be overwritten.
+- **`src/env/`** - Hand-written source code, split by environment. Each subfolder is a separate entry point in the `exports` map, pointing directly at its `index.ts`.
+- **`src/gen/`** - Machine-generated code produced by `pnpm language:generate`. These files should not be edited manually - changes will be overwritten.
 - **`generator/`** - Eta templates and contribution functions that the `uml-language-tooling` CLI invokes during code generation.
 - **`config/`** - Environment-specific TypeScript configurations. `tsconfig.browser.json` adds DOM and React JSX support; `tsconfig.node.json` targets Node.js only.
 
@@ -322,7 +322,7 @@ packages/<name>/
 
 **Why environment-based code splitting?** bigUML runs code in three distinct processes (extension host, server child process, browser webview) that have different APIs and module systems. Splitting by environment ensures that browser code never imports Node.js modules and vice versa, while still allowing a single package to contribute to all processes. The `exports` map in `package.json` enforces these boundaries at the import level.
 
-**Why a decorator-driven code generation pipeline?** UML has many element types with repetitive structures - each needs model types, property palette handlers, tool palette entries, creation paths, and default values. Writing these by hand for every element is tedious and error-prone. By encoding the metamodel once in `def.ts` with decorators like `@toolPaletteItem` and `@withDefaults`, generators can produce all boilerplate automatically. Adding a new UML element means adding one class to `def.ts` and re-running `npm run language:generate`.
+**Why a decorator-driven code generation pipeline?** UML has many element types with repetitive structures - each needs model types, property palette handlers, tool palette entries, creation paths, and default values. Writing these by hand for every element is tedious and error-prone. By encoding the metamodel once in `def.ts` with decorators like `@toolPaletteItem` and `@withDefaults`, generators can produce all boilerplate automatically. Adding a new UML element means adding one class to `def.ts` and re-running `pnpm language:generate`.
 
 **Why three server processes?** Each server handles a different protocol and concern: the **Language Server** speaks LSP and handles textual editing (validation, completion, formatting); the **GLSP Server** speaks the GLSP protocol and handles graphical editing (layout, diagram operations); the **Model Server** provides a JSON-RPC facade for direct AST access with undo/redo support. Running in the same Node.js process allows them to share the Langium service instances directly (no serialization overhead), while each remains independently addressable on its own port.
 

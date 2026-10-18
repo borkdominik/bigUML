@@ -1,1 +1,45 @@
-{}
+// Settings for opening the repository root. The client workspace (`client/`) has its own settings;
+// the formatter settings are repeated here so that files below `client/` are formatted the same way.
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.fixAll.oxc": "explicit"
+  },
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  // Language specific formatters (e.g. from user settings) take precedence over `editor.defaultFormatter`
+  "[css]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "oxc.fmt.configPath": "client/.oxfmtrc.json",
+  // Explicit binaries: the extension only searches for them on startup, so a window opened before
+  // `pnpm install` would otherwise stay without formatter/linter. Run "Oxc: Restart Server" after installing.
+  "oxc.path.oxfmt": "client/node_modules/oxfmt/bin/oxfmt",
+  "oxc.path.oxlint": "client/node_modules/oxlint/bin/oxlint",
+  // The project formats with oxfmt and lints with oxlint; never let Prettier or ESLint rewrite files
+  "prettier.enable": false,
+  "eslint.enable": false,
+  // TypeScript 7 (native) has no tsserver; use the native language server
+  "typescript.experimental.useTsgo": true
+}

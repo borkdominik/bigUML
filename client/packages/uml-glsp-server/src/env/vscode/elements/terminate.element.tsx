@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-server/jsx */
 import type { Terminate } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { GModelElement } from '@eclipse-glsp/server';
 import type { ElementContext } from './core/element-context.js';

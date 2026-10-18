@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-server/jsx */
 import { ClassDiagramNodeTypes, PACKAGE_TAB_HEIGHT } from '@borkdominik-biguml/uml-glsp-server';
 import { type Package } from '@borkdominik-biguml/uml-model-server/grammar';
 import { type Dimension, type Point } from '@eclipse-glsp/protocol';

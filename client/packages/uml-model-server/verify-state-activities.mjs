@@ -41,8 +41,15 @@ const doc = services.shared.workspace.LangiumDocumentFactory.fromString(content,
 await services.shared.workspace.DocumentBuilder.build([doc], { validation: true });
 
 const errors = [...doc.parseResult.parserErrors, ...doc.parseResult.lexerErrors];
-console.log('parser/lexer errors:', errors.length, errors.map(e => e.message));
-console.log('validation:', (doc.diagnostics ?? []).map(d => d.message));
+console.log(
+    'parser/lexer errors:',
+    errors.length,
+    errors.map(e => e.message)
+);
+console.log(
+    'validation:',
+    (doc.diagnostics ?? []).map(d => d.message)
+);
 
 const state = doc.parseResult.value?.diagram?.entities?.[0];
 console.log('parsed state:', {

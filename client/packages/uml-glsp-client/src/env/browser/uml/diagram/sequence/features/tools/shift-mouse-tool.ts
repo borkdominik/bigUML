@@ -24,7 +24,15 @@ import {
     toAbsoluteBounds,
     toElementAndBounds
 } from '@eclipse-glsp/client';
-import { type Action, ChangeBoundsOperation, type ElementAndBounds, type Operation, Point, SelectAction, SetBoundsAction } from '@eclipse-glsp/protocol';
+import {
+    type Action,
+    ChangeBoundsOperation,
+    type ElementAndBounds,
+    type Operation,
+    Point,
+    SelectAction,
+    SetBoundsAction
+} from '@eclipse-glsp/protocol';
 import { inject, injectable, optional } from 'inversify';
 import { UML_TYPES } from '../../../../../uml-glsp.types.js';
 import { SDRemoveHorizontalShiftAction } from '../tool-feedback/horizontal-shift-tool-feedback.js';

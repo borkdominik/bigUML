@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "types": ["node"],
+    /* Server-side JSX files select their runtime via `@jsxImportSource` pragma */
+    "jsx": "react-jsx"
+  }
+}

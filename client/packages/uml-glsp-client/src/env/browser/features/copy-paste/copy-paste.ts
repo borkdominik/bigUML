@@ -75,7 +75,7 @@ export class UmlServerCopyPasteHandler extends ServerCopyPasteHandler {
                     };
                 }
 
-                this.actionDispatcher.dispatch(
+                void this.actionDispatcher.dispatch(
                     PasteOperation.create({
                         clipboardData,
                         editorContext: this.editorContext.get(args)

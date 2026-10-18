@@ -4,22 +4,18 @@
   "version": "0.6.4",
   "description": "Graphical UML Editor",
   "categories": [
+    "Education",
     "Programming Languages",
-    "Visualization",
-    "Education"
+    "Visualization"
   ],
   "keywords": [
+    "Modeling Tool",
     "UML",
-    "Unified Modeling Language",
     "UML Diagram",
-    "Modeling Tool"
+    "Unified Modeling Language"
   ],
   "homepage": "https://github.com/borkdominik/bigUML",
   "bugs": "https://github.com/borkdominik/bigUML/issues",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/borkdominik/bigUML"
-  },
   "license": "MIT",
   "author": {
     "name": "Business Informatics Group (TU Wien)"
@@ -36,35 +32,61 @@
       "url": "https://me.big.tuwien.ac.at/"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/borkdominik/bigUML"
+  },
   "publisher": "BIGModelingTools",
-  "type": "module",
-  "main": "./build/index.cjs",
   "files": [
     "build",
-    "server",
     "webviews",
+    "templates",
     "resources",
     "LICENSE",
-    "README.md"
+    "README.md",
+    "syntaxes",
+    "language-configuration.json"
   ],
+  "type": "module",
+  "main": "./build/index.cjs",
   "scripts": {
-    "build": "npm run clean && npm run compile && npm run bundle",
-    "bundle": "tsx esbuild.ts",
-    "clean": "rimraf build dist node_modules/.tmp",
-    "compile": "tsc -p tsconfig.json",
-    "compile:prod": "npm run clean && npm run compile -- --minify",
-    "lint": "eslint -c ./eslint.config.js",
-    "lint:ci": "npm run lint -o eslint.xml -f checkstyle",
-    "lint:fix": "eslint --fix -c ./eslint.config.js",
-    "lint:ts": "tsc -noEmit",
+    "build": "tsx esbuild.ts",
+    "build:analyze": "tsx esbuild.ts --production --analyze",
+    "build:prod": "tsx esbuild.ts --production",
     "vscode:package": "vsce package --no-dependencies",
-    "vscode:package-pre": "npm run vscode:package -- --pre-release",
-    "vscode:prepublish": "npm run compile:prod",
+    "vscode:package-pre": "pnpm vscode:package --pre-release",
+    "vscode:prepublish": "pnpm build:prod",
     "vscode:release": "vsce publish --no-dependencies",
-    "vscode:release-pre": "npm run vscode:release -- --pre-release",
-    "watch": "concurrently --kill-others \"npm run watch:compile\" \"npm run watch:bundle\"",
-    "watch:bundle": "npm run bundle -- --watch --preserveWatchOutput",
-    "watch:compile": "npm run compile -- --watch --preserveWatchOutput"
+    "vscode:release-pre": "pnpm vscode:release --pre-release",
+    "watch": "tsx esbuild.ts --watch"
+  },
+  "dependencies": {
+    "@borkdominik-biguml/big-advancedsearch": "workspace:*",
+    "@borkdominik-biguml/big-code-generation": "workspace:*",
+    "@borkdominik-biguml/big-minimap": "workspace:*",
+    "@borkdominik-biguml/big-outline": "workspace:*",
+    "@borkdominik-biguml/big-property-palette": "workspace:*",
+    "@borkdominik-biguml/big-revision-management": "workspace:*",
+    "@borkdominik-biguml/big-vscode": "workspace:*",
+    "@borkdominik-biguml/uml-glsp-client": "workspace:*",
+    "@borkdominik-biguml/uml-glsp-server": "workspace:*",
+    "@borkdominik-biguml/uml-model-server": "workspace:*",
+    "@vscode/codicons": "catalog:",
+    "inversify": "catalog:",
+    "langium": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "reflect-metadata": "catalog:",
+    "vscode-languageclient": "catalog:",
+    "vscode-languageserver": "catalog:"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@types/vscode": "^1.63.0",
+    "@vscode/vsce": "catalog:",
+    "esbuild": "catalog:",
+    "tsx": "catalog:"
   },
   "contributes": {
     "commands": [
@@ -380,47 +402,12 @@
   "activationEvents": [
     "onStartupFinished"
   ],
-  "dependencies": {
-    "@borkdominik-biguml/big-advancedsearch": "*",
-    "@borkdominik-biguml/big-code-generation": "*",
-    "@borkdominik-biguml/big-common": "*",
-    "@borkdominik-biguml/big-minimap": "*",
-    "@borkdominik-biguml/big-outline": "*",
-    "@borkdominik-biguml/big-property-palette": "*",
-    "@borkdominik-biguml/big-revision-management": "*",
-    "@borkdominik-biguml/big-vscode": "*",
-    "@borkdominik-biguml/uml-glsp-client": "*",
-    "@borkdominik-biguml/uml-glsp-server": "*",
-    "@borkdominik-biguml/uml-model-server": "*",
-    "@eclipse-glsp/protocol": "*",
-    "@eclipse-glsp/vscode-integration": "*",
-    "@vscode/codicons": "^0.0.25",
-    "inversify": "^6.2.1",
-    "lodash": "^4.17.21",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "reflect-metadata": "^0.2.2",
-    "scheduler": "^0.25.0",
-    "vscode-languageclient": "9.0.1",
-    "vscode-languageserver": "9.0.1",
-    "vscode-languageserver-protocol": "^3.17.5",
-    "vscode-languageserver-textdocument": "^1.0.11",
-    "vscode-messenger": "^0.4.5",
-    "vscode-messenger-common": "^0.4.5"
-  },
-  "devDependencies": {
-    "@eclipse-glsp/vscode-integration-webview": "*",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
-    "@types/vscode": "^1.63.0",
-    "@vscode/vsce": "^3.6.2"
-  },
-  "engines": {
-    "vscode": "^1.63.0"
-  },
   "icon": "./resources/logo.png",
   "galleryBanner": {
     "color": "#1d1d1d",
     "theme": "dark"
+  },
+  "engines": {
+    "vscode": "^1.63.0"
   }
 }

@@ -39,7 +39,11 @@ export class PatchManager {
         this.affectedDocuments = new AffectedDocumentCollector(shared.workspace.LangiumDocuments, shared.workspace.IndexManager);
     }
 
-    async applyPatch(patch: jsonPatch.Operation | readonly jsonPatch.Operation[], uri: string, client?: ClientId): Promise<AstNode | undefined> {
+    async applyPatch(
+        patch: jsonPatch.Operation | readonly jsonPatch.Operation[],
+        uri: string,
+        client?: ClientId
+    ): Promise<AstNode | undefined> {
         logger.log(`Applying patch to document: ${uri}`, patch);
         const operations = Array.isArray(patch) ? patch : [patch as jsonPatch.Operation];
         const targetPath = URI.parse(uri).path;

@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-server/jsx */
 import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { GLabelElement, GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { SendSignalAction } from '@borkdominik-biguml/uml-model-server/grammar';

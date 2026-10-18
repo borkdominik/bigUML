@@ -1,6 +1,6 @@
 ## Summary
 
-bigUML is a graphical UML modeling tool built as a VSCode extension. It uses a Lerna monorepo (`application/`, `packages/`, `tooling/`) with three runtime processes: the **Extension Host** (VSCode), the **Language Server** (Langium, port 5999), and the **GLSP Diagram Server** (port 5007). A code generation pipeline produces boilerplate from a single language definition file (`tooling/uml-language/src/language/def.ts`).
+bigUML is a graphical UML modeling tool built as a VSCode extension. It uses a pnpm monorepo (`application/`, `packages/`, `tooling/`) with three runtime processes: the **Extension Host** (VSCode), the **Language Server** (Langium, port 5999), and the **GLSP Diagram Server** (port 5007). A code generation pipeline produces boilerplate from a single language definition file (`tooling/uml-language/src/language/def.ts`).
 
 ## Terminology
 
@@ -23,7 +23,7 @@ Each feature package contributes to one or more processes through an environment
 Key architectural rules:
 
 - Never import `sprotty` or `sprotty-protocol` directly. Use `@eclipse-glsp/client` re-exports instead.
-- Files in `src/gen/` are machine-generated. Never edit them manually. Regenerate with `npm run generate`.
+- Files in `src/gen/` are machine-generated. Never edit them manually. Regenerate with `pnpm generate`.
 - Each process has its own InversifyJS DI container. Do not share container instances across processes.
 - The GLSP server communicates with the model server via JSON-RPC. Model mutations always flow through JSON patches, never through direct AST manipulation.
 
@@ -31,13 +31,13 @@ Key architectural rules:
 
 - Before implementing, examine the relevant `src/env/` folder to understand which process the code runs in.
 - Before adding new code, check if an existing pattern in the same package already solves the problem. Reuse existing base classes (`BaseWebviewProvider`, `VSCodeCommand`, generic operation handlers).
-- When adding a new UML element: modify `tooling/uml-language/src/language/def.ts` and run `npm run generate`. Do not create handlers manually.
+- When adding a new UML element: modify `tooling/uml-language/src/language/def.ts` and run `pnpm generate`. Do not create handlers manually.
 - When adding a new feature package: follow the environment folder convention (`src/env/{common,vscode,glsp-server,glsp-client,browser}/`), expose exports via `package.json` exports map, and register modules in `extension.config.ts` and/or `server.main.ts`.
 - Never write backwards-compatible code. If a change requires updates to existing code, update the existing code. Do not add new code that supports old patterns.
 
 ## Verification
 
-Before running `npm run compile`, ask the user - they may already have a watch process running.
+Verify changes with `pnpm check` (type check + lint, incremental) and `pnpm build`. Packages are not compiled individually - there is no per-package build or watch. The user may already have `pnpm dev` running, which re-runs the checks on every change.
 
 ## Documentation
 

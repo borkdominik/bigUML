@@ -15,7 +15,14 @@
  ********************************************************************************/
 import { ClassDiagramNodeTypes, CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import type { EdgeTypeHint, ShapeTypeHint } from '@eclipse-glsp/protocol';
-import { type DiagramConfiguration, GCompartment, GLabel, type GModelElementConstructor, ServerLayoutKind, getDefaultMapping } from '@eclipse-glsp/server';
+import {
+    type DiagramConfiguration,
+    GCompartment,
+    GLabel,
+    type GModelElementConstructor,
+    ServerLayoutKind,
+    getDefaultMapping
+} from '@eclipse-glsp/server';
 import { injectable } from 'inversify';
 import { GClassNode } from '../elements/class.element.js';
 import { GEnumerationLiteralNode } from '../elements/enumeration-literal.element.js';

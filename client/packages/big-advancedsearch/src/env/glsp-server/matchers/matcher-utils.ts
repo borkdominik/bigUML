@@ -70,13 +70,13 @@ function getChildrenForCriteria(element: any, childCriteria: SearchCriteria): an
 
         case 'Slot':
             return Array.isArray(element.slots) ? element.slots : [];
-        
+
         case 'Parameter':
             return Array.isArray(element.parameters)
                 ? element.parameters
                 : Array.isArray(element.ownedParameters)
-                    ? element.ownedParameters
-                    : [];
+                  ? element.ownedParameters
+                  : [];
 
         default:
             return [];

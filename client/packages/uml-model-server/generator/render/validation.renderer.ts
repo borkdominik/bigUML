@@ -222,7 +222,9 @@ function renderMultiplicityProperties(declarations: Declaration[]): string {
         }
         seen.add(declaration.name!);
         const own = (declaration.properties ?? []).filter(p => Decorator.has(p.decorators, 'multiplicity')).map(p => p.name);
-        const inherited = (declaration.extends ?? []).flatMap(parent => (byName.has(parent) ? multiplicitiesOf(byName.get(parent)!, seen) : []));
+        const inherited = (declaration.extends ?? []).flatMap(parent =>
+            byName.has(parent) ? multiplicitiesOf(byName.get(parent)!, seen) : []
+        );
         return [...new Set([...inherited, ...own])];
     };
 

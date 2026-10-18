@@ -7,7 +7,15 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { type GCompartment, type GModelElement, GNode, GPort, type IMovementRestrictor, isNotUndefined, type Point } from '@eclipse-glsp/client';
+import {
+    type GCompartment,
+    type GModelElement,
+    GNode,
+    GPort,
+    type IMovementRestrictor,
+    isNotUndefined,
+    type Point
+} from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { NamedElement } from '../../../../elements/index.js';
 import { UMLSequenceTypes } from '../../sequence.types.js';
@@ -15,7 +23,7 @@ import { UMLSequenceTypes } from '../../sequence.types.js';
 // TODO: Sequence Diagram specific
 @injectable()
 export class SDMovementRestrictor implements IMovementRestrictor {
-    validate(element: GModelElement, newLocation?: Point | undefined): boolean {
+    validate(element: GModelElement, newLocation?: Point): boolean {
         // limit OCCURRENCE & EXECUTION SPEC movement
         const distanceLimit = 40;
 

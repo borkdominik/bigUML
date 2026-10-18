@@ -15,13 +15,7 @@
       ],
       "sourceMaps": true,
       "smartStep": true,
-      "outFiles": [
-        "${workspaceFolder}/node_modules/inversify/**/*.js",
-        "${workspaceFolder}/node_modules/eclipse-glsp/**/*.js",
-        "${workspaceFolder}/application/**/*.js",
-        "${workspaceFolder}/packages/**/*.js",
-        "${workspaceFolder}/tooling/**/*.js"
-      ]
+      "outFiles": ["${workspaceFolder}/application/vscode/build/**/*.cjs"]
     },
     {
       "name": "(Attach) LSP Server",

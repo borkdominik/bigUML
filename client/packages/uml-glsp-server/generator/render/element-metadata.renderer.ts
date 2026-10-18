@@ -111,7 +111,9 @@ function buildEntry(decl: Declaration, declarations: Declaration[]): ElementMeta
         owned,
         floating: Decorator.has(decl.decorators, 'floating'),
         defaultSize: sizeDec ? (Decorator.getArg<Record<string, unknown>>(sizeDec) as Size | undefined) : undefined,
-        opensWith: opensWithDec ? (Decorator.getArg<Record<string, unknown>>(opensWithDec) as { property: string; count: number } | undefined) : undefined,
+        opensWith: opensWithDec
+            ? (Decorator.getArg<Record<string, unknown>>(opensWithDec) as { property: string; count: number } | undefined)
+            : undefined,
         shape: {
             repositionable: (shapeOptions.repositionable as boolean | undefined) ?? !owned,
             resizable: (shapeOptions.resizable as boolean | undefined) ?? !owned,

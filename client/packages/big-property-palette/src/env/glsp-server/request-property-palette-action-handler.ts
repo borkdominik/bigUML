@@ -157,7 +157,8 @@ export class RequestPropertyPaletteActionHandler implements ActionHandler {
         if (!SetPropertyPaletteAction.is(action) || !action.palette?.items || !elementId) {
             return action;
         }
-        const typeOf = (id: string): string | undefined => (this.modelState.index.findIdElement(id) as { $type?: string } | undefined)?.$type;
+        const typeOf = (id: string): string | undefined =>
+            (this.modelState.index.findIdElement(id) as { $type?: string } | undefined)?.$type;
 
         const items = action.palette.items.map((item: any) => {
             if (item.type === 'TEXT' && isMultiplicityProperty(typeOf(item.elementId), item.propertyId)) {
@@ -206,7 +207,10 @@ export class RequestPropertyPaletteActionHandler implements ActionHandler {
                 const { value, suggestions } = typed(item.elementId, item.propertyId);
                 return { ...item, text: value, suggestions };
             }
-            if (item.type === 'REFERENCE' && item.references?.some((ref: any) => ref.fields?.some((field: any) => isTypedProperty(field.propertyId)))) {
+            if (
+                item.type === 'REFERENCE' &&
+                item.references?.some((ref: any) => ref.fields?.some((field: any) => isTypedProperty(field.propertyId)))
+            ) {
                 return {
                     ...item,
                     references: item.references.map((ref: any) => ({
@@ -252,7 +256,9 @@ export class RequestPropertyPaletteActionHandler implements ActionHandler {
                     ? {
                           ...item,
                           // `automatic` (the empty value) stays: it is how a pin is taken off again.
-                          choices: item.choices.filter((choice: any) => choice.value === '' || offered[item.propertyId].includes(choice.value))
+                          choices: item.choices.filter(
+                              (choice: any) => choice.value === '' || offered[item.propertyId].includes(choice.value)
+                          )
                       }
                     : item
             );

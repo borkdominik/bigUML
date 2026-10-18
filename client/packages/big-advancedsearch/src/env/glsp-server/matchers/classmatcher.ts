@@ -186,9 +186,11 @@ export class ClassDiagramMatcher implements IMatcher {
             const sourceId = relation.source?.ref?.__id;
             const targetId = relation.target?.ref?.__id;
 
-            const sourceName = this.nameOf(relation.source?.ref) ?? relation.source?.$refText ?? idToName.get(sourceId ?? '') ?? '(unknown)';
+            const sourceName =
+                this.nameOf(relation.source?.ref) ?? relation.source?.$refText ?? idToName.get(sourceId ?? '') ?? '(unknown)';
 
-            const targetName = this.nameOf(relation.target?.ref) ?? relation.target?.$refText ?? idToName.get(targetId ?? '') ?? '(unknown)';
+            const targetName =
+                this.nameOf(relation.target?.ref) ?? relation.target?.$refText ?? idToName.get(targetId ?? '') ?? '(unknown)';
             const relationName =
                 'name' in relation && relation.name ? `${relation.name}: ${sourceName} → ${targetName}` : `${sourceName} → ${targetName}`;
 

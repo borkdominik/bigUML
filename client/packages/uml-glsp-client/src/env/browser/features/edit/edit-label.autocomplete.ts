@@ -86,7 +86,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
                 labelId: this.label!.id
             })
         });
-        this.actionDispatcher.requestUntil(requestAction).then(response => {
+        void this.actionDispatcher.requestUntil(requestAction).then(response => {
             if (SetContextActions.is(response)) {
                 this.autocompleteEntries = response.actions.sort((a, b) => a.label.localeCompare(b.label));
             }
@@ -136,7 +136,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
     protected override applyLabelEditOnEvent(event: KeyboardEvent, code?: KeyCode, ...modifiers: KeyboardModifier[]): void {
         if (!this.isAutocompleteEnabled && matchesKeystroke(event, code ? code : 'Enter', ...modifiers)) {
             event.preventDefault();
-            this.applyLabelEdit();
+            void this.applyLabelEdit();
         }
     }
 
@@ -156,7 +156,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
                 return;
             }
         }
-        this.actionDispatcher.dispatchAll([
+        void this.actionDispatcher.dispatchAll([
             ApplyLabelEditOperation.create({ labelId: this.labelId, text: this.editControl.value }),
             CommitModelAction.create()
         ]);
@@ -245,7 +245,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
     }
 
     protected applyAutocompleteEdit(entry: AutocompleteEntry): void {
-        this.actionDispatcher.dispatchAll([...entry.actions, CommitModelAction.create()]);
+        void this.actionDispatcher.dispatchAll([...entry.actions, CommitModelAction.create()]);
         this.hide();
     }
 

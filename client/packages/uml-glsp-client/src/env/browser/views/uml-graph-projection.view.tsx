@@ -6,8 +6,8 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-/** @jsx svg */
-import { GLSPProjectionView, type GViewportRootElement, type IViewArgs, type RenderingContext, svg } from '@eclipse-glsp/client';
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-client/jsx */
+import { GLSPProjectionView, type GViewportRootElement, type IViewArgs, type RenderingContext } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 import { type VNode, type VNodeStyle, h } from 'snabbdom';
 import { placeEdgeCenterPorts } from '../uml/views/edge-center-port.js';

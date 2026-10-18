@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-server/jsx */
 import { representationTypeId } from '@borkdominik-biguml/uml-glsp-server';
 import { messagesOnLink } from '../notation/message-link.js';
 import { GEdgeElement, GLabelElement } from '@borkdominik-biguml/uml-glsp-server/jsx';

@@ -88,7 +88,10 @@ export interface MutationExtension {
 }
 
 /** The first claim any extension makes, or `undefined` where none does. */
-export function firstClaim<T>(extensions: readonly MutationExtension[], claim: (extension: MutationExtension) => T | undefined): T | undefined {
+export function firstClaim<T>(
+    extensions: readonly MutationExtension[],
+    claim: (extension: MutationExtension) => T | undefined
+): T | undefined {
     for (const extension of extensions) {
         const result = claim(extension);
         if (result !== undefined) {

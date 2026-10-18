@@ -1,0 +1,32 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "arrowParens": "avoid",
+  "trailingComma": "none",
+  "endOfLine": "lf",
+  "printWidth": 140,
+  "tabWidth": 4,
+  "sortPackageJson": {},
+  "overrides": [
+    {
+      "files": ["*.json", "*.jsonc", "*.yml", "*.yaml"],
+      "options": {
+        "printWidth": 100,
+        "tabWidth": 2
+      }
+    }
+  ],
+  "ignorePatterns": [
+    "**/*.md",
+    "pnpm-lock.yaml",
+    "release/**",
+    "workspace/**",
+    "**/src/gen/**",
+    "**/syntaxes/**",
+    "application/vscode/build/**",
+    "application/vscode/webviews/**",
+    "application/vscode/templates/**",
+    "application/vscode/css/codicon.css"
+  ]
+}

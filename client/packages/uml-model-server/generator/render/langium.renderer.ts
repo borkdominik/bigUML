@@ -152,9 +152,7 @@ function getReference(property: Definition): string[] {
     text.push(` ',' `);
     text.push(`'"__value"'`);
     text.push(`':'`);
-    text.push(
-        `${property.name}${property.multiplicity === Multiplicity.ONE_TO_ONE ? '=' : '+='}[${property.type!.typeName}:STRING]`
-    );
+    text.push(`${property.name}${property.multiplicity === Multiplicity.ONE_TO_ONE ? '=' : '+='}[${property.type!.typeName}:STRING]`);
     text.push(`'}'`);
     return text;
 }

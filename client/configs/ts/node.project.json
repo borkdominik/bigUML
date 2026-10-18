@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "./tsconfig.node.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "../../node_modules/.cache/tsc/node.tsbuildinfo"
+  },
+  "include": [
+    "./assets.d.ts",
+    "../../application/vscode/src",
+    "../../application/vscode/esbuild.ts",
+    "../../packages/*/src/env/common",
+    "../../packages/*/src/env/glsp-server",
+    "../../packages/*/src/env/jsx",
+    "../../packages/*/src/env/vscode",
+    "../../packages/*/src/gen",
+    "../../packages/*/generator",
+    "../../packages/*/test",
+    "../../packages/*/vitest.config.ts",
+    "../../packages/big-common/src",
+    "../../packages/uml-model-server/src",
+    "../../packages/uml-glsp-client/scripts",
+    "../../tooling/uml-language-tooling/src",
+    "../../tooling/uml-language-tooling/bin",
+    "../../tooling/uml-language/src"
+  ]
+}

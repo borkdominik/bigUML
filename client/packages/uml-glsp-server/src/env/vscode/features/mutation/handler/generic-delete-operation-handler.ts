@@ -207,8 +207,7 @@ export class GenericDeleteOperationHandler extends OperationHandler {
  * out before its owner, while its path still leads somewhere.
  */
 function sortRemoves(ops: ReadonlyArray<RemoveOp>): RemoveOp[] {
-    const bucket = (path: string): number =>
-        path.startsWith('/diagram/relations') ? 0 : path.startsWith('/diagram/') ? 1 : 2;
+    const bucket = (path: string): number => (path.startsWith('/diagram/relations') ? 0 : path.startsWith('/diagram/') ? 1 : 2);
 
     return [...ops].sort((a, b) => bucket(a.path) - bucket(b.path) || compareDocumentOrder(b.path, a.path));
 }

@@ -34,7 +34,7 @@ export class PackageDiagram {
     relations?: Array<PackageDiagramEdges>;
 }
 
-type PackageDiagramElements = PackageDiagramNodes | PackageDiagramEdges;
+export type PackageDiagramElements = PackageDiagramNodes | PackageDiagramEdges;
 
 type PackageDiagramNodes = Package | Class | Property | Operation | Parameter | Note | TextLabel | EdgeAnchor;
 

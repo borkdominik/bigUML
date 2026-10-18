@@ -16,7 +16,9 @@ import { siblingsOf } from './siblings.js';
  */
 export function mergesIntoSamePackage(merge: Relation): Relation[] {
     const merged = merge.target?.ref?.__id;
-    const group = siblingsOf(merge).filter((relation): relation is Relation => isPackageMerge(relation) && relation.target?.ref?.__id === merged);
+    const group = siblingsOf(merge).filter(
+        (relation): relation is Relation => isPackageMerge(relation) && relation.target?.ref?.__id === merged
+    );
     // A merge its own container does not list would otherwise come back as a set with no merges in it,
     // which no caller can label or count against.
     return group.length > 0 ? group : [merge];

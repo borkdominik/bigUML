@@ -38,7 +38,7 @@ export class StateMachineDiagram {
     relations?: Array<StateMachineDiagramEdges>;
 }
 
-type StateMachineDiagramElements = StateMachineDiagramNodes | StateMachineDiagramEdges;
+export type StateMachineDiagramElements = StateMachineDiagramNodes | StateMachineDiagramEdges;
 
 type StateMachineDiagramNodes =
     | StateMachine

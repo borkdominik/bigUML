@@ -22,9 +22,7 @@ import { NamedElement } from '../named-element/index.js';
  * labels inside the shape instead.
  */
 export class GPinNode extends NamedElement {
-    static override readonly DEFAULT_FEATURES = NamedElement.DEFAULT_FEATURES.filter(
-        feature => feature !== layoutableChildFeature
-    );
+    static override readonly DEFAULT_FEATURES = NamedElement.DEFAULT_FEATURES.filter(feature => feature !== layoutableChildFeature);
 }
 
 export class GInputPinNode extends GPinNode {}

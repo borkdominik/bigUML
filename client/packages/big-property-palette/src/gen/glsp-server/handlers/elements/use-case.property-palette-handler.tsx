@@ -1,4 +1,5 @@
 // AUTO-GENERATED – DO NOT EDIT
+/** @jsxImportSource @borkdominik-biguml/big-property-palette/jsx */
 
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
 import { type UseCase } from '@borkdominik-biguml/uml-model-server/grammar';

@@ -52,8 +52,8 @@ export function renderElementHandler(decl: Declaration, declarations: Declaratio
     // actions, and a handler may well have one of each.
     const references = properties.filter(p => p.type === 'reference');
     const creates = references.map(p => p.createsExpr).filter((e): e is string => !!e && e !== '[]');
-    const glspImports = ['CreateNodeOperation', 'DeleteElementOperation', 'TriggerEdgeCreationAction'].filter(
-        name => (name === 'DeleteElementOperation' ? references.length > 0 : creates.some(e => e.includes(name)))
+    const glspImports = ['CreateNodeOperation', 'DeleteElementOperation', 'TriggerEdgeCreationAction'].filter(name =>
+        name === 'DeleteElementOperation' ? references.length > 0 : creates.some(e => e.includes(name))
     );
     const needsPropertyPaletteChoices = properties.some(p => p.type === 'choice' && p.choicesExpr?.startsWith('PropertyPaletteChoices.'));
 

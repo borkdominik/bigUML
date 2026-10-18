@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-server/jsx */
 import { getDefaultSize } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
 import { GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { Region } from '@borkdominik-biguml/uml-model-server/grammar';
@@ -94,5 +95,7 @@ export function createRegionElement(ctx: ElementContext<Region>): GModelElement 
     const position = ctx.modelIndex.findPosition(ctx.node.__id);
     const size = ctx.modelIndex.findSize(ctx.node.__id);
     const freeformChildren = renderContents(ctx, ctx.node.subvertices);
-    return <GRegionNodeElement node={ctx.node} position={position} size={size} type={ctx.elementType} freeformChildren={freeformChildren} />;
+    return (
+        <GRegionNodeElement node={ctx.node} position={position} size={size} type={ctx.elementType} freeformChildren={freeformChildren} />
+    );
 }

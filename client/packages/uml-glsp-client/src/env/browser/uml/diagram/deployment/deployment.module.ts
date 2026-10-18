@@ -9,7 +9,16 @@
 import { representationTypeId } from '@borkdominik-biguml/uml-glsp-server';
 import { configureModelElement, FeatureModule, GEdge, PolylineEdgeView } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
-import { GGenericEdge, GGenericEdgeView, GNoteNode, GNoteNodeView, GTextLabelNode, GTextLabelNodeView, NamedElement, NamedElementView } from '../../elements/index.js';
+import {
+    GGenericEdge,
+    GGenericEdgeView,
+    GNoteNode,
+    GNoteNodeView,
+    GTextLabelNode,
+    GTextLabelNodeView,
+    NamedElement,
+    NamedElementView
+} from '../../elements/index.js';
 import { GEditableLabel, GEditableLabelView } from '../../views/uml-label.view.js';
 
 const R = 'Deployment';

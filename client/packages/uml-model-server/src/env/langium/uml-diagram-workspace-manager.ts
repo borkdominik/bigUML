@@ -31,7 +31,7 @@ export class UmlDiagramWorkspaceManager extends DefaultWorkspaceManager {
         this.initialBuildOptions = { validation: true };
     }
 
-    override async initializeWorkspace(folders: WorkspaceFolder[], cancelToken?: CancellationToken | undefined): Promise<void> {
+    override async initializeWorkspace(folders: WorkspaceFolder[], cancelToken?: CancellationToken): Promise<void> {
         try {
             await super.initializeWorkspace(folders, cancelToken);
             this.logger.info('Workspace Initialized');

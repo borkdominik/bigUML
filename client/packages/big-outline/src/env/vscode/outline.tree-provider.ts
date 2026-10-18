@@ -110,7 +110,7 @@ export class OutlineTreeProvider implements vscode.TreeDataProvider<OutlineTreeN
         return item;
     }
 
-    getChildren(element?: OutlineTreeNode | undefined): vscode.ProviderResult<OutlineTreeNode[]> {
+    getChildren(element?: OutlineTreeNode): vscode.ProviderResult<OutlineTreeNode[]> {
         if (!element) {
             // root elements are requested
             return this.storage.data;

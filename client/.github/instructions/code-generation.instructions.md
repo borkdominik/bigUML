@@ -8,13 +8,13 @@ applyTo: '**/generator/**,**/src/gen/**'
 
 ## Never edit generated files
 
-Files under `src/gen/` are machine-generated from `tooling/uml-language/src/language/def.ts`. **Never edit them manually** - changes will be overwritten on the next `npm run generate`.
+Files under `src/gen/` are machine-generated from `tooling/uml-language/src/language/def.ts`. **Never edit them manually** - changes will be overwritten on the next `pnpm generate`.
 
 ## How to make changes
 
 1. Modify the language definition: `tooling/uml-language/src/language/def.ts`.
 2. Or modify the generator templates: `<package>/generator/` directory (Eta templates + `contribution.ts`).
-3. Run `npm run generate` from the workspace root to regenerate all packages.
+3. Run `pnpm generate` from the workspace root to regenerate all packages.
 
 ## Generation pipeline
 
@@ -35,7 +35,7 @@ Files under `src/gen/` are machine-generated from `tooling/uml-language/src/lang
 ## Adding a new UML element
 
 1. Add a class to `def.ts` with appropriate decorators.
-2. Run `npm run generate`.
+2. Run `pnpm generate`.
 3. The pipeline auto-generates: model types, tool palette entry, creation path, default values, property palette handler, grammar rule, and serializer method.
 
 ## Documentation

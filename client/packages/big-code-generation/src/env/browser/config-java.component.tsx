@@ -20,11 +20,7 @@ interface JavaCodeGenerationConfigProps {
     setIsGenerationDisabled: (value: React.SetStateAction<boolean>) => void;
 }
 
-export function JavaCodeGenerationConfig({
-    options,
-    setOptions,
-    setIsGenerationDisabled
-}: JavaCodeGenerationConfigProps): ReactElement {
+export function JavaCodeGenerationConfig({ options, setOptions, setIsGenerationDisabled }: JavaCodeGenerationConfigProps): ReactElement {
     const { listenAction, dispatchAction } = useContext(VSCodeContext);
 
     useEffect(() => {
@@ -48,16 +44,13 @@ export function JavaCodeGenerationConfig({
         <>
             <div style={{ marginBottom: '8px' }}>
                 <span>Selected Folder: {options.folder ?? 'None'}</span>
-                <button onClick={selectFolder} style={{ marginLeft: '8px' }}>Select Folder</button>
+                <button onClick={selectFolder} style={{ marginLeft: '8px' }}>
+                    Select Folder
+                </button>
             </div>
             <div style={{ marginBottom: '8px' }}>
                 <label>
-                    <input
-                        type="checkbox"
-                        checked={options.multiple}
-                        onChange={toggleGenerateMultiple}
-                        style={{ marginRight: '4px' }}
-                    />
+                    <input type='checkbox' checked={options.multiple} onChange={toggleGenerateMultiple} style={{ marginRight: '4px' }} />
                     Generate multiple files
                 </label>
             </div>

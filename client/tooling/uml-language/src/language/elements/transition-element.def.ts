@@ -10,7 +10,7 @@
 import { Glsp } from '@borkdominik-biguml/uml-glsp-server/generator';
 import { Language } from '@borkdominik-biguml/uml-language-tooling';
 import 'reflect-metadata';
-import { Edge, Node, Unbounded, type Visibility } from '../core/element.def.js';
+import { Edge, type Node, type Unbounded, type Visibility } from '../core/element.def.js';
 
 // @ts-nocheck
 

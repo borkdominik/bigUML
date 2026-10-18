@@ -17,7 +17,7 @@ Guide for adding a new UML element type to bigUML. This is the most common exten
 ## Task checklist
 
 - Define the element class in `tooling/uml-language/src/language/def.ts` with appropriate decorators
-- Run `npm run generate` from the workspace root
+- Run `pnpm generate` from the workspace root
 - Verify generated output in each package's `src/gen/` directory (use git diff to see changes)
 - (Optional) Create a `.element.tsx` JSX view for diagram rendering
 - (Optional) Register the element view in the GLSP client container
@@ -116,7 +116,7 @@ If you add a new top-level node or relation, add it to the appropriate `*Diagram
 From the workspace root:
 
 ```bash
-npm run generate
+pnpm generate
 ```
 
 This triggers the `uml-language-tooling` CLI which:

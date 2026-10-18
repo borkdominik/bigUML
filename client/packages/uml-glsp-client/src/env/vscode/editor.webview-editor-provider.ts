@@ -215,7 +215,7 @@ class UmlWebviewEndpoint implements PublicOf<WebviewEndpoint>, Disposable {
                     // When the webview is reloaded, it will send the WebviewReadyNotification again.
                     // In this case, we need to resend the diagram identifier to re-initialize the webview.
                     if (this._readyDeferred.state === 'resolved') {
-                        this.sendDiagramIdentifier();
+                        void this.sendDiagramIdentifier();
                     } else {
                         this._readyDeferred.resolve();
                     }
@@ -275,7 +275,7 @@ class UmlWebviewEndpoint implements PublicOf<WebviewEndpoint>, Disposable {
                     if (!this._clientActions) {
                         this._clientActions = params.clientActionKinds;
                     }
-                    glspClient.initializeClientSession(params);
+                    void glspClient.initializeClientSession(params);
                 },
                 {
                     sender: this.messageParticipant
@@ -295,7 +295,7 @@ class UmlWebviewEndpoint implements PublicOf<WebviewEndpoint>, Disposable {
             )
         );
         this.toDispose.push(toDispose);
-        this.sendDiagramIdentifier();
+        void this.sendDiagramIdentifier();
         return toDispose;
     }
 

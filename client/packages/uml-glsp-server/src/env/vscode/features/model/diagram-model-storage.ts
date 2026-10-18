@@ -22,7 +22,6 @@ import {
     ClientSessionManager,
     GLSPServerError,
     Logger,
-    type MaybePromise,
     type RequestModelAction,
     SOURCE_URI_ARG,
     type SaveModelAction,
@@ -57,22 +56,25 @@ export class DiagramModelStorage implements SourceModelStorage, ClientSessionLis
         });
     }
 
-    saveSourceModel(action: SaveModelAction): MaybePromise<void> {
+    async saveSourceModel(action: SaveModelAction): Promise<void> {
         const saveUri = this.getFileUri(action);
 
         // save document and all related documents
-        this.state.modelService.save(saveUri, this.state.semanticRoot);
-        AstUtils.streamReferences(this.state.semanticRoot)
+        const relatedRoots = AstUtils.streamReferences(this.state.semanticRoot)
             .filter(refInfo => isReference(refInfo.reference))
             .map(refInfo => (refInfo.reference as Reference).ref)
             .nonNullable()
             .map(ref => AstUtils.findRootNode(ref))
-            .forEach(root => this.state.modelService.save(root.$document!.uri.toString(), root));
+            .toArray();
+        await Promise.all([
+            this.state.modelService.save(saveUri, this.state.semanticRoot),
+            ...relatedRoots.map(root => this.state.modelService.save(root.$document!.uri.toString(), root))
+        ]);
     }
 
     sessionDisposed(_clientSession: ClientSession): void {
         // close loaded document for modification
-        this.state.modelService.close(this.state.semanticUri, DIAGRAM_CLIENT);
+        void this.state.modelService.close(this.state.semanticUri, DIAGRAM_CLIENT);
     }
 
     protected getSourceUri(action: RequestModelAction): string {

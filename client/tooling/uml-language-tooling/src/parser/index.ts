@@ -8,4 +8,3 @@
  **********************************************************************************/
 export * from './definition.parser.js';
 export * from './transformer.js';
-

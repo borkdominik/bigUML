@@ -11,20 +11,19 @@ description: >-
 
 # Create a New Feature Package
 
-Guide for scaffolding a new feature package in the bigUML Lerna monorepo. Feature packages follow an environment-based folder convention that lets them contribute code to multiple runtime processes (extension host, GLSP server, browser webview) from a single package.
+Guide for scaffolding a new feature package in the bigUML pnpm monorepo. Feature packages follow an environment-based folder convention that lets them contribute code to multiple runtime processes (extension host, GLSP server, browser webview) from a single package.
 
 ## Task checklist
 
 - Create the package directory under `packages/`
 - Set up `package.json` with name, dependencies, and exports map
-- Create `tsconfig.json` referencing base configs
 - Create environment folders (`src/env/common/`, plus others as needed)
 - Create index files for each environment
 - Implement `VscodeFeatureModule` (if the package has extension host code)
 - Implement `DiagramFeatureModule` (if the package has GLSP server code)
 - Register modules in `application/vscode/src/extension.config.ts` and/or `application/vscode/src/server.main.ts`
-- Set up esbuild config (if the package has a browser webview)
-- Add the package to the Lerna workspace
+- Register the webview entry point in `application/vscode/esbuild.ts` (if the package has a browser webview)
+- Run `pnpm install` to link the package into the workspace
 
 ## Before you start
 
@@ -37,10 +36,6 @@ Read `docs/architecture-overview.md` for the full environment model and package 
 ```
 packages/big-<name>/
 ├── package.json
-├── tsconfig.json
-├── config/
-│   ├── tsconfig.node.json
-│   └── tsconfig.browser.json    # only if package has browser code
 ├── src/
 │   └── env/
 │       ├── common/
@@ -53,8 +48,9 @@ packages/big-<name>/
 │       │   └── index.ts
 │       └── browser/             # if providing a webview UI
 │           └── index.ts
-└── esbuild.ts                   # only if package has browser webview
 ```
+
+Packages have no `tsconfig.json`, build script or `esbuild.ts`. Type checking is done by the root projects in `configs/ts/` (they pick up `packages/*/src/env/*` automatically), and `application/vscode/esbuild.ts` bundles everything.
 
 Only create the environment folders that are actually needed. Every package should have `common/` at minimum.
 
@@ -69,38 +65,19 @@ Use this template, adjusting the exports map to include only the environments yo
     "private": true,
     "type": "module",
     "exports": {
-        ".": {
-            "types": "./build/env/common/index.d.ts",
-            "default": "./build/env/common/index.js"
-        },
-        "./vscode": {
-            "types": "./build/env/vscode/index.d.ts",
-            "default": "./build/env/vscode/index.js"
-        },
-        "./glsp-server": {
-            "types": "./build/env/glsp-server/index.d.ts",
-            "default": "./build/env/glsp-server/index.js"
-        },
-        "./glsp-client": {
-            "types": "./build/env/glsp-client/index.d.ts",
-            "default": "./build/env/glsp-client/index.js"
-        }
-    },
-    "scripts": {
-        "build": "tsc -b",
-        "watch": "tsc -b --watch",
-        "clean": "rimraf build"
+        ".": "./src/env/common/index.ts",
+        "./vscode": "./src/env/vscode/index.ts",
+        "./glsp-server": "./src/env/glsp-server/index.ts",
+        "./glsp-client": "./src/env/glsp-client/index.ts"
     },
     "dependencies": {
-        "@borkdominik-biguml/big-vscode": "*",
-        "@borkdominik-biguml/big-common": "*"
-    },
-    "devDependencies": {
-        "rimraf": "^5.0.0",
-        "typescript": "^5.0.0"
+        "@borkdominik-biguml/big-vscode": "workspace:*",
+        "@borkdominik-biguml/big-common": "workspace:*"
     }
 }
 ```
+
+The exports point at the TypeScript sources; there is nothing to build. Use `workspace:*` for workspace packages and `catalog:` for dependencies that have a version in the `catalog` of `pnpm-workspace.yaml`. Declare every package you import - pnpm does not hoist undeclared dependencies.
 
 Add dependencies based on which environments the package targets:
 
@@ -109,42 +86,11 @@ Add dependencies based on which environments the package targets:
 - **glsp-client env**: `@eclipse-glsp/client`
 - **browser env**: `@borkdominik-biguml/big-components`, `react`, `react-dom`
 
-## Step 3: Set up tsconfig.json
+## Step 3: Type checking
 
-Root `tsconfig.json` uses project references:
+Nothing to set up. `configs/ts/node.project.json` includes `packages/*/src/env/{common,vscode,glsp-server,jsx}` and `configs/ts/browser.project.json` includes `packages/*/src/env/{browser,glsp-client}`. Run `pnpm check` (or keep `pnpm dev` running) to type check and lint.
 
-```json
-{
-    "files": [],
-    "references": [{ "path": "./config/tsconfig.node.json" }, { "path": "./config/tsconfig.browser.json" }]
-}
-```
-
-`config/tsconfig.node.json` - for common, vscode, and glsp-server code:
-
-```json
-{
-    "extends": "../../../tsconfig.node.json",
-    "compilerOptions": {
-        "rootDir": "../src",
-        "outDir": "../build"
-    },
-    "include": ["../src/env/common/**/*.ts", "../src/env/vscode/**/*.ts", "../src/env/glsp-server/**/*.ts"]
-}
-```
-
-`config/tsconfig.browser.json` - for browser and glsp-client code:
-
-```json
-{
-    "extends": "../../../tsconfig.browser.json",
-    "compilerOptions": {
-        "rootDir": "../src",
-        "outDir": "../build"
-    },
-    "include": ["../src/env/browser/**/*.ts", "../src/env/browser/**/*.tsx", "../src/env/glsp-client/**/*.ts"]
-}
-```
+If the package has a webview, add its entry point to the `webviews` map in `application/vscode/esbuild.ts`. The key is the folder below `application/vscode/webviews/` that the webview provider loads its `bundle.js`/`bundle.css` from.
 
 ## Step 4: Create the common environment
 
@@ -214,11 +160,9 @@ import { myFeatureGlspModule } from '@borkdominik-biguml/big-<name>/glsp-server'
 startGLSPServer({ shared, language: UmlDiagram }, [propertyPaletteModule, outlineModule, advancedSearchGlspModule, myFeatureGlspModule]);
 ```
 
-## Step 7: Add to the Lerna workspace
+## Step 7: Link the package
 
-The root `package.json` should already have `"workspaces": ["packages/*", "application/*", "tooling/*"]`. If your package is under `packages/`, it is automatically included.
-
-Run `npm install` from the workspace root to link the new package.
+`pnpm-workspace.yaml` already includes `packages/*`. Run `pnpm install` from the workspace root to link the new package, and add it with `workspace:*` to the packages (e.g. `application/vscode`) that use it.
 
 ## Common mistakes
 

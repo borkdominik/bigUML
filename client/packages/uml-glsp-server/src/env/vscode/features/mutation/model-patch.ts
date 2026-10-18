@@ -49,7 +49,9 @@ export class ModelPatchBuilder {
             return [];
         }
         const stored = this.modelState.index.findBounds(elementId);
-        const given = BOUNDS_FIELDS.filter(field => bounds[field] !== undefined).map(field => [field, roundCoordinate(bounds[field]!)] as const);
+        const given = BOUNDS_FIELDS.filter(field => bounds[field] !== undefined).map(
+            field => [field, roundCoordinate(bounds[field]!)] as const
+        );
 
         if (stored) {
             return given

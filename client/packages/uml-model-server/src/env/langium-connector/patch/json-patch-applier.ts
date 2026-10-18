@@ -200,5 +200,12 @@ function nodeAt(document: unknown, pointer: string): unknown {
 
 /** `$.a[0].b` as the JSON serializer's `findNodes` writes a path, into the `/a/0/b` a JSON pointer is. */
 function jsonPathToJsonPointer(path: string): string {
-    return '/' + path.slice(1).replace(/[.[\]]/g, '/').replace(/\/\//g, '/').replace(/\/$/, '');
+    return (
+        '/' +
+        path
+            .slice(1)
+            .replace(/[.[\]]/g, '/')
+            .replace(/\/\//g, '/')
+            .replace(/\/$/, '')
+    );
 }

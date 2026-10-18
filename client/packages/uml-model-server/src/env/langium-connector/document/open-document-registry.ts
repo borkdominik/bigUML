@@ -67,7 +67,9 @@ export class OpenDocumentRegistry {
     }
 
     private entriesOf(uri: string): [ClientId, OpenDocumentEntry][] {
-        return [...this.entries.entries()].filter(([entryKey]) => uriOf(entryKey) === uri).map(([entryKey, entry]) => [clientOf(entryKey), entry]);
+        return [...this.entries.entries()]
+            .filter(([entryKey]) => uriOf(entryKey) === uri)
+            .map(([entryKey, entry]) => [clientOf(entryKey), entry]);
     }
 }
 

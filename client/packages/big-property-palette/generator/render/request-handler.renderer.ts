@@ -62,7 +62,9 @@ export function renderRequestHandler(outputPath: string, declarations: Declarati
             .join(', ');
         const astImport = [
             `import { ${guardNames} } from '@borkdominik-biguml/uml-model-server/grammar';`,
-            ...(dynamicProperties.size > 0 ? [`import { referenceChoices } from '@borkdominik-biguml/big-property-palette/glsp-server';`] : [])
+            ...(dynamicProperties.size > 0
+                ? [`import { referenceChoices } from '@borkdominik-biguml/big-property-palette/glsp-server';`]
+                : [])
         ].join('\n');
 
         const handlerImports = nodes
@@ -73,7 +75,10 @@ export function renderRequestHandler(outputPath: string, declarations: Declarati
 
         const dynamicBuilders = [...dynamicProperties.values()]
             .map(dynamic => {
-                const guards = dynamic.memberTypes.map(type => `is${type}`).sort().join(', ');
+                const guards = dynamic.memberTypes
+                    .map(type => `is${type}`)
+                    .sort()
+                    .join(', ');
                 return `            const ${lcFirst(dynamic.typeName)}Choices = referenceChoices(this.modelState.semanticRoot, [${guards}]);`;
             })
             .join('\n');

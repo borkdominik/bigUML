@@ -126,7 +126,10 @@ export class OpenableTextDocuments<T extends { version: number; uri: DocumentUri
         }
     }
 
-    public notifyWillSaveTextDocumentWaitUntil(event: WillSaveTextDocumentParams, token: CancellationToken): HandlerResult<TextEdit[], void> {
+    public notifyWillSaveTextDocumentWaitUntil(
+        event: WillSaveTextDocumentParams,
+        token: CancellationToken
+    ): HandlerResult<TextEdit[], void> {
         const syncedDocument = this.syncedDocuments.get(event.textDocument.uri);
         if (syncedDocument !== undefined && this.willSaveWaitUntilHandler) {
             return this.willSaveWaitUntilHandler(Object.freeze({ document: syncedDocument, reason: event.reason }), token);

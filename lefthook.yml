@@ -1,0 +1,18 @@
+# Git hooks (https://lefthook.dev). Opt in from `client/` with `pnpm hooks:install`.
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      root: client/
+      glob: '*.{ts,tsx,mts,cts,js,mjs,cjs,json,jsonc,yml,yaml,css}'
+      exclude:
+        - '**/src/gen/**'
+      run: pnpm exec oxfmt --no-error-on-unmatched-pattern {staged_files}
+      stage_fixed: true
+    lint:
+      root: client/
+      glob: '*.{ts,tsx,mts,cts,js,mjs,cjs}'
+      exclude:
+        - '**/src/gen/**'
+      run: pnpm exec oxlint --fix {staged_files}
+      stage_fixed: true

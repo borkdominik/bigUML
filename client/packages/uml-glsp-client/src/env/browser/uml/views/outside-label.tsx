@@ -6,9 +6,16 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-/** @jsx svg */
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-client/jsx */
 import { OUTSIDE_LABEL_ARG } from '@borkdominik-biguml/uml-glsp-server';
-import { type ArgsAware, type Dimension, type GModelElement, GLabel, type GParentElement, layoutableChildFeature, svg } from '@eclipse-glsp/client';
+import {
+    type ArgsAware,
+    type Dimension,
+    type GModelElement,
+    GLabel,
+    type GParentElement,
+    layoutableChildFeature
+} from '@eclipse-glsp/client';
 import { type VNode } from 'snabbdom';
 
 /** Distance between a shape and the name written next to it. */

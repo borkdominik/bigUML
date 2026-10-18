@@ -7,6 +7,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-server/jsx */
 import { EDGE_CENTER_TYPE, edgeCenterId } from '@borkdominik-biguml/uml-glsp-server';
 import {
     isAbstraction,

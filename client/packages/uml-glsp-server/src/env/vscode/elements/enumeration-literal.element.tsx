@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-server/jsx */
 import { ClassDiagramNodeTypes, CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { GLabelElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { EnumerationLiteral } from '@borkdominik-biguml/uml-model-server/grammar';

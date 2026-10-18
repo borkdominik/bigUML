@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-/** @jsx svg */
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-client/jsx */
 import {
     type EditableLabel,
     editLabelFeature,
@@ -24,7 +24,6 @@ import {
     type RenderingContext,
     setAttr,
     ShapeView,
-    svg,
     type WithEditableLabel,
     withEditLabelFeature
 } from '@eclipse-glsp/client';

@@ -207,7 +207,12 @@ export class UmlDiagramJsonSerializer implements LinkingJsonSerializer {
             }
             // The target is gone. The reference stays unresolved under the id it named, so that what is
             // written back still says which element it meant rather than nothing at all.
-            return this.unresolved(container, property, refText ?? (reference.$ref[properties.referenceProperty] as string | undefined) ?? '', 'Could not resolve reference');
+            return this.unresolved(
+                container,
+                property,
+                refText ?? (reference.$ref[properties.referenceProperty] as string | undefined) ?? '',
+                'Could not resolve reference'
+            );
         }
         if (reference.$error) {
             return this.unresolved(container, property, refText ?? '', reference.$error);
@@ -222,7 +227,11 @@ export class UmlDiagramJsonSerializer implements LinkingJsonSerializer {
     }
 
     /** The element a serialised reference names, or `undefined` where there is no such element. */
-    protected getRefNode<T extends AstNode>(root: AstNode, ref: Language.Reference<T>, resolveDocument: DocumentResolver | undefined): AstNode | undefined {
+    protected getRefNode<T extends AstNode>(
+        root: AstNode,
+        ref: Language.Reference<T>,
+        resolveDocument: DocumentResolver | undefined
+    ): AstNode | undefined {
         const id = ref[properties.referenceProperty] as string | undefined;
         const scope = ref.__documentUri ? this.documentRoot(ref.__documentUri, resolveDocument) : root;
         if (!scope) {

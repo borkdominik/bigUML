@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-server/jsx */
 
 import { ActivityDiagramNodeTypes, OUTSIDE_LABEL_ARG, PIN_SIZE, type PinSide, pinPosition } from '@borkdominik-biguml/uml-glsp-server';
 import { GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';

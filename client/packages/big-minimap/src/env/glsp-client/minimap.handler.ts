@@ -57,7 +57,7 @@ export class MinimapGLSPSvgExporter {
                 const svgExport = this.getSvgExport(serializedSvg, svgElement, root, request);
                 const bounds = this.getBounds(root, this.findSvgElement());
                 // do not give request/response id here as otherwise the action is treated as an unrequested response
-                this.actionDispatcher.dispatch(
+                void this.actionDispatcher.dispatch(
                     MinimapExportSvgAction.create({
                         svg: svgExport,
                         elementId: root.id,

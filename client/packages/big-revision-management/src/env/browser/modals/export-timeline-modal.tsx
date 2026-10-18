@@ -32,9 +32,7 @@ export function ExportTimelineModal({ onClose, onExport }: ExportTimelineModalPr
 
     const handleExport = () => {
         const count = Math.max(1, Number(entryCountText) || 1);
-        const scope = exportType === 'all'
-            ? { type: 'all' as const }
-            : { type: 'last' as const, count };
+        const scope = exportType === 'all' ? { type: 'all' as const } : { type: 'last' as const, count };
 
         onExport(scope);
         onClose();
@@ -43,37 +41,29 @@ export function ExportTimelineModal({ onClose, onExport }: ExportTimelineModalPr
     return (
         <div style={overlayStyle}>
             <div style={modalStyle}>
-                <button onClick={onClose} style={closeButtonStyle}>×</button>
+                <button onClick={onClose} style={closeButtonStyle}>
+                    ×
+                </button>
                 <h3 style={titleStyle}>Export Timeline</h3>
                 <hr style={dividerStyle} />
 
                 <div style={sectionStyle}>
                     <label style={labelStyle}>Export Scope</label>
                     <label style={radioStyle}>
-                        <input
-                            type="radio"
-                            name="scope"
-                            checked={exportType === 'all'}
-                            onChange={() => setExportType('all')}
-                        />
+                        <input type='radio' name='scope' checked={exportType === 'all'} onChange={() => setExportType('all')} />
                         <span style={{ marginLeft: '0.4rem' }}>Export entire timeline</span>
                     </label>
                     <label style={radioStyle}>
-                        <input
-                            type="radio"
-                            name="scope"
-                            checked={exportType === 'last'}
-                            onChange={() => setExportType('last')}
-                        />
+                        <input type='radio' name='scope' checked={exportType === 'last'} onChange={() => setExportType('last')} />
                         <span style={{ marginLeft: '0.4rem' }}>
                             Export only the last{' '}
                             <input
-                                type="text"
-                                inputMode="numeric"
-                                pattern="[0-9]*"
-                                placeholder="n"
+                                type='text'
+                                inputMode='numeric'
+                                pattern='[0-9]*'
+                                placeholder='n'
                                 value={entryCountText}
-                                onChange={(e) => {
+                                onChange={e => {
                                     const val = e.target.value;
                                     if (/^\d*$/.test(val)) {
                                         setEntryCountText(val);
@@ -84,25 +74,30 @@ export function ExportTimelineModal({ onClose, onExport }: ExportTimelineModalPr
                         </span>
                     </label>
 
-                    <span style={{
-                        display: 'block',
-                        fontSize: '11px',
-                        marginLeft: '1.6rem',
-                        opacity: 0.6
-                    }}>
+                    <span
+                        style={{
+                            display: 'block',
+                            fontSize: '11px',
+                            marginLeft: '1.6rem',
+                            opacity: 0.6
+                        }}
+                    >
                         If the number exceeds total entries, the full timeline will be exported.
                     </span>
                 </div>
 
                 <div style={buttonRowStyle}>
-                    <button onClick={onClose} style={cancelButtonStyle}>Cancel</button>
-                    <button onClick={handleExport} style={exportButtonStyle}>Export</button>
+                    <button onClick={onClose} style={cancelButtonStyle}>
+                        Cancel
+                    </button>
+                    <button onClick={handleExport} style={exportButtonStyle}>
+                        Export
+                    </button>
                 </div>
             </div>
         </div>
     );
 }
-
 
 const overlayStyle: React.CSSProperties = {
     position: 'fixed',

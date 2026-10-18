@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-server/jsx */
 import type { FlowFinalNode } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { GModelElement } from '@eclipse-glsp/server';
 import { GCircleNodeElement } from './core/circle-node.js';
@@ -14,12 +15,5 @@ import type { ElementContext } from './core/element-context.js';
 export function createFlowFinalNodeElement(ctx: ElementContext<FlowFinalNode>): GModelElement {
     const position = ctx.modelIndex.findPosition(ctx.node.__id);
     const size = ctx.modelIndex.findSize(ctx.node.__id);
-    return (
-        <GCircleNodeElement
-            id={ctx.node.__id}
-            position={position}
-            size={size}
-            type={ctx.elementType}
-        />
-    );
+    return <GCircleNodeElement id={ctx.node.__id} position={position} size={size} type={ctx.elementType} />;
 }

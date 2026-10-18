@@ -117,7 +117,7 @@ export class DiagramModelState extends DefaultModelState implements JsonModelSta
             console.error('Error applying model patch:', ex);
             const message = ex instanceof Error ? ex.message : String(ex);
 
-            this.actionDispatcher.dispatch(MessageAction.create(message, { severity: 'ERROR' as SeverityLevel }));
+            void this.actionDispatcher.dispatch(MessageAction.create(message, { severity: 'ERROR' as SeverityLevel }));
             // Rethrow so callers (commands, the command stack) see the failure.
             // Swallowing it here made the command stack record a command whose
             // execution never happened, so a later undo reverted the wrong edit.
@@ -127,7 +127,11 @@ export class DiagramModelState extends DefaultModelState implements JsonModelSta
 
     async updateSourceModel(sourceModel: DiagramSourceModel, doNotUpdateSemanticRoot?: boolean): Promise<void> {
         if (!doNotUpdateSemanticRoot) {
-            this._semanticRoot = await this.modelService.update<Diagram>(this.semanticUri, sourceModel.text ?? this.semanticRoot, DIAGRAM_CLIENT);
+            this._semanticRoot = await this.modelService.update<Diagram>(
+                this.semanticUri,
+                sourceModel.text ?? this.semanticRoot,
+                DIAGRAM_CLIENT
+            );
         }
 
         this.index.indexSemanticRoot(this.semanticRoot);

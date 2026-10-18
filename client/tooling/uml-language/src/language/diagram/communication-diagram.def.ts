@@ -26,7 +26,7 @@ export class CommunicationDiagram {
     relations?: Array<CommunicationDiagramEdges>;
 }
 
-type CommunicationDiagramElements = CommunicationDiagramNodes | CommunicationDiagramEdges;
+export type CommunicationDiagramElements = CommunicationDiagramNodes | CommunicationDiagramEdges;
 
 type CommunicationDiagramNodes = Interaction | Lifeline | Note | TextLabel | EdgeAnchor;
 

@@ -34,9 +34,9 @@ import { GLSPIsReadyAction } from '../../common/index.js';
 import { createUmlDiagramContainer } from '../index.js';
 import { UmlDiagramWidget } from './diagram.widget.js';
 import { UmlHostExtensionActionHandler } from './vscode-extension-action-handler.js';
-// GLSP Uses cjs version of inversify, so we need to use require to import it
+// GLSP uses the cjs build of inversify; the esbuild config resolves every `inversify` import to it
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-import inversify = require('inversify');
+import * as inversify from 'inversify';
 
 class UmlStarter extends GLSPStarter {
     createContainer(...containerConfiguration: ContainerConfiguration): inversify.Container {
@@ -73,6 +73,6 @@ class GLSPReadyStartup implements IDiagramStartup {
     protected actionDispatcher: IActionDispatcher;
 
     public postRequestModel(): MaybePromise<void> {
-        this.actionDispatcher.dispatch(GLSPIsReadyAction.create());
+        void this.actionDispatcher.dispatch(GLSPIsReadyAction.create());
     }
 }

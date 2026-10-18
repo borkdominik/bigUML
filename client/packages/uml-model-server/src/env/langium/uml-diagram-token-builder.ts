@@ -56,11 +56,7 @@ export class UmlDiagramTokenBuilder extends DefaultTokenBuilder {
         return tokens;
     }
 
-    protected override buildKeywordToken(
-        keyword: GrammarAST.Keyword,
-        terminalTokens: TokenType[],
-        caseInsensitive: boolean
-    ): TokenType {
+    protected override buildKeywordToken(keyword: GrammarAST.Keyword, terminalTokens: TokenType[], caseInsensitive: boolean): TokenType {
         const token = super.buildKeywordToken(keyword, terminalTokens, caseInsensitive);
         const pattern = this.buildPositionalPattern(keyword.value);
         if (pattern) {

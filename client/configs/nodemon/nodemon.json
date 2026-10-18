@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json.schemastore.org/nodemon.json",
+  "watch": [
+    "application/vscode/src",
+    "application/vscode/esbuild.ts",
+    "packages/*/src/**/*",
+    "packages/*/generator/**/*",
+    "packages/*/test/**/*",
+    "tooling/*/src/**/*",
+    "tooling/*/bin/**/*",
+    "configs/ts",
+    "configs/oxlint",
+    "tsconfig.json",
+    ".oxlintrc.json"
+  ],
+  "ext": "ts,tsx,mts,js,mjs,json",
+  "ignore": ["**/node_modules/**", "**/build/**", "**/webviews/**"],
+  "delay": 300,
+  "exec": "tsc -p configs/ts/node.project.json --pretty false; n=$?; tsc -p configs/ts/browser.project.json --pretty false; b=$?; oxlint -f unix; l=$?; exit $((n | b | l))"
+}

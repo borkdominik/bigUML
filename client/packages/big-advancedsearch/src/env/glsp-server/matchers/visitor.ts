@@ -96,7 +96,7 @@ class ModelAstBuilderVisitor extends BaseCstVisitor {
             children.BooleanLiteral?.[0] ??
             children.IntegerLiteral?.[0] ??
             children.Identifier?.[0] ??
-            children.searchElement?.[0];        
+            children.searchElement?.[0];
 
         if (children.searchElement) {
             return {

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/nodemon.json",
+  "watch": [
+    "tooling/uml-language/src",
+    "tooling/uml-language-tooling/src",
+    "tooling/uml-language-tooling/bin",
+    "packages/*/generator/**/*",
+    "packages/uml-model-server/langium-config.json"
+  ],
+  "ext": "ts,eta,langium,json",
+  "ignore": ["**/src/gen/**", "**/node_modules/**"],
+  "delay": 500,
+  "exec": "pnpm -s generate",
+  "runOnChangeOnly": true
+}

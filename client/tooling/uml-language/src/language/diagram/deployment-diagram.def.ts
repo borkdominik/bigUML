@@ -38,7 +38,7 @@ export class DeploymentDiagram {
     relations?: Array<DeploymentDiagramEdges>;
 }
 
-type DeploymentDiagramElements = DeploymentDiagramNodes | DeploymentDiagramEdges;
+export type DeploymentDiagramElements = DeploymentDiagramNodes | DeploymentDiagramEdges;
 
 type DeploymentDiagramNodes =
     | Artifact

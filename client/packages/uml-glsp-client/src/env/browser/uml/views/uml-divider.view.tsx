@@ -6,16 +6,8 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-/** @jsx svg */
-import {
-    boundsFeature,
-    fadeFeature,
-    GShapeElement,
-    type IView,
-    layoutableChildFeature,
-    type RenderingContext,
-    svg
-} from '@eclipse-glsp/client';
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-client/jsx */
+import { boundsFeature, fadeFeature, GShapeElement, type IView, layoutableChildFeature, type RenderingContext } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { type VNode } from 'snabbdom';
 // eslint-disable-next-line no-restricted-imports

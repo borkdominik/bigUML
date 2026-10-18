@@ -49,7 +49,11 @@ export class ModelService {
      * The semantic model stored in the document with the given URI, if it matches the guard. Opens the
      * document for the client where it is not open yet.
      */
-    async request<T extends AstNode = AstNode>(uri: string, guard: (item: unknown) => item is T = isAstNode as (item: unknown) => item is T, client?: ClientId): Promise<T | undefined> {
+    async request<T extends AstNode = AstNode>(
+        uri: string,
+        guard: (item: unknown) => item is T = isAstNode as (item: unknown) => item is T,
+        client?: ClientId
+    ): Promise<T | undefined> {
         await this.open(uri, client);
         const root = (await this.synchronizer.document(uri)).parseResult.value;
         return guard(root) ? root : undefined;
@@ -74,7 +78,11 @@ export class ModelService {
         return { references };
     }
 
-    async patch<T extends AstNode>(uri: string, patch: string | jsonpatch.Operation | readonly jsonpatch.Operation[], client?: ClientId): Promise<T> {
+    async patch<T extends AstNode>(
+        uri: string,
+        patch: string | jsonpatch.Operation | readonly jsonpatch.Operation[],
+        client?: ClientId
+    ): Promise<T> {
         const operations = typeof patch === 'string' ? (JSON.parse(patch) as jsonpatch.Operation[]) : patch;
         return (await this.patchManager.applyPatch(operations, uri, client)) as T;
     }

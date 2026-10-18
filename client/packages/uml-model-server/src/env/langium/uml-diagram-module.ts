@@ -80,7 +80,9 @@ export interface UmlDiagramAddedServices {
 export type UmlDiagramServices = ExtendedLangiumServices & UmlDiagramAddedServices;
 export const UmlDiagramServices = Symbol('UmlDiagramServices');
 
-export function createUmlDiagramModule(context: UmlDiagramModuleContext): Module<UmlDiagramServices, PartialLangiumServices & UmlDiagramAddedServices> {
+export function createUmlDiagramModule(
+    context: UmlDiagramModuleContext
+): Module<UmlDiagramServices, PartialLangiumServices & UmlDiagramAddedServices> {
     return {
         references: {
             ScopeComputation: services => new UmlDiagramScopeComputation(services),
@@ -114,7 +116,12 @@ export function createUmlDiagramServices(context: DefaultSharedModuleContext): {
     shared: UmlDiagramSharedServices;
     UmlDiagram: UmlDiagramServices;
 } {
-    const shared = inject(createDefaultSharedModule(context), UmlDiagramGeneratedSharedModule, UmlDiagramSharedModule, ModelServerSharedModule);
+    const shared = inject(
+        createDefaultSharedModule(context),
+        UmlDiagramGeneratedSharedModule,
+        UmlDiagramSharedModule,
+        ModelServerSharedModule
+    );
     const UmlDiagram = inject(createDefaultModule({ shared }), UmlDiagramGeneratedModule, createUmlDiagramModule({ shared }));
     shared.ServiceRegistry.register(UmlDiagram);
     registerValidationChecks(UmlDiagram);

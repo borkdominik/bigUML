@@ -53,7 +53,12 @@ export abstract class BigDiagramModule extends DiagramModule {
         this.featureModules.push(module);
     }
 
-    protected override configure(bind: interfaces.Bind, unbind: interfaces.Unbind, isBound: interfaces.IsBound, rebind: interfaces.Rebind): void {
+    protected override configure(
+        bind: interfaces.Bind,
+        unbind: interfaces.Unbind,
+        isBound: interfaces.IsBound,
+        rebind: interfaces.Rebind
+    ): void {
         super.configure(bind, unbind, isBound, rebind);
         bind(ModelPatchBuilder).toSelf().inSingletonScope();
     }

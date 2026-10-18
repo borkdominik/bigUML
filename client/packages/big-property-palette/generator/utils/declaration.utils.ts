@@ -7,7 +7,15 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { type Declaration, Decorator, extractTypeNames, getConcreteElements, getDiagramDeclarations, resolveTypeAliasMembers, toConstant } from '@borkdominik-biguml/uml-language-tooling';
+import {
+    type Declaration,
+    Decorator,
+    extractTypeNames,
+    getConcreteElements,
+    getDiagramDeclarations,
+    resolveTypeAliasMembers,
+    toConstant
+} from '@borkdominik-biguml/uml-language-tooling';
 
 /**
  * The elements a handler is generated for. An aliased class is not one: it is stored as the type it

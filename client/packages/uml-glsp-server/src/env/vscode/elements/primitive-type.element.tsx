@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-server/jsx */
 import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import type { PrimitiveType } from '@borkdominik-biguml/uml-model-server/grammar';
 import { type Dimension, type Point } from '@eclipse-glsp/protocol';

@@ -223,7 +223,7 @@ class MultiStepInput {
                 input.ignoreFocusOut = options.ignoreFocusOut ?? false;
                 input.placeholder = options.placeholder;
                 input.buttons = [...(this.steps.length > 1 ? [QuickInputButtons.Back] : []), ...(options.buttons || [])];
-                let validating = await options.validate('');
+                let validating = options.validate('');
 
                 disposables.push(
                     input.onDidTriggerButton(item => {
@@ -244,7 +244,7 @@ class MultiStepInput {
                         input.busy = false;
                     }),
                     input.onDidChangeValue(async text => {
-                        const current = await options.validate(text);
+                        const current = options.validate(text);
                         validating = current;
                         const validationMessage = await current;
                         if (current === validating) {

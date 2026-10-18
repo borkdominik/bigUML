@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-server/jsx */
 import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { GCompartmentElement, GNodeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
 import type { ActivityPartition } from '@borkdominik-biguml/uml-model-server/grammar';
@@ -162,5 +163,7 @@ export function createActivityPartitionElement(ctx: ElementContext<ActivityParti
     } else {
         laneContents.set(ctx.node.__id, renderContents(ctx, ctx.node.nodes));
     }
-    return <GActivityPartitionNodeElement node={ctx.node} position={position} size={size} type={ctx.elementType} laneContents={laneContents} />;
+    return (
+        <GActivityPartitionNodeElement node={ctx.node} position={position} size={size} type={ctx.elementType} laneContents={laneContents} />
+    );
 }

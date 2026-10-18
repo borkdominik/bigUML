@@ -7,7 +7,6 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-
 // ImportTimelineModal.tsx
 import type { ReactElement } from 'react';
 import { useEffect, useState } from 'react';
@@ -38,7 +37,7 @@ export function ImportTimelineModal({ onClose, onImport }: ImportTimelineModalPr
     const handleImport = () => {
         if (!file) return;
         if (importType === 'last' && (!count || count < 1)) {
-            alert("Please enter a valid number.");
+            alert('Please enter a valid number.');
             return;
         }
         onImport(file, importType === 'all' ? { type: 'all' } : { type: 'last', count: count! });
@@ -48,7 +47,9 @@ export function ImportTimelineModal({ onClose, onImport }: ImportTimelineModalPr
     return (
         <div style={overlayStyle}>
             <div style={modalStyle}>
-                <button onClick={onClose} style={closeButtonStyle}>×</button>
+                <button onClick={onClose} style={closeButtonStyle}>
+                    ×
+                </button>
                 <h3 style={titleStyle}>Import Timeline</h3>
 
                 <hr style={dividerStyle} />
@@ -56,15 +57,11 @@ export function ImportTimelineModal({ onClose, onImport }: ImportTimelineModalPr
                 <div style={sectionStyle}>
                     <label style={labelStyle}>Upload JSON File</label>
                     <div style={fileRowStyle}>
-                        <label htmlFor="file-upload" style={customFileLabelStyle}>Browse...</label>
+                        <label htmlFor='file-upload' style={customFileLabelStyle}>
+                            Browse...
+                        </label>
                         <span style={fileNameStyle}>{file?.name || 'No file chosen'}</span>
-                        <input
-                            id="file-upload"
-                            type="file"
-                            accept=".json"
-                            onChange={handleFileChange}
-                            style={hiddenFileInputStyle}
-                        />
+                        <input id='file-upload' type='file' accept='.json' onChange={handleFileChange} style={hiddenFileInputStyle} />
                     </div>
                 </div>
 
@@ -73,30 +70,20 @@ export function ImportTimelineModal({ onClose, onImport }: ImportTimelineModalPr
                 <div style={sectionStyle}>
                     <label style={labelStyle}>Import Scope</label>
                     <label style={radioStyle}>
-                        <input
-                            type="radio"
-                            name="importScope"
-                            checked={importType === 'all'}
-                            onChange={() => setImportType('all')}
-                        />
+                        <input type='radio' name='importScope' checked={importType === 'all'} onChange={() => setImportType('all')} />
                         <span style={{ marginLeft: '0.4rem' }}>Import entire timeline</span>
                     </label>
                     <label style={radioStyle}>
-                        <input
-                            type="radio"
-                            name="importScope"
-                            checked={importType === 'last'}
-                            onChange={() => setImportType('last')}
-                        />
+                        <input type='radio' name='importScope' checked={importType === 'last'} onChange={() => setImportType('last')} />
                         <span style={{ marginLeft: '0.4rem' }}>
                             Import only the last{' '}
                             <input
-                                type="text"
-                                inputMode="numeric"
-                                pattern="[0-9]*"
-                                placeholder="n"
+                                type='text'
+                                inputMode='numeric'
+                                pattern='[0-9]*'
+                                placeholder='n'
                                 value={count === null ? '' : count}
-                                onChange={(e) => {
+                                onChange={e => {
                                     const val = e.target.value;
                                     if (/^\d*$/.test(val)) {
                                         setCount(val === '' ? null : Number(val));
@@ -109,9 +96,12 @@ export function ImportTimelineModal({ onClose, onImport }: ImportTimelineModalPr
                 </div>
 
                 <div style={buttonRowStyle}>
-                    <button onClick={onClose} style={cancelButtonStyle}>Cancel</button>
-                    <button onClick={handleImport} style={importButtonStyle}>Import</button>
-
+                    <button onClick={onClose} style={cancelButtonStyle}>
+                        Cancel
+                    </button>
+                    <button onClick={handleImport} style={importButtonStyle}>
+                        Import
+                    </button>
                 </div>
             </div>
         </div>

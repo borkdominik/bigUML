@@ -20,7 +20,7 @@ export class UmlDiagramDocumentBuilder extends DefaultDocumentBuilder {
     constructor(services: UmlDiagramSharedServices) {
         super(services);
     }
-    override update(changed: URI[], deleted: URI[], cancelToken?: CancellationToken | undefined): Promise<void> {
+    override update(changed: URI[], deleted: URI[], cancelToken?: CancellationToken): Promise<void> {
         return super.update(
             changed.flatMap(uri => this.flattenAndAdaptURI(uri)),
             deleted.flatMap(uri => this.collectDeletedURIs(uri)),

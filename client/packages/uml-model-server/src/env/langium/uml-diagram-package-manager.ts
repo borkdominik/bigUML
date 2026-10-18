@@ -50,7 +50,8 @@ export function createPackageId(name?: string, version = '0.0.0'): string {
 export function createPackageReferenceName(packageJson?: PackageJson): string {
     // we prefer the our custom-introduced alias if it is specified, otherwise we will fall back on the package name
     // we do not care about the package version as we do not allow to install multiple versions of the same package
-    const name = (packageJson as Record<string, unknown> | undefined)?.['alias'] as string | undefined ?? packageJson?.name ?? UNKNOWN_PROJECT_ID;
+    const name =
+        ((packageJson as Record<string, unknown> | undefined)?.['alias'] as string | undefined) ?? packageJson?.name ?? UNKNOWN_PROJECT_ID;
     // ensure we only have characters that are supported by our ID rule in the grammar and still look good to the user
     return name.split(' ').join('_').split('.').join('-');
 }

@@ -6,4 +6,4 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-export * from './prettier.js';
+export * from './format.js';

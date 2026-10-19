@@ -1,0 +1,30 @@
+/**********************************************************************************
+ * Copyright (c) 2026 borkdominik and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ **********************************************************************************/
+/** @jsxImportSource @borkdominik-biguml/uml-glsp-server/jsx */
+import { GEdgeElement } from '@borkdominik-biguml/uml-glsp-server/jsx';
+import type { InstanceLink } from '@borkdominik-biguml/uml-model-server/grammar';
+import type { GEdge } from '@eclipse-glsp/server';
+import { EdgeNameLabel } from './core/index.js';
+import type { ElementContext } from './core/element-context.js';
+
+/** A link between two instances: a plain solid line, named like the association it instantiates. */
+export function createInstanceLinkRelation(ctx: ElementContext<InstanceLink>): GEdge {
+    return (
+        <GEdgeElement
+            id={ctx.node.__id}
+            type={ctx.elementType}
+            sourceId={ctx.node.source!.ref!.__id}
+            targetId={ctx.node.target!.ref!.__id}
+            cssClasses={['uml-edge']}
+            args={{ edgePadding: 10 }}
+        >
+            <EdgeNameLabel id={ctx.node.__id} name={ctx.node.name} />
+        </GEdgeElement>
+    ) as GEdge;
+}

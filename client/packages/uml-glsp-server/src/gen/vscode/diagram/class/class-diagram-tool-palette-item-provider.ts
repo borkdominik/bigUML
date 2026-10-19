@@ -142,6 +142,13 @@ export class ClassDiagramToolPaletteItemProvider extends ToolPaletteItemProvider
                         actions: [TriggerEdgeCreationAction.create(ClassDiagramEdgeTypes.INTERFACE_REALIZATION)]
                     },
                     {
+                        id: 'instance-link',
+                        sortString: 'A',
+                        label: 'Instance Link',
+                        icon: 'uml-association-icon',
+                        actions: [TriggerEdgeCreationAction.create(ClassDiagramEdgeTypes.INSTANCE_LINK)]
+                    },
+                    {
                         id: 'composition',
                         sortString: 'A',
                         label: 'Composition',

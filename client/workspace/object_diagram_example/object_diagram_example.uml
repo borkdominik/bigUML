@@ -1,0 +1,283 @@
+{
+	"diagram": {
+		"__type": "ClassDiagram",
+		"__id": "ObjectDiagramExample",
+		"diagramType": "CLASS",
+		"entities": [
+			{
+				"__type": "Class",
+				"__id": "person-cls",
+				"name": "Person",
+				"isAbstract": true,
+				"properties": [
+					{
+						"__type": "Property",
+						"__id": "person-fullname-prop",
+						"name": "fullName",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isUnique": true,
+						"visibility": "PUBLIC",
+						"aggregation": "NONE"
+					},
+					{
+						"__type": "Property",
+						"__id": "person-nickname-prop",
+						"name": "nickname",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isUnique": true,
+						"visibility": "PUBLIC",
+						"aggregation": "NONE"
+					}
+				],
+				"operations": [],
+				"isActive": false,
+				"visibility": "PUBLIC",
+				"bounds": {
+					"__type": "Bounds",
+					"x": 80,
+					"y": 30,
+					"width": 140,
+					"height": 90
+				}
+			},
+			{
+				"__type": "Class",
+				"__id": "employee-cls",
+				"name": "Employee",
+				"isAbstract": false,
+				"properties": [
+					{
+						"__type": "Property",
+						"__id": "employee-role-prop",
+						"name": "role",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isUnique": true,
+						"visibility": "PUBLIC",
+						"aggregation": "NONE"
+					}
+				],
+				"operations": [],
+				"isActive": false,
+				"visibility": "PUBLIC",
+				"bounds": {
+					"__type": "Bounds",
+					"x": 320,
+					"y": 30,
+					"width": 140,
+					"height": 70
+				}
+			},
+			{
+				"__type": "DataType",
+				"__id": "address-dt",
+				"name": "Address",
+				"properties": [
+					{
+						"__type": "Property",
+						"__id": "address-city-prop",
+						"name": "city",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isUnique": true,
+						"visibility": "PUBLIC",
+						"aggregation": "NONE"
+					}
+				],
+				"operations": [],
+				"isAbstract": false,
+				"visibility": "PUBLIC",
+				"bounds": {
+					"__type": "Bounds",
+					"x": 560,
+					"y": 30,
+					"width": 140,
+					"height": 70
+				}
+			},
+			{
+				"__type": "InstanceSpecification",
+				"__id": "alice-inst",
+				"name": "alice",
+				"visibility": "PUBLIC",
+				"classifier": {
+					"__type": "Reference",
+					"__refType": "InstanceClassifier",
+					"__value": "employee-cls"
+				},
+				"slots": [
+					{
+						"__type": "Slot",
+						"__id": "alice-fullname-slot",
+						"name": "fullName",
+						"definingFeature": {
+							"__type": "Reference",
+							"__refType": "SlotDefiningFeature",
+							"__value": "person-fullname-prop"
+						},
+						"values": [
+							{
+								"__type": "LiteralSpecification",
+								"__id": "alice-fullname-val",
+								"name": "Alice",
+								"value": "Alice"
+							}
+						]
+					},
+					{
+						"__type": "Slot",
+						"__id": "alice-nickname-slot",
+						"name": "nickname",
+						"definingFeature": {
+							"__type": "Reference",
+							"__refType": "SlotDefiningFeature",
+							"__value": "person-nickname-prop"
+						},
+						"values": [
+							{
+								"__type": "LiteralSpecification",
+								"__id": "alice-nickname-val",
+								"name": "Ali",
+								"value": "Ali"
+							}
+						]
+					},
+					{
+						"__type": "Slot",
+						"__id": "alice-role-slot",
+						"name": "role",
+						"definingFeature": {
+							"__type": "Reference",
+							"__refType": "SlotDefiningFeature",
+							"__value": "employee-role-prop"
+						},
+						"values": [
+							{
+								"__type": "LiteralSpecification",
+								"__id": "alice-role-val",
+								"name": "Manager",
+								"value": "Manager"
+							}
+						]
+					}
+				],
+				"bounds": {
+					"__type": "Bounds",
+					"x": 80,
+					"y": 240,
+					"width": 200,
+					"height": 170
+				}
+			},
+			{
+				"__type": "InstanceSpecification",
+				"__id": "home1-inst",
+				"name": "home1",
+				"visibility": "PUBLIC",
+				"classifier": {
+					"__type": "Reference",
+					"__refType": "InstanceClassifier",
+					"__value": "address-dt"
+				},
+				"slots": [
+					{
+						"__type": "Slot",
+						"__id": "home1-city-slot",
+						"name": "city",
+						"definingFeature": {
+							"__type": "Reference",
+							"__refType": "SlotDefiningFeature",
+							"__value": "address-city-prop"
+						},
+						"values": [
+							{
+								"__type": "LiteralSpecification",
+								"__id": "home1-city-val",
+								"name": "Vienna",
+								"value": "Vienna"
+							}
+						]
+					}
+				],
+				"bounds": {
+					"__type": "Bounds",
+					"x": 560,
+					"y": 240,
+					"width": 160,
+					"height": 100
+				}
+			}
+		],
+		"relations": [
+			{
+				"__type": "Generalization",
+				"__id": "employee-gen-rel",
+				"source": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "employee-cls"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "person-cls"
+				},
+				"isSubstitutable": true
+			},
+			{
+				"__type": "Association",
+				"__id": "has-address-assoc",
+				"source": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "person-cls"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "address-dt"
+				},
+				"name": "hasAddress",
+				"sourceMultiplicity": "*",
+				"targetMultiplicity": "1",
+				"sourceAggregation": "NONE",
+				"targetAggregation": "NONE",
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "InstanceLink",
+				"__id": "alice-home1-link",
+				"source": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "alice-inst"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "home1-inst"
+				},
+				"name": "hasAddress",
+				"association": {
+					"__type": "Reference",
+					"__refType": "Association",
+					"__value": "has-address-assoc"
+				}
+			}
+		]
+	}
+}

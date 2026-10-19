@@ -1,0 +1,454 @@
+{
+	"diagram": {
+		"__type": "ClassDiagram",
+		"__id": "ClassDiagram1",
+		"diagramType": "CLASS",
+		"entities": [
+			{
+				"__type": "Class",
+				"__id": "person-cls",
+				"name": "Person",
+				"isAbstract": true,
+				"properties": [
+					{
+						"__type": "Property",
+						"__id": "person-name-prop",
+						"name": "fullName",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isUnique": true,
+						"visibility": "PUBLIC",
+						"multiplicity": "1",
+						"aggregation": "NONE"
+					},
+					{
+						"__type": "Property",
+						"__id": "person-email-prop",
+						"name": "email",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isUnique": true,
+						"visibility": "PUBLIC",
+						"aggregation": "NONE"
+					},
+					{
+						"__type": "Property",
+						"__id": "person-birthYear-prop",
+						"name": "birthYear",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isUnique": true,
+						"visibility": "PUBLIC",
+						"aggregation": "NONE"
+					}
+				],
+				"operations": [],
+				"isActive": false,
+				"visibility": "PUBLIC",
+				"bounds": {
+					"__type": "Bounds",
+					"x": 300,
+					"y": 20,
+					"width": 220,
+					"height": 100
+				}
+			},
+			{
+				"__type": "Class",
+				"__id": "employee-cls",
+				"name": "Employee",
+				"isAbstract": false,
+				"properties": [
+					{
+						"__type": "Property",
+						"__id": "emp-employeeId-prop",
+						"name": "employeeId",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isUnique": true,
+						"visibility": "PUBLIC",
+						"multiplicity": "1",
+						"aggregation": "NONE"
+					},
+					{
+						"__type": "Property",
+						"__id": "emp-department-prop",
+						"name": "department",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isUnique": true,
+						"visibility": "PUBLIC",
+						"aggregation": "NONE"
+					},
+					{
+						"__type": "Property",
+						"__id": "emp-salary-prop",
+						"name": "salary",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isUnique": true,
+						"visibility": "PUBLIC",
+						"aggregation": "NONE"
+					}
+				],
+				"operations": [],
+				"isActive": false,
+				"visibility": "PUBLIC",
+				"bounds": {
+					"__type": "Bounds",
+					"x": 80,
+					"y": 200,
+					"width": 220,
+					"height": 100
+				}
+			},
+			{
+				"__type": "Class",
+				"__id": "manager-cls",
+				"name": "Manager",
+				"isAbstract": false,
+				"properties": [
+					{
+						"__type": "Property",
+						"__id": "mgr-teamSize-prop",
+						"name": "teamSize",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isUnique": true,
+						"visibility": "PUBLIC",
+						"aggregation": "NONE"
+					}
+				],
+				"operations": [],
+				"isActive": false,
+				"visibility": "PUBLIC",
+				"bounds": {
+					"__type": "Bounds",
+					"x": 80,
+					"y": 380,
+					"width": 180,
+					"height": 56
+				}
+			},
+			{
+				"__type": "Class",
+				"__id": "customer-cls",
+				"name": "Customer",
+				"isAbstract": false,
+				"properties": [
+					{
+						"__type": "Property",
+						"__id": "cust-customerId-prop",
+						"name": "customerId",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isUnique": true,
+						"visibility": "PUBLIC",
+						"multiplicity": "1",
+						"aggregation": "NONE"
+					},
+					{
+						"__type": "Property",
+						"__id": "cust-loyaltyTier-prop",
+						"name": "loyaltyTier",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isUnique": true,
+						"visibility": "PUBLIC",
+						"aggregation": "NONE"
+					}
+				],
+				"operations": [],
+				"isActive": false,
+				"visibility": "PUBLIC",
+				"bounds": {
+					"__type": "Bounds",
+					"x": 560,
+					"y": 200,
+					"width": 200,
+					"height": 78
+				}
+			},
+			{
+				"__type": "DataType",
+				"__id": "address-dt",
+				"name": "Address",
+				"properties": [
+					{
+						"__type": "Property",
+						"__id": "addr-street-prop",
+						"name": "street",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isUnique": true,
+						"visibility": "PUBLIC",
+						"aggregation": "NONE"
+					},
+					{
+						"__type": "Property",
+						"__id": "addr-city-prop",
+						"name": "city",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isUnique": true,
+						"visibility": "PUBLIC",
+						"aggregation": "NONE"
+					},
+					{
+						"__type": "Property",
+						"__id": "addr-country-prop",
+						"name": "country",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isUnique": true,
+						"visibility": "PUBLIC",
+						"aggregation": "NONE"
+					}
+				],
+				"operations": [],
+				"isAbstract": false,
+				"visibility": "PUBLIC",
+				"bounds": {
+					"__type": "Bounds",
+					"x": 820,
+					"y": 20,
+					"width": 180,
+					"height": 100
+				}
+			},
+			{
+				"__type": "Class",
+				"__id": "company-cls",
+				"name": "Company",
+				"isAbstract": false,
+				"properties": [
+					{
+						"__type": "Property",
+						"__id": "comp-name-prop",
+						"name": "companyName",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isUnique": true,
+						"visibility": "PUBLIC",
+						"multiplicity": "1",
+						"aggregation": "NONE"
+					},
+					{
+						"__type": "Property",
+						"__id": "comp-founded-prop",
+						"name": "founded",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isUnique": true,
+						"visibility": "PUBLIC",
+						"aggregation": "NONE"
+					}
+				],
+				"operations": [],
+				"isActive": false,
+				"visibility": "PUBLIC",
+				"bounds": {
+					"__type": "Bounds",
+					"x": 820,
+					"y": 200,
+					"width": 200,
+					"height": 78
+				}
+			},
+			{
+				"__type": "Class",
+				"__id": "project-cls",
+				"name": "Project",
+				"isAbstract": false,
+				"properties": [
+					{
+						"__type": "Property",
+						"__id": "project-name-prop",
+						"name": "projectName",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isUnique": true,
+						"visibility": "PUBLIC",
+						"multiplicity": "1",
+						"aggregation": "NONE"
+					},
+					{
+						"__type": "Property",
+						"__id": "project-budget-prop",
+						"name": "budget",
+						"isDerived": false,
+						"isOrdered": false,
+						"isStatic": false,
+						"isDerivedUnion": false,
+						"isReadOnly": false,
+						"isUnique": true,
+						"visibility": "PUBLIC",
+						"aggregation": "NONE"
+					}
+				],
+				"operations": [],
+				"isActive": false,
+				"visibility": "PUBLIC",
+				"bounds": {
+					"__type": "Bounds",
+					"x": 1080,
+					"y": 380,
+					"width": 200,
+					"height": 100
+				}
+			}
+		],
+		"relations": [
+			{
+				"__type": "Generalization",
+				"__id": "emp-gen-rel",
+				"source": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "employee-cls"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "person-cls"
+				},
+				"isSubstitutable": true
+			},
+			{
+				"__type": "Generalization",
+				"__id": "mgr-gen-rel",
+				"source": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "manager-cls"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "employee-cls"
+				},
+				"isSubstitutable": true
+			},
+			{
+				"__type": "Generalization",
+				"__id": "cust-gen-rel",
+				"source": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "customer-cls"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "person-cls"
+				},
+				"isSubstitutable": true
+			},
+			{
+				"__type": "Association",
+				"__id": "works-for-assoc",
+				"source": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "employee-cls"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "company-cls"
+				},
+				"name": "worksFor",
+				"sourceMultiplicity": "*",
+				"targetMultiplicity": "1",
+				"sourceAggregation": "NONE",
+				"targetAggregation": "NONE",
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "Association",
+				"__id": "has-addr-assoc",
+				"source": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "person-cls"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "address-dt"
+				},
+				"name": "hasAddress",
+				"sourceMultiplicity": "*",
+				"targetMultiplicity": "1",
+				"sourceAggregation": "NONE",
+				"targetAggregation": "NONE",
+				"visibility": "PUBLIC"
+			},
+			{
+				"__type": "Association",
+				"__id": "works-on-assoc",
+				"source": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "employee-cls"
+				},
+				"target": {
+					"__type": "Reference",
+					"__refType": "Node",
+					"__value": "project-cls"
+				},
+				"name": "worksOn",
+				"sourceMultiplicity": "*",
+				"targetMultiplicity": "*",
+				"sourceAggregation": "NONE",
+				"targetAggregation": "NONE",
+				"visibility": "PUBLIC"
+			}
+		]
+	}
+}

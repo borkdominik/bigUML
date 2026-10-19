@@ -1,0 +1,355 @@
+/**********************************************************************************
+ * Copyright (c) 2026 borkdominik and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ **********************************************************************************/
+
+body {
+    margin: 0;
+    color: var(--vscode-foreground);
+    background: var(--vscode-sideBar-background);
+    font-family: var(--vscode-font-family);
+    font-size: var(--vscode-font-size);
+    line-height: 1.4;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+.instance-explorer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.instance-explorer__header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.instance-explorer__title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.instance-explorer__subtitle {
+    color: var(--vscode-descriptionForeground);
+    font-size: 11px;
+}
+
+.instance-explorer__input {
+    width: 100%;
+    border: 1px solid var(--vscode-input-border, transparent);
+    background: var(--vscode-input-background);
+    color: var(--vscode-input-foreground);
+    border-radius: 6px;
+    box-sizing: border-box;
+    padding: 6px 8px;
+}
+
+.instance-explorer__tree {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.instance-explorer__group {
+    border: 1px solid var(--vscode-sideBarSectionHeader-border, var(--vscode-editorWidget-border, transparent));
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--vscode-editorWidget-background, var(--vscode-sideBar-background));
+}
+
+.instance-explorer__row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    padding: 8px 10px;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.instance-explorer__row--group {
+    border-bottom: 1px solid var(--vscode-editorWidget-border, transparent);
+}
+
+.instance-explorer__row--instance:hover,
+.instance-explorer__row-main:hover,
+.instance-explorer__icon-button:hover {
+    background: var(--vscode-list-hoverBackground);
+}
+
+.instance-explorer__row--selected,
+.instance-explorer__row--selected:hover {
+    background: var(--vscode-list-activeSelectionBackground, var(--vscode-list-hoverBackground));
+    color: var(--vscode-list-activeSelectionForeground, inherit);
+}
+
+.instance-explorer__row-main {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1 1 auto;
+    min-width: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    text-align: left;
+}
+
+.instance-explorer__disclosure {
+    flex: 0 0 auto;
+    color: var(--vscode-icon-foreground);
+}
+
+.instance-explorer__icon {
+    flex: 0 0 auto;
+    color: var(--vscode-symbolIcon-classForeground, var(--vscode-icon-foreground));
+}
+
+.instance-explorer__label {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.instance-explorer__count {
+    flex: 0 0 auto;
+    min-width: 22px;
+    color: var(--vscode-descriptionForeground);
+    font-size: 11px;
+    text-align: right;
+}
+
+.instance-explorer__icon-button {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    border-radius: 6px;
+    padding: 4px;
+    line-height: 1;
+    flex: 0 0 auto;
+}
+
+.instance-explorer__children {
+    display: flex;
+    flex-direction: column;
+}
+
+.instance-explorer__instance + .instance-explorer__instance {
+    border-top: 1px solid var(--vscode-editorWidget-border, transparent);
+}
+
+.instance-explorer__slots {
+    display: grid;
+    grid-template-columns: minmax(0, auto) auto minmax(0, 1fr) auto;
+    padding: 0 10px 8px 28px;
+    row-gap: 4px;
+}
+
+.instance-explorer__slot {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
+    align-items: center;
+    column-gap: 6px;
+    border-radius: 6px;
+    padding: 4px 6px;
+}
+
+.instance-explorer__slot:hover {
+    background: var(--vscode-list-hoverBackground);
+}
+
+.instance-explorer__slot-feature {
+    color: var(--vscode-textPreformat-foreground, var(--vscode-foreground));
+}
+
+.instance-explorer__slot-equals {
+    color: var(--vscode-descriptionForeground);
+}
+
+.instance-explorer__slot-value {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--vscode-descriptionForeground);
+}
+
+.instance-explorer__slot-input {
+    min-width: 0;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.instance-explorer__link-peer {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border: 0;
+    background: transparent;
+    color: var(--vscode-textLink-foreground, var(--vscode-foreground));
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+}
+
+.instance-explorer__link-peer:hover {
+    text-decoration: underline;
+}
+
+.instance-explorer__row--m2m {
+    padding-left: 28px;
+}
+
+.instance-explorer__icon-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.instance-explorer__available-assoc {
+    display: flex;
+    flex-direction: column;
+}
+
+.instance-explorer__add-links {
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px 8px 28px;
+    gap: 2px;
+}
+
+.instance-explorer__add-link {
+    display: flex;
+    flex-direction: column;
+}
+
+.instance-explorer__add-link-trigger {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: var(--vscode-descriptionForeground);
+    padding: 4px 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.instance-explorer__add-link-trigger:hover:not(:disabled) {
+    background: var(--vscode-list-hoverBackground);
+    color: var(--vscode-foreground);
+}
+
+.instance-explorer__add-link-trigger:disabled {
+    cursor: default;
+    opacity: 0.8;
+}
+
+.instance-explorer__add-link-hint {
+    flex: 1 1 auto;
+    color: var(--vscode-descriptionForeground);
+    font-style: italic;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.instance-explorer__create-link {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px 8px 28px;
+}
+
+.instance-explorer__create-link select {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.instance-explorer__create-link-confirm,
+.instance-explorer__create-link-cancel {
+    flex: 0 0 auto;
+    border: 1px solid var(--vscode-button-border, transparent);
+    border-radius: 4px;
+    padding: 4px 10px;
+    cursor: pointer;
+}
+
+.instance-explorer__create-link-confirm {
+    background: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+}
+
+.instance-explorer__create-link-confirm:hover {
+    background: var(--vscode-button-hoverBackground, var(--vscode-button-background));
+}
+
+.instance-explorer__create-link-cancel {
+    background: var(--vscode-button-secondaryBackground, transparent);
+    color: var(--vscode-button-secondaryForeground, inherit);
+}
+
+.instance-explorer__create-link-cancel:hover {
+    background: var(--vscode-button-secondaryHoverBackground, var(--vscode-list-hoverBackground));
+}
+
+.instance-explorer__warning {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex: 0 0 auto;
+    color: var(--vscode-editorWarning-foreground, #cca700);
+    font-size: 11px;
+}
+
+.instance-explorer__action {
+    padding: 6px 14px;
+    border: none;
+    background: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+    cursor: pointer;
+    font: inherit;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.instance-explorer__action:hover:not(:disabled) {
+    background: var(--vscode-button-hoverBackground, var(--vscode-button-background));
+}
+
+.instance-explorer__action:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.instance-explorer__empty {
+    color: var(--vscode-descriptionForeground);
+    padding: 8px 2px;
+}

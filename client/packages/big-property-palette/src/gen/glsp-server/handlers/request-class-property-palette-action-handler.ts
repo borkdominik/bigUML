@@ -22,6 +22,7 @@ import {
     isEnumerationLiteral,
     isGeneralization,
     isGenericEdge,
+    isInstanceLink,
     isInstanceSpecification,
     isInterface,
     isInterfaceRealization,
@@ -55,6 +56,7 @@ import { EnumerationPropertyPaletteHandler } from './elements/enumeration.proper
 import { EnumerationLiteralPropertyPaletteHandler } from './elements/enumeration-literal.property-palette-handler.js';
 import { GeneralizationPropertyPaletteHandler } from './elements/generalization.property-palette-handler.js';
 import { GenericEdgePropertyPaletteHandler } from './elements/generic-edge.property-palette-handler.js';
+import { InstanceLinkPropertyPaletteHandler } from './elements/instance-link.property-palette-handler.js';
 import { InstanceSpecificationPropertyPaletteHandler } from './elements/instance-specification.property-palette-handler.js';
 import { InterfacePropertyPaletteHandler } from './elements/interface.property-palette-handler.js';
 import { InterfaceRealizationPropertyPaletteHandler } from './elements/interface-realization.property-palette-handler.js';
@@ -105,6 +107,8 @@ export class RequestClassPropertyPaletteActionHandler implements ActionHandler {
             const context = { semanticElement, languageMetadata: this.languageMetadata };
 
             const definingFeatureChoices = referenceChoices(this.modelState.semanticRoot, [isClass, isInterface, isProperty]);
+            const classifierChoices = referenceChoices(this.modelState.semanticRoot, [isClass, isDataType, isInterface]);
+            const associationChoices = referenceChoices(this.modelState.semanticRoot, [isAssociation]);
             if (isEdgeAnchor(semanticElement)) {
                 return EdgeAnchorPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isGenericEdge(semanticElement)) {
@@ -162,7 +166,9 @@ export class RequestClassPropertyPaletteActionHandler implements ActionHandler {
             } else if (isInterfaceRealization(semanticElement)) {
                 return InterfaceRealizationPropertyPaletteHandler.getPropertyPalette(context);
             } else if (isInstanceSpecification(semanticElement)) {
-                return InstanceSpecificationPropertyPaletteHandler.getPropertyPalette(context);
+                return InstanceSpecificationPropertyPaletteHandler.getPropertyPalette(context, classifierChoices);
+            } else if (isInstanceLink(semanticElement)) {
+                return InstanceLinkPropertyPaletteHandler.getPropertyPalette(context, associationChoices);
             }
 
             return [SetPropertyPaletteAction.create()];

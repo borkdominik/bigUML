@@ -10,6 +10,8 @@
 import 'reflect-metadata';
 
 // import { advancedSearchGlspModule } from '@borkdominik-biguml/big-advancedsearch/glsp-server';
+// import { instanceExplorerGlspModule } from '@borkdominik-biguml/big-instance-explorer/glsp-server';
+// import { transformationModule } from '@borkdominik-biguml/big-object-to-class/glsp-server';
 import { outlineModule } from '@borkdominik-biguml/big-outline/glsp-server';
 import { propertyPaletteModule } from '@borkdominik-biguml/big-property-palette/glsp-server';
 import { startGLSPServer } from '@borkdominik-biguml/uml-glsp-server/vscode';
@@ -44,9 +46,13 @@ startLanguageServer(shared);
 
 shared.workspace.WorkspaceManager.onWorkspaceInitialized(() => {
     // Start the graphical language server with the shared services
-    startGLSPServer({ shared, language: UmlDiagram }, [propertyPaletteModule, outlineModule /* , advancedSearchGlspModule */], {
-        onReady: () => void connection.sendNotification(GLSP_SERVER_READY_NOTIFICATION)
-    });
+    startGLSPServer(
+        { shared, language: UmlDiagram },
+        [propertyPaletteModule, outlineModule /* , advancedSearchGlspModule, instanceExplorerGlspModule, transformationModule */],
+        {
+            onReady: () => void connection.sendNotification(GLSP_SERVER_READY_NOTIFICATION)
+        }
+    );
     // Start the JSON server with the shared services
     void startModelServer({ shared });
 });

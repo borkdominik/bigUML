@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import type { Action } from '@eclipse-glsp/protocol';
+import type { Action, Disposable } from '@eclipse-glsp/protocol';
 import { createContext } from 'react';
 import type { NotificationHandler, NotificationType } from 'vscode-messenger-common';
 
@@ -29,8 +29,9 @@ export interface VSCodeContext {
     dispatchNotification: <P>(type: NotificationType<P>, params?: P) => void;
     /**
      * Listen for an action notification.
+     * Returns a Disposable that should be called when the listener is no longer needed.
      */
-    listenAction: (handler: (action: Action) => void) => void;
+    listenAction: (handler: (action: Action) => void) => Disposable;
     /**
      * Dispatch an action notification.
      * The client id will be automatically added to the action.

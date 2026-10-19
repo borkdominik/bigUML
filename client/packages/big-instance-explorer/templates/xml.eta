@@ -1,0 +1,13 @@
+<instances>
+<% it.instances.forEach((inst) => { %>
+    <instance>
+        <type><%= inst.classifierName %></type>
+        <name><%= inst.name %></name>
+        <properties>
+        <% inst.slots.forEach((slot) => { %>
+            <<%= slot.featureName %>><%= slot.value %></<%= slot.featureName %>>
+        <% }) %>
+        </properties>
+    </instance>
+<% }) %>
+</instances>

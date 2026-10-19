@@ -20,6 +20,7 @@ import { LOGGER_CONFIG, LogLevel } from '@borkdominik-biguml/big-common';
 import {
     bindOrRebind,
     ContainerManager,
+    GlspHoverMouseListener,
     glspFocusTrackerModule,
     LogLevel as GlspLogLevel,
     glspToastModule,
@@ -36,6 +37,7 @@ import { umlCopyPasteModule } from './features/copy-paste/uml-copy-paste.module.
 import { UmlContainerManager } from './features/creation/uml-container-manager.js';
 import { umlEditModule } from './features/edit/uml-edit.module.js';
 import { umlTypeHintsModule } from './features/hints/uml-type-hints.module.js';
+import { UmlHoverMouseListener } from './features/hover/uml-hover-mouse-listener.js';
 import { umlLoadingModule } from './features/loading/uml-loading.module.js';
 import { umlRoutingModule } from './features/routing/uml-routing.module.js';
 import { umlThemeModule } from './features/theme/uml-theme.module.js';
@@ -69,6 +71,7 @@ export function createUmlDiagramContainer(...containerConfiguration: ContainerCo
     const container = initializeUmlDiagramContainer(new inversify.Container(), ...containerConfiguration);
     bindOrRebind(container, TYPES.LogLevel).toConstantValue(logLevel);
     container.rebind(ContainerManager).to(UmlContainerManager).inSingletonScope();
+    container.rebind(GlspHoverMouseListener).to(UmlHoverMouseListener).inSingletonScope();
     return container;
 }
 

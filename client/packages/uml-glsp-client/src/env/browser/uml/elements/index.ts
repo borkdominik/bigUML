@@ -31,6 +31,7 @@ export * from './generalization/index.js';
 export * from './generic-edge/index.js';
 export * from './include/index.js';
 export * from './information-flow/index.js';
+export * from './instance-link/index.js';
 export * from './instance-specification/index.js';
 export * from './interaction/index.js';
 export * from './interface-realization/index.js';

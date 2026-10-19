@@ -53,6 +53,7 @@ import {
     isInitialNode,
     isInitialState,
     isInputPin,
+    isInstanceLink,
     isInstanceSpecification,
     isInteraction,
     isInterface,
@@ -136,6 +137,7 @@ import { createInitialStateElement } from '../../elements/initial-state.element.
 import { createInputPinElement } from '../../elements/input-pin.element.js';
 import { createInstanceSpecificationElement } from '../../elements/instance-specification.element.js';
 import { createInteractionElement } from '../../elements/interaction.element.js';
+import { createInstanceLinkRelation } from '../../elements/instance-link-relation.element.js';
 import { createInterfaceRealizationRelation } from '../../elements/interface-realization-relation.element.js';
 import { createInterfaceElement } from '../../elements/interface.element.js';
 import { createJoinNodeElement } from '../../elements/join-node.element.js';
@@ -339,6 +341,7 @@ export class UmlDiagramGModelFactory implements GModelFactory {
         if (isAssociation(edge)) return createAssociationRelation(this.buildCtx(edge));
         if (isDependency(edge)) return createDependencyRelation(this.buildCtx(edge));
         if (isGeneralization(edge)) return createGeneralizationRelation(this.buildCtx(edge));
+        if (isInstanceLink(edge)) return createInstanceLinkRelation(this.buildCtx(edge));
         if (isInterfaceRealization(edge)) return createInterfaceRealizationRelation(this.buildCtx(edge));
         if (isPackageImport(edge)) return createPackageImportRelation(this.buildCtx(edge));
         if (isPackageMerge(edge)) return createPackageMergeRelation(this.buildCtx(edge));

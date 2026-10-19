@@ -49,7 +49,9 @@ export function GInstanceSpecificationNodeElement(props: GInstanceSpecificationN
         instNode.layoutOptions = { prefWidth: size.width, prefHeight: size.height };
     }
 
-    const header = <CompartmentHeader id={id} name={node.name} />;
+    // UML object notation: the underlined name, followed by the classifier the instance is an instance of.
+    const classifierName = node.classifier?.ref?.name;
+    const header = <CompartmentHeader id={id} name={node.name} underline nameSuffix={classifierName ? `: ${classifierName}` : undefined} />;
     header.parent = instNode;
     instNode.children.push(header);
 

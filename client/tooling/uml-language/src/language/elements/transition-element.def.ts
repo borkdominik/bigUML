@@ -27,7 +27,6 @@ export type TransitionKind = 'INTERNAL' | 'EXTERNAL' | 'LOCAL';
 export type ConnectionPoint = 'NORTH' | 'EAST' | 'SOUTH' | 'WEST';
 
 @Glsp.toolPalette({
-    section: 'Transition',
     label: 'Transition',
     icon: 'uml-transition-icon'
 })

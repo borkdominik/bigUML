@@ -15,7 +15,6 @@ import { Relation } from './relation-element.def.js';
 // @ts-nocheck
 
 @Glsp.toolPalette({
-    section: 'Relations',
     label: 'Abstraction',
     icon: 'uml-abstraction-icon'
 })

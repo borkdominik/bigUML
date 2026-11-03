@@ -11,42 +11,67 @@
 import type { ToolPaletteItemProvider } from '@eclipse-glsp/server';
 import type { interfaces } from 'inversify';
 import * as uuid from 'uuid';
+import type { RelationType } from '../../env/common/model/relation-type.action.js';
 import { UseCaseAstTypes, UseCaseDiagramEdgeTypes, UseCaseDiagramNodeTypes } from '../common/model-types/use-case-diagram-model-types.js';
-import { UseCaseDiagramToolPaletteItemProvider } from './diagram/use-case/use-case-diagram-tool-palette-item-provider.js';
+import {
+    UseCaseDiagramRelationTypes,
+    UseCaseDiagramToolPaletteItemProvider
+} from './diagram/use-case/use-case-diagram-tool-palette-item-provider.js';
 import {
     StateMachineAstTypes,
     StateMachineDiagramEdgeTypes,
     StateMachineDiagramNodeTypes
 } from '../common/model-types/state-machine-diagram-model-types.js';
-import { StateMachineDiagramToolPaletteItemProvider } from './diagram/state-machine/state-machine-diagram-tool-palette-item-provider.js';
+import {
+    StateMachineDiagramRelationTypes,
+    StateMachineDiagramToolPaletteItemProvider
+} from './diagram/state-machine/state-machine-diagram-tool-palette-item-provider.js';
 import { PackageAstTypes, PackageDiagramEdgeTypes, PackageDiagramNodeTypes } from '../common/model-types/package-diagram-model-types.js';
-import { PackageDiagramToolPaletteItemProvider } from './diagram/package/package-diagram-tool-palette-item-provider.js';
+import {
+    PackageDiagramRelationTypes,
+    PackageDiagramToolPaletteItemProvider
+} from './diagram/package/package-diagram-tool-palette-item-provider.js';
 import {
     InformationFlowAstTypes,
     InformationFlowDiagramEdgeTypes,
     InformationFlowDiagramNodeTypes
 } from '../common/model-types/information-flow-diagram-model-types.js';
-import { InformationFlowDiagramToolPaletteItemProvider } from './diagram/information-flow/information-flow-diagram-tool-palette-item-provider.js';
+import {
+    InformationFlowDiagramRelationTypes,
+    InformationFlowDiagramToolPaletteItemProvider
+} from './diagram/information-flow/information-flow-diagram-tool-palette-item-provider.js';
 import {
     DeploymentAstTypes,
     DeploymentDiagramEdgeTypes,
     DeploymentDiagramNodeTypes
 } from '../common/model-types/deployment-diagram-model-types.js';
-import { DeploymentDiagramToolPaletteItemProvider } from './diagram/deployment/deployment-diagram-tool-palette-item-provider.js';
+import {
+    DeploymentDiagramRelationTypes,
+    DeploymentDiagramToolPaletteItemProvider
+} from './diagram/deployment/deployment-diagram-tool-palette-item-provider.js';
 import {
     CommunicationAstTypes,
     CommunicationDiagramEdgeTypes,
     CommunicationDiagramNodeTypes
 } from '../common/model-types/communication-diagram-model-types.js';
-import { CommunicationDiagramToolPaletteItemProvider } from './diagram/communication/communication-diagram-tool-palette-item-provider.js';
+import {
+    CommunicationDiagramRelationTypes,
+    CommunicationDiagramToolPaletteItemProvider
+} from './diagram/communication/communication-diagram-tool-palette-item-provider.js';
 import { ClassAstTypes, ClassDiagramEdgeTypes, ClassDiagramNodeTypes } from '../common/model-types/class-diagram-model-types.js';
-import { ClassDiagramToolPaletteItemProvider } from './diagram/class/class-diagram-tool-palette-item-provider.js';
+import {
+    ClassDiagramRelationTypes,
+    ClassDiagramToolPaletteItemProvider
+} from './diagram/class/class-diagram-tool-palette-item-provider.js';
 import {
     ActivityAstTypes,
     ActivityDiagramEdgeTypes,
     ActivityDiagramNodeTypes
 } from '../common/model-types/activity-diagram-model-types.js';
-import { ActivityDiagramToolPaletteItemProvider } from './diagram/activity/activity-diagram-tool-palette-item-provider.js';
+import {
+    ActivityDiagramRelationTypes,
+    ActivityDiagramToolPaletteItemProvider
+} from './diagram/activity/activity-diagram-tool-palette-item-provider.js';
 
 /** One diagram of the language and what serves it. */
 export interface DiagramRegistration {
@@ -65,6 +90,8 @@ export interface DiagramRegistration {
     /** The element type id an element stored as `astType` is drawn as in the diagram. */
     convertToElementType(astType: string): string;
     toolPaletteItemProvider: interfaces.Newable<ToolPaletteItemProvider>;
+    /** The relations of the diagram, offered by the "Create relation" tool between the ends they admit. */
+    relationTypes: readonly RelationType[];
 }
 
 /** Every diagram there is. Wiring that needs a per-diagram class iterates this rather than naming each. */
@@ -77,7 +104,8 @@ export const DIAGRAM_REGISTRY: readonly DiagramRegistration[] = [
         edgeTypeIds: Object.values(UseCaseDiagramEdgeTypes),
         convertToAst: UseCaseAstTypes.convertToAst,
         convertToElementType: UseCaseAstTypes.convertToElementType,
-        toolPaletteItemProvider: UseCaseDiagramToolPaletteItemProvider
+        toolPaletteItemProvider: UseCaseDiagramToolPaletteItemProvider,
+        relationTypes: UseCaseDiagramRelationTypes
     },
     {
         diagramType: 'STATE_MACHINE',
@@ -87,7 +115,8 @@ export const DIAGRAM_REGISTRY: readonly DiagramRegistration[] = [
         edgeTypeIds: Object.values(StateMachineDiagramEdgeTypes),
         convertToAst: StateMachineAstTypes.convertToAst,
         convertToElementType: StateMachineAstTypes.convertToElementType,
-        toolPaletteItemProvider: StateMachineDiagramToolPaletteItemProvider
+        toolPaletteItemProvider: StateMachineDiagramToolPaletteItemProvider,
+        relationTypes: StateMachineDiagramRelationTypes
     },
     {
         diagramType: 'PACKAGE',
@@ -97,7 +126,8 @@ export const DIAGRAM_REGISTRY: readonly DiagramRegistration[] = [
         edgeTypeIds: Object.values(PackageDiagramEdgeTypes),
         convertToAst: PackageAstTypes.convertToAst,
         convertToElementType: PackageAstTypes.convertToElementType,
-        toolPaletteItemProvider: PackageDiagramToolPaletteItemProvider
+        toolPaletteItemProvider: PackageDiagramToolPaletteItemProvider,
+        relationTypes: PackageDiagramRelationTypes
     },
     {
         diagramType: 'INFORMATION_FLOW',
@@ -107,7 +137,8 @@ export const DIAGRAM_REGISTRY: readonly DiagramRegistration[] = [
         edgeTypeIds: Object.values(InformationFlowDiagramEdgeTypes),
         convertToAst: InformationFlowAstTypes.convertToAst,
         convertToElementType: InformationFlowAstTypes.convertToElementType,
-        toolPaletteItemProvider: InformationFlowDiagramToolPaletteItemProvider
+        toolPaletteItemProvider: InformationFlowDiagramToolPaletteItemProvider,
+        relationTypes: InformationFlowDiagramRelationTypes
     },
     {
         diagramType: 'DEPLOYMENT',
@@ -117,7 +148,8 @@ export const DIAGRAM_REGISTRY: readonly DiagramRegistration[] = [
         edgeTypeIds: Object.values(DeploymentDiagramEdgeTypes),
         convertToAst: DeploymentAstTypes.convertToAst,
         convertToElementType: DeploymentAstTypes.convertToElementType,
-        toolPaletteItemProvider: DeploymentDiagramToolPaletteItemProvider
+        toolPaletteItemProvider: DeploymentDiagramToolPaletteItemProvider,
+        relationTypes: DeploymentDiagramRelationTypes
     },
     {
         diagramType: 'COMMUNICATION',
@@ -127,7 +159,8 @@ export const DIAGRAM_REGISTRY: readonly DiagramRegistration[] = [
         edgeTypeIds: Object.values(CommunicationDiagramEdgeTypes),
         convertToAst: CommunicationAstTypes.convertToAst,
         convertToElementType: CommunicationAstTypes.convertToElementType,
-        toolPaletteItemProvider: CommunicationDiagramToolPaletteItemProvider
+        toolPaletteItemProvider: CommunicationDiagramToolPaletteItemProvider,
+        relationTypes: CommunicationDiagramRelationTypes
     },
     {
         diagramType: 'CLASS',
@@ -137,7 +170,8 @@ export const DIAGRAM_REGISTRY: readonly DiagramRegistration[] = [
         edgeTypeIds: Object.values(ClassDiagramEdgeTypes),
         convertToAst: ClassAstTypes.convertToAst,
         convertToElementType: ClassAstTypes.convertToElementType,
-        toolPaletteItemProvider: ClassDiagramToolPaletteItemProvider
+        toolPaletteItemProvider: ClassDiagramToolPaletteItemProvider,
+        relationTypes: ClassDiagramRelationTypes
     },
     {
         diagramType: 'ACTIVITY',
@@ -147,7 +181,8 @@ export const DIAGRAM_REGISTRY: readonly DiagramRegistration[] = [
         edgeTypeIds: Object.values(ActivityDiagramEdgeTypes),
         convertToAst: ActivityAstTypes.convertToAst,
         convertToElementType: ActivityAstTypes.convertToElementType,
-        toolPaletteItemProvider: ActivityDiagramToolPaletteItemProvider
+        toolPaletteItemProvider: ActivityDiagramToolPaletteItemProvider,
+        relationTypes: ActivityDiagramRelationTypes
     }
 ];
 

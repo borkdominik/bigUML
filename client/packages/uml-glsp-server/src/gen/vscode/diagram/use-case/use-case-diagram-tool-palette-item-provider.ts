@@ -8,49 +8,45 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
+import type { RelationType } from '../../../../env/common/model/relation-type.action.js';
 import { UseCaseDiagramEdgeTypes, UseCaseDiagramNodeTypes } from '../../../common/model-types/use-case-diagram-model-types.js';
-import {
-    type Args,
-    type MaybePromise,
-    type PaletteItem,
-    ToolPaletteItemProvider,
-    TriggerEdgeCreationAction,
-    TriggerNodeCreationAction
-} from '@eclipse-glsp/server';
+import { type Args, type MaybePromise, type PaletteItem, ToolPaletteItemProvider, TriggerNodeCreationAction } from '@eclipse-glsp/server';
+
+/**
+ * The relations of the diagram. They are not listed in the palette: the "Create relation" tool offers
+ * the ones whose ends admit the two elements picked.
+ */
+export const UseCaseDiagramRelationTypes: readonly RelationType[] = [
+    {
+        elementTypeId: UseCaseDiagramEdgeTypes.ASSOCIATION,
+        label: 'Association',
+        icon: 'uml-association-icon'
+    },
+    {
+        elementTypeId: UseCaseDiagramEdgeTypes.EXTEND,
+        label: 'Extend',
+        icon: 'uml-extend-icon'
+    },
+    {
+        elementTypeId: UseCaseDiagramEdgeTypes.GENERALIZATION,
+        label: 'Generalization',
+        icon: 'uml-generalization-icon'
+    },
+    {
+        elementTypeId: UseCaseDiagramEdgeTypes.GENERIC_EDGE,
+        label: 'Generic Edge',
+        icon: 'uml-connector-icon'
+    },
+    {
+        elementTypeId: UseCaseDiagramEdgeTypes.INCLUDE,
+        label: 'Include',
+        icon: 'uml-include-icon'
+    }
+];
 
 export class UseCaseDiagramToolPaletteItemProvider extends ToolPaletteItemProvider {
     override getItems(_args?: Args): MaybePromise<PaletteItem[]> {
         return [
-            {
-                id: 'uml.annotation',
-                sortString: 'A',
-                label: 'Annotation',
-                icon: 'symbol-property',
-                children: [
-                    {
-                        id: 'generic-edge',
-                        sortString: 'A',
-                        label: 'Generic Edge',
-                        icon: 'uml-connector-icon',
-                        actions: [TriggerEdgeCreationAction.create(UseCaseDiagramEdgeTypes.GENERIC_EDGE)]
-                    },
-                    {
-                        id: 'text-label',
-                        sortString: 'A',
-                        label: 'Label',
-                        icon: 'uml-string-expression-icon',
-                        actions: [TriggerNodeCreationAction.create(UseCaseDiagramNodeTypes.TEXT_LABEL)]
-                    },
-                    {
-                        id: 'note',
-                        sortString: 'A',
-                        label: 'Note',
-                        icon: 'uml-comment-icon',
-                        actions: [TriggerNodeCreationAction.create(UseCaseDiagramNodeTypes.NOTE)]
-                    }
-                ],
-                actions: []
-            },
             {
                 id: 'uml.container',
                 sortString: 'A',
@@ -82,47 +78,24 @@ export class UseCaseDiagramToolPaletteItemProvider extends ToolPaletteItemProvid
                 actions: []
             },
             {
-                id: 'uml.relation',
+                id: 'uml.annotation',
                 sortString: 'A',
-                label: 'Relation',
+                label: 'Annotation',
                 icon: 'symbol-property',
                 children: [
                     {
-                        id: 'include',
+                        id: 'text-label',
                         sortString: 'A',
-                        label: 'Include',
-                        icon: 'uml-include-icon',
-                        actions: [TriggerEdgeCreationAction.create(UseCaseDiagramEdgeTypes.INCLUDE)]
+                        label: 'Label',
+                        icon: 'uml-string-expression-icon',
+                        actions: [TriggerNodeCreationAction.create(UseCaseDiagramNodeTypes.TEXT_LABEL)]
                     },
                     {
-                        id: 'extend',
+                        id: 'note',
                         sortString: 'A',
-                        label: 'Extend',
-                        icon: 'uml-extend-icon',
-                        actions: [TriggerEdgeCreationAction.create(UseCaseDiagramEdgeTypes.EXTEND)]
-                    }
-                ],
-                actions: []
-            },
-            {
-                id: 'uml.relations',
-                sortString: 'A',
-                label: 'Relations',
-                icon: 'symbol-property',
-                children: [
-                    {
-                        id: 'generalization',
-                        sortString: 'A',
-                        label: 'Generalization',
-                        icon: 'uml-generalization-icon',
-                        actions: [TriggerEdgeCreationAction.create(UseCaseDiagramEdgeTypes.GENERALIZATION)]
-                    },
-                    {
-                        id: 'association',
-                        sortString: 'A',
-                        label: 'Association',
-                        icon: 'uml-association-icon',
-                        actions: [TriggerEdgeCreationAction.create(UseCaseDiagramEdgeTypes.ASSOCIATION)]
+                        label: 'Note',
+                        icon: 'uml-comment-icon',
+                        actions: [TriggerNodeCreationAction.create(UseCaseDiagramNodeTypes.NOTE)]
                     }
                 ],
                 actions: []

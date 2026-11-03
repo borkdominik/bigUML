@@ -8,15 +8,26 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
+import type { RelationType } from '../../../../env/common/model/relation-type.action.js';
 import { ActivityDiagramEdgeTypes, ActivityDiagramNodeTypes } from '../../../common/model-types/activity-diagram-model-types.js';
-import {
-    type Args,
-    type MaybePromise,
-    type PaletteItem,
-    ToolPaletteItemProvider,
-    TriggerEdgeCreationAction,
-    TriggerNodeCreationAction
-} from '@eclipse-glsp/server';
+import { type Args, type MaybePromise, type PaletteItem, ToolPaletteItemProvider, TriggerNodeCreationAction } from '@eclipse-glsp/server';
+
+/**
+ * The relations of the diagram. They are not listed in the palette: the "Create relation" tool offers
+ * the ones whose ends admit the two elements picked.
+ */
+export const ActivityDiagramRelationTypes: readonly RelationType[] = [
+    {
+        elementTypeId: ActivityDiagramEdgeTypes.CONTROL_FLOW,
+        label: 'Control Flow',
+        icon: 'uml-control-flow-icon'
+    },
+    {
+        elementTypeId: ActivityDiagramEdgeTypes.GENERIC_EDGE,
+        label: 'Generic Edge',
+        icon: 'uml-connector-icon'
+    }
+];
 
 export class ActivityDiagramToolPaletteItemProvider extends ToolPaletteItemProvider {
     override getItems(_args?: Args): MaybePromise<PaletteItem[]> {
@@ -27,13 +38,6 @@ export class ActivityDiagramToolPaletteItemProvider extends ToolPaletteItemProvi
                 label: 'Annotation',
                 icon: 'symbol-property',
                 children: [
-                    {
-                        id: 'generic-edge',
-                        sortString: 'A',
-                        label: 'Generic Edge',
-                        icon: 'uml-connector-icon',
-                        actions: [TriggerEdgeCreationAction.create(ActivityDiagramEdgeTypes.GENERIC_EDGE)]
-                    },
                     {
                         id: 'text-label',
                         sortString: 'A',
@@ -188,22 +192,6 @@ export class ActivityDiagramToolPaletteItemProvider extends ToolPaletteItemProvi
                         label: 'Activity Final Node',
                         icon: 'uml-activity-final-node-icon',
                         actions: [TriggerNodeCreationAction.create(ActivityDiagramNodeTypes.ACTIVITY_FINAL_NODE)]
-                    }
-                ],
-                actions: []
-            },
-            {
-                id: 'uml.edges',
-                sortString: 'A',
-                label: 'Edges',
-                icon: 'symbol-property',
-                children: [
-                    {
-                        id: 'control-flow',
-                        sortString: 'A',
-                        label: 'Control Flow',
-                        icon: 'uml-control-flow-icon',
-                        actions: [TriggerEdgeCreationAction.create(ActivityDiagramEdgeTypes.CONTROL_FLOW)]
                     }
                 ],
                 actions: []

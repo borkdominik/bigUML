@@ -8,18 +8,29 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
+import type { RelationType } from '../../../../env/common/model/relation-type.action.js';
 import {
     StateMachineDiagramEdgeTypes,
     StateMachineDiagramNodeTypes
 } from '../../../common/model-types/state-machine-diagram-model-types.js';
-import {
-    type Args,
-    type MaybePromise,
-    type PaletteItem,
-    ToolPaletteItemProvider,
-    TriggerEdgeCreationAction,
-    TriggerNodeCreationAction
-} from '@eclipse-glsp/server';
+import { type Args, type MaybePromise, type PaletteItem, ToolPaletteItemProvider, TriggerNodeCreationAction } from '@eclipse-glsp/server';
+
+/**
+ * The relations of the diagram. They are not listed in the palette: the "Create relation" tool offers
+ * the ones whose ends admit the two elements picked.
+ */
+export const StateMachineDiagramRelationTypes: readonly RelationType[] = [
+    {
+        elementTypeId: StateMachineDiagramEdgeTypes.GENERIC_EDGE,
+        label: 'Generic Edge',
+        icon: 'uml-connector-icon'
+    },
+    {
+        elementTypeId: StateMachineDiagramEdgeTypes.TRANSITION,
+        label: 'Transition',
+        icon: 'uml-transition-icon'
+    }
+];
 
 export class StateMachineDiagramToolPaletteItemProvider extends ToolPaletteItemProvider {
     override getItems(_args?: Args): MaybePromise<PaletteItem[]> {
@@ -30,13 +41,6 @@ export class StateMachineDiagramToolPaletteItemProvider extends ToolPaletteItemP
                 label: 'Annotation',
                 icon: 'symbol-property',
                 children: [
-                    {
-                        id: 'generic-edge',
-                        sortString: 'A',
-                        label: 'Generic Edge',
-                        icon: 'uml-connector-icon',
-                        actions: [TriggerEdgeCreationAction.create(StateMachineDiagramEdgeTypes.GENERIC_EDGE)]
-                    },
                     {
                         id: 'text-label',
                         sortString: 'A',
@@ -50,22 +54,6 @@ export class StateMachineDiagramToolPaletteItemProvider extends ToolPaletteItemP
                         label: 'Note',
                         icon: 'uml-comment-icon',
                         actions: [TriggerNodeCreationAction.create(StateMachineDiagramNodeTypes.NOTE)]
-                    }
-                ],
-                actions: []
-            },
-            {
-                id: 'uml.transition',
-                sortString: 'A',
-                label: 'Transition',
-                icon: 'symbol-property',
-                children: [
-                    {
-                        id: 'transition',
-                        sortString: 'A',
-                        label: 'Transition',
-                        icon: 'uml-transition-icon',
-                        actions: [TriggerEdgeCreationAction.create(StateMachineDiagramEdgeTypes.TRANSITION)]
                     }
                 ],
                 actions: []

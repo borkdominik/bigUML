@@ -15,7 +15,6 @@ import { Relation } from './relation-element.def.js';
 // @ts-nocheck
 
 @Glsp.toolPalette({
-    section: 'Relation',
     label: 'Manifestation',
     icon: 'uml-manifestation-icon'
 })

@@ -8,18 +8,29 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
+import type { RelationType } from '../../../../env/common/model/relation-type.action.js';
 import {
     CommunicationDiagramEdgeTypes,
     CommunicationDiagramNodeTypes
 } from '../../../common/model-types/communication-diagram-model-types.js';
-import {
-    type Args,
-    type MaybePromise,
-    type PaletteItem,
-    ToolPaletteItemProvider,
-    TriggerEdgeCreationAction,
-    TriggerNodeCreationAction
-} from '@eclipse-glsp/server';
+import { type Args, type MaybePromise, type PaletteItem, ToolPaletteItemProvider, TriggerNodeCreationAction } from '@eclipse-glsp/server';
+
+/**
+ * The relations of the diagram. They are not listed in the palette: the "Create relation" tool offers
+ * the ones whose ends admit the two elements picked.
+ */
+export const CommunicationDiagramRelationTypes: readonly RelationType[] = [
+    {
+        elementTypeId: CommunicationDiagramEdgeTypes.GENERIC_EDGE,
+        label: 'Generic Edge',
+        icon: 'uml-connector-icon'
+    },
+    {
+        elementTypeId: CommunicationDiagramEdgeTypes.MESSAGE,
+        label: 'Message',
+        icon: 'uml-message-icon'
+    }
+];
 
 export class CommunicationDiagramToolPaletteItemProvider extends ToolPaletteItemProvider {
     override getItems(_args?: Args): MaybePromise<PaletteItem[]> {
@@ -30,13 +41,6 @@ export class CommunicationDiagramToolPaletteItemProvider extends ToolPaletteItem
                 label: 'Annotation',
                 icon: 'symbol-property',
                 children: [
-                    {
-                        id: 'generic-edge',
-                        sortString: 'A',
-                        label: 'Generic Edge',
-                        icon: 'uml-connector-icon',
-                        actions: [TriggerEdgeCreationAction.create(CommunicationDiagramEdgeTypes.GENERIC_EDGE)]
-                    },
                     {
                         id: 'text-label',
                         sortString: 'A',
@@ -50,22 +54,6 @@ export class CommunicationDiagramToolPaletteItemProvider extends ToolPaletteItem
                         label: 'Note',
                         icon: 'uml-comment-icon',
                         actions: [TriggerNodeCreationAction.create(CommunicationDiagramNodeTypes.NOTE)]
-                    }
-                ],
-                actions: []
-            },
-            {
-                id: 'uml.edges',
-                sortString: 'A',
-                label: 'Edges',
-                icon: 'symbol-property',
-                children: [
-                    {
-                        id: 'message',
-                        sortString: 'A',
-                        label: 'Message',
-                        icon: 'uml-message-icon',
-                        actions: [TriggerEdgeCreationAction.create(CommunicationDiagramEdgeTypes.MESSAGE)]
                     }
                 ],
                 actions: []

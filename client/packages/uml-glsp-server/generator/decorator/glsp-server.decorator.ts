@@ -115,17 +115,22 @@ export namespace Glsp {
     export interface ToolPaletteOptions {
         /** Optional custom ID. Defaults to the kebab-case class name. */
         id?: string;
-        /** The palette section this item belongs to (e.g., `"Container"`, `"Relations"`). */
-        section: string;
-        /** The display label shown in the palette. */
+        /**
+         * The palette section a node is listed in (e.g., `"Container"`, `"Feature"`). Required for a node,
+         * and left out for a relation: relations have no section, they are offered by the palette's
+         * "Create relation" tool once both ends have been picked.
+         */
+        section?: string;
+        /** The display label shown in the palette, or in the relation picker for a relation. */
         label: string;
         /** The CSS icon class for the palette entry. */
         icon: string;
     }
 
     /**
-     * Registers a class as a creatable element in the diagram tool palette.
-     * Requires section, label, and icon to define its appearance.
+     * Registers a class as a creatable element of the diagram. A node is listed in the tool palette under
+     * its section; a relation is offered by the "Create relation" tool between the ends its `source` and
+     * `target` references admit.
      */
     export function toolPalette(_options: ToolPaletteOptions): ClassDecorator {
         return (() => {}) as ClassDecorator;

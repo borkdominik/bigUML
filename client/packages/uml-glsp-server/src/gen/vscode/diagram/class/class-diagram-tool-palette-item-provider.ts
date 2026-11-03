@@ -8,15 +8,91 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
+import type { RelationType } from '../../../../env/common/model/relation-type.action.js';
 import { ClassDiagramEdgeTypes, ClassDiagramNodeTypes } from '../../../common/model-types/class-diagram-model-types.js';
-import {
-    type Args,
-    type MaybePromise,
-    type PaletteItem,
-    ToolPaletteItemProvider,
-    TriggerEdgeCreationAction,
-    TriggerNodeCreationAction
-} from '@eclipse-glsp/server';
+import { type Args, type MaybePromise, type PaletteItem, ToolPaletteItemProvider, TriggerNodeCreationAction } from '@eclipse-glsp/server';
+
+/**
+ * The relations of the diagram. They are not listed in the palette: the "Create relation" tool offers
+ * the ones whose ends admit the two elements picked.
+ */
+export const ClassDiagramRelationTypes: readonly RelationType[] = [
+    {
+        elementTypeId: ClassDiagramEdgeTypes.ABSTRACTION,
+        label: 'Abstraction',
+        icon: 'uml-abstraction-icon'
+    },
+    {
+        elementTypeId: ClassDiagramEdgeTypes.AGGREGATION,
+        label: 'Aggregation',
+        icon: 'uml-association-shared-icon'
+    },
+    {
+        elementTypeId: ClassDiagramEdgeTypes.ASSOCIATION,
+        label: 'Association',
+        icon: 'uml-association-icon'
+    },
+    {
+        elementTypeId: ClassDiagramEdgeTypes.COMPOSITION,
+        label: 'Composition',
+        icon: 'uml-association-composite-icon'
+    },
+    {
+        elementTypeId: ClassDiagramEdgeTypes.DEPENDENCY,
+        label: 'Dependency',
+        icon: 'uml-dependency-icon'
+    },
+    {
+        elementTypeId: ClassDiagramEdgeTypes.ELEMENT_IMPORT,
+        label: 'Element Import',
+        icon: 'uml-package-import-icon'
+    },
+    {
+        elementTypeId: ClassDiagramEdgeTypes.GENERALIZATION,
+        label: 'Generalization',
+        icon: 'uml-generalization-icon'
+    },
+    {
+        elementTypeId: ClassDiagramEdgeTypes.GENERIC_EDGE,
+        label: 'Generic Edge',
+        icon: 'uml-connector-icon'
+    },
+    {
+        elementTypeId: ClassDiagramEdgeTypes.INSTANCE_LINK,
+        label: 'Instance Link',
+        icon: 'uml-association-icon'
+    },
+    {
+        elementTypeId: ClassDiagramEdgeTypes.INTERFACE_REALIZATION,
+        label: 'Interface Realization',
+        icon: 'uml-interface-realization-icon'
+    },
+    {
+        elementTypeId: ClassDiagramEdgeTypes.PACKAGE_IMPORT,
+        label: 'Package Import',
+        icon: 'uml-package-import-icon'
+    },
+    {
+        elementTypeId: ClassDiagramEdgeTypes.PACKAGE_MERGE,
+        label: 'Package Merge',
+        icon: 'uml-package-merge-icon'
+    },
+    {
+        elementTypeId: ClassDiagramEdgeTypes.REALIZATION,
+        label: 'Realization',
+        icon: 'uml-realization-icon'
+    },
+    {
+        elementTypeId: ClassDiagramEdgeTypes.SUBSTITUTION,
+        label: 'Substitution',
+        icon: 'uml-substitution-icon'
+    },
+    {
+        elementTypeId: ClassDiagramEdgeTypes.USAGE,
+        label: 'Usage',
+        icon: 'uml-usage-icon'
+    }
+];
 
 export class ClassDiagramToolPaletteItemProvider extends ToolPaletteItemProvider {
     override getItems(_args?: Args): MaybePromise<PaletteItem[]> {
@@ -27,13 +103,6 @@ export class ClassDiagramToolPaletteItemProvider extends ToolPaletteItemProvider
                 label: 'Annotation',
                 icon: 'symbol-property',
                 children: [
-                    {
-                        id: 'generic-edge',
-                        sortString: 'A',
-                        label: 'Generic Edge',
-                        icon: 'uml-connector-icon',
-                        actions: [TriggerEdgeCreationAction.create(ClassDiagramEdgeTypes.GENERIC_EDGE)]
-                    },
                     {
                         id: 'text-label',
                         sortString: 'A',
@@ -47,120 +116,6 @@ export class ClassDiagramToolPaletteItemProvider extends ToolPaletteItemProvider
                         label: 'Note',
                         icon: 'uml-comment-icon',
                         actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.NOTE)]
-                    }
-                ],
-                actions: []
-            },
-            {
-                id: 'uml.relations',
-                sortString: 'A',
-                label: 'Relations',
-                icon: 'symbol-property',
-                children: [
-                    {
-                        id: 'generalization',
-                        sortString: 'A',
-                        label: 'Generalization',
-                        icon: 'uml-generalization-icon',
-                        actions: [TriggerEdgeCreationAction.create(ClassDiagramEdgeTypes.GENERALIZATION)]
-                    },
-                    {
-                        id: 'association',
-                        sortString: 'A',
-                        label: 'Association',
-                        icon: 'uml-association-icon',
-                        actions: [TriggerEdgeCreationAction.create(ClassDiagramEdgeTypes.ASSOCIATION)]
-                    },
-                    {
-                        id: 'usage',
-                        sortString: 'A',
-                        label: 'Usage',
-                        icon: 'uml-usage-icon',
-                        actions: [TriggerEdgeCreationAction.create(ClassDiagramEdgeTypes.USAGE)]
-                    },
-                    {
-                        id: 'package-merge',
-                        sortString: 'A',
-                        label: 'Package Merge',
-                        icon: 'uml-package-merge-icon',
-                        actions: [TriggerEdgeCreationAction.create(ClassDiagramEdgeTypes.PACKAGE_MERGE)]
-                    },
-                    {
-                        id: 'package-import',
-                        sortString: 'A',
-                        label: 'Package Import',
-                        icon: 'uml-package-import-icon',
-                        actions: [TriggerEdgeCreationAction.create(ClassDiagramEdgeTypes.PACKAGE_IMPORT)]
-                    },
-                    {
-                        id: 'element-import',
-                        sortString: 'A',
-                        label: 'Element Import',
-                        icon: 'uml-package-import-icon',
-                        actions: [TriggerEdgeCreationAction.create(ClassDiagramEdgeTypes.ELEMENT_IMPORT)]
-                    },
-                    {
-                        id: 'dependency',
-                        sortString: 'A',
-                        label: 'Dependency',
-                        icon: 'uml-dependency-icon',
-                        actions: [TriggerEdgeCreationAction.create(ClassDiagramEdgeTypes.DEPENDENCY)]
-                    },
-                    {
-                        id: 'abstraction',
-                        sortString: 'A',
-                        label: 'Abstraction',
-                        icon: 'uml-abstraction-icon',
-                        actions: [TriggerEdgeCreationAction.create(ClassDiagramEdgeTypes.ABSTRACTION)]
-                    },
-                    {
-                        id: 'substitution',
-                        sortString: 'A',
-                        label: 'Substitution',
-                        icon: 'uml-substitution-icon',
-                        actions: [TriggerEdgeCreationAction.create(ClassDiagramEdgeTypes.SUBSTITUTION)]
-                    },
-                    {
-                        id: 'realization',
-                        sortString: 'A',
-                        label: 'Realization',
-                        icon: 'uml-realization-icon',
-                        actions: [TriggerEdgeCreationAction.create(ClassDiagramEdgeTypes.REALIZATION)]
-                    },
-                    {
-                        id: 'nary-association',
-                        sortString: 'A',
-                        label: 'N-ary Association',
-                        icon: 'uml-decision-node-icon',
-                        actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.NARY_ASSOCIATION)]
-                    },
-                    {
-                        id: 'interface-realization',
-                        sortString: 'A',
-                        label: 'Interface Realization',
-                        icon: 'uml-interface-realization-icon',
-                        actions: [TriggerEdgeCreationAction.create(ClassDiagramEdgeTypes.INTERFACE_REALIZATION)]
-                    },
-                    {
-                        id: 'instance-link',
-                        sortString: 'A',
-                        label: 'Instance Link',
-                        icon: 'uml-association-icon',
-                        actions: [TriggerEdgeCreationAction.create(ClassDiagramEdgeTypes.INSTANCE_LINK)]
-                    },
-                    {
-                        id: 'composition',
-                        sortString: 'A',
-                        label: 'Composition',
-                        icon: 'uml-association-composite-icon',
-                        actions: [TriggerEdgeCreationAction.create(ClassDiagramEdgeTypes.COMPOSITION)]
-                    },
-                    {
-                        id: 'aggregation',
-                        sortString: 'A',
-                        label: 'Aggregation',
-                        icon: 'uml-association-shared-icon',
-                        actions: [TriggerEdgeCreationAction.create(ClassDiagramEdgeTypes.AGGREGATION)]
                     }
                 ],
                 actions: []
@@ -249,6 +204,13 @@ export class ClassDiagramToolPaletteItemProvider extends ToolPaletteItemProvider
                         label: 'Package',
                         icon: 'uml-package-icon',
                         actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.PACKAGE)]
+                    },
+                    {
+                        id: 'nary-association',
+                        sortString: 'A',
+                        label: 'N-ary Association',
+                        icon: 'uml-decision-node-icon',
+                        actions: [TriggerNodeCreationAction.create(ClassDiagramNodeTypes.NARY_ASSOCIATION)]
                     },
                     {
                         id: 'instance-specification',

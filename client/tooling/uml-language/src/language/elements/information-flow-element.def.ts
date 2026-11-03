@@ -17,7 +17,6 @@ import type { Class } from './class-element.def.js';
 // @ts-nocheck
 
 @Glsp.toolPalette({
-    section: 'Edges',
     label: 'Information Flow',
     icon: 'uml-dependency-icon'
 })

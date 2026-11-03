@@ -16,7 +16,6 @@ import { type ConnectionPoint } from './transition-element.def.js';
 // @ts-nocheck
 
 @Glsp.toolPalette({
-    section: 'Edges',
     label: 'Control Flow',
     icon: 'uml-control-flow-icon'
 })

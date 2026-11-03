@@ -18,6 +18,7 @@
 
 @import 'extensions/uml-edit-label.css';
 @import 'extensions/uml-tool-palette.css';
+@import 'extensions/uml-relation-type-picker.css';
 @import 'extensions/uml-editor-panel.css';
 @import 'extensions/uml-property-palette.css';
 @import 'extensions/uml-toast.css';

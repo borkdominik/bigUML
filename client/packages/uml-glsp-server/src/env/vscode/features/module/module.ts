@@ -39,6 +39,8 @@ import {
     GenericDeleteOperationHandler,
     GenericUpdateOperationHandler
 } from '../mutation/index.js';
+import { RelationTypeResolver } from '../relation/relation-type-resolver.js';
+import { RequestRelationTypesActionHandler } from '../relation/request-relation-types-action-handler.js';
 import { GenericDiagramModelValidator } from '../validator/generic-diagram-model-validator.js';
 
 export class DiagramFeatureModule {
@@ -61,6 +63,7 @@ export abstract class BigDiagramModule extends DiagramModule {
     ): void {
         super.configure(bind, unbind, isBound, rebind);
         bind(ModelPatchBuilder).toSelf().inSingletonScope();
+        bind(RelationTypeResolver).toSelf().inSingletonScope();
     }
 
     protected bindSourceModelStorage(): BindingTarget<SourceModelStorage> {
@@ -109,6 +112,7 @@ export abstract class BigDiagramModule extends DiagramModule {
         super.configureActionHandlers(binding);
         binding.add(CreateNewFileActionHandler);
         binding.add(RequestSemanticModelActionHandler);
+        binding.add(RequestRelationTypesActionHandler);
 
         for (const module of this.featureModules) {
             module.configureActionHandlers?.(binding);

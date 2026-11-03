@@ -8,18 +8,29 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
+import type { RelationType } from '../../../../env/common/model/relation-type.action.js';
 import {
     InformationFlowDiagramEdgeTypes,
     InformationFlowDiagramNodeTypes
 } from '../../../common/model-types/information-flow-diagram-model-types.js';
-import {
-    type Args,
-    type MaybePromise,
-    type PaletteItem,
-    ToolPaletteItemProvider,
-    TriggerEdgeCreationAction,
-    TriggerNodeCreationAction
-} from '@eclipse-glsp/server';
+import { type Args, type MaybePromise, type PaletteItem, ToolPaletteItemProvider, TriggerNodeCreationAction } from '@eclipse-glsp/server';
+
+/**
+ * The relations of the diagram. They are not listed in the palette: the "Create relation" tool offers
+ * the ones whose ends admit the two elements picked.
+ */
+export const InformationFlowDiagramRelationTypes: readonly RelationType[] = [
+    {
+        elementTypeId: InformationFlowDiagramEdgeTypes.GENERIC_EDGE,
+        label: 'Generic Edge',
+        icon: 'uml-connector-icon'
+    },
+    {
+        elementTypeId: InformationFlowDiagramEdgeTypes.INFORMATION_FLOW,
+        label: 'Information Flow',
+        icon: 'uml-dependency-icon'
+    }
+];
 
 export class InformationFlowDiagramToolPaletteItemProvider extends ToolPaletteItemProvider {
     override getItems(_args?: Args): MaybePromise<PaletteItem[]> {
@@ -30,13 +41,6 @@ export class InformationFlowDiagramToolPaletteItemProvider extends ToolPaletteIt
                 label: 'Annotation',
                 icon: 'symbol-property',
                 children: [
-                    {
-                        id: 'generic-edge',
-                        sortString: 'A',
-                        label: 'Generic Edge',
-                        icon: 'uml-connector-icon',
-                        actions: [TriggerEdgeCreationAction.create(InformationFlowDiagramEdgeTypes.GENERIC_EDGE)]
-                    },
                     {
                         id: 'text-label',
                         sortString: 'A',
@@ -96,22 +100,6 @@ export class InformationFlowDiagramToolPaletteItemProvider extends ToolPaletteIt
                         label: 'Actor',
                         icon: 'uml-actor-icon',
                         actions: [TriggerNodeCreationAction.create(InformationFlowDiagramNodeTypes.ACTOR)]
-                    }
-                ],
-                actions: []
-            },
-            {
-                id: 'uml.edges',
-                sortString: 'A',
-                label: 'Edges',
-                icon: 'symbol-property',
-                children: [
-                    {
-                        id: 'information-flow',
-                        sortString: 'A',
-                        label: 'Information Flow',
-                        icon: 'uml-dependency-icon',
-                        actions: [TriggerEdgeCreationAction.create(InformationFlowDiagramEdgeTypes.INFORMATION_FLOW)]
                     }
                 ],
                 actions: []

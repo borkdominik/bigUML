@@ -18,7 +18,6 @@ import { Relation } from './relation-element.def.js';
 
 /** A link between two instances: an instance of an association, drawn as a plain line. */
 @Glsp.toolPalette({
-    section: 'Relations',
     label: 'Instance Link',
     icon: 'uml-association-icon'
 })

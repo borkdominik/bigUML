@@ -56,6 +56,14 @@ export interface ElementMetadata {
     unnamed: boolean;
     /** The values a new element is created with. */
     defaults: ElementDefault[];
+    /** The concrete AST types an edge may run from and to, read off its `source` and `target` references. */
+    ends?: EdgeEndTypes;
+}
+
+/** The concrete AST types an edge may run from (`source`) and to (`target`). */
+export interface EdgeEndTypes {
+    source: string[];
+    target: string[];
 }
 
 /** A value a new element of a type is created with. */
@@ -133,6 +141,14 @@ export function isFloatingType(typeIdOrAstType: string): boolean {
 /** The size a new node of this type opens at. */
 export function getDefaultSize(typeIdOrAstType: string): ElementSize {
     return getElementMetadata(typeIdOrAstType)?.defaultSize ?? DEFAULT_NODE_SIZE;
+}
+
+/**
+ * Whether an edge of this type may have an element stored as `astType` at its `role` end. An element type
+ * that is no edge has no ends at all.
+ */
+export function admitsEnd(edgeTypeIdOrAstType: string, role: keyof EdgeEndTypes, astType: string): boolean {
+    return getElementMetadata(edgeTypeIdOrAstType)?.ends?.[role].includes(astType) ?? false;
 }
 
 /** The property of `containerType` a child of `childType` is written into, if the container holds such children. */

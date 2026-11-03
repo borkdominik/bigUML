@@ -18,7 +18,6 @@ import { type ConnectionPoint } from './transition-element.def.js';
 // @ts-nocheck
 
 @Glsp.toolPalette({
-    section: 'Relations',
     label: 'Association',
     icon: 'uml-association-icon'
 })

@@ -14,5 +14,6 @@ export * from './model-type-utils.js';
 export * from './multiplicity.js';
 export * from './new-file.action.js';
 export * from './pin-placement.js';
+export * from './relation-type.action.js';
 export * from './semantic-model.action.js';
 export * from './storable-text.js';

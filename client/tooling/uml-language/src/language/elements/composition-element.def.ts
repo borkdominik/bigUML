@@ -15,7 +15,6 @@ import { Association } from './association-element.def.js';
 // @ts-nocheck
 
 @Glsp.toolPalette({
-    section: 'Relations',
     label: 'Composition',
     icon: 'uml-association-composite-icon'
 })

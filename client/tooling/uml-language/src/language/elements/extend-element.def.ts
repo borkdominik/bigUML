@@ -14,7 +14,6 @@ import { Relation } from './relation-element.def.js';
 // @ts-nocheck
 
 @Glsp.toolPalette({
-    section: 'Relation',
     label: 'Extend',
     icon: 'uml-extend-icon'
 })

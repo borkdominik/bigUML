@@ -30,7 +30,7 @@ const eta = new Eta({ views: path.join(__dirname, '..', 'templates') });
 
 interface ToolPaletteItemOptions {
     id?: string;
-    section: string;
+    section?: string;
     label: string;
     icon: string;
 }
@@ -39,7 +39,6 @@ interface ToolPaletteChild {
     id: string;
     label: string;
     icon: string;
-    isEdge: boolean;
     constName: string;
 }
 
@@ -49,12 +48,18 @@ interface ToolPaletteSection {
     children: ToolPaletteChild[];
 }
 
+/** A relation of the diagram, offered by the "Create relation" tool rather than listed in a section. */
+interface RelationTypeEntry {
+    label: string;
+    icon: string;
+    constName: string;
+}
+
 interface ToolPaletteTemplateData {
     diagramName: string;
     modelTypesFileName: string;
     sections: ToolPaletteSection[];
-    hasNodes: boolean;
-    hasEdges: boolean;
+    relationTypes: RelationTypeEntry[];
 }
 
 // ============================================================================
@@ -81,6 +86,7 @@ export function renderToolPaletteItemProvider(extensionPath: string, declaration
         );
 
         const sectionMap = new Map<string, ToolPaletteChild[]>();
+        const relationTypes: RelationTypeEntry[] = [];
 
         for (const decl of decoratedDecls) {
             const options = parseToolPaletteItemDecorator(decl.decorators);
@@ -88,21 +94,33 @@ export function renderToolPaletteItemProvider(extensionPath: string, declaration
                 continue;
             }
 
-            const isEdge = edgeNames.has(decl.name!);
-            const id = options.id ?? toKebab(decl.name!);
+            const constName = toConstant(decl.name!);
 
-            const child: ToolPaletteChild = {
-                id,
-                label: options.label,
-                icon: options.icon,
-                isEdge,
-                constName: toConstant(decl.name!)
-            };
+            // A relation is not listed in a section: the "Create relation" tool offers it once both of its
+            // ends are picked, and only where its `source` and `target` references admit them.
+            if (edgeNames.has(decl.name!)) {
+                if (options.section !== undefined) {
+                    throw new Error(
+                        `[tool-palette] Relation '${decl.name}' declares the section '${options.section}'. ` +
+                            'Relations are offered by the "Create relation" tool and take no section.'
+                    );
+                }
+                relationTypes.push({ label: options.label, icon: options.icon, constName });
+                continue;
+            }
 
+            if (options.section === undefined) {
+                throw new Error(`[tool-palette] Node '${decl.name}' declares no section to be listed in.`);
+            }
             if (!sectionMap.has(options.section)) {
                 sectionMap.set(options.section, []);
             }
-            sectionMap.get(options.section)!.push(child);
+            sectionMap.get(options.section)!.push({
+                id: options.id ?? toKebab(decl.name!),
+                label: options.label,
+                icon: options.icon,
+                constName
+            });
         }
 
         const sections: ToolPaletteSection[] = Array.from(sectionMap.entries()).map(([label, children]) => ({
@@ -111,15 +129,12 @@ export function renderToolPaletteItemProvider(extensionPath: string, declaration
             children
         }));
 
-        const hasNodes = sections.some(s => s.children.some(c => !c.isEdge));
-        const hasEdges = sections.some(s => s.children.some(c => c.isEdge));
-
         const data: ToolPaletteTemplateData = {
             diagramName,
             modelTypesFileName: `${toKebab(diagramName)}-diagram-model-types`,
             sections,
-            hasNodes,
-            hasEdges
+            // Listed by name, so the picker reads the same whatever order the definitions are declared in.
+            relationTypes: relationTypes.sort((a, b) => a.label.localeCompare(b.label))
         };
 
         const content = eta.render('./tool-palette-item-provider', data);
@@ -143,12 +158,12 @@ function parseToolPaletteItemDecorator(decorators: Decorator[]): ToolPaletteItem
     }
 
     const parsed = Decorator.getArg<Record<string, unknown>>(dec);
-    if (!parsed || !parsed.section || !parsed.label || !parsed.icon) {
+    if (!parsed || !parsed.label || !parsed.icon) {
         return undefined;
     }
 
     return {
-        section: parsed.section as string,
+        section: parsed.section as string | undefined,
         label: parsed.label as string,
         icon: parsed.icon as string,
         id: parsed.id as string | undefined

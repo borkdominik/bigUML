@@ -13,11 +13,18 @@ import {
     CommunicationDiagramEdgeTypes,
     CommunicationDiagramNodeTypes
 } from '../../../common/model-types/communication-diagram-model-types.js';
-import { type Args, type MaybePromise, type PaletteItem, ToolPaletteItemProvider, TriggerNodeCreationAction } from '@eclipse-glsp/server';
+import {
+    type Args,
+    type MaybePromise,
+    type PaletteItem,
+    ToolPaletteItemProvider,
+    TriggerEdgeCreationAction,
+    TriggerNodeCreationAction
+} from '@eclipse-glsp/server';
 
 /**
- * The relations of the diagram. They are not listed in the palette: the "Create relation" tool offers
- * the ones whose ends admit the two elements picked.
+ * The relations of the diagram, as the "Create relation" tool offers them between the ends they admit.
+ * Each is listed under its palette section as well, to be drawn as that type directly.
  */
 export const CommunicationDiagramRelationTypes: readonly RelationType[] = [
     {
@@ -42,6 +49,13 @@ export class CommunicationDiagramToolPaletteItemProvider extends ToolPaletteItem
                 icon: 'symbol-property',
                 children: [
                     {
+                        id: 'generic-edge',
+                        sortString: 'A',
+                        label: 'Generic Edge',
+                        icon: 'uml-connector-icon',
+                        actions: [TriggerEdgeCreationAction.create(CommunicationDiagramEdgeTypes.GENERIC_EDGE)]
+                    },
+                    {
                         id: 'text-label',
                         sortString: 'A',
                         label: 'Label',
@@ -54,6 +68,22 @@ export class CommunicationDiagramToolPaletteItemProvider extends ToolPaletteItem
                         label: 'Note',
                         icon: 'uml-comment-icon',
                         actions: [TriggerNodeCreationAction.create(CommunicationDiagramNodeTypes.NOTE)]
+                    }
+                ],
+                actions: []
+            },
+            {
+                id: 'uml.edges',
+                sortString: 'A',
+                label: 'Edges',
+                icon: 'symbol-property',
+                children: [
+                    {
+                        id: 'message',
+                        sortString: 'A',
+                        label: 'Message',
+                        icon: 'uml-message-icon',
+                        actions: [TriggerEdgeCreationAction.create(CommunicationDiagramEdgeTypes.MESSAGE)]
                     }
                 ],
                 actions: []

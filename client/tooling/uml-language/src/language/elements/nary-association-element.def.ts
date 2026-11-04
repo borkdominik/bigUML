@@ -18,7 +18,7 @@ import { Node, type Visibility } from '../core/element.def.js';
  * runs an association to one of the diamond's tips, the way a transition runs to a choice.
  */
 @Glsp.toolPalette({
-    section: 'Container',
+    section: 'Relations',
     label: 'N-ary Association',
     icon: 'uml-decision-node-icon'
 })

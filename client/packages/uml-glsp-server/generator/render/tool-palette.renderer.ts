@@ -30,7 +30,7 @@ const eta = new Eta({ views: path.join(__dirname, '..', 'templates') });
 
 interface ToolPaletteItemOptions {
     id?: string;
-    section?: string;
+    section: string;
     label: string;
     icon: string;
 }
@@ -39,6 +39,7 @@ interface ToolPaletteChild {
     id: string;
     label: string;
     icon: string;
+    isEdge: boolean;
     constName: string;
 }
 
@@ -48,7 +49,7 @@ interface ToolPaletteSection {
     children: ToolPaletteChild[];
 }
 
-/** A relation of the diagram, offered by the "Create relation" tool rather than listed in a section. */
+/** A relation of the diagram, as the "Create relation" tool offers it between the ends it admits. */
 interface RelationTypeEntry {
     label: string;
     icon: string;
@@ -95,23 +96,15 @@ export function renderToolPaletteItemProvider(extensionPath: string, declaration
             }
 
             const constName = toConstant(decl.name!);
+            const isEdge = edgeNames.has(decl.name!);
 
-            // A relation is not listed in a section: the "Create relation" tool offers it once both of its
-            // ends are picked, and only where its `source` and `target` references admit them.
-            if (edgeNames.has(decl.name!)) {
-                if (options.section !== undefined) {
-                    throw new Error(
-                        `[tool-palette] Relation '${decl.name}' declares the section '${options.section}'. ` +
-                            'Relations are offered by the "Create relation" tool and take no section.'
-                    );
-                }
+            // A relation is offered twice: under its section, to be drawn as that type, and by the
+            // "Create relation" tool, which offers it once both ends are picked and only where its
+            // `source` and `target` references admit them.
+            if (isEdge) {
                 relationTypes.push({ label: options.label, icon: options.icon, constName });
-                continue;
             }
 
-            if (options.section === undefined) {
-                throw new Error(`[tool-palette] Node '${decl.name}' declares no section to be listed in.`);
-            }
             if (!sectionMap.has(options.section)) {
                 sectionMap.set(options.section, []);
             }
@@ -119,6 +112,7 @@ export function renderToolPaletteItemProvider(extensionPath: string, declaration
                 id: options.id ?? toKebab(decl.name!),
                 label: options.label,
                 icon: options.icon,
+                isEdge,
                 constName
             });
         }
@@ -158,12 +152,12 @@ function parseToolPaletteItemDecorator(decorators: Decorator[]): ToolPaletteItem
     }
 
     const parsed = Decorator.getArg<Record<string, unknown>>(dec);
-    if (!parsed || !parsed.label || !parsed.icon) {
+    if (!parsed || !parsed.section || !parsed.label || !parsed.icon) {
         return undefined;
     }
 
     return {
-        section: parsed.section as string | undefined,
+        section: parsed.section as string,
         label: parsed.label as string,
         icon: parsed.icon as string,
         id: parsed.id as string | undefined

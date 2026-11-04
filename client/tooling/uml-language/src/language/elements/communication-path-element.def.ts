@@ -15,6 +15,7 @@ import { Relation } from './relation-element.def.js';
 // @ts-nocheck
 
 @Glsp.toolPalette({
+    section: 'Relation',
     label: 'Communication Path',
     icon: 'uml-communication-path-icon'
 })

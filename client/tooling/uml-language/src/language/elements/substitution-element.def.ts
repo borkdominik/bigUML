@@ -15,6 +15,7 @@ import { Relation } from './relation-element.def.js';
 // @ts-nocheck
 
 @Glsp.toolPalette({
+    section: 'Relations',
     label: 'Substitution',
     icon: 'uml-substitution-icon'
 })

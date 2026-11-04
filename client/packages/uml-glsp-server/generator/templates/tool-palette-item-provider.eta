@@ -10,11 +10,18 @@
 
 import type { RelationType } from '../../../../env/common/model/relation-type.action.js';
 import { <%~ it.diagramName %>DiagramEdgeTypes, <%~ it.diagramName %>DiagramNodeTypes } from '../../../common/model-types/<%~ it.modelTypesFileName %>.js';
-import { type Args, type MaybePromise, type PaletteItem, ToolPaletteItemProvider, TriggerNodeCreationAction } from '@eclipse-glsp/server';
+import {
+    type Args,
+    type MaybePromise,
+    type PaletteItem,
+    ToolPaletteItemProvider,
+    TriggerEdgeCreationAction,
+    TriggerNodeCreationAction
+} from '@eclipse-glsp/server';
 
 /**
- * The relations of the diagram. They are not listed in the palette: the "Create relation" tool offers
- * the ones whose ends admit the two elements picked.
+ * The relations of the diagram, as the "Create relation" tool offers them between the ends they admit.
+ * Each is listed under its palette section as well, to be drawn as that type directly.
  */
 export const <%~ it.diagramName %>DiagramRelationTypes: readonly RelationType[] = [
 <% it.relationTypes.forEach(function(relation, rIdx) { %>
@@ -43,7 +50,11 @@ export class <%~ it.diagramName %>DiagramToolPaletteItemProvider extends ToolPal
                         sortString: 'A',
                         label: '<%~ child.label %>',
                         icon: '<%~ child.icon %>',
+<% if (child.isEdge) { %>
+                        actions: [TriggerEdgeCreationAction.create(<%~ it.diagramName %>DiagramEdgeTypes.<%~ child.constName %>)]
+<% } else { %>
                         actions: [TriggerNodeCreationAction.create(<%~ it.diagramName %>DiagramNodeTypes.<%~ child.constName %>)]
+<% } %>
                     }<% if (cIdx < section.children.length - 1) { %>,<% } %>
 
 <% }); %>

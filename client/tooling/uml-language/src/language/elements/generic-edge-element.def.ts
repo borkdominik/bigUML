@@ -29,6 +29,8 @@ export type EdgeLineStyle = 'SOLID' | 'DASHED' | 'DOTTED';
  * is solid, dashed or dotted. Every diagram gets one, as every diagram gets a note.
  */
 @Glsp.toolPalette({
+    // Grouped with the note and the free label: the other drawing aids that are not UML notation.
+    section: 'Annotation',
     label: 'Generic Edge',
     icon: 'uml-connector-icon'
 })

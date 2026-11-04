@@ -16,6 +16,7 @@ import type { Lifeline } from './lifeline-element.def.js';
 // @ts-nocheck
 
 @Glsp.toolPalette({
+    section: 'Edges',
     label: 'Message',
     icon: 'uml-message-icon'
 })

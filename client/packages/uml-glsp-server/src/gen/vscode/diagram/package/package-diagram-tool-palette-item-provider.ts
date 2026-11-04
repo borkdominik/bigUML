@@ -10,11 +10,18 @@
 
 import type { RelationType } from '../../../../env/common/model/relation-type.action.js';
 import { PackageDiagramEdgeTypes, PackageDiagramNodeTypes } from '../../../common/model-types/package-diagram-model-types.js';
-import { type Args, type MaybePromise, type PaletteItem, ToolPaletteItemProvider, TriggerNodeCreationAction } from '@eclipse-glsp/server';
+import {
+    type Args,
+    type MaybePromise,
+    type PaletteItem,
+    ToolPaletteItemProvider,
+    TriggerEdgeCreationAction,
+    TriggerNodeCreationAction
+} from '@eclipse-glsp/server';
 
 /**
- * The relations of the diagram. They are not listed in the palette: the "Create relation" tool offers
- * the ones whose ends admit the two elements picked.
+ * The relations of the diagram, as the "Create relation" tool offers them between the ends they admit.
+ * Each is listed under its palette section as well, to be drawn as that type directly.
  */
 export const PackageDiagramRelationTypes: readonly RelationType[] = [
     {
@@ -63,6 +70,13 @@ export class PackageDiagramToolPaletteItemProvider extends ToolPaletteItemProvid
                 label: 'Annotation',
                 icon: 'symbol-property',
                 children: [
+                    {
+                        id: 'generic-edge',
+                        sortString: 'A',
+                        label: 'Generic Edge',
+                        icon: 'uml-connector-icon',
+                        actions: [TriggerEdgeCreationAction.create(PackageDiagramEdgeTypes.GENERIC_EDGE)]
+                    },
                     {
                         id: 'text-label',
                         sortString: 'A',
@@ -122,6 +136,57 @@ export class PackageDiagramToolPaletteItemProvider extends ToolPaletteItemProvid
                         label: 'Package',
                         icon: 'uml-package-icon',
                         actions: [TriggerNodeCreationAction.create(PackageDiagramNodeTypes.PACKAGE)]
+                    }
+                ],
+                actions: []
+            },
+            {
+                id: 'uml.relations',
+                sortString: 'A',
+                label: 'Relations',
+                icon: 'symbol-property',
+                children: [
+                    {
+                        id: 'usage',
+                        sortString: 'A',
+                        label: 'Usage',
+                        icon: 'uml-usage-icon',
+                        actions: [TriggerEdgeCreationAction.create(PackageDiagramEdgeTypes.USAGE)]
+                    },
+                    {
+                        id: 'package-merge',
+                        sortString: 'A',
+                        label: 'Package Merge',
+                        icon: 'uml-package-merge-icon',
+                        actions: [TriggerEdgeCreationAction.create(PackageDiagramEdgeTypes.PACKAGE_MERGE)]
+                    },
+                    {
+                        id: 'package-import',
+                        sortString: 'A',
+                        label: 'Package Import',
+                        icon: 'uml-package-import-icon',
+                        actions: [TriggerEdgeCreationAction.create(PackageDiagramEdgeTypes.PACKAGE_IMPORT)]
+                    },
+                    {
+                        id: 'element-import',
+                        sortString: 'A',
+                        label: 'Element Import',
+                        icon: 'uml-package-import-icon',
+                        actions: [TriggerEdgeCreationAction.create(PackageDiagramEdgeTypes.ELEMENT_IMPORT)]
+                    },
+                    {
+                        id: 'dependency',
+                        sortString: 'A',
+                        label: 'Dependency',
+                        icon: 'uml-dependency-icon',
+                        actions: [TriggerEdgeCreationAction.create(PackageDiagramEdgeTypes.DEPENDENCY)]
+                    },
+                    {
+                        id: 'abstraction',
+                        sortString: 'A',
+                        label: 'Abstraction',
+                        icon: 'uml-abstraction-icon',
+                        actions: [TriggerEdgeCreationAction.create(PackageDiagramEdgeTypes.ABSTRACTION)]
                     }
                 ],
                 actions: []

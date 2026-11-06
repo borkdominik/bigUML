@@ -8,14 +8,17 @@
  *********************************************************************************/
 import { type RelationType, RequestRelationTypesAction } from '@borkdominik-biguml/uml-glsp-server';
 import {
-    type Action,
+    Action,
     CreateEdgeOperation,
     DefaultTypes,
     Disposable,
     DrawFeedbackEdgeAction,
     EdgeCreationTool,
     EnableDefaultToolsAction,
+    EnableToolsAction,
+    FeedbackEdgeEndMovingMouseListener,
     type GModelElement,
+    hasStringProp,
     type IActionDispatcher,
     isConnectable,
     type ITypeHintProvider,
@@ -28,6 +31,24 @@ import {
 import { inject, injectable } from 'inversify';
 import { UmlEdgeCreationToolMouseListener } from '../edge-creation/uml-edge-creation-tool-mouse-listener.js';
 import { RelationTypePicker } from './relation-type-picker.js';
+
+/** Starts the {@link RelationCreationTool} with the relation's source already picked - by a shape's arrow. */
+export interface StartRelationCreationAction extends Action {
+    kind: typeof StartRelationCreationAction.KIND;
+    sourceElementId: string;
+}
+
+export namespace StartRelationCreationAction {
+    export const KIND = 'startRelationCreation';
+
+    export function is(object: unknown): object is StartRelationCreationAction {
+        return Action.hasKind(object, KIND) && hasStringProp(object, 'sourceElementId');
+    }
+
+    export function create(sourceElementId: string): StartRelationCreationAction {
+        return { kind: KIND, sourceElementId };
+    }
+}
 
 /**
  * Draws a relation without its type being chosen first: the source and the target are picked on the
@@ -53,8 +74,21 @@ export class RelationCreationTool extends EdgeCreationTool {
     // Enabled from the palette rather than triggered: there is no type to trigger it with.
     protected override isTriggerAction = (_object: unknown): _object is TriggerEdgeCreationAction => false;
 
+    /** The source the next relation starts at, where the tool was started from a shape's arrow. */
+    protected startSourceId?: string;
+
+    /** Moves the loose end of the feedback edge with the mouse - except while it is held on the target. */
+    protected edgeEndListener?: HoldableFeedbackEdgeEndMovingMouseListener;
+
     override get id(): string {
         return RelationCreationTool.ID;
+    }
+
+    override handle(action: Action): Action | void {
+        if (StartRelationCreationAction.is(action)) {
+            this.startSourceId = action.sourceElementId;
+            return EnableToolsAction.create([this.id]);
+        }
     }
 
     protected override creationListener(): void {
@@ -64,8 +98,13 @@ export class RelationCreationTool extends EdgeCreationTool {
             this.typeHintProvider,
             this,
             this.picker,
+            held => this.edgeEndListener?.hold(held),
             this.grid ? this.grid.x / 2 : undefined
         );
+        if (this.startSourceId !== undefined) {
+            listener.startFrom(this.startSourceId);
+            this.startSourceId = undefined;
+        }
         this.toDisposeOnDisable.push(
             listener,
             this.mouseTool.registerListener(listener),
@@ -73,6 +112,33 @@ export class RelationCreationTool extends EdgeCreationTool {
             // Switching to another tool drops a choice still open.
             Disposable.create(() => this.picker.close())
         );
+    }
+
+    protected override trackFeedbackEdge(): void {
+        const edgeEndListener = new HoldableFeedbackEdgeEndMovingMouseListener(this.anchorRegistry, this.feedbackDispatcher);
+        this.edgeEndListener = edgeEndListener;
+        this.toDisposeOnDisable.push(
+            edgeEndListener,
+            this.mouseTool.registerListener(edgeEndListener),
+            Disposable.create(() => (this.edgeEndListener = undefined))
+        );
+    }
+}
+
+/**
+ * The edge creation tool's feedback, which keeps the loose end of the edge under the mouse - and which
+ * can be held where it is. Held while the relation's type is being chosen, so the edge stays on the
+ * target it was dropped on however the mouse moves on its way to the picker, or the diagram is scrolled.
+ */
+class HoldableFeedbackEdgeEndMovingMouseListener extends FeedbackEdgeEndMovingMouseListener {
+    protected held = false;
+
+    hold(held: boolean): void {
+        this.held = held;
+    }
+
+    override mouseMove(target: GModelElement, event: MouseEvent): Action[] {
+        return this.held ? [] : super.mouseMove(target, event);
     }
 }
 
@@ -82,6 +148,13 @@ class RelationCreationToolMouseListener extends UmlEdgeCreationToolMouseListener
     protected readonly settled = new Map<string, RelationType[]>();
     /** Whether the picker is open for the relation drawn, which then decides how it goes on. */
     protected choosing = false;
+    /**
+     * Whether the tool was started by pressing a shape's arrow, and the release of that press is still to
+     * come. The press reached the tool that showed the arrow, not this one, so the release is the first
+     * this listener hears of it: dropped on another shape it ends a drag there, and anywhere else - back on
+     * the shape, or on the canvas - it is just the end of the click that started the tool.
+     */
+    protected awaitingStartRelease = false;
 
     constructor(
         triggerAction: TriggerEdgeCreationAction,
@@ -89,6 +162,8 @@ class RelationCreationToolMouseListener extends UmlEdgeCreationToolMouseListener
         typeHintProvider: ITypeHintProvider,
         tool: RelationCreationTool,
         protected readonly picker: RelationTypePicker,
+        /** Holds the loose end of the feedback edge where it is, or lets it follow the mouse again. */
+        protected readonly holdEdgeEnd: (held: boolean) => void,
         dragSensitivity?: number
     ) {
         super(triggerAction, actionDispatcher, typeHintProvider, tool, dragSensitivity);
@@ -103,6 +178,12 @@ class RelationCreationToolMouseListener extends UmlEdgeCreationToolMouseListener
             return [EnableDefaultToolsAction.create()];
         }
         const end = this.currentTarget;
+        if (this.awaitingStartRelease && event.button === 0) {
+            this.awaitingStartRelease = false;
+            if (!end || end.id === this.source) {
+                return [];
+            }
+        }
         if (event.button !== 0 || !end) {
             return [];
         }
@@ -110,7 +191,10 @@ class RelationCreationToolMouseListener extends UmlEdgeCreationToolMouseListener
         if (!this.isSourceSelected()) {
             void this.relationTypesBetween(end.id).then(relationTypes => {
                 if (relationTypes.length > 0 && !this.isSourceSelected() && this.currentTarget === end) {
-                    this.selectSource(end);
+                    this.selectSource(end.id);
+                    // The element under the cursor is now asked about as a target - by itself, a relation to itself.
+                    this.allowedTarget = this.canConnect(end, 'target');
+                    void this.actionDispatcher.dispatch(this.updateEdgeFeedback());
                 }
             });
             return [];
@@ -127,13 +211,17 @@ class RelationCreationToolMouseListener extends UmlEdgeCreationToolMouseListener
         return [];
     }
 
-    /** What Escape does: drops the source picked, or - with none picked yet - leaves the tool. */
+    /**
+     * What Escape does: drops the source picked, or - with none picked yet, or with the type being chosen -
+     * leaves the tool, as dismissing the picker does.
+     */
     cancel(): Action[] {
-        if (this.isSourceSelected() || this.choosing) {
-            this.picker.close();
+        if (this.isSourceSelected() && !this.choosing) {
             this.dispose();
             return [];
         }
+        this.picker.close();
+        this.dispose();
         return [EnableDefaultToolsAction.create()];
     }
 
@@ -164,17 +252,23 @@ class RelationCreationToolMouseListener extends UmlEdgeCreationToolMouseListener
         return false;
     }
 
-    protected selectSource(source: GModelElement): void {
-        this.source = source.id;
+    /**
+     * Starts the relation at `sourceId` without it being picked on the canvas - it was picked by pressing
+     * one of its arrows (see `RelationHandleTool`), which only shows where a relation may start.
+     */
+    startFrom(sourceId: string): void {
+        this.selectSource(sourceId);
+        this.awaitingStartRelease = true;
+    }
+
+    protected selectSource(sourceId: string): void {
+        this.source = sourceId;
         this.feedbackEdgeFeedback
             .add(
-                DrawFeedbackEdgeAction.create({ elementTypeId: this.triggerAction.elementTypeId, sourceId: source.id }),
+                DrawFeedbackEdgeAction.create({ elementTypeId: this.triggerAction.elementTypeId, sourceId }),
                 RemoveFeedbackEdgeAction.create()
             )
             .submit();
-        // The element under the cursor is now asked about as a target - by itself, a relation to itself.
-        this.allowedTarget = this.canConnect(source, 'target');
-        void this.actionDispatcher.dispatch(this.updateEdgeFeedback());
     }
 
     /** Creates the relation the ends admit, or - where they admit several - lets the user choose one. */
@@ -187,17 +281,21 @@ class RelationCreationToolMouseListener extends UmlEdgeCreationToolMouseListener
             this.create(relationTypes[0], sourceId, targetId, continuous);
             return;
         }
+        // The edge stays on the target it was dropped on while the type is chosen.
         this.choosing = true;
+        this.holdEdgeEnd(true);
         this.picker.open({
             relationTypes,
             position,
             onSelect: relationType => {
                 this.choosing = false;
+                this.holdEdgeEnd(false);
                 this.create(relationType, sourceId, targetId, continuous);
             },
+            // Dismissing the choice ends the relation and the tool with it, back to selecting.
             onCancel: () => {
-                this.choosing = false;
                 this.dispose();
+                void this.actionDispatcher.dispatch(EnableDefaultToolsAction.create());
             }
         });
     }
@@ -236,6 +334,8 @@ class RelationCreationToolMouseListener extends UmlEdgeCreationToolMouseListener
 
     override dispose(): void {
         this.choosing = false;
+        this.awaitingStartRelease = false;
+        this.holdEdgeEnd(false);
         // The model may change before the next relation is drawn - what is asked then is asked anew.
         this.answers.clear();
         this.settled.clear();

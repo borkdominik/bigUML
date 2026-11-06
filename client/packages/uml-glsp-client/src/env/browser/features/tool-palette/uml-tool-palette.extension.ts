@@ -28,7 +28,6 @@ import {
 import { KeyboardToolPalette } from '@eclipse-glsp/client/lib/features/accessibility/keyboard-tool-palette/keyboard-tool-palette.js';
 import { injectable } from 'inversify';
 import { SDShiftMouseTool } from '../../uml/diagram/sequence/features/tools/shift-mouse-tool.js';
-import { RelationCreationTool } from '../tools/relation-creation/relation-creation-tool.js';
 
 const CLICKED_CSS_CLASS = 'clicked';
 const CHEVRON_DOWN_ICON_ID = 'chevron-right';
@@ -62,7 +61,6 @@ const AVAILABLE_KEYS: KeyCode[] = [
 ];
 
 const SEARCH_ICON_ID = 'search';
-const RELATION_ICON_ID = 'arrow-right';
 const SELECTION_TOOL_KEY: KeyCode[] = ['Digit1', 'Numpad1'];
 const DELETION_TOOL_KEY: KeyCode[] = ['Digit2', 'Numpad2'];
 const MARQUEE_TOOL_KEY: KeyCode[] = ['Digit3', 'Numpad3'];
@@ -141,9 +139,6 @@ export class UmlToolPalette extends KeyboardToolPalette {
     protected override createHeaderTools(): HTMLElement {
         const headerTools = super.createHeaderTools();
 
-        // Right after selection: the tools that act on the canvas come first, creating a relation among them.
-        headerTools.insertBefore(this.createRelationButton(), this.defaultToolsButton.nextSibling);
-
         // TODO: Sequence Specific
         const createShiftButton = this.createShiftButton();
         headerTools.appendChild(createShiftButton);
@@ -196,21 +191,6 @@ export class UmlToolPalette extends KeyboardToolPalette {
             void this.actionDispatcher.dispatch(RequestMarkersAction.create(modelIds));
         };
         container.appendChild(this.createKeyboardShotcut(VALIDATION_TOOL_KEY[0]));
-        container.appendChild(icon);
-
-        return container;
-    }
-
-    /**
-     * Enables the relation creation tool. The palette lists no relations of its own: the tool offers the
-     * ones that may run between the two elements picked (see `RelationCreationTool`).
-     */
-    protected createRelationButton(): HTMLElement {
-        const container = document.createElement('div');
-        const icon = createIcon(RELATION_ICON_ID);
-        icon.title = 'Create relation';
-
-        container.onclick = this.onClickStaticToolButton(container, RelationCreationTool.ID);
         container.appendChild(icon);
 
         return container;

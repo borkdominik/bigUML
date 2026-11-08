@@ -117,16 +117,15 @@ export namespace Glsp {
         id?: string;
         /** The palette section this item belongs to (e.g., `"Container"`, `"Relations"`). */
         section: string;
-        /** The display label shown in the palette, and in the relation picker for a relation. */
+        /** The display label shown in the palette. */
         label: string;
         /** The CSS icon class for the palette entry. */
         icon: string;
     }
 
     /**
-     * Registers a class as a creatable element in the diagram tool palette, listed under its section.
-     * A relation is also offered by the "Create relation" tool between the ends its `source` and `target`
-     * references admit.
+     * Registers a class as a creatable element in the diagram tool palette.
+     * Requires section, label, and icon to define its appearance.
      */
     export function toolPalette(_options: ToolPaletteOptions): ClassDecorator {
         return (() => {}) as ClassDecorator;

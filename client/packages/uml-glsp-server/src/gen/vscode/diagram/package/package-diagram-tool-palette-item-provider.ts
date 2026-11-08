@@ -8,7 +8,6 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import type { RelationType } from '../../../../env/common/model/relation-type.action.js';
 import { PackageDiagramEdgeTypes, PackageDiagramNodeTypes } from '../../../common/model-types/package-diagram-model-types.js';
 import {
     type Args,
@@ -18,48 +17,6 @@ import {
     TriggerEdgeCreationAction,
     TriggerNodeCreationAction
 } from '@eclipse-glsp/server';
-
-/**
- * The relations of the diagram, as the "Create relation" tool offers them between the ends they admit.
- * Each is listed under its palette section as well, to be drawn as that type directly.
- */
-export const PackageDiagramRelationTypes: readonly RelationType[] = [
-    {
-        elementTypeId: PackageDiagramEdgeTypes.ABSTRACTION,
-        label: 'Abstraction',
-        icon: 'uml-abstraction-icon'
-    },
-    {
-        elementTypeId: PackageDiagramEdgeTypes.DEPENDENCY,
-        label: 'Dependency',
-        icon: 'uml-dependency-icon'
-    },
-    {
-        elementTypeId: PackageDiagramEdgeTypes.ELEMENT_IMPORT,
-        label: 'Element Import',
-        icon: 'uml-package-import-icon'
-    },
-    {
-        elementTypeId: PackageDiagramEdgeTypes.GENERIC_EDGE,
-        label: 'Generic Edge',
-        icon: 'uml-connector-icon'
-    },
-    {
-        elementTypeId: PackageDiagramEdgeTypes.PACKAGE_IMPORT,
-        label: 'Package Import',
-        icon: 'uml-package-import-icon'
-    },
-    {
-        elementTypeId: PackageDiagramEdgeTypes.PACKAGE_MERGE,
-        label: 'Package Merge',
-        icon: 'uml-package-merge-icon'
-    },
-    {
-        elementTypeId: PackageDiagramEdgeTypes.USAGE,
-        label: 'Usage',
-        icon: 'uml-usage-icon'
-    }
-];
 
 export class PackageDiagramToolPaletteItemProvider extends ToolPaletteItemProvider {
     override getItems(_args?: Args): MaybePromise<PaletteItem[]> {

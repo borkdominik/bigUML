@@ -8,7 +8,6 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import type { RelationType } from '../../../../env/common/model/relation-type.action.js';
 import { DeploymentDiagramEdgeTypes, DeploymentDiagramNodeTypes } from '../../../common/model-types/deployment-diagram-model-types.js';
 import {
     type Args,
@@ -18,43 +17,6 @@ import {
     TriggerEdgeCreationAction,
     TriggerNodeCreationAction
 } from '@eclipse-glsp/server';
-
-/**
- * The relations of the diagram, as the "Create relation" tool offers them between the ends they admit.
- * Each is listed under its palette section as well, to be drawn as that type directly.
- */
-export const DeploymentDiagramRelationTypes: readonly RelationType[] = [
-    {
-        elementTypeId: DeploymentDiagramEdgeTypes.COMMUNICATION_PATH,
-        label: 'Communication Path',
-        icon: 'uml-communication-path-icon'
-    },
-    {
-        elementTypeId: DeploymentDiagramEdgeTypes.DEPENDENCY,
-        label: 'Dependency',
-        icon: 'uml-dependency-icon'
-    },
-    {
-        elementTypeId: DeploymentDiagramEdgeTypes.DEPLOYMENT,
-        label: 'Deployment',
-        icon: 'uml-deployment-icon'
-    },
-    {
-        elementTypeId: DeploymentDiagramEdgeTypes.GENERALIZATION,
-        label: 'Generalization',
-        icon: 'uml-generalization-icon'
-    },
-    {
-        elementTypeId: DeploymentDiagramEdgeTypes.GENERIC_EDGE,
-        label: 'Generic Edge',
-        icon: 'uml-connector-icon'
-    },
-    {
-        elementTypeId: DeploymentDiagramEdgeTypes.MANIFESTATION,
-        label: 'Manifestation',
-        icon: 'uml-manifestation-icon'
-    }
-];
 
 export class DeploymentDiagramToolPaletteItemProvider extends ToolPaletteItemProvider {
     override getItems(_args?: Args): MaybePromise<PaletteItem[]> {

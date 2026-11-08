@@ -8,7 +8,6 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import type { RelationType } from '../../../../env/common/model/relation-type.action.js';
 import { ClassDiagramEdgeTypes, ClassDiagramNodeTypes } from '../../../common/model-types/class-diagram-model-types.js';
 import {
     type Args,
@@ -18,88 +17,6 @@ import {
     TriggerEdgeCreationAction,
     TriggerNodeCreationAction
 } from '@eclipse-glsp/server';
-
-/**
- * The relations of the diagram, as the "Create relation" tool offers them between the ends they admit.
- * Each is listed under its palette section as well, to be drawn as that type directly.
- */
-export const ClassDiagramRelationTypes: readonly RelationType[] = [
-    {
-        elementTypeId: ClassDiagramEdgeTypes.ABSTRACTION,
-        label: 'Abstraction',
-        icon: 'uml-abstraction-icon'
-    },
-    {
-        elementTypeId: ClassDiagramEdgeTypes.AGGREGATION,
-        label: 'Aggregation',
-        icon: 'uml-association-shared-icon'
-    },
-    {
-        elementTypeId: ClassDiagramEdgeTypes.ASSOCIATION,
-        label: 'Association',
-        icon: 'uml-association-icon'
-    },
-    {
-        elementTypeId: ClassDiagramEdgeTypes.COMPOSITION,
-        label: 'Composition',
-        icon: 'uml-association-composite-icon'
-    },
-    {
-        elementTypeId: ClassDiagramEdgeTypes.DEPENDENCY,
-        label: 'Dependency',
-        icon: 'uml-dependency-icon'
-    },
-    {
-        elementTypeId: ClassDiagramEdgeTypes.ELEMENT_IMPORT,
-        label: 'Element Import',
-        icon: 'uml-package-import-icon'
-    },
-    {
-        elementTypeId: ClassDiagramEdgeTypes.GENERALIZATION,
-        label: 'Generalization',
-        icon: 'uml-generalization-icon'
-    },
-    {
-        elementTypeId: ClassDiagramEdgeTypes.GENERIC_EDGE,
-        label: 'Generic Edge',
-        icon: 'uml-connector-icon'
-    },
-    {
-        elementTypeId: ClassDiagramEdgeTypes.INSTANCE_LINK,
-        label: 'Instance Link',
-        icon: 'uml-association-icon'
-    },
-    {
-        elementTypeId: ClassDiagramEdgeTypes.INTERFACE_REALIZATION,
-        label: 'Interface Realization',
-        icon: 'uml-interface-realization-icon'
-    },
-    {
-        elementTypeId: ClassDiagramEdgeTypes.PACKAGE_IMPORT,
-        label: 'Package Import',
-        icon: 'uml-package-import-icon'
-    },
-    {
-        elementTypeId: ClassDiagramEdgeTypes.PACKAGE_MERGE,
-        label: 'Package Merge',
-        icon: 'uml-package-merge-icon'
-    },
-    {
-        elementTypeId: ClassDiagramEdgeTypes.REALIZATION,
-        label: 'Realization',
-        icon: 'uml-realization-icon'
-    },
-    {
-        elementTypeId: ClassDiagramEdgeTypes.SUBSTITUTION,
-        label: 'Substitution',
-        icon: 'uml-substitution-icon'
-    },
-    {
-        elementTypeId: ClassDiagramEdgeTypes.USAGE,
-        label: 'Usage',
-        icon: 'uml-usage-icon'
-    }
-];
 
 export class ClassDiagramToolPaletteItemProvider extends ToolPaletteItemProvider {
     override getItems(_args?: Args): MaybePromise<PaletteItem[]> {

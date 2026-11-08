@@ -8,7 +8,6 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import type { RelationType } from '../../../../env/common/model/relation-type.action.js';
 import { UseCaseDiagramEdgeTypes, UseCaseDiagramNodeTypes } from '../../../common/model-types/use-case-diagram-model-types.js';
 import {
     type Args,
@@ -18,38 +17,6 @@ import {
     TriggerEdgeCreationAction,
     TriggerNodeCreationAction
 } from '@eclipse-glsp/server';
-
-/**
- * The relations of the diagram, as the "Create relation" tool offers them between the ends they admit.
- * Each is listed under its palette section as well, to be drawn as that type directly.
- */
-export const UseCaseDiagramRelationTypes: readonly RelationType[] = [
-    {
-        elementTypeId: UseCaseDiagramEdgeTypes.ASSOCIATION,
-        label: 'Association',
-        icon: 'uml-association-icon'
-    },
-    {
-        elementTypeId: UseCaseDiagramEdgeTypes.EXTEND,
-        label: 'Extend',
-        icon: 'uml-extend-icon'
-    },
-    {
-        elementTypeId: UseCaseDiagramEdgeTypes.GENERALIZATION,
-        label: 'Generalization',
-        icon: 'uml-generalization-icon'
-    },
-    {
-        elementTypeId: UseCaseDiagramEdgeTypes.GENERIC_EDGE,
-        label: 'Generic Edge',
-        icon: 'uml-connector-icon'
-    },
-    {
-        elementTypeId: UseCaseDiagramEdgeTypes.INCLUDE,
-        label: 'Include',
-        icon: 'uml-include-icon'
-    }
-];
 
 export class UseCaseDiagramToolPaletteItemProvider extends ToolPaletteItemProvider {
     override getItems(_args?: Args): MaybePromise<PaletteItem[]> {

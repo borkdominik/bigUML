@@ -8,7 +8,6 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import type { RelationType } from '../../../../env/common/model/relation-type.action.js';
 import { ActivityDiagramEdgeTypes, ActivityDiagramNodeTypes } from '../../../common/model-types/activity-diagram-model-types.js';
 import {
     type Args,
@@ -18,23 +17,6 @@ import {
     TriggerEdgeCreationAction,
     TriggerNodeCreationAction
 } from '@eclipse-glsp/server';
-
-/**
- * The relations of the diagram, as the "Create relation" tool offers them between the ends they admit.
- * Each is listed under its palette section as well, to be drawn as that type directly.
- */
-export const ActivityDiagramRelationTypes: readonly RelationType[] = [
-    {
-        elementTypeId: ActivityDiagramEdgeTypes.CONTROL_FLOW,
-        label: 'Control Flow',
-        icon: 'uml-control-flow-icon'
-    },
-    {
-        elementTypeId: ActivityDiagramEdgeTypes.GENERIC_EDGE,
-        label: 'Generic Edge',
-        icon: 'uml-connector-icon'
-    }
-];
 
 export class ActivityDiagramToolPaletteItemProvider extends ToolPaletteItemProvider {
     override getItems(_args?: Args): MaybePromise<PaletteItem[]> {

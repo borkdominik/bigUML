@@ -49,18 +49,12 @@ interface ToolPaletteSection {
     children: ToolPaletteChild[];
 }
 
-/** A relation of the diagram, as the "Create relation" tool offers it between the ends it admits. */
-interface RelationTypeEntry {
-    label: string;
-    icon: string;
-    constName: string;
-}
-
 interface ToolPaletteTemplateData {
     diagramName: string;
     modelTypesFileName: string;
     sections: ToolPaletteSection[];
-    relationTypes: RelationTypeEntry[];
+    hasNodes: boolean;
+    hasEdges: boolean;
 }
 
 // ============================================================================
@@ -87,7 +81,6 @@ export function renderToolPaletteItemProvider(extensionPath: string, declaration
         );
 
         const sectionMap = new Map<string, ToolPaletteChild[]>();
-        const relationTypes: RelationTypeEntry[] = [];
 
         for (const decl of decoratedDecls) {
             const options = parseToolPaletteItemDecorator(decl.decorators);
@@ -95,26 +88,21 @@ export function renderToolPaletteItemProvider(extensionPath: string, declaration
                 continue;
             }
 
-            const constName = toConstant(decl.name!);
             const isEdge = edgeNames.has(decl.name!);
+            const id = options.id ?? toKebab(decl.name!);
 
-            // A relation is offered twice: under its section, to be drawn as that type, and by the
-            // "Create relation" tool, which offers it once both ends are picked and only where its
-            // `source` and `target` references admit them.
-            if (isEdge) {
-                relationTypes.push({ label: options.label, icon: options.icon, constName });
-            }
+            const child: ToolPaletteChild = {
+                id,
+                label: options.label,
+                icon: options.icon,
+                isEdge,
+                constName: toConstant(decl.name!)
+            };
 
             if (!sectionMap.has(options.section)) {
                 sectionMap.set(options.section, []);
             }
-            sectionMap.get(options.section)!.push({
-                id: options.id ?? toKebab(decl.name!),
-                label: options.label,
-                icon: options.icon,
-                isEdge,
-                constName
-            });
+            sectionMap.get(options.section)!.push(child);
         }
 
         const sections: ToolPaletteSection[] = Array.from(sectionMap.entries()).map(([label, children]) => ({
@@ -123,12 +111,15 @@ export function renderToolPaletteItemProvider(extensionPath: string, declaration
             children
         }));
 
+        const hasNodes = sections.some(s => s.children.some(c => !c.isEdge));
+        const hasEdges = sections.some(s => s.children.some(c => c.isEdge));
+
         const data: ToolPaletteTemplateData = {
             diagramName,
             modelTypesFileName: `${toKebab(diagramName)}-diagram-model-types`,
             sections,
-            // Listed by name, so the picker reads the same whatever order the definitions are declared in.
-            relationTypes: relationTypes.sort((a, b) => a.label.localeCompare(b.label))
+            hasNodes,
+            hasEdges
         };
 
         const content = eta.render('./tool-palette-item-provider', data);

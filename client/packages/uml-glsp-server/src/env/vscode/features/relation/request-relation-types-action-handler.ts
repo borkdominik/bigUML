@@ -8,7 +8,7 @@
  **********************************************************************************/
 
 import { RelationTypesResponseAction, RequestRelationTypesAction } from '@borkdominik-biguml/uml-glsp-server';
-import { type Action, type ActionHandler, type MaybePromise } from '@eclipse-glsp/server';
+import { type Action, type ActionHandler } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 import { RelationTypeResolver } from './relation-type-resolver.js';
 
@@ -20,8 +20,8 @@ export class RequestRelationTypesActionHandler implements ActionHandler {
     @inject(RelationTypeResolver)
     protected readonly resolver: RelationTypeResolver;
 
-    execute(action: RequestRelationTypesAction): MaybePromise<Action[]> {
-        const relationTypes = this.resolver.relationTypesBetween(action.sourceElementId, action.targetElementId);
+    async execute(action: RequestRelationTypesAction): Promise<Action[]> {
+        const relationTypes = await this.resolver.relationTypesBetween(action.sourceElementId, action.targetElementId);
         return [RelationTypesResponseAction.create(relationTypes, action.requestId)];
     }
 }

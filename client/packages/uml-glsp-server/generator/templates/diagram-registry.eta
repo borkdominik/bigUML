@@ -11,14 +11,13 @@
 import type { ToolPaletteItemProvider } from '@eclipse-glsp/server';
 import type { interfaces } from 'inversify';
 import * as uuid from 'uuid';
-import type { RelationType } from '../../env/common/model/relation-type.action.js';
 <% it.diagrams.forEach(function(diagram) { %>
 import {
     <%~ diagram.name %>AstTypes,
     <%~ diagram.name %>DiagramEdgeTypes,
     <%~ diagram.name %>DiagramNodeTypes
 } from '../common/model-types/<%~ diagram.kebab %>-diagram-model-types.js';
-import { <%~ diagram.name %>DiagramRelationTypes, <%~ diagram.name %>DiagramToolPaletteItemProvider } from './diagram/<%~ diagram.kebab %>/<%~ diagram.kebab %>-diagram-tool-palette-item-provider.js';
+import { <%~ diagram.name %>DiagramToolPaletteItemProvider } from './diagram/<%~ diagram.kebab %>/<%~ diagram.kebab %>-diagram-tool-palette-item-provider.js';
 <% }) %>
 
 /** One diagram of the language and what serves it. */
@@ -38,8 +37,6 @@ export interface DiagramRegistration {
     /** The element type id an element stored as `astType` is drawn as in the diagram. */
     convertToElementType(astType: string): string;
     toolPaletteItemProvider: interfaces.Newable<ToolPaletteItemProvider>;
-    /** The relations of the diagram, offered by the "Create relation" tool between the ends they admit. */
-    relationTypes: readonly RelationType[];
 }
 
 /** Every diagram there is. Wiring that needs a per-diagram class iterates this rather than naming each. */
@@ -53,8 +50,7 @@ export const DIAGRAM_REGISTRY: readonly DiagramRegistration[] = [
         edgeTypeIds: Object.values(<%~ diagram.name %>DiagramEdgeTypes),
         convertToAst: <%~ diagram.name %>AstTypes.convertToAst,
         convertToElementType: <%~ diagram.name %>AstTypes.convertToElementType,
-        toolPaletteItemProvider: <%~ diagram.name %>DiagramToolPaletteItemProvider,
-        relationTypes: <%~ diagram.name %>DiagramRelationTypes
+        toolPaletteItemProvider: <%~ diagram.name %>DiagramToolPaletteItemProvider
     },
 <% }) %>
 ];

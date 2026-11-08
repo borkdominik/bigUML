@@ -8,8 +8,9 @@
  **********************************************************************************/
 
 import { parseConnectionPointId, parseEdgeCenterId, type RelationType } from '@borkdominik-biguml/uml-glsp-server';
-import { admitsEnd, findDiagramRegistration } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
+import { admitsEnd } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
 import { EdgeAnchor } from '@borkdominik-biguml/uml-model-server/grammar';
+import { type PaletteItem, ToolPaletteItemProvider, TriggerEdgeCreationAction } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 import { DiagramModelState } from '../model/diagram-model-state.js';
 
@@ -25,22 +26,46 @@ export class RelationTypeResolver {
     @inject(DiagramModelState)
     protected readonly modelState: DiagramModelState;
 
+    @inject(ToolPaletteItemProvider)
+    protected readonly toolPaletteItemProvider: ToolPaletteItemProvider;
+
     /**
      * The relations of the loaded diagram that may run from `sourceId` - and to `targetId`, where one is
      * given. None where either end names nothing an edge can end on.
      */
-    relationTypesBetween(sourceId: string, targetId?: string): RelationType[] {
+    async relationTypesBetween(sourceId: string, targetId?: string): Promise<RelationType[]> {
         const sourceType = this.endTypeOf(sourceId);
         const targetType = targetId === undefined ? undefined : this.endTypeOf(targetId);
         if (sourceType === undefined || (targetId !== undefined && targetType === undefined)) {
             return [];
         }
-        const relationTypes = findDiagramRegistration(this.modelState.diagramType)?.relationTypes ?? [];
+        const relationTypes = await this.relationTypes();
         return relationTypes.filter(
             ({ elementTypeId }) =>
                 admitsEnd(elementTypeId, 'source', sourceType) &&
                 (targetType === undefined || admitsEnd(elementTypeId, 'target', targetType))
         );
+    }
+
+    /**
+     * The relations of the loaded diagram: the edge entries of its tool palette, so a relation is
+     * declared once (its `@toolPalette` decorator) and offered both there and by the "Create relation"
+     * tool. Sorted by label, so the picker reads the same whatever section an entry sits in.
+     */
+    protected async relationTypes(): Promise<RelationType[]> {
+        const relationTypes: RelationType[] = [];
+        const collect = (items: PaletteItem[]): void => {
+            for (const item of items) {
+                for (const action of item.actions) {
+                    if (TriggerEdgeCreationAction.is(action)) {
+                        relationTypes.push({ elementTypeId: action.elementTypeId, label: item.label, icon: item.icon ?? '' });
+                    }
+                }
+                collect(item.children ?? []);
+            }
+        };
+        collect(await this.toolPaletteItemProvider.getItems());
+        return relationTypes.sort((a, b) => a.label.localeCompare(b.label));
     }
 
     /** Whether an edge of `edgeTypeId` may run from `sourceId` to `targetId`. */

@@ -8,7 +8,6 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import type { RelationType } from '../../../../env/common/model/relation-type.action.js';
 import {
     InformationFlowDiagramEdgeTypes,
     InformationFlowDiagramNodeTypes
@@ -21,23 +20,6 @@ import {
     TriggerEdgeCreationAction,
     TriggerNodeCreationAction
 } from '@eclipse-glsp/server';
-
-/**
- * The relations of the diagram, as the "Create relation" tool offers them between the ends they admit.
- * Each is listed under its palette section as well, to be drawn as that type directly.
- */
-export const InformationFlowDiagramRelationTypes: readonly RelationType[] = [
-    {
-        elementTypeId: InformationFlowDiagramEdgeTypes.GENERIC_EDGE,
-        label: 'Generic Edge',
-        icon: 'uml-connector-icon'
-    },
-    {
-        elementTypeId: InformationFlowDiagramEdgeTypes.INFORMATION_FLOW,
-        label: 'Information Flow',
-        icon: 'uml-dependency-icon'
-    }
-];
 
 export class InformationFlowDiagramToolPaletteItemProvider extends ToolPaletteItemProvider {
     override getItems(_args?: Args): MaybePromise<PaletteItem[]> {

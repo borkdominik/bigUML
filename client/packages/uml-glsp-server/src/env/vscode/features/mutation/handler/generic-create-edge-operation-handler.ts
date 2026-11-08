@@ -22,6 +22,7 @@ import { inject, injectable, multiInject, optional } from 'inversify';
 import { ModelPatchCommand } from '../../command/model-patch-command.js';
 import { DiagramLanguageMetadata } from '../../model/diagram-language-metadata.js';
 import { type DiagramModelState } from '../../model/diagram-model-state.js';
+import { RelationTypeResolver } from '../../relation/relation-type-resolver.js';
 import { type EdgeEnds, firstClaim, MutationExtension } from '../extension/mutation-extension.js';
 
 /** The diagram's own list of relations, where every edge drawn on the canvas lives. */
@@ -42,6 +43,9 @@ export class GenericCreateEdgeOperationHandler extends OperationHandler implemen
     @inject(DiagramLanguageMetadata)
     protected readonly metadata: DiagramLanguageMetadata;
 
+    @inject(RelationTypeResolver)
+    protected readonly relationTypes: RelationTypeResolver;
+
     @multiInject(MutationExtension)
     @optional()
     protected readonly extensions: MutationExtension[] = [];
@@ -57,6 +61,13 @@ export class GenericCreateEdgeOperationHandler extends OperationHandler implemen
     }
 
     override createCommand(operation: CreateEdgeOperation): Command {
+        // Asked of the ends as they were drawn, before an extension reads them differently: what the user
+        // pointed at is what the metamodel has to admit.
+        if (!this.relationTypes.admits(operation.elementTypeId, operation.sourceElementId, operation.targetElementId)) {
+            throw new Error(
+                `An edge of type '${operation.elementTypeId}' cannot run from '${operation.sourceElementId}' to '${operation.targetElementId}'`
+            );
+        }
         // Anchors first: the relation refers to them, and one ending on another edge's centre dot needs the
         // anchor on that edge to exist when it is linked (see `anchorReferenceFor`).
         const anchors: jsonPatch.AddOperation<unknown>[] = [];

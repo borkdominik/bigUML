@@ -7,7 +7,14 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { type Declaration, Decorator, getConcreteElements, isValueProperty, Multiplicity } from '@borkdominik-biguml/uml-language-tooling';
+import {
+    type Declaration,
+    Decorator,
+    getConcreteElements,
+    isValueProperty,
+    Multiplicity,
+    resolveTypeAliasMembers
+} from '@borkdominik-biguml/uml-language-tooling';
 import { Eta } from 'eta';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -43,6 +50,13 @@ interface ElementMetadataEntry {
     optionalName: boolean;
     unnamed: boolean;
     defaults: DefaultValue[];
+    ends?: EdgeEndTypes;
+}
+
+/** The concrete AST types an edge may run from and to. */
+interface EdgeEndTypes {
+    source: string[];
+    target: string[];
 }
 
 interface DefaultValue {
@@ -103,10 +117,11 @@ function buildEntry(decl: Declaration, declarations: Declaration[]): ElementMeta
     const opensWithDec = Decorator.find(decl.decorators, 'opensWith');
     const shapeDec = Decorator.find(decl.decorators, 'shape');
     const shapeOptions = shapeDec ? (Decorator.getArg<Record<string, unknown>>(shapeDec) ?? {}) : {};
+    const kind = kindOf(decl, declarations);
 
     return {
         astType,
-        kind: kindOf(decl, declarations),
+        kind,
         noBounds,
         owned,
         floating: Decorator.has(decl.decorators, 'floating'),
@@ -125,8 +140,45 @@ function buildEntry(decl: Declaration, declarations: Declaration[]): ElementMeta
         optionalName: (decl.properties ?? []).some(prop => prop.name === 'name' && prop.isOptional),
         // Whether the element has no name to write at all - a note, which is the text it holds.
         unnamed: !(decl.properties ?? []).some(prop => prop.name === 'name'),
-        defaults: defaultsOf(decl, declarations)
+        defaults: defaultsOf(decl, declarations),
+        ends: kind === 'edge' ? endsOf(decl, declarations) : undefined
     };
+}
+
+/**
+ * What an edge may run between, read off the types of its `source` and `target` references - the
+ * metamodel's own statement of it, which the grammar links the two references against as well.
+ */
+function endsOf(decl: Declaration, declarations: Declaration[]): EdgeEndTypes {
+    const endTypes = (role: 'source' | 'target'): string[] => {
+        const prop = decl.properties?.find(p => p.name === role && Decorator.has(p.decorators, 'reference'));
+        if (!prop) {
+            throw new Error(`[element-metadata] Edge '${decl.name}' declares no '${role}' reference`);
+        }
+        return [...new Set(prop.types.flatMap(type => concreteTypesOf(type.typeName, declarations)))].sort();
+    };
+    return { source: endTypes('source'), target: endTypes('target') };
+}
+
+/**
+ * The concrete declarations a type admits: the members of a type alias, every concrete class extending
+ * a base class however far down, and a concrete class itself.
+ */
+function concreteTypesOf(typeName: string, declarations: Declaration[], seen = new Set<string>()): string[] {
+    if (seen.has(typeName)) {
+        return [];
+    }
+    seen.add(typeName);
+
+    const decl = declarations.find(d => d.name === typeName);
+    if (!decl) {
+        return [];
+    }
+    if (decl.type === 'type') {
+        return resolveTypeAliasMembers(decl, declarations).flatMap(member => concreteTypesOf(member, declarations, seen));
+    }
+    const own = decl.isAbstract ? [] : [typeName];
+    return [...own, ...(decl.extendedBy ?? []).flatMap(subtype => concreteTypesOf(subtype, declarations, seen))];
 }
 
 /**

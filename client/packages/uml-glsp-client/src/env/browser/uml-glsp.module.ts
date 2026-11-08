@@ -42,6 +42,7 @@ import { umlLoadingModule } from './features/loading/uml-loading.module.js';
 import { umlRoutingModule } from './features/routing/uml-routing.module.js';
 import { umlThemeModule } from './features/theme/uml-theme.module.js';
 import { umlToolPaletteModule } from './features/tool-palette/uml-tool-palette.module.js';
+import { umlRelationCreationModule } from './features/tools/relation-creation/relation-creation.module.js';
 import { umlToolManagerModule } from './features/tools/tool-manager/uml-tool-manager.module.js';
 import { umlDiagramModules } from './uml/index.js';
 import { umlBaseViewsModule } from './views/uml-base-views.module.js';
@@ -101,6 +102,7 @@ export function initializeUmlDiagramContainer(
         umlRoutingModule,
         umlThemeModule,
         umlToolManagerModule,
+        umlRelationCreationModule,
         umlTypeHintsModule,
         { add: umlToolPaletteModule, remove: toolPaletteModule },
         ...umlDiagramModules,
